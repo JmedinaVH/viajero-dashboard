@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Viajero Loyalty · Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --naranja:    #F04B24;
+  --naranja-dk: #C73A1A;
+  --naranja-lt: #F47B5A;
+  --naranja-xs: #FAC4B4;
+  --gris:       #585856;
+  --gris-lt:    #B1BABf;
+  --negro:      #1A1A1A;
+  --blanco:     #FFFFFF;
+  --fondo:      #FFF8F5;
+  --fondo-lt:   #FFFCFA;
+  --ok:         #2D7A4F;
+  --ok-lt:      #C8F0DC;
+  --warn:       #B8650A;
+  --warn-lt:    #FFF0CC;
+  --error:      #F04B24;
+  --error-lt:   #FFE0D8;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--fondo);
+  color: var(--negro);
+  min-height: 100vh;
+  font-weight: 400;
+}
+
+/* BOTÓN REGRESO */
+.btn-hub {
+  position: fixed;
+  top: 20px; left: 20px;
+  background: rgba(255,255,255,0.95);
+  border: 1.5px solid var(--naranja);
+  color: var(--naranja);
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  z-index: 999;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.2s;
+  backdrop-filter: blur(8px);
+}
+.btn-hub:hover {
+  background: var(--naranja);
+  color: var(--blanco);
+}
+
+/* HEADER */
+header {
+  background: var(--naranja);
+  padding: 56px 40px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: 'V';
+  position: absolute;
+  right: -20px; top: -40px;
+  font-size: 280px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.08);
+  line-height: 1;
+  letter-spacing: -10px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-icon {
+  font-size: 48px;
+  line-height: 1;
+}
+
+.logo-text h1 {
+  color: var(--blanco);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.logo-text p {
+  color: rgba(255,255,255,0.75);
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.header-meta {
+  color: rgba(255,255,255,0.8);
+  font-size: 12px;
+  text-align: right;
+  line-height: 1.6;
+}
+
+/* FILTROS */
+.filtros {
+  background: var(--blanco);
+  border-bottom: 2px solid var(--naranja-xs);
+  padding: 14px 40px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(240,75,36,0.08);
+}
+
+.filtro-grupo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filtros label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--naranja);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.filtros select {
+  border: 1.5px solid var(--naranja-xs);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--fondo);
+  color: var(--negro);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+
+.filtros select:focus,
+.filtros select:hover {
+  border-color: var(--naranja);
+}
+
+/* MAIN */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+
+/* ACTUALIZADO BADGE */
+.actualizado {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--blanco);
+  border: 1.5px solid var(--naranja-xs);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gris);
+  margin-bottom: 32px;
+}
+
+.actualizado::before {
+  content: '●';
+  color: var(--naranja);
+  font-size: 8px;
+}
+
+/* SECCIÓN */
+.seccion {
+  margin-bottom: 48px;
+}
+
+.seccion-titulo {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--naranja);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.seccion-titulo::after {
+  content: '';
+  flex: 1;
+  height: 1.5px;
+  background: var(--naranja-xs);
+}
+
+/* KPI CARDS */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.kpi-card {
+  background: var(--blanco);
+  border-radius: 20px;
+  padding: 28px 24px;
+  border: 1.5px solid rgba(240,75,36,0.1);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(240,75,36,0.1);
+}
+
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--naranja);
+  border-radius: 0 0 20px 20px;
+}
+
+.kpi-card.ok::after   { background: var(--ok); }
+.kpi-card.warn::after { background: var(--warn); }
+.kpi-card.bad::after  { background: var(--error); }
+.kpi-card.neutral::after { background: var(--gris-lt); }
+
+.kpi-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gris);
+  margin-bottom: 12px;
+}
+
+.kpi-valor {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--negro);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.kpi-card.bad .kpi-valor  { color: var(--error); }
+.kpi-card.ok .kpi-valor   { color: var(--ok); }
+
+.kpi-sub {
+  font-size: 12px;
+  color: var(--gris);
+  margin-top: 8px;
+  font-weight: 400;
+}
+
+/* CHARTS */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.chart-card {
+  background: var(--blanco);
+  border-radius: 20px;
+  padding: 28px;
+  border: 1.5px solid rgba(240,75,36,0.08);
+}
+
+.chart-titulo {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--negro);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* TABLAS */
+.tabla-wrap {
+  background: var(--blanco);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1.5px solid rgba(240,75,36,0.08);
+}
+
+.tabla-empty {
+  text-align: center;
+  padding: 48px;
+  color: var(--gris);
+  font-size: 14px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+thead tr {
+  background: var(--naranja);
+}
+
+thead th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--blanco);
+}
+
+tbody tr {
+  border-bottom: 1px solid rgba(240,75,36,0.06);
+  transition: background 0.15s;
+}
+
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--fondo); }
+
+tbody td {
+  padding: 14px 16px;
+  color: var(--negro);
+  vertical-align: middle;
+}
+
+/* BADGES */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-critico  { background: var(--error-lt);  color: var(--error); }
+.badge-atencion { background: var(--warn-lt);   color: var(--warn); }
+.badge-positivo { background: var(--ok-lt);     color: var(--ok); }
+
+/* FOOTER */
+footer {
+  background: var(--naranja);
+  padding: 32px 40px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+footer p {
+  color: rgba(255,255,255,0.8);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+footer strong {
+  color: var(--blanco);
+  font-weight: 800;
+}
+
+@media (max-width: 768px) {
+  header { padding: 72px 20px 32px; }
+  .filtros { padding: 12px 16px; }
+  main { padding: 24px 16px 48px; }
+  .kpi-valor { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<a href="../" class="btn-hub">← Hub</a>
+
+<header>
+  <div class="header-inner">
+    <div class="header-logo">
+      <span class="logo-icon">✌️</span>
+      <div class="logo-text">
+        <h1>Viajero Loyalty</h1>
+        <p>Programa Viajero Go × Akin · Performance</p>
+      </div>
+    </div>
+    <div class="header-meta" id="meta-actualizado"></div>
+  </div>
+</header>
+
+<div class="filtros">
+  <div class="filtro-grupo">
+    <label>Propiedad</label>
+    <select id="sel-propiedad" onchange="aplicarFiltros()">
+      <option value="todas">Todas</option>
+    </select>
+  </div>
+  <div class="filtro-grupo">
+    <label>Período</label>
+    <select id="sel-periodo" onchange="aplicarFiltros()">
+      <option value="todos">Todos</option>
+    </select>
+  </div>
+  <div class="filtro-grupo">
+    <label>País</label>
+    <select id="sel-pais" onchange="aplicarFiltros()">
+      <option value="todos">Todos</option>
+    </select>
+  </div>
+</div>
+
+<main>
+
+  <div class="actualizado" id="txt-actualizado"></div>
+
+  <!-- KPIs -->
+  <div class="seccion">
+    <p class="seccion-titulo">Indicadores clave</p>
+    <div class="kpi-grid" id="kpi-grid"></div>
+  </div>
+
+  <!-- GRÁFICAS -->
+  <div class="seccion">
+    <p class="seccion-titulo">Tendencias históricas</p>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <p class="chart-titulo">% Penetración por período</p>
+        <canvas id="chart-penetracion"></canvas>
+      </div>
+      <div class="chart-card">
+        <p class="chart-titulo">% Error Operativo por período</p>
+        <canvas id="chart-error"></canvas>
+      </div>
+      <div class="chart-card">
+        <p class="chart-titulo">Distribución de beneficios</p>
+        <canvas id="chart-beneficios"></canvas>
+      </div>
+      <div class="chart-card">
+        <p class="chart-titulo">Afiliados por propiedad</p>
+        <canvas id="chart-propiedades"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- HALLAZGOS -->
+  <div class="seccion">
+    <p class="seccion-titulo">Hallazgos del período</p>
+    <div class="tabla-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Período</th>
+            <th>Propiedad</th>
+            <th>Severidad</th>
+            <th>Categoría</th>
+            <th>Hallazgo</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-hallazgos"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SIN CANJE -->
+  <div class="seccion">
+    <p class="seccion-titulo">Afiliados sin canje</p>
+    <div class="tabla-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Período</th>
+            <th>Propiedad</th>
+            <th>Nombre</th>
+            <th>Tier</th>
+            <th>Noches</th>
+            <th>Observación</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-sincanje"></tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p><strong>Viajero Hostels</strong> · Loyalty Viajero Go × Akin · Dashboard interno · No compartir externamente</p>
+</footer>
+
+<script>
+let DATA = null;
+let charts = {};
+
+async function init() {
+  try {
+    const res = await fetch('../data/loyalty_data.json');
+    if (!res.ok) throw new Error('No se encontró loyalty_data.json');
+    DATA = await res.json();
+
+    const fecha = new Date(DATA.actualizado).toLocaleString('es-CO', {
+      day:'2-digit', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit'
+    });
+    document.getElementById('meta-actualizado').innerHTML =
+      `Actualizado<br>${fecha}`;
+    document.getElementById('txt-actualizado').textContent =
+      `⏱ Última actualización: ${fecha}`;
+
+    poblarFiltros();
+    aplicarFiltros();
+  } catch(e) {
+    document.querySelector('main').innerHTML = `
+      <div style="text-align:center;padding:80px 20px">
+        <p style="font-size:48px;margin-bottom:16px">✌️</p>
+        <p style="font-size:20px;font-weight:700;color:#F04B24">No se encontró loyalty_data.json</p>
+        <p style="color:#585856;margin-top:8px">Exporta el JSON desde Google Sheets y súbelo a la carpeta data/</p>
+      </div>`;
+  }
+}
+
+function poblarFiltros() {
+  const props  = [...new Set(DATA.beneficios.map(r=>r['Propiedad']).filter(Boolean))].sort();
+  const pers   = [...new Set(DATA.beneficios.map(r=>r['Período']).filter(Boolean))].sort();
+  const paises = [...new Set(DATA.beneficios.map(r=>r['País']).filter(Boolean))].sort();
+  llenarSelect('sel-propiedad', props,  'Todas',   'todas');
+  llenarSelect('sel-periodo',   pers,   'Todos',   'todos');
+  llenarSelect('sel-pais',      paises, 'Todos',   'todos');
+}
+
+function llenarSelect(id, items, lbl, val) {
+  const sel = document.getElementById(id);
+  sel.innerHTML = `<option value="${val}">${lbl}</option>`;
+  items.forEach(v => {
+    const o = document.createElement('option');
+    o.value = v; o.text = v; sel.add(o);
+  });
+}
+
+function aplicarFiltros() {
+  const prop = document.getElementById('sel-propiedad').value;
+  const per  = document.getElementById('sel-periodo').value;
+  const pais = document.getElementById('sel-pais').value;
+
+  const f = arr => arr.filter(r =>
+    (prop==='todas' || r['Propiedad']===prop) &&
+    (per==='todos'  || r['Período']===per) &&
+    (pais==='todos' || r['País']===pais)
+  );
+
+  renderKPIs(f(DATA.beneficios), f(DATA.afiliados));
+  renderCharts(f(DATA.beneficios), f(DATA.afiliados), f(DATA.historico||[]));
+  renderHallazgos(f(DATA.hallazgos));
+  renderSinCanje(f(DATA.sinCanje));
+}
+
+function renderKPIs(ben, afil) {
+  const totalCI   = sum(afil, 'Check ins');
+  const totalAfil = sum(afil, 'Afiliados confirmados');
+  const pctPen    = totalCI > 0 ? (totalAfil/totalCI*100).toFixed(1) : 0;
+  const totalT    = sum(ben, 'Total Transacciones');
+  const errSum    = ben.reduce((s,r)=>s+(Number(r['Total Transacciones'])||0)*(Number(r['% Error Operativo'])||0),0);
+  const pctErr    = totalT > 0 ? (errSum/totalT*100).toFixed(1) : 0;
+  const pctOkV    = totalT > 0 ? (100-pctErr).toFixed(1) : 0;
+
+  const classPen = pctPen < 15 ? 'bad' : pctPen < 30 ? 'warn' : 'ok';
+  const classErr = pctErr >= 80 ? 'bad' : pctErr >= 50 ? 'warn' : 'ok';
+  const classOk  = pctOkV >= 80 ? 'ok' : pctOkV >= 50 ? 'warn' : 'bad';
+
+  document.getElementById('kpi-grid').innerHTML = `
+    <div class="kpi-card ${classPen}">
+      <p class="kpi-label">Penetración</p>
+      <p class="kpi-valor">${pctPen}%</p>
+      <p class="kpi-sub">${totalAfil} afiliados · ${totalCI} check ins</p>
+    </div>
+    <div class="kpi-card ${classErr}">
+      <p class="kpi-label">Error Operativo</p>
+      <p class="kpi-valor">${pctErr}%</p>
+      <p class="kpi-sub">${totalT} transacciones loyalty</p>
+    </div>
+    <div class="kpi-card ${classOk}">
+      <p class="kpi-label">% OK</p>
+      <p class="kpi-valor">${pctOkV}%</p>
+      <p class="kpi-sub">Beneficios ejecutados correctamente</p>
+    </div>
+    <div class="kpi-card neutral">
+      <p class="kpi-label">Toallas registradas</p>
+      <p class="kpi-valor">${sum(ben,'Toallas Total')}</p>
+      <p class="kpi-sub">${sum(ben,'Toallas Correctas')} correctas</p>
+    </div>
+    <div class="kpi-card neutral">
+      <p class="kpi-label">Desayunos registrados</p>
+      <p class="kpi-valor">${sum(ben,'Desayunos Total')}</p>
+      <p class="kpi-sub">${sum(ben,'Desayunos Correctos')} correctos</p>
+    </div>
+  `;
+}
+
+function renderCharts(ben, afil, hist) {
+  const histAgr  = agrupar(hist, 'Período');
+  const periodos = Object.keys(histAgr).sort();
+
+  const penSerie = periodos.map(p => {
+    const rows = histAgr[p];
+    const ci = rows.reduce((s,r)=>s+(Number(r['Check_ins'])||0),0);
+    const af = rows.reduce((s,r)=>s+(Number(r['Afiliados'])||0),0);
+    return ci>0 ? +(af/ci*100).toFixed(1) : 0;
+  });
+
+  const errSerie = periodos.map(p => {
+    const rows = histAgr[p];
+    const t = rows.reduce((s,r)=>s+(Number(r['Total_Trans'])||0),0);
+    const e = rows.reduce((s,r)=>s+(Number(r['Total_Trans'])||0)*(Number(r['Pct_Error_Op'])||0),0);
+    return t>0 ? +(e/t*100).toFixed(1) : 0;
+  });
+
+  crearLinea('chart-penetracion', periodos, penSerie, '% Penetración', '#F04B24');
+  crearLinea('chart-error',       periodos, errSerie, '% Error Op.',   '#F47B5A');
+
+  const tOk = sum(ben,'Toallas Correctas');
+  const dOk = sum(ben,'Desayunos Correctos');
+  const dcOk= sum(ben,'Descuento a Afiliados');
+  const err = (sum(ben,'Toallas Mal Cobradas')+sum(ben,'Desayunos Mal Cobrados'));
+  crearDona('chart-beneficios',
+    ['Toallas ✅','Desayunos ✅','Descuento ✅','Incorrectos ❌'],
+    [tOk, dOk, dcOk, err],
+    ['#F04B24','#F47B5A','#FAC4B4','#D0C5B5']
+  );
+
+  const propAgr = agrupar(afil, 'Propiedad');
+  const pNombres = Object.keys(propAgr);
+  const pVals    = pNombres.map(p=>
+    propAgr[p].reduce((s,r)=>s+(Number(r['Afiliados confirmados'])||0),0));
+  crearBarras('chart-propiedades', pNombres, pVals, 'Afiliados');
+}
+
+function crearLinea(id, labels, data, label, color) {
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), {
+    type: 'line',
+    data: { labels, datasets: [{
+      label, data,
+      borderColor: color, backgroundColor: color+'22',
+      tension: 0.4, fill: true,
+      pointBackgroundColor: color, pointRadius: 5, pointHoverRadius: 7
+    }]},
+    options: { responsive:true,
+      plugins:{ legend:{display:false} },
+      scales:{
+        y:{ beginAtZero:true, grid:{color:'#FFF0EB'}, ticks:{font:{family:'Outfit'}} },
+        x:{ grid:{display:false}, ticks:{font:{family:'Outfit'}} }
+      }
+    }
+  });
+}
+
+function crearDona(id, labels, data, colors) {
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), {
+    type: 'doughnut',
+    data: { labels, datasets:[{ data, backgroundColor:colors, borderWidth:0, hoverOffset:8 }]},
+    options: { responsive:true,
+      plugins:{ legend:{ position:'bottom',
+        labels:{ font:{size:11,family:'Outfit'}, padding:14 }
+      }}
+    }
+  });
+}
+
+function crearBarras(id, labels, data, label) {
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: { labels, datasets:[{
+      label, data,
+      backgroundColor: '#F04B24',
+      borderRadius: 10,
+      borderSkipped: false
+    }]},
+    options: { responsive:true,
+      plugins:{ legend:{display:false} },
+      scales:{
+        y:{ beginAtZero:true, grid:{color:'#FFF0EB'}, ticks:{font:{family:'Outfit'}} },
+        x:{ grid:{display:false}, ticks:{font:{family:'Outfit'}} }
+      }
+    }
+  });
+}
+
+function renderHallazgos(hall) {
+  const tbody = document.getElementById('tabla-hallazgos');
+  if (!hall.length) {
+    tbody.innerHTML = `<tr><td colspan="6" class="tabla-empty">Sin hallazgos para el filtro seleccionado</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = hall.map(h => {
+    const sev = h['Severidad']||'';
+    const cls = sev.includes('CRÍTICO') ? 'critico' : sev.includes('ATENCIÓN') ? 'atencion' : 'positivo';
+    return `<tr>
+      <td>${h['Período']||''}</td>
+      <td><strong>${h['Propiedad']||''}</strong></td>
+      <td><span class="badge badge-${cls}">${sev}</span></td>
+      <td>${h['Categoría']||''}</td>
+      <td>${h['Hallazgo']||''}</td>
+      <td style="color:var(--gris);font-size:12px">${h['Acción sugerida']||''}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderSinCanje(sc) {
+  const tbody = document.getElementById('tabla-sincanje');
+  if (!sc.length) {
+    tbody.innerHTML = `<tr><td colspan="6" class="tabla-empty">✅ Todos los afiliados canjearon su beneficio</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = sc.map(r => `<tr>
+    <td>${r['Período']||''}</td>
+    <td><strong>${r['Propiedad']||''}</strong></td>
+    <td>${r['Nombre']||''}</td>
+    <td><span class="badge badge-atencion">${r['Tier']||'—'}</span></td>
+    <td>${r['Noches']||''}</td>
+    <td style="color:var(--gris);font-size:12px">${r['Observación']||''}</td>
+  </tr>`).join('');
+}
+
+function sum(arr, col) {
+  return arr.reduce((s,r)=>s+(Number(r[col])||0),0);
+}
+
+function agrupar(arr, col) {
+  return arr.reduce((acc,r)=>{
+    const k=r[col]||'?';
+    if(!acc[k]) acc[k]=[];
+    acc[k].push(r);
+    return acc;
+  },{});
+}
+
+init();
+</script>
+</body>
+</html>
