@@ -19,7 +19,7 @@
   --fondo:      #FFF8F5;
   --ok:         #2D7A4F;
   --ok-lt:      #C8F0DC;
-  --warn:       #B8650A;
+  --warn-color: #B8650A;
   --warn-lt:    #FFF0CC;
   --error:      #F04B24;
   --error-lt:   #FFE0D8;
@@ -27,7 +27,6 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Outfit',sans-serif; background:var(--fondo); color:var(--negro); min-height:100vh; }
 
-/* NAV */
 .btn-hub {
   position:fixed; top:20px; left:20px;
   background:rgba(255,255,255,0.95); border:1.5px solid var(--naranja);
@@ -37,7 +36,6 @@ body { font-family:'Outfit',sans-serif; background:var(--fondo); color:var(--neg
 }
 .btn-hub:hover { background:var(--naranja); color:var(--blanco); }
 
-/* HEADER */
 header {
   background:var(--naranja); padding:56px 40px 48px;
   position:relative; overflow:hidden;
@@ -49,14 +47,12 @@ header::before {
 }
 .header-inner {
   max-width:1200px; margin:0 auto;
-  display:flex; align-items:flex-end; justify-content:space-between;
-  flex-wrap:wrap; gap:20px;
+  display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:20px;
 }
 .logo-text h1 { color:var(--blanco); font-size:28px; font-weight:900; text-transform:uppercase; }
 .logo-text p  { color:rgba(255,255,255,0.75); font-size:12px; margin-top:4px; text-transform:uppercase; letter-spacing:0.5px; }
 .header-meta  { color:rgba(255,255,255,0.8); font-size:12px; text-align:right; line-height:1.6; }
 
-/* FILTROS */
 .filtros {
   background:var(--blanco); border-bottom:2px solid var(--naranja-xs);
   padding:14px 40px; display:flex; gap:20px; flex-wrap:wrap; align-items:center;
@@ -67,12 +63,10 @@ header::before {
 .filtros select {
   border:1.5px solid var(--naranja-xs); border-radius:100px;
   padding:6px 16px; font-family:'Outfit',sans-serif; font-size:13px; font-weight:500;
-  background:var(--fondo); color:var(--negro); cursor:pointer; outline:none;
-  -webkit-appearance:none;
+  background:var(--fondo); color:var(--negro); cursor:pointer; outline:none; -webkit-appearance:none;
 }
 .filtros select:focus { border-color:var(--naranja); }
 
-/* MAIN */
 main { max-width:1200px; margin:0 auto; padding:40px 24px 60px; }
 
 .actualizado {
@@ -83,7 +77,6 @@ main { max-width:1200px; margin:0 auto; padding:40px 24px 60px; }
 }
 .actualizado::before { content:'●'; color:var(--naranja); font-size:8px; }
 
-/* SECCIÓN */
 .seccion { margin-bottom:48px; }
 .seccion-titulo {
   font-size:10px; font-weight:800; text-transform:uppercase;
@@ -92,7 +85,6 @@ main { max-width:1200px; margin:0 auto; padding:40px 24px 60px; }
 }
 .seccion-titulo::after { content:''; flex:1; height:1.5px; background:var(--naranja-xs); }
 
-/* KPI */
 .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; }
 .kpi-card {
   background:var(--blanco); border-radius:20px; padding:28px 24px;
@@ -104,43 +96,41 @@ main { max-width:1200px; margin:0 auto; padding:40px 24px 60px; }
   content:''; position:absolute; bottom:0; left:0; right:0;
   height:3px; background:var(--naranja); border-radius:0 0 20px 20px;
 }
-.kpi-card.ok::after    { background:var(--ok); }
-.kpi-card.warn::after  { background:var(--warn); }
-.kpi-card.bad::after   { background:var(--error); }
-.kpi-card.neutral::after { background:var(--gris-lt); }
+.kpi-card.ok::after     { background:var(--ok); }
+.kpi-card.warn::after   { background:var(--warn-color); }
+.kpi-card.bad::after    { background:var(--error); }
+.kpi-card.neutral::after{ background:var(--gris-lt); }
 .kpi-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--gris); margin-bottom:12px; }
 .kpi-valor { font-size:40px; font-weight:900; color:var(--negro); line-height:1; letter-spacing:-1px; }
 .kpi-card.bad .kpi-valor { color:var(--error); }
 .kpi-card.ok .kpi-valor  { color:var(--ok); }
 .kpi-sub { font-size:12px; color:var(--gris); margin-top:8px; }
 
-/* BARRA RATIO */
 .ratio-card {
   background:var(--blanco); border-radius:20px; padding:24px 28px;
   border:1.5px solid rgba(240,75,36,0.08); margin-bottom:20px; grid-column:1/-1;
 }
 .ratio-titulo { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:2px; color:var(--naranja); margin-bottom:16px; }
 .ratio-fila { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
-.ratio-label { font-size:12px; color:var(--gris); min-width:130px; font-weight:500; }
+.ratio-label { font-size:12px; color:var(--gris); min-width:140px; font-weight:500; }
 .ratio-barra-bg { flex:1; background:var(--fondo); border-radius:100px; height:18px; overflow:hidden; }
 .ratio-barra-fill { height:100%; border-radius:100px; transition:width 0.8s ease; }
-.ratio-num { font-size:16px; font-weight:900; min-width:60px; text-align:right; }
+.ratio-num { font-size:16px; font-weight:900; min-width:80px; text-align:right; }
 
-/* ERROR TIPOS */
-.error-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-top:16px; }
+.error-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-top:4px; }
 .error-item {
-  background:var(--blanco); border-radius:16px; padding:16px; text-align:center;
-  border:1.5px solid rgba(240,75,36,0.08);
+  background:var(--blanco); border-radius:16px; padding:20px 16px; text-align:center;
+  border:1.5px solid rgba(240,75,36,0.08); transition:transform 0.2s;
 }
-.error-item-val { font-size:28px; font-weight:900; color:var(--naranja); }
-.error-item-lbl { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:var(--gris); margin-top:4px; }
+.error-item:hover { transform:translateY(-2px); }
+.error-item-val { font-size:32px; font-weight:900; color:var(--naranja); line-height:1; }
+.error-item-lbl { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:var(--gris); margin-top:6px; }
+.error-item-desc { font-size:10px; color:var(--gris-lt); margin-top:4px; line-height:1.3; }
 
-/* CHARTS */
 .charts-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:20px; }
 .chart-card { background:var(--blanco); border-radius:20px; padding:28px; border:1.5px solid rgba(240,75,36,0.08); }
 .chart-titulo { font-size:12px; font-weight:700; color:var(--negro); margin-bottom:20px; text-transform:uppercase; letter-spacing:0.5px; }
 
-/* TABLAS */
 .tabla-wrap { background:var(--blanco); border-radius:20px; overflow:hidden; border:1.5px solid rgba(240,75,36,0.08); }
 table { width:100%; border-collapse:collapse; font-size:13px; }
 thead tr { background:var(--naranja); }
@@ -151,17 +141,15 @@ tbody tr:hover { background:var(--fondo); }
 tbody td { padding:14px 16px; color:var(--negro); vertical-align:middle; }
 .tabla-empty { text-align:center; padding:48px; color:var(--gris); font-size:14px; }
 
-/* BADGES */
 .badge { display:inline-flex; align-items:center; padding:4px 12px; border-radius:100px; font-size:11px; font-weight:700; }
 .badge-critico  { background:var(--error-lt); color:var(--error); }
-.badge-atencion { background:var(--warn-lt);  color:var(--warn); }
+.badge-atencion { background:var(--warn-lt);  color:var(--warn-color); }
 .badge-positivo { background:var(--ok-lt);    color:var(--ok); }
 
-/* DESPLEGABLE SIN CANJE */
 .sincanje-header {
   cursor:pointer; user-select:none; display:flex; align-items:center; gap:8px;
   font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:2.5px;
-  color:var(--naranja); margin-bottom:16px; padding-bottom:0;
+  color:var(--naranja); margin-bottom:16px;
 }
 .sincanje-header::after { content:''; flex:1; height:1.5px; background:var(--naranja-xs); }
 .sincanje-resumen {
@@ -170,7 +158,6 @@ tbody td { padding:14px 16px; color:var(--negro); vertical-align:middle; }
   display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px;
 }
 
-/* MODAL */
 .modal-overlay {
   display:none; position:fixed; inset:0; background:rgba(26,26,26,0.5);
   z-index:1000; backdrop-filter:blur(4px); align-items:flex-end; justify-content:center;
@@ -184,14 +171,14 @@ tbody td { padding:14px 16px; color:var(--negro); vertical-align:middle; }
 @keyframes slideUp { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
 .modal-handle { width:40px; height:4px; background:var(--naranja-xs); border-radius:100px; margin:0 auto 24px; }
 .modal-titulo { font-size:20px; font-weight:900; color:var(--negro); margin-bottom:6px; }
-.modal-subtitulo { font-size:13px; color:var(--gris); margin-bottom:20px; line-height:1.5; }
-.modal-valor-grande { font-size:52px; font-weight:900; color:var(--naranja); line-height:1; margin-bottom:16px; }
+.modal-subtitulo { font-size:13px; color:var(--gris); margin-bottom:20px; line-height:1.6; }
+.modal-valor-grande { font-size:52px; font-weight:900; color:var(--naranja); line-height:1; margin-bottom:20px; }
 .modal-barra-wrap { margin-bottom:14px; }
 .modal-barra-label { display:flex; justify-content:space-between; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:var(--gris); margin-bottom:6px; }
 .modal-barra-bg { background:var(--fondo); border-radius:100px; height:14px; overflow:hidden; }
 .modal-barra-fill { height:100%; border-radius:100px; background:var(--naranja); transition:width 0.6s ease; }
 .modal-barra-fill.ok   { background:var(--ok); }
-.modal-barra-fill.warn { background:var(--warn); }
+.modal-barra-fill.warn { background:var(--warn-color); }
 .modal-barra-fill.bad  { background:var(--error); }
 .modal-desglose { margin-top:20px; display:flex; flex-direction:column; gap:10px; }
 .modal-fila { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background:var(--fondo); border-radius:12px; }
@@ -208,6 +195,7 @@ footer strong { color:var(--blanco); font-weight:800; }
   .filtros { padding:12px 16px; }
   main { padding:24px 16px 48px; }
   .kpi-valor { font-size:32px; }
+  .ratio-label { min-width:100px; font-size:11px; }
 }
 </style>
 </head>
@@ -250,25 +238,22 @@ footer strong { color:var(--blanco); font-weight:800; }
 <main>
   <div class="actualizado" id="txt-actualizado"></div>
 
-  <!-- EMBUDO -->
   <div class="seccion">
     <p class="seccion-titulo">Embudo del programa</p>
     <div id="embudo-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));background:var(--blanco);border-radius:20px;overflow:hidden;border:1.5px solid rgba(240,75,36,0.08)"></div>
   </div>
 
-  <!-- KPIs -->
   <div class="seccion">
     <p class="seccion-titulo">Indicadores clave · click para ver detalle</p>
     <div class="kpi-grid" id="kpi-grid"></div>
   </div>
 
-  <!-- ERROR TIPOS -->
   <div class="seccion" id="seccion-error-tipos" style="display:none">
     <p class="seccion-titulo">Desglose de errores operativos</p>
+    <div id="error-nota"></div>
     <div class="error-grid" id="error-grid"></div>
   </div>
 
-  <!-- GRÁFICAS -->
   <div class="seccion">
     <p class="seccion-titulo">Tendencias y distribución</p>
     <div class="charts-grid">
@@ -291,29 +276,32 @@ footer strong { color:var(--blanco); font-weight:800; }
     </div>
   </div>
 
-  <!-- HALLAZGOS -->
   <div class="seccion">
     <p class="seccion-titulo">Hallazgos del período</p>
     <div class="tabla-wrap">
       <table>
-        <thead><tr><th>Período</th><th>Propiedad</th><th>Severidad</th><th>Categoría</th><th>Hallazgo</th><th>Acción</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Período</th><th>Propiedad</th><th>Severidad</th>
+            <th>Categoría</th><th>Hallazgo · Métrica</th><th>Acción sugerida</th>
+          </tr>
+        </thead>
         <tbody id="tabla-hallazgos"></tbody>
       </table>
     </div>
   </div>
 
-  <!-- SIN CANJE DESPLEGABLE -->
   <div class="seccion">
     <div class="sincanje-header" onclick="toggleSinCanje()">
       Afiliados sin canje
-      <span id="sincanje-badge" style="background:var(--naranja);color:white;border-radius:100px;padding:2px 10px;font-size:10px">0</span>
+      <span id="sincanje-badge" style="background:var(--naranja);color:white;border-radius:100px;padding:2px 10px;font-size:10px;font-weight:700">0</span>
       <span id="sincanje-chevron" style="font-size:14px;transition:transform 0.3s;margin-left:4px">▼</span>
     </div>
     <div class="sincanje-resumen" id="sincanje-resumen"></div>
     <div id="sincanje-detalle" style="display:none">
       <div class="tabla-wrap">
         <table>
-          <thead><tr><th>Nombre</th><th>Tier</th><th>Noches</th><th>Situación</th></tr></thead>
+          <thead><tr><th>Nombre</th><th>Tier</th><th>Noches</th><th># Reserva</th><th>Situación</th></tr></thead>
           <tbody id="tabla-sincanje"></tbody>
         </table>
       </div>
@@ -325,7 +313,6 @@ footer strong { color:var(--blanco); font-weight:800; }
   <p><strong>Viajero Hostels</strong> · Loyalty Viajero Go × Akin · Dashboard interno · No compartir externamente</p>
 </footer>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="cerrarModal(event)">
   <div class="modal-panel">
     <div class="modal-handle"></div>
@@ -338,12 +325,31 @@ footer strong { color:var(--blanco); font-weight:800; }
 let DATA = null;
 let charts = {};
 
+// Suma una columna — busca el nombre ignorando espacios al inicio/fin
+function sum(arr, nombre) {
+  return arr.reduce((s, r) => {
+    const key = Object.keys(r).find(k => k.trim() === nombre.trim());
+    return s + (Number(key ? r[key] : 0) || 0);
+  }, 0);
+}
+
+function agrupar(arr, col) {
+  return arr.reduce((acc, r) => {
+    const k = r[col] || '?';
+    if (!acc[k]) acc[k] = [];
+    acc[k].push(r);
+    return acc;
+  }, {});
+}
+
 async function init() {
   try {
     const res = await fetch('../data/loyalty_data.json');
     if (!res.ok) throw new Error();
     DATA = await res.json();
-    const fecha = new Date(DATA.actualizado).toLocaleString('es-CO',{day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    const fecha = new Date(DATA.actualizado).toLocaleString('es-CO', {
+      day:'2-digit', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit'
+    });
     document.getElementById('meta-actualizado').innerHTML = `Actualizado<br>${fecha}`;
     document.getElementById('txt-actualizado').textContent = `⏱ Última actualización: ${fecha}`;
     poblarFiltros();
@@ -359,143 +365,209 @@ async function init() {
 }
 
 function poblarFiltros() {
-  const u = (arr, col) => [...new Set(arr.map(r=>r[col]).filter(Boolean))].sort();
-  llenarSelect('sel-propiedad', u(DATA.beneficios,'Propiedad'), 'Todas','todas');
-  llenarSelect('sel-periodo',   u(DATA.beneficios,'Período'),   'Todos', 'todos');
-  llenarSelect('sel-pais',      u(DATA.afiliados,'Pais'),       'Todos', 'todos');
+  const u = (arr, col) => [...new Set(arr.map(r => r[col]).filter(Boolean))].sort();
+  llenarSelect('sel-propiedad', u(DATA.afiliados, 'Propiedad'), 'Todas', 'todas');
+  llenarSelect('sel-periodo',   u(DATA.afiliados, 'Período'),   'Todos', 'todos');
+  llenarSelect('sel-pais',      u(DATA.afiliados, 'Pais'),      'Todos', 'todos');
 }
 
 function llenarSelect(id, items, lbl, val) {
   const sel = document.getElementById(id);
   sel.innerHTML = `<option value="${val}">${lbl}</option>`;
-  items.forEach(v => { const o=document.createElement('option'); o.value=v; o.text=v; sel.add(o); });
+  items.forEach(v => { const o = document.createElement('option'); o.value = v; o.text = v; sel.add(o); });
 }
 
 function aplicarFiltros() {
   const prop = document.getElementById('sel-propiedad').value;
   const per  = document.getElementById('sel-periodo').value;
   const pais = document.getElementById('sel-pais').value;
+
   const f = arr => arr.filter(r =>
-    (prop==='todas' || r['Propiedad']===prop) &&
-    (per==='todos'  || r['Período']===per) &&
-    (pais==='todos' || r['Pais']===pais || r['País']===pais)
+    (prop === 'todas' || r['Propiedad'] === prop) &&
+    (per  === 'todos' || r['Período']  === per)  &&
+    (pais === 'todos' || r['Pais'] === pais || r['País'] === pais)
   );
+
   renderKPIs(f(DATA.beneficios), f(DATA.afiliados));
-  renderCharts(f(DATA.beneficios), f(DATA.afiliados), f(DATA.historico||[]));
-  renderHallazgos(f(DATA.hallazgos));
-  renderSinCanje(f(DATA.sinCanje));
+  renderCharts(f(DATA.beneficios), f(DATA.afiliados), f(DATA.historico || []));
+  renderHallazgos(f(DATA.hallazgos || []));
+  renderSinCanje(f(DATA.sinCanje || []));
   renderErrorTipos(DATA.tiposError || {});
 }
 
 function renderKPIs(ben, afil) {
-  const totalCI        = sum(afil,'Check ins - CB');
-  const totalHuespedes = sum(afil,'Huespedes Totales - CB');
-  const llegadasAkin   = sum(afil,'Llegadas Loyalty (Akin)');
-  const afilCB         = sum(afil,'Afiliados hospedados cloudbeds');
-  const noEnCB         = sum(afil,'Afiliados no hospedados akin vs CB');
-  const nuevos         = sum(afil,'Nuevos afiliados');
+  const totalCI        = sum(afil, 'Check ins - CB');
+  const totalHuespedes = sum(afil, 'Huespedes Totales - CB');
+  const llegadasAkin   = sum(afil, 'Llegadas Loyalty (Akin)');
+  const afilCB         = sum(afil, 'Afiliados hospedados cloudbeds');
+  const noEnCB         = sum(afil, 'Afiliados no hospedados akin vs CB');
+  const nuevos         = sum(afil, 'Nuevos afiliados');
 
-  const pctPenReal = totalCI>0 ? (afilCB/totalCI*100).toFixed(1) : 0;
-  const pctPenPot  = totalCI>0 ? (llegadasAkin/totalCI*100).toFixed(1) : 0;
-  const pctNuevos  = totalHuespedes>0 ? (nuevos/totalHuespedes*100).toFixed(1) : 0;
+  const pctPenReal = totalCI > 0 ? (afilCB / totalCI * 100).toFixed(1) : 0;
+  const pctPenPot  = totalCI > 0 ? (llegadasAkin / totalCI * 100).toFixed(1) : 0;
+  const pctNuevos  = totalHuespedes > 0 ? (nuevos / totalHuespedes * 100).toFixed(1) : 0;
 
-  const totalT      = sum(ben,'Total Transacciones');
-  const toallasOk   = sum(ben,'Toallas Correctas');
-  const toallasMal  = sum(ben,'Toallas Mal Cobradas');
-  const toallasBtn  = sum(ben,'Toallas Botón Incorrecto');
-  const desayOk     = sum(ben,'Desayunos Correctos');
-  const desayMal    = sum(ben,'Desayunos Mal Cobrados');
-  const desayBtn    = sum(ben,'Desayunos Botón Incorrecto');
-  const descuento   = sum(ben,'Descuento a Afiliados');
-  const totalToallas = toallasOk+toallasMal+toallasBtn;
-  const totalDesay   = desayOk+desayMal+desayBtn;
+  // Columnas exactas de 02_Loyalty_Beneficios
+  const totalT      = sum(ben, 'Total Transacciones Loyalty');
+  const toallasOk   = sum(ben, 'Toallas correctas ($0)');
+  const toallasMal  = sum(ben, 'Toallas a no miembros');
+  const toallasGrat = sum(ben, 'Toallas gratis a no miembros');
+  const toallasBtn  = sum(ben, 'Toallas cobradas a miembro');
+  const totalToallas= sum(ben, 'Toallas registradas');
+  const desayTotal  = sum(ben, 'Desayunos Total');
+  const desayOk     = sum(ben, 'Desayunos Correctos');
+  const desayMal    = sum(ben, 'Desayunos Mal Cobrados');
+  const desayBtn    = sum(ben, 'Desayunos Botón Incorrecto');
+  const desayReg    = sum(ben, 'Desayunos Regalados');
+  const tarifaMiemb = sum(ben, 'Tarifa Loyalty en miembros');
+  const tarifaNom   = sum(ben, 'Tarifa Loyalty en no miembros');
+  const afilConBen  = sum(ben, 'Afiliados con ≥1 beneficio');
+  const afilSinBen  = sum(ben, 'Afiliados sin ningún beneficio');
 
-  const errSum = ben.reduce((s,r)=>s+(Number(r['Total Transacciones'])||0)*(Number(r['% Error Operativo'])||0),0);
-  const pctErr = totalT>0?(errSum/totalT*100).toFixed(1):0;
-  const pctOkV = totalT>0?(100-pctErr).toFixed(1):0;
+  // % OK y % Error usando columna exacta (tiene espacio al inicio)
+  const pctOkSum = ben.reduce((s, r) => {
+    const kOk = Object.keys(r).find(k => k.trim() === '%OK');
+    const kT  = Object.keys(r).find(k => k.trim() === 'Total Transacciones Loyalty');
+    return s + (Number(kOk ? r[kOk] : 0) || 0) * (Number(kT ? r[kT] : 1) || 1);
+  }, 0);
+  const pctOkV = totalT > 0 ? (pctOkSum / totalT).toFixed(1) : 0;
+  const pctErr = (100 - pctOkV).toFixed(1);
 
-  const classPen = pctPenReal<15?'bad':pctPenReal<30?'warn':'ok';
-  const classErr = pctErr>=80?'bad':pctErr>=50?'warn':'ok';
-  const classOk  = pctOkV>=80?'ok':pctOkV>=50?'warn':'bad';
+  const classPen = pctPenReal < 15 ? 'bad' : pctPenReal < 30 ? 'warn' : 'ok';
+  const classErr = pctErr >= 50 ? 'bad' : pctErr >= 20 ? 'warn' : 'ok';
+  const classOk  = pctOkV >= 80 ? 'ok'  : pctOkV >= 50 ? 'warn' : 'bad';
 
+  // Datos para modales
   window._md = {
-    penetracion:{
-      titulo:'Penetración REAL',
-      subtitulo:'De todos los check-ins en Cloudbeds, ¿cuántos son afiliados Loyalty confirmados en ambos sistemas?',
-      valor:pctPenReal+'%',
-      barras:[
-        {label:'Afiliados confirmados CB',valor:afilCB,total:totalCI,clase:'ok'},
-        {label:'Llegadas Akin (potencial)',valor:llegadasAkin,total:totalCI,clase:'warn'},
-        {label:'Sin match Cloudbeds',valor:noEnCB,total:totalCI,clase:'bad'},
+    penetracion: {
+      titulo: 'Penetración REAL',
+      subtitulo: 'De todos los check-ins registrados en Cloudbeds, ¿cuántos son afiliados Loyalty confirmados?',
+      valor: pctPenReal + '%',
+      barras: [
+        { label: 'Afiliados confirmados CB', valor: afilCB,       total: totalCI, clase: 'ok' },
+        { label: 'Llegadas Akin (potencial)', valor: llegadasAkin, total: totalCI, clase: 'warn' },
+        { label: 'Sin match Cloudbeds',       valor: noEnCB,       total: totalCI, clase: 'bad' },
       ],
-      filas:[
-        {label:'🏠 Huéspedes totales CB',valor:totalHuespedes},
-        {label:'📋 Check-ins registrados',valor:totalCI},
-        {label:'🎫 Llegadas Akin',valor:llegadasAkin},
-        {label:'✅ Confirmados en CB',valor:afilCB},
-        {label:'❌ Sin match CB',valor:noEnCB},
-        {label:'⭐ Nuevos afiliados',valor:nuevos},
+      filas: [
+        { label: '🏠 Huéspedes totales CB',        valor: totalHuespedes },
+        { label: '📋 Check-ins registrados',        valor: totalCI },
+        { label: '🎫 Llegadas Akin (potencial)',    valor: llegadasAkin },
+        { label: '✅ Confirmados en Cloudbeds',     valor: afilCB },
+        { label: '❌ Sin match Cloudbeds',          valor: noEnCB },
+        { label: '⭐ Nuevos afiliados',             valor: nuevos },
       ]
     },
-    error:{
-      titulo:'Error Operativo',
-      subtitulo:'Transacciones donde el beneficio fue ejecutado incorrectamente. LEAKAGE = beneficio a no afiliado. MISUSE = tarifa incorrecta.',
-      valor:pctErr+'%',
-      barras:[
-        {label:'Toallas incorrectas',valor:toallasMal+toallasBtn,total:totalT,clase:'bad'},
-        {label:'Desayunos incorrectos',valor:desayMal+desayBtn,total:totalT,clase:'bad'},
+    error: {
+      titulo: 'Error Operativo',
+      subtitulo: 'Transacciones donde el beneficio fue ejecutado incorrectamente. LEAKAGE = beneficio dado a un huésped NO afiliado (plata regalada). Botón incorrecto = se usó el botón equivocado en Cloudbeds.',
+      valor: pctErr + '%',
+      barras: [
+        { label: 'Toallas a no miembros (LEAKAGE)', valor: toallasMal + toallasGrat, total: totalT, clase: 'bad' },
+        { label: 'Toallas botón incorrecto',         valor: toallasBtn,               total: totalT, clase: 'warn' },
+        { label: 'Desayunos incorrectos',            valor: desayMal + desayBtn,       total: totalT, clase: 'bad' },
+        { label: 'Tarifa loyalty a no miembro',      valor: tarifaNom,                 total: totalT, clase: 'bad' },
       ],
-      filas:[
-        {label:'🛁 Toallas OK',valor:toallasOk},
-        {label:'🛁 Toallas mal cobradas',valor:toallasMal},
-        {label:'🛁 Toallas botón incorrecto',valor:toallasBtn},
-        {label:'🍳 Desayunos OK',valor:desayOk},
-        {label:'🍳 Desayunos mal cobrados',valor:desayMal},
-        {label:'🍳 Desayunos botón incorrecto',valor:desayBtn},
-        {label:'💳 Descuentos aplicados',valor:descuento},
+      filas: [
+        { label: '🛁 Toallas correctas',                  valor: toallasOk },
+        { label: '🔴 Toallas a no miembros (cobradas)',   valor: toallasMal },
+        { label: '🎁 Toallas a no miembros (gratis)',     valor: toallasGrat },
+        { label: '⚠️ Toallas botón incorrecto',           valor: toallasBtn },
+        { label: '🍳 Desayunos correctos',                valor: desayOk },
+        { label: '🔴 Desayunos mal cobrados (LEAKAGE)',   valor: desayMal },
+        { label: '⚠️ Desayunos botón incorrecto',         valor: desayBtn },
+        { label: '💳 Tarifa loyalty a miembros (OK)',     valor: tarifaMiemb },
+        { label: '🔴 Tarifa loyalty a NO miembros',       valor: tarifaNom },
       ]
     },
-    ok:{titulo:'% Beneficios OK',subtitulo:'Porcentaje de transacciones ejecutadas correctamente según el tier del afiliado.',valor:pctOkV+'%',
-      barras:[{label:'Correctos',valor:Math.round(totalT*pctOkV/100),total:totalT,clase:'ok'}],
-      filas:[{label:'✅ Toallas',valor:toallasOk},{label:'✅ Desayunos',valor:desayOk},{label:'✅ Descuentos',valor:descuento},{label:'📊 Total transacciones',valor:totalT}]
+    ok: {
+      titulo: '% Beneficios OK',
+      subtitulo: 'Porcentaje de transacciones loyalty ejecutadas correctamente según el tier del afiliado.',
+      valor: pctOkV + '%',
+      barras: [{ label: 'Correctos', valor: Math.round(totalT * pctOkV / 100), total: totalT, clase: 'ok' }],
+      filas: [
+        { label: '✅ Con ≥1 beneficio correcto', valor: afilConBen },
+        { label: '⚠️ Sin ningún beneficio',      valor: afilSinBen },
+        { label: '🛁 Toallas correctas',          valor: toallasOk },
+        { label: '🍳 Desayunos correctos',        valor: desayOk },
+        { label: '💳 Tarifa loyalty en miembros', valor: tarifaMiemb },
+        { label: '📊 Total transacciones',        valor: totalT },
+      ]
     },
-    toallas:{titulo:'Toallas registradas',subtitulo:'Toallas entregadas como beneficio loyalty (Backpacker o superior). ¿Cuántas fueron correctas vs incorrectas?',valor:totalToallas,
-      barras:[{label:'Correctas',valor:toallasOk,total:totalToallas,clase:'ok'},{label:'Mal cobradas',valor:toallasMal,total:totalToallas,clase:'bad'},{label:'Botón incorrecto',valor:toallasBtn,total:totalToallas,clase:'warn'}],
-      filas:[{label:'✅ Correctas',valor:toallasOk},{label:'❌ Mal cobradas (a no afiliado)',valor:toallasMal},{label:'⚠️ Botón incorrecto en CB',valor:toallasBtn}]
+    toallas: {
+      titulo: 'Toallas registradas',
+      subtitulo: 'Toallas entregadas como beneficio loyalty (tier Backpacker o superior). ¿Cuántas fueron correctas vs incorrectas?',
+      valor: totalToallas,
+      barras: [
+        { label: 'Correctas ($0 al afiliado)',    valor: toallasOk,              total: totalToallas, clase: 'ok' },
+        { label: 'A no miembros (LEAKAGE)',        valor: toallasMal + toallasGrat, total: totalToallas, clase: 'bad' },
+        { label: 'Botón incorrecto en CB',         valor: toallasBtn,             total: totalToallas, clase: 'warn' },
+      ],
+      filas: [
+        { label: '✅ Correctas ($0 al afiliado)',        valor: toallasOk },
+        { label: '🔴 A no miembros cobradas (LEAKAGE)', valor: toallasMal },
+        { label: '🎁 A no miembros gratis (LEAKAGE)',   valor: toallasGrat },
+        { label: '⚠️ Botón incorrecto en Cloudbeds',    valor: toallasBtn },
+      ]
     },
-    desayunos:{titulo:'Desayunos registrados',subtitulo:'Desayunos entregados como beneficio loyalty (tier Viajero con 3+ noches). Solo aplica a Viajero tier.',valor:totalDesay,
-      barras:[{label:'Correctos',valor:desayOk,total:totalDesay,clase:'ok'},{label:'Mal cobrados',valor:desayMal,total:totalDesay,clase:'bad'},{label:'Botón incorrecto',valor:desayBtn,total:totalDesay,clase:'warn'}],
-      filas:[{label:'✅ Correctos',valor:desayOk},{label:'❌ Mal cobrados (a no afiliado)',valor:desayMal},{label:'⚠️ Botón incorrecto en CB',valor:desayBtn}]
+    desayunos: {
+      titulo: 'Desayunos registrados',
+      subtitulo: '"Mal cobrados" significa que se registró un desayuno loyalty a un huésped que NO es afiliado o no cumple el tier Viajero con 3+ noches. Es dinero que la propiedad perdió sin corresponder al programa.',
+      valor: desayTotal,
+      barras: [
+        { label: 'Correctos',               valor: desayOk,  total: desayTotal, clase: 'ok' },
+        { label: 'Mal cobrados (LEAKAGE)',   valor: desayMal, total: desayTotal, clase: 'bad' },
+        { label: 'Botón incorrecto',         valor: desayBtn, total: desayTotal, clase: 'warn' },
+        { label: 'Regalados',               valor: desayReg, total: desayTotal, clase: 'warn' },
+      ],
+      filas: [
+        { label: '✅ Correctos (tier Viajero ≥3 noches)', valor: desayOk },
+        { label: '🔴 Mal cobrados (a no afiliado)',        valor: desayMal },
+        { label: '⚠️ Botón incorrecto en Cloudbeds',       valor: desayBtn },
+        { label: '🎁 Regalados',                           valor: desayReg },
+      ]
     },
-    sinmatch:{titulo:'Sin match Cloudbeds',subtitulo:'Afiliados que aparecen en Akin como llegadas del período pero NO se encontró su reserva en Cloudbeds. Causa probable: nombre diferente entre sistemas o cancelación.',
-      valor:noEnCB,filas:[{label:'En Akin (potencial)',valor:llegadasAkin},{label:'Confirmados CB',valor:afilCB},{label:'Diferencia (sin match)',valor:noEnCB}]
+    sinmatch: {
+      titulo: 'Sin match Cloudbeds',
+      subtitulo: 'Afiliados que Akin registró como llegadas del período pero NO se encontró su reserva en Cloudbeds. Esto ocurre porque el nombre o número de reserva es diferente entre los dos sistemas.',
+      valor: noEnCB,
+      filas: [
+        { label: '🎫 Llegadas registradas en Akin', valor: llegadasAkin },
+        { label: '✅ Encontrados en Cloudbeds',     valor: afilCB },
+        { label: '❌ Sin match (diferencia)',        valor: noEnCB },
+      ]
     },
-    nuevos:{titulo:'Nuevos afiliados',subtitulo:'Afiliados que se unieron al programa por primera vez en este período. La tasa de adquisición mide cuántos huéspedes totales se convierten en nuevos miembros.',
-      valor:nuevos,
-      barras:[{label:'Tasa de adquisición',valor:nuevos,total:totalHuespedes,clase:'ok'}],
-      filas:[{label:'🏠 Huéspedes totales',valor:totalHuespedes},{label:'⭐ Nuevos afiliados',valor:nuevos},{label:'📈 Tasa adquisición',valor:pctNuevos+'%'}]
+    nuevos: {
+      titulo: 'Nuevos afiliados',
+      subtitulo: 'Huéspedes que se unieron al programa Viajero Loyalty por primera vez en este período. La tasa de adquisición mide cuántos huéspedes totales se convierten en nuevos miembros.',
+      valor: nuevos,
+      barras: [{ label: 'Tasa de adquisición', valor: nuevos, total: totalHuespedes, clase: 'ok' }],
+      filas: [
+        { label: '🏠 Huéspedes totales',   valor: totalHuespedes },
+        { label: '⭐ Nuevos afiliados',     valor: nuevos },
+        { label: '📈 Tasa adquisición',    valor: pctNuevos + '%' },
+      ]
     }
   };
 
   // EMBUDO
   const pasos = [
-    {label:'Huéspedes totales',valor:totalHuespedes,icon:'🏠',color:'var(--gris)'},
-    {label:'Check-ins CB',valor:totalCI,icon:'📋',color:'var(--naranja)'},
-    {label:'Llegadas Akin',valor:llegadasAkin,icon:'🎫',color:'var(--naranja)'},
-    {label:'Confirmados CB',valor:afilCB,icon:'✅',color:'var(--ok)'},
-    {label:'Sin match CB',valor:noEnCB,icon:'❌',color:'var(--error)'},
-    {label:'Nuevos afiliados',valor:nuevos,icon:'⭐',color:'var(--warn)'},
+    { label: 'Huéspedes totales', valor: totalHuespedes, icon: '🏠', color: 'var(--gris)' },
+    { label: 'Check-ins CB',      valor: totalCI,        icon: '📋', color: 'var(--naranja)' },
+    { label: 'Llegadas Akin',     valor: llegadasAkin,   icon: '🎫', color: 'var(--naranja)' },
+    { label: 'Confirmados CB',    valor: afilCB,         icon: '✅', color: 'var(--ok)' },
+    { label: 'Sin match CB',      valor: noEnCB,         icon: '❌', color: 'var(--error)' },
+    { label: 'Nuevos afiliados',  valor: nuevos,         icon: '⭐', color: 'var(--warn-color)' },
   ];
-  document.getElementById('embudo-grid').innerHTML = pasos.map((p,i)=>`
-    <div style="padding:24px 16px;text-align:center;border-right:${i<pasos.length-1?'1px solid rgba(240,75,36,0.08)':'none'}">
+  document.getElementById('embudo-grid').innerHTML = pasos.map((p, i) => `
+    <div style="padding:24px 16px;text-align:center;border-right:${i < pasos.length - 1 ? '1px solid rgba(240,75,36,0.08)' : 'none'}">
       <p style="font-size:22px;margin-bottom:8px">${p.icon}</p>
       <p style="font-size:26px;font-weight:900;color:${p.color};line-height:1">${p.valor.toLocaleString('es-CO')}</p>
       <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#585856;margin-top:6px">${p.label}</p>
     </div>`).join('');
 
-  // BARRA RATIO + KPIs
-  const pBarra = totalCI>0?(afilCB/totalCI*100):0;
-  const pNuevosBarra = totalHuespedes>0?(nuevos/totalHuespedes*100):0;
+  // BARRA RATIO
+  const pBarra     = totalCI > 0 ? (afilCB / totalCI * 100) : 0;
+  const pNuevBarra = totalHuespedes > 0 ? (nuevos / totalHuespedes * 100) : 0;
 
   document.getElementById('kpi-grid').innerHTML = `
     <div class="ratio-card" style="grid-column:1/-1">
@@ -507,7 +579,7 @@ function renderKPIs(ben, afil) {
       </div>
       <div class="ratio-fila">
         <span class="ratio-label">📋 Check-ins CB</span>
-        <div class="ratio-barra-bg"><div class="ratio-barra-fill" style="width:${totalHuespedes>0?totalCI/totalHuespedes*100:0}%;background:var(--gris)"></div></div>
+        <div class="ratio-barra-bg"><div class="ratio-barra-fill" style="width:${totalHuespedes > 0 ? totalCI / totalHuespedes * 100 : 0}%;background:var(--gris)"></div></div>
         <span class="ratio-num">${totalCI.toLocaleString()}</span>
       </div>
       <div class="ratio-fila">
@@ -517,8 +589,8 @@ function renderKPIs(ben, afil) {
       </div>
       <div class="ratio-fila">
         <span class="ratio-label">⭐ Nuevos afiliados</span>
-        <div class="ratio-barra-bg"><div class="ratio-barra-fill" style="width:${pNuevosBarra}%;background:var(--ok)"></div></div>
-        <span class="ratio-num" style="color:var(--ok)">${nuevos.toLocaleString()} <small style="font-size:11px">(${pNuevosBarra.toFixed(1)}%)</small></span>
+        <div class="ratio-barra-bg"><div class="ratio-barra-fill" style="width:${pNuevBarra}%;background:var(--ok)"></div></div>
+        <span class="ratio-num" style="color:var(--ok)">${nuevos.toLocaleString()} <small style="font-size:11px">(${pNuevBarra.toFixed(1)}%)</small></span>
       </div>
     </div>
     <div class="kpi-card ${classPen}" onclick="abrirModal('penetracion')" style="cursor:pointer">
@@ -534,7 +606,7 @@ function renderKPIs(ben, afil) {
     <div class="kpi-card ${classErr}" onclick="abrirModal('error')" style="cursor:pointer">
       <p class="kpi-label">Error Operativo <span style="float:right;opacity:0.4">↗</span></p>
       <p class="kpi-valor">${pctErr}%</p>
-      <p class="kpi-sub">${totalT} transacciones</p>
+      <p class="kpi-sub">${totalT} transacciones loyalty</p>
     </div>
     <div class="kpi-card ${classOk}" onclick="abrirModal('ok')" style="cursor:pointer">
       <p class="kpi-label">% OK <span style="float:right;opacity:0.4">↗</span></p>
@@ -548,8 +620,8 @@ function renderKPIs(ben, afil) {
     </div>
     <div class="kpi-card neutral" onclick="abrirModal('desayunos')" style="cursor:pointer">
       <p class="kpi-label">Desayunos registrados <span style="float:right;opacity:0.4">↗</span></p>
-      <p class="kpi-valor">${totalDesay}</p>
-      <p class="kpi-sub">${desayOk} correctos</p>
+      <p class="kpi-valor">${desayTotal}</p>
+      <p class="kpi-sub">${desayOk} correctos · click para ver qué significa</p>
     </div>
     <div class="kpi-card neutral" onclick="abrirModal('nuevos')" style="cursor:pointer">
       <p class="kpi-label">Nuevos afiliados <span style="float:right;opacity:0.4">↗</span></p>
@@ -565,167 +637,218 @@ function renderKPIs(ben, afil) {
 }
 
 function renderErrorTipos(tipos) {
-  if (!tipos || Object.keys(tipos).length===0) return;
-  const seccion = document.getElementById('seccion-error-tipos');
-  seccion.style.display = 'block';
+  if (!tipos || Object.keys(tipos).length === 0) return;
+  document.getElementById('seccion-error-tipos').style.display = 'block';
+
+  const noLoyalty    = tipos['NO_LOYALTY'] || 0;
+  const totalGeneral = Object.values(tipos).reduce((s, v) => s + v, 0);
+  const cobertura    = totalGeneral > 0 ? ((totalGeneral - noLoyalty) / totalGeneral * 100).toFixed(1) : 0;
+
+  document.getElementById('error-nota').innerHTML = noLoyalty > 0 ? `
+    <div style="background:var(--fondo);border-radius:16px;padding:14px 20px;
+      font-size:12px;color:var(--gris);border:1.5px solid rgba(240,75,36,0.08);margin-bottom:16px">
+      ℹ️ <strong>${noLoyalty.toLocaleString('es-CO')} reservas</strong> del período no pertenecen al programa
+      (huéspedes normales sin tarifa ni beneficio loyalty). El programa cubrió
+      <strong style="color:var(--naranja)">${cobertura}%</strong> del volumen total de reservas.
+    </div>` : '';
+
   const defs = {
-    LEAKAGE:          {icon:'🔴',label:'LEAKAGE',desc:'Beneficio entregado a huésped NO afiliado'},
-    MISUSE:           {icon:'🟠',label:'MISUSE',desc:'Tarifa loyalty sin ser afiliado'},
-    TIER_INCORRECTO:  {icon:'🟡',label:'Tier incorrecto',desc:'Beneficio que no corresponde al tier'},
-    SIN_CANJE:        {icon:'⚪',label:'Sin canje',desc:'Afiliado sin ningún beneficio registrado'},
-    NO_LOYALTY:       {icon:'⚫',label:'No loyalty',desc:'Sin tarifa ni beneficio loyalty'},
-    REVISAR:          {icon:'🔵',label:'Revisar',desc:'Caso que requiere revisión manual'},
-    OK:               {icon:'🟢',label:'OK',desc:'Ejecutado correctamente'},
+    OK:              { icon: '🟢', label: 'OK',              desc: 'Ejecutado correctamente' },
+    LEAKAGE:         { icon: '🔴', label: 'LEAKAGE',         desc: 'Beneficio a huésped NO afiliado' },
+    MISUSE:          { icon: '🟠', label: 'MISUSE',          desc: 'Tarifa loyalty a no afiliado' },
+    TIER_INCORRECTO: { icon: '🟡', label: 'Tier incorrecto', desc: 'Beneficio no corresponde al tier' },
+    SIN_CANJE:       { icon: '⚪', label: 'Sin canje',       desc: 'Afiliado sin beneficio registrado' },
+    REVISAR:         { icon: '🔵', label: 'Revisar',         desc: 'Requiere revisión manual' },
   };
+
   document.getElementById('error-grid').innerHTML = Object.entries(tipos)
-    .filter(([k,v])=>v>0)
-    .sort((a,b)=>b[1]-a[1])
-    .map(([k,v])=>{
-      const d = defs[k]||{icon:'⚪',label:k,desc:''};
-      return `<div class="error-item" title="${d.desc}">
-        <p style="font-size:20px">${d.icon}</p>
-        <p class="error-item-val">${v}</p>
+    .filter(([k, v]) => v > 0 && k !== 'NO_LOYALTY')
+    .sort((a, b) => b[1] - a[1])
+    .map(([k, v]) => {
+      const d = defs[k] || { icon: '⚪', label: k, desc: '' };
+      return `<div class="error-item">
+        <p style="font-size:24px;margin-bottom:4px">${d.icon}</p>
+        <p class="error-item-val">${v.toLocaleString('es-CO')}</p>
         <p class="error-item-lbl">${d.label}</p>
-        <p style="font-size:10px;color:var(--gris);margin-top:4px">${d.desc}</p>
+        <p class="error-item-desc">${d.desc}</p>
       </div>`;
     }).join('');
 }
 
 function renderCharts(ben, afil, hist) {
-  const histAgr  = agrupar(hist,'Período');
+  const histAgr  = agrupar(hist, 'Período');
   const periodos = Object.keys(histAgr).sort();
-  const penSerie = periodos.map(p=>{
-    const r=histAgr[p]; const ci=r.reduce((s,x)=>s+(Number(x['Check_ins'])||0),0); const af=r.reduce((s,x)=>s+(Number(x['Afiliados'])||0),0);
-    return ci>0?+(af/ci*100).toFixed(1):0;
-  });
-  const errSerie = periodos.map(p=>{
-    const r=histAgr[p]; const t=r.reduce((s,x)=>s+(Number(x['Total_Trans'])||0),0); const e=r.reduce((s,x)=>s+(Number(x['Total_Trans'])||0)*(Number(x['Pct_Error_Op'])||0),0);
-    return t>0?+(e/t*100).toFixed(1):0;
-  });
-  crearLinea('chart-penetracion',periodos,penSerie,'% Penetración','#F04B24');
-  crearLinea('chart-error',periodos,errSerie,'% Error Op.','#F47B5A');
 
-  const tOk=sum(ben,'Toallas Correctas'), tMal=sum(ben,'Toallas Mal Cobradas')+sum(ben,'Toallas Botón Incorrecto');
-  const dOk=sum(ben,'Desayunos Correctos'), dMal=sum(ben,'Desayunos Mal Cobrados')+sum(ben,'Desayunos Botón Incorrecto');
-  const dcOk=sum(ben,'Descuento a Afiliados');
+  const penSerie = periodos.map(p => {
+    const r  = histAgr[p];
+    const ci = r.reduce((s, x) => s + (Number(x['Check_ins']) || 0), 0);
+    const af = r.reduce((s, x) => s + (Number(x['Afiliados']) || 0), 0);
+    return ci > 0 ? +(af / ci * 100).toFixed(1) : 0;
+  });
+  const errSerie = periodos.map(p => {
+    const r = histAgr[p];
+    const t = r.reduce((s, x) => s + (Number(x['Total_Trans']) || 0), 0);
+    const e = r.reduce((s, x) => s + (Number(x['Total_Trans']) || 0) * (Number(x['Pct_Error_Op']) || 0), 0);
+    return t > 0 ? +(e / t * 100).toFixed(1) : 0;
+  });
+
+  crearLinea('chart-penetracion', periodos, penSerie, '% Penetración', '#F04B24');
+  crearLinea('chart-error',       periodos, errSerie, '% Error Op.',   '#F47B5A');
+
+  const tOk  = sum(ben, 'Toallas correctas ($0)');
+  const tMal = sum(ben, 'Toallas a no miembros') + sum(ben, 'Toallas gratis a no miembros') + sum(ben, 'Toallas cobradas a miembro');
+  const dOk  = sum(ben, 'Desayunos Correctos');
+  const dMal = sum(ben, 'Desayunos Mal Cobrados') + sum(ben, 'Desayunos Botón Incorrecto');
+  const tar  = sum(ben, 'Tarifa Loyalty en miembros');
   crearDona('chart-beneficios',
-    ['Toallas ✅','Desayunos ✅','Descuento ✅','Toallas ❌','Desayunos ❌'],
-    [tOk,dOk,dcOk,tMal,dMal],
-    ['#F04B24','#F47B5A','#FAC4B4','#C73A1A','#8B2010']
+    ['Toallas ✅', 'Desayunos ✅', 'Tarifa ✅', 'Toallas ❌', 'Desayunos ❌'],
+    [tOk, dOk, tar, tMal, dMal],
+    ['#F04B24', '#F47B5A', '#FAC4B4', '#8B2010', '#C73A1A']
   );
-  const propAgr=agrupar(afil,'Propiedad');
-  const pN=Object.keys(propAgr), pV=pN.map(p=>propAgr[p].reduce((s,r)=>s+(Number(r['Afiliados hospedados cloudbeds'])||0),0));
-  crearBarras('chart-propiedades',pN,pV,'Afiliados');
+
+  const propAgr = agrupar(afil, 'Propiedad');
+  const pN = Object.keys(propAgr);
+  const pV = pN.map(p => propAgr[p].reduce((s, r) => s + (Number(r['Afiliados hospedados cloudbeds']) || 0), 0));
+  crearBarras('chart-propiedades', pN, pV, 'Afiliados');
 }
 
-function crearLinea(id,labels,data,label,color) {
-  if(charts[id]) charts[id].destroy();
-  charts[id]=new Chart(document.getElementById(id),{type:'line',
-    data:{labels,datasets:[{label,data,borderColor:color,backgroundColor:color+'22',tension:0.4,fill:true,pointBackgroundColor:color,pointRadius:5}]},
-    options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'#FFF0EB'}},x:{grid:{display:false}}}}
+function crearLinea(id, labels, data, label, color) {
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), {
+    type: 'line',
+    data: { labels, datasets: [{ label, data, borderColor: color, backgroundColor: color + '22', tension: 0.4, fill: true, pointBackgroundColor: color, pointRadius: 5 }] },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#FFF0EB' } }, x: { grid: { display: false } } } }
   });
 }
 
-function crearDona(id,labels,data,colors) {
-  if(charts[id]) charts[id].destroy();
-  charts[id]=new Chart(document.getElementById(id),{type:'doughnut',
-    data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:0,hoverOffset:10}]},
-    options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:12}}}}
+function crearDona(id, labels, data, colors) {
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0, hoverOffset: 10 }] },
+    options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12 } } } }
   });
 }
 
-function crearBarras(id,labels,data,label) {
-  if(charts[id]) charts[id].destroy();
-  charts[id]=new Chart(document.getElementById(id),{type:'bar',
-    data:{labels,datasets:[{label,data,backgroundColor:'#F04B24',borderRadius:10,borderSkipped:false}]},
-    options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'#FFF0EB'}},x:{grid:{display:false}}}}
+function crearBarras(id, labels, data, label) {
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: { labels, datasets: [{ label, data, backgroundColor: '#F04B24', borderRadius: 10, borderSkipped: false }] },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#FFF0EB' } }, x: { grid: { display: false } } } }
   });
 }
 
 function renderHallazgos(hall) {
-  const tbody=document.getElementById('tabla-hallazgos');
-  if(!hall.length){tbody.innerHTML=`<tr><td colspan="6" class="tabla-empty">Sin hallazgos para el filtro</td></tr>`;return;}
-  tbody.innerHTML=hall.map(h=>{
-    const sev=h['Severidad']||'';
-    const cls=sev.includes('CRÍTICO')?'critico':sev.includes('ATENCIÓN')?'atencion':'positivo';
+  const tbody = document.getElementById('tabla-hallazgos');
+  if (!hall.length) {
+    tbody.innerHTML = `<tr><td colspan="6" class="tabla-empty">Sin hallazgos para el filtro seleccionado — prueba con "Todas las propiedades"</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = hall.map(h => {
+    const sev = h['Severidad'] || '';
+    const cls = sev.toUpperCase().includes('CRIT') ? 'critico' :
+                sev.toUpperCase().includes('ATEN') ? 'atencion' : 'positivo';
     return `<tr>
-      <td>${h['Período']||''}</td><td><strong>${h['Propiedad']||''}</strong></td>
+      <td>${h['Período'] || ''}</td>
+      <td><strong>${h['Propiedad'] || ''}</strong></td>
       <td><span class="badge badge-${cls}">${sev}</span></td>
-      <td>${h['Categoría']||''}</td><td>${h['Hallazgo']||''}</td>
-      <td style="font-size:12px;color:var(--gris)">${h['Acción sugerida']||''}</td>
+      <td>${h['Categoría'] || ''}</td>
+      <td>${h['Hallazgo'] || ''}
+        ${h['Métrica'] ? `<br><span style="font-size:11px;color:var(--naranja);font-weight:700">${h['Métrica']}</span>` : ''}
+      </td>
+      <td style="font-size:12px;color:var(--gris)">${h['Acción sugerida'] || ''}</td>
     </tr>`;
   }).join('');
 }
 
 function renderSinCanje(sc) {
   document.getElementById('sincanje-badge').textContent = sc.length;
-  const motivos = {};
-  sc.forEach(r=>{
-    const obs = r['Observación']||'';
-    const k = obs.includes('Tourist') ? '🎫 Tier Tourist\n(solo descuento directo)' :
-              obs.includes('Sin beneficio') ? '⚠️ Sin beneficio\nni tarifa loyalty' : '❓ Otro';
-    motivos[k]=(motivos[k]||0)+1;
-  });
-  document.getElementById('sincanje-resumen').innerHTML =
-    Object.entries(motivos).map(([k,v])=>`
-      <div style="text-align:center;padding:12px;border-right:1px solid rgba(240,75,36,0.08)">
-        <p style="font-size:28px;font-weight:900;color:var(--naranja)">${v}</p>
-        <p style="font-size:11px;color:var(--gris);margin-top:4px;white-space:pre-line">${k}</p>
-      </div>`).join('') ||
-    `<p style="color:var(--gris);font-size:13px;padding:12px">✅ Todos los afiliados canjearon su beneficio</p>`;
 
-  const tbody=document.getElementById('tabla-sincanje');
-  if(!sc.length){tbody.innerHTML=`<tr><td colspan="4" class="tabla-empty">✅ Todos canjearon</td></tr>`;return;}
-  tbody.innerHTML=sc.map(r=>{
-    const obs=r['Observación']||''; const esTourist=obs.includes('Tourist');
+  const motivos = {};
+  sc.forEach(r => {
+    const obs = r['Observación'] || '';
+    const k = obs.toLowerCase().includes('tourist') ? '🎫 Tier Tourist\n(solo descuento directo)' :
+              obs.toLowerCase().includes('sin beneficio') ? '⚠️ Sin beneficio\nni tarifa loyalty' :
+              '❓ Otro';
+    motivos[k] = (motivos[k] || 0) + 1;
+  });
+
+  document.getElementById('sincanje-resumen').innerHTML =
+    Object.keys(motivos).length > 0
+      ? Object.entries(motivos).map(([k, v]) => `
+          <div style="text-align:center;padding:12px">
+            <p style="font-size:28px;font-weight:900;color:var(--naranja)">${v}</p>
+            <p style="font-size:11px;color:var(--gris);margin-top:4px;white-space:pre-line;line-height:1.4">${k}</p>
+          </div>`).join('')
+      : `<p style="color:var(--gris);font-size:13px;padding:12px">✅ Todos los afiliados canjearon su beneficio</p>`;
+
+  const tbody = document.getElementById('tabla-sincanje');
+  if (!sc.length) {
+    tbody.innerHTML = `<tr><td colspan="5" class="tabla-empty">✅ Todos los afiliados canjearon</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = sc.map(r => {
+    const tier = r['Tier'] || '—';
+    const obs  = r['Observación'] || '';
+    const esTourist = tier.toLowerCase().includes('tourist');
     return `<tr>
-      <td><strong>${r['Nombre']||''}</strong></td>
-      <td><span class="badge ${esTourist?'badge-atencion':'badge-critico'}">${r['Tier']||'—'}</span></td>
-      <td>${r['Noches']||''}</td>
+      <td><strong>${r['Nombre'] || ''}</strong></td>
+      <td><span class="badge ${esTourist ? 'badge-atencion' : 'badge-critico'}">${tier}</span></td>
+      <td>${r['Noches'] || ''}</td>
+      <td style="font-size:12px;color:var(--gris)">${r['# Reserva'] || ''}</td>
       <td style="font-size:12px;color:var(--gris)">${obs}</td>
     </tr>`;
   }).join('');
 }
 
 function toggleSinCanje() {
-  const d=document.getElementById('sincanje-detalle');
-  const c=document.getElementById('sincanje-chevron');
-  const open=d.style.display!=='none';
-  d.style.display=open?'none':'block';
-  c.style.transform=open?'rotate(0deg)':'rotate(180deg)';
+  const d = document.getElementById('sincanje-detalle');
+  const c = document.getElementById('sincanje-chevron');
+  const open = d.style.display !== 'none';
+  d.style.display  = open ? 'none' : 'block';
+  c.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
 }
 
 function abrirModal(tipo) {
-  const d=window._md[tipo]; if(!d) return;
-  const barrasHtml=(d.barras||[]).map(b=>{
-    const pct=b.total>0?(b.valor/b.total*100).toFixed(1):0;
+  const d = window._md[tipo];
+  if (!d) return;
+
+  const barrasHtml = (d.barras || []).map(b => {
+    const pct = b.total > 0 ? (b.valor / b.total * 100).toFixed(1) : 0;
     return `<div class="modal-barra-wrap">
-      <div class="modal-barra-label"><span>${b.label}</span><span>${typeof b.valor==='number'?b.valor.toLocaleString('es-CO'):b.valor} (${pct}%)</span></div>
-      <div class="modal-barra-bg"><div class="modal-barra-fill ${b.clase}" style="width:${pct}%"></div></div>
+      <div class="modal-barra-label">
+        <span>${b.label}</span>
+        <span>${typeof b.valor === 'number' ? b.valor.toLocaleString('es-CO') : b.valor} (${pct}%)</span>
+      </div>
+      <div class="modal-barra-bg">
+        <div class="modal-barra-fill ${b.clase}" style="width:${pct}%"></div>
+      </div>
     </div>`;
   }).join('');
-  const filasHtml=(d.filas||[]).map(f=>`
+
+  const filasHtml = (d.filas || []).map(f => `
     <div class="modal-fila">
       <span class="modal-fila-label">${f.label}</span>
-      <span class="modal-fila-valor">${typeof f.valor==='number'?f.valor.toLocaleString('es-CO'):f.valor}</span>
+      <span class="modal-fila-valor">${typeof f.valor === 'number' ? f.valor.toLocaleString('es-CO') : f.valor}</span>
     </div>`).join('');
-  document.getElementById('modal-contenido').innerHTML=`
+
+  document.getElementById('modal-contenido').innerHTML = `
     <p class="modal-titulo">${d.titulo}</p>
     <p class="modal-subtitulo">${d.subtitulo}</p>
-    <p class="modal-valor-grande">${typeof d.valor==='number'?d.valor.toLocaleString('es-CO'):d.valor}</p>
-    ${barrasHtml}<div class="modal-desglose">${filasHtml}</div>`;
+    <p class="modal-valor-grande">${typeof d.valor === 'number' ? d.valor.toLocaleString('es-CO') : d.valor}</p>
+    ${barrasHtml}
+    <div class="modal-desglose">${filasHtml}</div>`;
+
   document.getElementById('modal-overlay').classList.add('activo');
-  document.body.style.overflow='hidden';
+  document.body.style.overflow = 'hidden';
 }
 
 function cerrarModal(e) {
-  if(e&&e.target!==document.getElementById('modal-overlay')) return;
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
   document.getElementById('modal-overlay').classList.remove('activo');
-  document.body.style.overflow='';
+  document.body.style.overflow = '';
 }
-
-function sum(arr,col){return arr.reduce((s,r)=>s+(Number(r[col])||0),0);}
-function agrupar(arr,col){return arr.reduce((acc,r)=>{const k=r[col]||'?';if(!acc[k])acc[k]=[];acc[k].push(r);return acc;},{});}
 
 init();
 </script>
