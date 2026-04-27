@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Viajero · Performance Hub</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --cream:  #F5EDD6;
+  --coral:  #E84C1E;
+  --salmon: #F07B54;
+  --peach:  #F5A98A;
+  --dark:   #2C1810;
+  --mid:    #7A4030;
+  --light:  #FAF3E8;
+  --gray:   #8C7B72;
+  --white:  #FFFFFF;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  min-height: 100vh;
+}
+
+header {
+  background: var(--coral);
+  padding: 48px 40px;
+  text-align: center;
+}
+
+.logo-emoji {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+header h1 {
+  color: var(--white);
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+header p {
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 56px 24px;
+}
+
+.subtitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--coral);
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.modulos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.modulo-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid rgba(232,76,30,0.12);
+  text-decoration: none;
+  color: var(--dark);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.modulo-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 20px 20px 0 0;
+}
+
+.modulo-card.loyalty::before  { background: var(--coral); }
+.modulo-card.merch::before    { background: var(--salmon); }
+.modulo-card.upgrade::before  { background: var(--peach); }
+.modulo-card.kyto::before     { background: #B07A60; }
+
+.modulo-card:not(.disabled):hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(232,76,30,0.18);
+}
+
+.modulo-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.modulo-icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.modulo-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modulo-card p {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+.badge-live {
+  background: var(--coral);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.badge-soon {
+  background: var(--cream);
+  color: var(--gray);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  border: 1px solid #D0C5B5;
+}
+
+footer {
+  text-align: center;
+  padding: 32px;
+  font-size: 12px;
+  color: var(--gray);
+  border-top: 1px solid rgba(232,76,30,0.1);
+  margin-top: 20px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo-emoji">🦋</span>
+  <h1>Viajero Performance Hub</h1>
+  <p>Dashboard ejecutivo de operaciones · Uso interno Viajero Hostels</p>
+</header>
+
+<main>
+  <p class="subtitle">Módulos disponibles</p>
+
+  <div class="modulos">
+
+    <a href="loyalty/" class="modulo-card loyalty">
+      <span class="modulo-icon">🎫</span>
+      <h2>Loyalty <span class="badge-live">Live</span></h2>
+      <p>Programa Viajero Go x Akin. Penetración, beneficios, error operativo y hallazgos por propiedad y período.</p>
+    </a>
+
+    <div class="modulo-card merch disabled">
+      <span class="modulo-icon">👕</span>
+      <h2>Merch Viajero <span class="badge-soon">Próximo</span></h2>
+      <p>Seguimiento de entregas de merch exclusivo Viajero. Inventario, canjes y distribución por propiedad.</p>
+    </div>
+
+    <div class="modulo-card upgrade disabled">
+      <span class="modulo-icon">🛏️</span>
+      <h2>Upgrades Recepción <span class="badge-soon">Próximo</span></h2>
+      <p>Upgrades de habitación gestionados por recepción. Tasas de conversión y satisfacción.</p>
+    </div>
+
+    <div class="modulo-card kyto disabled">
+      <span class="modulo-icon">🤖</span>
+      <h2>Upgrades Kyto <span class="badge-soon">Próximo</span></h2>
+      <p>Upgrades automatizados vía Kyto. Efectividad, revenue generado y tasa de aceptación.</p>
+    </div>
+
+    <div class="modulo-card kyto disabled">
+      <span class="modulo-icon">💬</span>
+      <h2>Conversaciones Kyto <span class="badge-soon">Próximo</span></h2>
+      <p>Análisis de conversaciones automatizadas. Volumen, temas frecuentes y resolución.</p>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  Viajero Hostels · Dashboard interno · No compartir externamente
+</footer>
+
+</body>
+</html>
