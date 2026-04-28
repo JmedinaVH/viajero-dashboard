@@ -2,1072 +2,219 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Viajero Loyalty · Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Viajero · Performance Hub</title>
 <style>
-:root{
-  --naranja:#F04B24;--naranja-light:#ff6b47;--naranja-pale:#fff3f0;
-  --gris:#585856;--gris-light:#f5f5f4;--gris-border:#e8e8e6;
-  --verde:#16a34a;--amarillo:#d97706;--rojo:#dc2626;
-  --text:#1a1a18;--text-muted:#6b6b69;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --cream:  #F5EDD6;
+  --coral:  #E84C1E;
+  --salmon: #F07B54;
+  --peach:  #F5A98A;
+  --dark:   #2C1810;
+  --mid:    #7A4030;
+  --light:  #FAF3E8;
+  --gray:   #8C7B72;
+  --white:  #FFFFFF;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Outfit',sans-serif;background:#fafaf9;color:var(--text);font-size:15px}
 
-/* ── HEADER ── */
-.header{background:var(--naranja);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(240,75,36,.3)}
-.header-left{display:flex;align-items:center;gap:12px}
-.btn-hub{color:#fff;text-decoration:none;font-size:13px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:5px 14px;white-space:nowrap;transition:background .2s}
-.btn-hub:hover{background:rgba(255,255,255,.3)}
-.logo-header{height:34px;width:auto;display:block}
-.header-right{text-align:right;color:rgba(255,255,255,.9)}
-.header-right .titulo{font-size:14px;font-weight:700}
-.header-right .subtitulo{font-size:11px;opacity:.8;margin-top:1px}
+* { margin:0; padding:0; box-sizing:border-box; }
 
-/* ── FILTROS ── */
-.filtros-wrap{background:#fff;border-bottom:2px solid var(--naranja);padding:12px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:sticky;top:56px;z-index:90}
-.filtro-grupo{display:flex;align-items:center;gap:8px}
-.filtro-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--naranja)}
-.filtro-select{border:1.5px solid var(--gris-border);border-radius:8px;padding:6px 10px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;background:#fff;cursor:pointer}
-.filtro-select:focus{outline:none;border-color:var(--naranja)}
-.periodo-rango{font-size:12px;color:var(--text-muted);margin-left:auto;font-weight:500}
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  min-height: 100vh;
+}
 
-/* ── LAYOUT ── */
-.main{max-width:1200px;margin:0 auto;padding:24px 24px 60px}
-.timestamp{font-size:12px;color:var(--text-muted);margin-bottom:20px;display:flex;align-items:center;gap:6px}
-.timestamp::before{content:'⏱';font-size:14px}
-.sec-titulo{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--naranja);margin:32px 0 14px;padding-bottom:6px;border-bottom:2px solid var(--naranja-pale)}
-.sec-subtitulo{font-size:12px;color:var(--text-muted);margin-top:-8px;margin-bottom:14px}
+header {
+  background: var(--coral);
+  padding: 48px 40px;
+  text-align: center;
+}
 
-/* ── KPI STATUS PANEL ── */
-.kpi-panel{background:#fff;border-radius:14px;border:1.5px solid var(--gris-border);overflow:hidden;margin-bottom:8px}
-.kpi-panel-header{background:var(--naranja-pale);padding:12px 18px;border-bottom:1px solid var(--gris-border)}
-.kpi-panel-titulo{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--naranja)}
-.kpi-panel-desc{font-size:11px;color:var(--text-muted);margin-top:2px}
-.kpi-item{display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid var(--gris-border)}
-.kpi-item:last-child{border-bottom:none}
-.kpi-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.dot-verde{background:var(--verde)}.dot-amarillo{background:var(--amarillo)}
-.kpi-nombre{font-size:13px;font-weight:600;flex:1}
-.kpi-donde{font-size:11px;color:var(--text-muted);margin-top:1px}
-.kpi-status{font-size:10px;font-weight:700;padding:2px 10px;border-radius:20px;white-space:nowrap}
-.status-verde{background:#dcfce7;color:#15803d}
-.status-amarillo{background:#fef3c7;color:#92400e}
+.logo-emoji {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
 
-/* ── HERO CARDS ── */
-.hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:8px}
-.hero-card{background:#fff;border-radius:14px;padding:18px 20px;border:1.5px solid var(--gris-border);cursor:pointer;transition:all .2s}
-.hero-card:hover{border-color:var(--naranja);box-shadow:0 4px 16px rgba(240,75,36,.12);transform:translateY(-2px)}
-.hero-etiqueta{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:4px;display:flex;align-items:center;gap:6px}
-.semaforo{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
-.s-rojo{background:var(--rojo)}.s-verde{background:var(--verde)}.s-amarillo{background:var(--amarillo)}
-.hero-kpi-tag{font-size:10px;background:var(--naranja-pale);color:var(--naranja);padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:6px;font-weight:600}
-.hero-q{font-size:13px;font-weight:700;margin-bottom:6px;line-height:1.3}
-.hero-num{font-size:40px;font-weight:800;line-height:1;color:var(--naranja);margin-bottom:4px}
-.hero-desc{font-size:12px;color:var(--text-muted);line-height:1.4}
-.hero-link{font-size:11px;color:var(--naranja);margin-top:8px;display:block;font-weight:600}
+header h1 {
+  color: var(--white);
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
 
-/* ── EMBUDO ── */
-.embudo{display:flex;align-items:center;background:#fff;border-radius:14px;border:1.5px solid var(--gris-border);padding:20px 16px;overflow-x:auto;margin-bottom:8px}
-.embudo-paso{text-align:center;min-width:95px;flex:1}
-.embudo-paso .ico{font-size:24px;margin-bottom:4px}
-.embudo-paso .num{font-size:26px;font-weight:800;line-height:1}
-.embudo-paso .num.hi{color:var(--naranja)}
-.embudo-paso .etiq{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-top:2px;font-weight:600;line-height:1.3}
-.embudo-paso .pct{font-size:10px;color:var(--text-muted);margin-top:3px}
-.embudo-flecha{font-size:16px;color:var(--gris-border);flex-shrink:0;padding:0 2px}
+header p {
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+  margin-top: 8px;
+}
 
-/* ── BENEFICIOS ── */
-.beneficios-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:8px}
-.ben-card{background:#fff;border-radius:12px;border:1.5px solid var(--gris-border);padding:16px 18px;cursor:pointer;transition:all .2s}
-.ben-card:hover{border-color:var(--naranja);box-shadow:0 3px 12px rgba(240,75,36,.1)}
-.ben-titulo{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted);margin-bottom:8px}
-.ben-num{font-size:34px;font-weight:800}
-.ben-sub{font-size:11px;color:var(--text-muted);margin-top:4px;line-height:1.3}
-.ben-badges{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
-.badge-ok{background:#dcfce7;color:#15803d}
-.badge-err{background:#fee2e2;color:#dc2626}
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 56px 24px;
+}
 
-/* ── SEMÁFORO ── */
-.sem-fila{display:flex;align-items:flex-start;gap:12px;background:#fff;border-radius:10px;border:1.5px solid var(--gris-border);padding:12px 16px;margin-bottom:8px}
-.sem-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:3px}
-.sem-info{flex:1}
-.sem-label{font-size:13px;font-weight:600}
-.sem-desc{font-size:11px;color:var(--text-muted);margin-top:2px;line-height:1.4}
-.sem-count{font-size:20px;font-weight:800;white-space:nowrap}
-.sem-tip{font-size:12px;background:#fffbeb;border-left:3px solid var(--amarillo);padding:10px 14px;border-radius:0 8px 8px 0;margin:8px 0;color:#92400e;line-height:1.5}
+.subtitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--coral);
+  margin-bottom: 28px;
+  text-align: center;
+}
 
-/* ── TIERS ── */
-.tier-nota{font-size:11px;background:var(--naranja-pale);border-left:3px solid var(--naranja);padding:8px 12px;border-radius:0 8px 8px 0;color:var(--gris);margin-bottom:12px;line-height:1.5}
-.tier-propiedad{background:#fff;border-radius:12px;border:1.5px solid var(--gris-border);padding:16px 18px;margin-bottom:12px}
-.tier-prop-titulo{font-size:14px;font-weight:700;margin-bottom:2px}
-.tier-prop-sub{font-size:11px;color:var(--text-muted);margin-bottom:12px}
-.tier-fila{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gris-border)}
-.tier-fila:last-child{border-bottom:none}
-.tier-izq{width:170px;flex-shrink:0}
-.tier-nombre{font-size:13px;font-weight:700}
-.tier-bens{font-size:10px;color:var(--text-muted);margin-top:1px}
-.tier-barras{flex:1;display:flex;flex-direction:column;gap:3px}
-.tier-barra-row{display:flex;align-items:center;gap:6px}
-.tier-barra-label{font-size:9px;width:70px;text-align:right;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
-.tier-bar-wrap{flex:1;background:var(--gris-light);border-radius:20px;height:7px;overflow:hidden}
-.tier-bar{height:100%;border-radius:20px}
-.bar-verde{background:var(--verde)}
-.bar-amarillo{background:var(--amarillo)}
-.bar-rojo{background:var(--rojo)}
-.tier-der{text-align:right;min-width:100px}
-.tier-total{font-size:13px;font-weight:700}
-.tier-pct-periodo{font-size:11px;color:var(--text-muted);margin-top:1px}
+.modulos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
 
-.red-tier-tabla{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border-radius:10px;overflow:hidden;border:1.5px solid var(--gris-border);margin-bottom:16px}
-.red-tier-tabla th{background:var(--naranja);color:#fff;padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.6px}
-.red-tier-tabla td{padding:8px 12px;border-bottom:1px solid var(--gris-border)}
-.red-tier-tabla tr:last-child td{border-bottom:none}
-.red-tier-tabla tr:hover td{background:var(--naranja-pale)}
-.hi{color:var(--naranja);font-weight:700}
-.red-bar{display:inline-block;height:6px;border-radius:3px;vertical-align:middle;margin-right:6px}
+.modulo-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid rgba(232,76,30,0.12);
+  text-decoration: none;
+  color: var(--dark);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
 
-.tier-ref{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border-radius:10px;overflow:hidden;border:1.5px solid var(--gris-border);margin-bottom:20px}
-.tier-ref th{background:var(--naranja);color:#fff;padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.6px}
-.tier-ref td{padding:8px 12px;border-bottom:1px solid var(--gris-border)}
-.tier-ref tr:last-child td{border-bottom:none}
-.chk{color:var(--verde);font-weight:700}
-.crs{color:#d1d5db}
+.modulo-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 20px 20px 0 0;
+}
 
-/* ── CHARTS ── */
-.evolucion-filtros,.historico-filtros{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;background:#fff;border-radius:10px;border:1.5px solid var(--gris-border);padding:12px 16px;align-items:center}
-.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:8px}
-.chart-card{background:#fff;border-radius:12px;border:1.5px solid var(--gris-border);padding:16px 18px}
-.chart-titulo{font-size:12px;font-weight:700;margin-bottom:3px}
-.chart-sub{font-size:11px;color:var(--text-muted);margin-bottom:12px}
-.chart-wrap{position:relative;height:160px}
+.modulo-card.loyalty::before  { background: var(--coral); }
+.modulo-card.merch::before    { background: var(--salmon); }
+.modulo-card.upgrade::before  { background: var(--peach); }
+.modulo-card.kyto::before     { background: #B07A60; }
 
-/* ── HISTÓRICO ── */
-.historico-info{font-size:12px;background:var(--gris-light);border-radius:8px;padding:10px 14px;margin-bottom:12px;line-height:1.5}
-.hist-tabla-wrap{overflow-x:auto;margin-bottom:20px}
-.hist-tabla{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border-radius:12px;overflow:hidden;border:1.5px solid var(--gris-border)}
-.hist-tabla th{background:var(--naranja);color:#fff;padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.6px;white-space:nowrap}
-.hist-tabla td{padding:9px 12px;border-bottom:1px solid var(--gris-border);white-space:nowrap}
-.hist-tabla tr:hover td{background:var(--naranja-pale)}
-.badge-per{display:inline-block;background:var(--naranja);color:#fff;border-radius:20px;padding:2px 10px;font-size:10px;font-weight:600}
+.modulo-card:not(.disabled):hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(232,76,30,0.18);
+}
 
-/* ── HALLAZGOS ── */
-.hallazgo{border-radius:12px;padding:14px 16px;display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:start;margin-bottom:10px;border-left:4px solid transparent}
-.hallazgo.sev-rojo{background:#fff5f5;border-color:var(--rojo)}
-.hallazgo.sev-amarillo{background:#fffbeb;border-color:var(--amarillo)}
-.hallazgo.sev-verde{background:#f0fdf4;border-color:var(--verde)}
-.hallazgo-ico{font-size:20px;padding-top:2px}
-.hallazgo-titulo{font-size:13px;font-weight:700;line-height:1.4}
-.hallazgo-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
-.hallazgo-accion{font-size:11px;font-weight:600;margin-top:5px}
-.hallazgo.sev-rojo .hallazgo-accion{color:var(--rojo)}
-.hallazgo.sev-amarillo .hallazgo-accion{color:var(--amarillo)}
-.hallazgo.sev-verde .hallazgo-accion{color:var(--verde)}
-.hallazgo-metrica{font-size:15px;font-weight:800;white-space:nowrap}
-.hallazgo.sev-rojo .hallazgo-metrica{color:var(--rojo)}
-.hallazgo.sev-amarillo .hallazgo-metrica{color:var(--amarillo)}
-.hallazgo.sev-verde .hallazgo-metrica{color:var(--verde)}
+.modulo-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 
-/* ── SIN CANJE ── */
-.sincanje-header{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;margin-bottom:6px}
-.sincanje-toggle{font-size:12px;color:var(--naranja);padding:4px 12px;border:1.5px solid var(--naranja);border-radius:20px;font-weight:600}
-.sincanje-cuerpo{background:#fff;border-radius:12px;border:1.5px solid var(--gris-border);overflow:hidden;display:none}
-.sincanje-cuerpo.open{display:block}
-.sincanje-split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--gris-border)}
-.sincanje-col{background:#fff;padding:20px;text-align:center}
-.sincanje-num{font-size:38px;font-weight:800;color:var(--naranja)}
-.sincanje-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:4px 0 2px}
-.sincanje-desc{font-size:11px;color:var(--text-muted);line-height:1.4}
-.sincanje-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block;margin-top:6px}
-.sincanje-tabla-wrap{overflow-x:auto;padding:12px}
-.sincanje-tabla{width:100%;border-collapse:collapse;font-size:12px}
-.sincanje-tabla th{background:var(--gris-light);padding:8px 10px;text-align:left;font-weight:700;font-size:10px;text-transform:uppercase}
-.sincanje-tabla td{padding:8px 10px;border-bottom:1px solid var(--gris-border)}
+.modulo-icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+  display: block;
+}
 
-/* ── MODAL ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:16px;padding:28px;max-width:580px;width:92%;max-height:85vh;overflow-y:auto;position:relative}
-.modal-close{position:absolute;top:14px;right:16px;font-size:22px;cursor:pointer;color:var(--text-muted);background:none;border:none}
-.modal-titulo{font-size:18px;font-weight:800;margin-bottom:4px}
-.modal-sub{font-size:13px;color:var(--text-muted);margin-bottom:16px}
-.modal-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.modal-kpi{background:var(--gris-light);border-radius:10px;padding:12px 14px}
-.modal-kpi .label{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted);margin-bottom:4px;font-weight:700}
-.modal-kpi .valor{font-size:20px;font-weight:800}
-.modal-kpi .valor.naranja{color:var(--naranja)}
-.modal-kpi .valor.rojo{color:var(--rojo)}
-.modal-nota{font-size:12px;background:var(--naranja-pale);border-left:3px solid var(--naranja);padding:10px 14px;border-radius:0 8px 8px 0;color:var(--gris);line-height:1.5;margin-top:10px}
-.modal-alerta{font-size:12px;background:#fff5f5;border-left:3px solid var(--rojo);padding:10px 14px;border-radius:0 8px 8px 0;color:#7f1d1d;line-height:1.5;margin-top:10px}
+.modulo-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-.footer{text-align:center;padding:24px;font-size:11px;color:var(--text-muted);border-top:1px solid var(--gris-border);margin-top:32px}
+.modulo-card p {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+}
 
-@media(max-width:600px){
-  .main{padding:16px 12px 48px}
-  .filtros-wrap{padding:10px 12px;gap:10px}
-  .embudo{flex-wrap:wrap}.embudo-flecha{display:none}
-  .hero-num{font-size:34px}
-  .sincanje-split{grid-template-columns:1fr}
-  .modal-kpis{grid-template-columns:1fr}
+.badge-live {
+  background: var(--coral);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.badge-soon {
+  background: var(--cream);
+  color: var(--gray);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  border: 1px solid #D0C5B5;
+}
+
+footer {
+  text-align: center;
+  padding: 32px;
+  font-size: 12px;
+  color: var(--gray);
+  border-top: 1px solid rgba(232,76,30,0.1);
+  margin-top: 20px;
 }
 </style>
 </head>
 <body>
 
-<header class="header">
-  <div class="header-left">
-    <a class="btn-hub" href="../index.html">← Hub</a>
-    <img src="../img/logo-viajero.png" alt="Viajero" class="logo-header" onerror="this.style.display='none'"/>
-  </div>
-  <div class="header-right">
-    <div class="titulo">Loyalty · Viajero Go × Akin</div>
-    <div class="subtitulo" id="ts-header">Cargando…</div>
-  </div>
+<header>
+  <span class="logo-emoji">🦋</span>
+  <h1>Viajero Performance Hub</h1>
+  <p>Dashboard ejecutivo de operaciones · Uso interno Viajero Hostels</p>
 </header>
 
-<div class="filtros-wrap">
-  <div class="filtro-grupo">
-    <span class="filtro-label">Propiedad</span>
-    <select class="filtro-select" id="fil-propiedad" onchange="aplicarFiltros()"><option value="">Todas</option></select>
-  </div>
-  <div class="filtro-grupo">
-    <span class="filtro-label">País</span>
-    <select class="filtro-select" id="fil-pais" onchange="aplicarFiltros()"><option value="">Todos</option></select>
-  </div>
-  <div class="periodo-rango" id="rango-periodo">—</div>
-</div>
+<main>
+  <p class="subtitle">Módulos disponibles</p>
 
-<main class="main">
-  <div class="timestamp" id="timestamp-txt">Cargando datos…</div>
+  <div class="modulos">
 
-  <!-- ═══ ESTADO KPIs ═══ -->
-  <div class="sec-titulo">Estado de KPIs del plan · Disponibilidad en este dashboard</div>
-  <div class="sec-subtitulo">Objetivo: Incrementar la adopción, uso y recurrencia del programa loyalty y su impacto en revenue directo</div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-bottom:8px">
-    <div class="kpi-panel">
-      <div class="kpi-panel-header">
-        <div class="kpi-panel-titulo">📈 Adopción del programa</div>
-        <div class="kpi-panel-desc">Registros, visibilidad y reducción de fricciones</div>
-      </div>
-      <div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">Registros nuevos</div><div class="kpi-donde">→ "Nuevos afiliados" en héroe y evolución</div></div><span class="kpi-status status-verde">✅ Disponible</span></div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">Tasa de registro / huéspedes</div><div class="kpi-donde">→ % Adquisición = nuevos / huéspedes totales</div></div><span class="kpi-status status-verde">✅ Disponible</span></div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">Participación por destino</div><div class="kpi-donde">→ Filtro propiedad + gráfica comparativa</div></div><span class="kpi-status status-verde">✅ Disponible</span></div>
-        <div class="kpi-item"><div class="kpi-dot dot-amarillo"></div><div><div class="kpi-nombre">Tasa de incidencias de enrolamiento</div><div class="kpi-donde">→ Aproximado: LEAKAGE + MISUSE / total MATCH_BASE</div></div><span class="kpi-status status-amarillo">⚠️ Aproximado</span></div>
-      </div>
+    <a href="loyalty/" class="modulo-card loyalty">
+      <span class="modulo-icon">🎫</span>
+      <h2>Loyalty <span class="badge-live">Live</span></h2>
+      <p>Programa Viajero Go x Akin. Penetración, beneficios, error operativo y hallazgos por propiedad y período.</p>
+    </a>
+
+    <div class="modulo-card merch disabled">
+      <span class="modulo-icon">👕</span>
+      <h2>Merch Viajero <span class="badge-soon">Próximo</span></h2>
+      <p>Seguimiento de entregas de merch exclusivo Viajero. Inventario, canjes y distribución por propiedad.</p>
     </div>
-    <div class="kpi-panel">
-      <div class="kpi-panel-header">
-        <div class="kpi-panel-titulo">🎁 Operación y redención</div>
-        <div class="kpi-panel-desc">Beneficios redimidos correctamente, errores e impacto en revenue</div>
-      </div>
-      <div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">Número de perks redimidos correctamente</div><div class="kpi-donde">→ Toallas + desayunos + tarifa con Error_Type = OK</div></div><span class="kpi-status status-verde">✅ Disponible</span></div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">% miembros que redimen</div><div class="kpi-donde">→ Afiliados con ≥1 beneficio / total afiliados CB</div></div><span class="kpi-status status-verde">✅ Disponible</span></div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">Redenciones por tier (solo OK)</div><div class="kpi-donde">→ Tabla tiers: OK / con error / sin registro separados</div></div><span class="kpi-status status-verde">✅ Disponible</span></div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">% redenciones correctamente marcadas</div><div class="kpi-donde">→ % OK calculado desde 02_Loyalty_Beneficios</div></div><span class="kpi-status status-verde">✅ Disponible</span></div>
-      </div>
+
+    <div class="modulo-card upgrade disabled">
+      <span class="modulo-icon">🛏️</span>
+      <h2>Upgrades Recepción <span class="badge-soon">Próximo</span></h2>
+      <p>Upgrades de habitación gestionados por recepción. Tasas de conversión y satisfacción.</p>
     </div>
-  </div>
 
-  <!-- ═══ ADOPCIÓN ═══ -->
-  <div class="sec-titulo">📈 Sub-proyecto 1 · Adopción del programa</div>
-  <div class="hero-grid" id="hero-adopcion"></div>
-  <div style="margin-top:16px;margin-bottom:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted)">¿Cómo fluyen los huéspedes por el programa?</div>
-  <div class="embudo" id="embudo"></div>
-
-  <!-- ═══ OPERACIÓN ═══ -->
-  <div class="sec-titulo">🎁 Sub-proyecto 2 · Operación y redención</div>
-  <div class="hero-grid" id="hero-operacion"></div>
-  <div style="margin-top:16px;margin-bottom:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted)">¿Cómo se están registrando los 3 beneficios?</div>
-  <div class="beneficios-grid" id="ben-grid"></div>
-  <div style="margin-top:20px;margin-bottom:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted)">¿Qué errores de registro se encontraron?</div>
-  <div id="semaforo-wrap"></div>
-
-  <!-- ═══ TIERS ═══ -->
-  <div class="sec-titulo">Beneficios por tier · Referencia del programa</div>
-  <table class="tier-ref">
-    <thead><tr><th>Tier</th><th>Descuento alojamiento</th><th>Toalla ($0)</th><th>Desayuno ($0)</th><th>Condición desayuno</th></tr></thead>
-    <tbody>
-      <tr><td><b>Tourist</b></td><td>15%</td><td class="crs">—</td><td class="crs">—</td><td class="crs">—</td></tr>
-      <tr><td><b>Backpacker</b></td><td>15%</td><td class="chk">✅ botón CB</td><td class="crs">—</td><td class="crs">—</td></tr>
-      <tr><td><b>Explorer</b></td><td>20%</td><td class="chk">✅ botón CB</td><td class="crs">—</td><td class="crs">—</td></tr>
-      <tr><td><b>Nomad</b></td><td>20%</td><td class="chk">✅ botón CB</td><td class="crs">—</td><td class="crs">—</td></tr>
-      <tr><td><b>Viajero</b></td><td>25%</td><td class="chk">✅ botón CB</td><td class="chk">✅ botón CB</td><td>Solo con 3+ noches</td></tr>
-    </tbody>
-  </table>
-
-  <div class="sec-titulo">¿Qué tier nos visita? · Redención por tier y período</div>
-  <div class="tier-nota" id="tier-nota"></div>
-  <div id="tiers-seccion"></div>
-
-  <!-- ═══ EVOLUCIÓN ═══ -->
-  <div class="sec-titulo">Evolución por período</div>
-  <div class="evolucion-filtros">
-    <span class="filtro-label">Desde</span>
-    <select class="filtro-select" id="evo-desde" onchange="renderEvolucion()"><option value="">Todos</option></select>
-    <span class="filtro-label">Hasta</span>
-    <select class="filtro-select" id="evo-hasta" onchange="renderEvolucion()"><option value="">Todos</option></select>
-    <span style="font-size:11px;color:var(--text-muted)">· Respeta filtro propiedad/país</span>
-  </div>
-  <div class="charts-grid" id="charts-grid"></div>
-
-  <!-- ═══ HISTÓRICO ═══ -->
-  <div class="sec-titulo">Histórico comparativo · Todos los períodos</div>
-  <div class="historico-filtros">
-    <span class="filtro-label">Período</span>
-    <select class="filtro-select" id="hist-periodo" onchange="renderHistorico()"><option value="">Todos</option></select>
-    <span class="filtro-label">País</span>
-    <select class="filtro-select" id="hist-pais" onchange="renderHistorico()"><option value="">Todos</option></select>
-  </div>
-  <div class="historico-info">📊 Cada fila es un <b>período + propiedad</b>. Al agregar datos de mayo aparecerán aquí automáticamente.</div>
-  <div class="hist-tabla-wrap" id="hist-tabla-wrap"></div>
-  <div class="charts-grid" id="hist-charts"></div>
-
-  <!-- ═══ HALLAZGOS ═══ -->
-  <div class="sec-titulo">Hallazgos del período · Acciones recomendadas</div>
-  <div id="hallazgos-lista"></div>
-
-  <!-- ═══ SIN CANJE ═══ -->
-  <div class="sec-titulo" style="margin-bottom:10px">
-    <div class="sincanje-header" onclick="toggleSinCanje()">
-      <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.7px">Afiliados sin ningún beneficio registrado</span>
-      <span id="sincanje-total" style="font-size:20px;font-weight:800;color:var(--naranja)">—</span>
-      <span class="sincanje-toggle" id="sincanje-toggle-btn">▼</span>
+    <div class="modulo-card kyto disabled">
+      <span class="modulo-icon">🤖</span>
+      <h2>Upgrades Kyto <span class="badge-soon">Próximo</span></h2>
+      <p>Upgrades automatizados vía Kyto. Efectividad, revenue generado y tasa de aceptación.</p>
     </div>
+
+    <div class="modulo-card kyto disabled">
+      <span class="modulo-icon">💬</span>
+      <h2>Conversaciones Kyto <span class="badge-soon">Próximo</span></h2>
+      <p>Análisis de conversaciones automatizadas. Volumen, temas frecuentes y resolución.</p>
+    </div>
+
   </div>
-  <div class="sincanje-cuerpo" id="sincanje-cuerpo"></div>
 </main>
 
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <button class="modal-close" onclick="cerrarModal()">×</button>
-    <div id="modal-contenido"></div>
-  </div>
-</div>
+<footer>
+  Viajero Hostels · Dashboard interno · No compartir externamente
+</footer>
 
-<footer class="footer">Viajero Hostels · Loyalty Viajero Go × Akin · Dashboard interno · No compartir externamente</footer>
-
-<script>
-const DATA_URL = '../data/loyalty_data.json';
-let DATA = null;
-const CI = {};
-
-async function init() {
-  try {
-    const r = await fetch(DATA_URL + '?t=' + Date.now());
-    DATA = await r.json();
-  } catch(e) {
-    document.getElementById('timestamp-txt').textContent =
-      '❌ Error cargando datos. Verifica que loyalty_data.json existe en /data/';
-    return;
-  }
-  const ts = DATA.actualizado
-    ? new Date(DATA.actualizado).toLocaleString('es-CR',{dateStyle:'long',timeStyle:'short'}) : '—';
-  document.getElementById('ts-header').textContent = 'Actualizado: ' + ts;
-  document.getElementById('timestamp-txt').textContent = ts;
-  poblarFiltros();
-  aplicarFiltros();
-}
-
-// ── UTILIDADES ────────────────────────────────────────────────
-
-function uniq(arr){ return [...new Set(arr.filter(Boolean))]; }
-function periodosSorted(arr, col){ col = col||'Período'; return uniq(arr.map(r=>r[col])).sort(); }
-function fmt(n){ if(n===null||n===undefined||n==='') return '—'; return Number(n).toLocaleString('es-CR'); }
-function pct(a,b){ if(!b) return 0; return Math.round(a/b*1000)/10; }
-function fmtPct(v){ const n=parseFloat(v); if(isNaN(n)||v===''||v===null) return '—'; if(n===0) return '0%'; return Math.round(n*10)/10+'%'; }
-function sumF(arr, campo){ return arr.reduce((a,r)=>a+(parseFloat(r[campo])||0),0); }
-
-// Lee campos enriquecidos (prefijo _) del JSON
-function getA(r, campo){ return parseFloat(r['_'+campo])||0; }
-function getB(r, campo){
-  var v = r['_'+campo];
-  if(v===null||v===undefined) return null;
-  return parseFloat(v)||0;
-}
-
-function fil(arr, prop, pais){
-  return arr.filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||(r['Pais']||r['País'])===pais));
-}
-
-// ── FILTROS ──────────────────────────────────────────────────
-
-function poblarFiltros(){
-  const af = DATA.afiliados||[];
-  fill('fil-propiedad', uniq(af.map(r=>r['Propiedad'])).sort());
-  fill('fil-pais',      uniq(af.map(r=>r['Pais']||r['País'])).sort());
-  const pers = periodosSorted(af);
-  fill('evo-desde', pers); fill('evo-hasta', pers);
-  const hAf = DATA.historico||[];
-  fill('hist-periodo', periodosSorted(hAf,'Período'));
-  fill('hist-pais',    uniq(hAf.map(r=>r['País']||r['Pais'])).sort());
-}
-
-function fill(id, arr){
-  const sel = document.getElementById(id);
-  arr.forEach(v=>{ if(!v) return; const o=document.createElement('option'); o.value=o.textContent=v; sel.appendChild(o); });
-}
-
-function aplicarFiltros(){
-  const prop = document.getElementById('fil-propiedad').value;
-  const pais = document.getElementById('fil-pais').value;
-  const af   = fil(DATA.afiliados||[], prop, pais);
-  const ben  = fil(DATA.beneficios||[], prop, pais);
-  const hall = (DATA.hallazgos||[]).filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||(r['País']||r['Pais'])===pais));
-  const sc   = (DATA.sinCanje||[]).filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||(r['País']||r['Pais'])===pais));
-  const errDet  = (DATA.tiposErrorDetalle||[]).filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||r['País']===pais));
-  const tiersDet = (DATA.tiersDetalle||[]).filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||r['País']===pais));
-  const redTier  = (DATA.redencionPorTier||[]).filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||r['País']===pais));
-  const pers = periodosSorted(af);
-  document.getElementById('rango-periodo').textContent =
-    pers.length ? 'Período: '+pers[0]+(pers.length>1?' → '+pers[pers.length-1]:'') : '';
-  renderHeroAdopcion(af, ben, errDet);
-  renderHeroOperacion(af, ben);
-  renderEmbudo(af, ben);
-  renderBeneficios(ben);
-  renderSemaforo(errDet);
-  renderTiers(tiersDet, redTier, af);
-  renderHallazgos(hall);
-  renderSinCanje(sc);
-  renderEvolucion();
-  renderHistorico();
-}
-
-// ── HERO ADOPCIÓN ────────────────────────────────────────────
-
-function renderHeroAdopcion(af, ben, errDet){
-  const totH = af.reduce((a,r)=>a+getA(r,'huespedes'),0);
-  const totC = af.reduce((a,r)=>a+getA(r,'check_ins'),0);
-  const totA = af.reduce((a,r)=>a+getA(r,'afiliados_cb'),0);
-  const totN = af.reduce((a,r)=>a+getA(r,'nuevos'),0);
-  const inc  = errDet.filter(r=>r.Error_Type==='LEAKAGE'||r.Error_Type==='MISUSE').length;
-  const totMB = errDet.length;
-  const pPenet = totC>0 ? pct(totA,totC) : 0;
-  const pAdq   = totH>0 ? pct(totN,totH) : 0;
-  const pInc   = totMB>0 ? pct(inc,totMB) : 0;
-
-  document.getElementById('hero-adopcion').innerHTML = [
-    { sem: pPenet<15?'rojo':'verde', label:'Penetración',
-      kpi:'KPI: Participación por destino',
-      q:'Afiliados vs check-ins', val:pPenet+'%',
-      desc:fmt(totA)+' afiliados de '+fmt(totC)+' check-ins en CB', modal:'afiliados' },
-    { sem: pAdq>3?'verde':'amarillo', label:'Adquisición',
-      kpi:'KPI: Tasa de registro / huéspedes',
-      q:'Nuevos afiliados captados', val:fmt(totN),
-      desc:pAdq+'% de '+fmt(totH)+' huéspedes se afiliaron este período', modal:'crecimiento' },
-    { sem: pInc<5?'verde':(pInc<15?'amarillo':'rojo'), label:'Incidencias operativas',
-      kpi:'KPI: Tasa de incidencias (aprox.)',
-      q:'Registros con error de botón', val:fmt(inc),
-      desc:pInc+'% del total en MATCH_BASE (LEAKAGE + MISUSE)', modal:'operativo' },
-  ].map(c=>`<div class="hero-card" onclick="abrirModal('${c.modal}')">
-    <div class="hero-etiqueta"><span class="semaforo s-${c.sem}"></span>${c.label}</div>
-    <div class="hero-kpi-tag">${c.kpi}</div>
-    <div class="hero-q">${c.q}</div>
-    <div class="hero-num">${c.val}</div>
-    <div class="hero-desc">${c.desc}</div>
-    <span class="hero-link">Ver detalle →</span>
-  </div>`).join('');
-}
-
-// ── HERO OPERACIÓN ───────────────────────────────────────────
-
-function renderHeroOperacion(af, ben){
-  const totA     = af.reduce((a,r)=>a+getA(r,'afiliados_cb'),0);
-  const totBen   = ben.reduce((a,r)=>a+(parseFloat(r['_af_con_ben'])||0),0);
-  const totTrans = ben.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0),0);
-  const totPerks = ben.reduce((a,r)=>a+(parseFloat(r['_toallas_ok'])||0)+(parseFloat(r['_desayunos_ok'])||0)+(parseFloat(r['_tarifa_ok'])||0),0);
-  // %OK ponderado por transacciones
-  const sumOK = ben.reduce((a,r)=>{
-    const t=parseFloat(r['_total_trans'])||0, ok=parseFloat(r['_pct_ok'])||0;
-    return a+t*(ok/100);
-  },0);
-  const pOK = totTrans>0 ? Math.round(sumOK/totTrans*1000)/10 : 0;
-  const pCob = totA>0 ? pct(totBen,totA) : 0;
-
-  document.getElementById('hero-operacion').innerHTML = [
-    { sem:'naranja', label:'Perks redimidos',
-      kpi:'KPI: Número de perks redimidos correctamente',
-      q:'Beneficios con registro OK en CB', val:fmt(totPerks),
-      desc:'Toallas + desayunos + tarifa loyalty correctamente registrados', modal:'beneficios' },
-    { sem: pCob<50?'rojo':(pCob<80?'amarillo':'verde'), label:'Cobertura',
-      kpi:'KPI: % miembros que redimen',
-      q:'Afiliados con ≥1 beneficio registrado', val:pCob+'%',
-      desc:fmt(totBen)+' de '+fmt(totA)+' afiliados confirmados', modal:'beneficios' },
-    { sem: pOK===0&&totTrans>0?'rojo':(pOK<70?'rojo':(pOK<90?'amarillo':'verde')), label:'Calidad registro',
-      kpi:'KPI: % redenciones correctamente marcadas',
-      q:'Transacciones loyalty sin error', val:totTrans>0?pOK+'%':'Sin trans',
-      desc:fmt(totTrans)+' transacciones loyalty registradas en CB', modal:'operativo' },
-  ].map(c=>`<div class="hero-card" onclick="abrirModal('${c.modal}')">
-    <div class="hero-etiqueta"><span class="semaforo s-${c.sem==='naranja'?'verde':c.sem}"></span>${c.label}</div>
-    <div class="hero-kpi-tag">${c.kpi}</div>
-    <div class="hero-q">${c.q}</div>
-    <div class="hero-num">${c.val}</div>
-    <div class="hero-desc">${c.desc}</div>
-    <span class="hero-link">Ver detalle →</span>
-  </div>`).join('');
-}
-
-// ── EMBUDO ───────────────────────────────────────────────────
-
-function renderEmbudo(af, ben){
-  const h  = af.reduce((a,r)=>a+getA(r,'huespedes'),0);
-  const c  = af.reduce((a,r)=>a+getA(r,'check_ins'),0);
-  const l  = af.reduce((a,r)=>a+getA(r,'llegadas_akin'),0);
-  const cb = af.reduce((a,r)=>a+getA(r,'afiliados_cb'),0);
-  const b  = ben.reduce((a,r)=>a+(parseFloat(r['_af_con_ben'])||0),0);
-  const t  = ben.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0),0);
-  const ok = ben.reduce((a,r)=>{
-    const trans=parseFloat(r['_total_trans'])||0, pOK=parseFloat(r['_pct_ok'])||0;
-    return a+trans*(pOK/100);
-  },0);
-
-  const pasos = [
-    {ico:'🏠',num:h,label:'HUÉSPEDES\nTOTALES',base:null},
-    {ico:'📋',num:c,label:'CHECK-INS\nEN CB',base:h},
-    {ico:'🎫',num:l,label:'LLEGADAS\nEN AKIN',base:c},
-    {ico:'✅',num:cb,label:'CONFIRMADOS\nEN CB',base:l},
-    {ico:'🎁',num:b,label:'CON BENEFICIO\nREGISTRADO',base:cb},
-    {ico:'⭐',num:Math.round(ok),label:'REGISTRADO\nCORRECTAMENTE',base:t},
-  ];
-  document.getElementById('embudo').innerHTML = pasos.map((p,i)=>`
-    ${i>0?'<span class="embudo-flecha">›</span>':''}
-    <div class="embudo-paso">
-      <div class="ico">${p.ico}</div>
-      <div class="num${i>0?' hi':''}">${fmt(p.num)}</div>
-      <div class="etiq">${p.label.replace('\n','<br>')}</div>
-      ${p.base&&p.base>0?`<div class="pct">${pct(p.num,p.base)}% del paso anterior</div>`:''}
-    </div>`).join('');
-}
-
-// ── BENEFICIOS ───────────────────────────────────────────────
-
-function renderBeneficios(ben){
-  const toReg = sumF(ben,'Toallas registradas');
-  const toOK  = ben.reduce((a,r)=>a+(parseFloat(r['_toallas_ok'])||0),0);
-  const toErr = ben.reduce((a,r)=>a+(parseFloat(r['_toallas_err'])||0),0);
-  const deReg = sumF(ben,'Desayunos Total');
-  const deOK  = ben.reduce((a,r)=>a+(parseFloat(r['_desayunos_ok'])||0),0);
-  const deErr = ben.reduce((a,r)=>a+(parseFloat(r['_desayunos_err'])||0),0);
-  const taOK  = ben.reduce((a,r)=>a+(parseFloat(r['_tarifa_ok'])||0),0);
-  const taErr = ben.reduce((a,r)=>a+(parseFloat(r['_tarifa_err'])||0),0);
-
-  document.getElementById('ben-grid').innerHTML = [
-    {t:'🧺 Toallas',num:toReg,sub:'Backpacker o superior · $0 al afiliado · botón CB',ok:toOK,err:toErr,m:'toallas'},
-    {t:'🍳 Desayunos',num:deReg,sub:'Solo Viajero · 3+ noches · $0 al afiliado · botón CB',ok:deOK,err:deErr,m:'desayunos'},
-    {t:'🏷️ Tarifa alojamiento',num:taOK+taErr,sub:'Descuento según tier · se aplica en tarifa de reserva CB',ok:taOK,err:taErr,m:'tarifa'},
-  ].map(c=>`<div class="ben-card" onclick="abrirModal('${c.m}')">
-    <div class="ben-titulo">${c.t}</div>
-    <div class="ben-num">${fmt(c.num)}</div>
-    <div class="ben-sub">${c.sub}</div>
-    <div class="ben-badges">
-      <span class="badge badge-ok">${fmt(c.ok)} OK</span>
-      <span class="badge badge-err">${fmt(c.err)} con error</span>
-    </div></div>`).join('');
-}
-
-// ── SEMÁFORO ─────────────────────────────────────────────────
-
-function renderSemaforo(errDet){
-  const conteo = {};
-  errDet.forEach(r=>{ conteo[r.Error_Type]=(conteo[r.Error_Type]||0)+1; });
-  const total  = Object.values(conteo).reduce((a,b)=>a+b,0);
-  const noLoy  = conteo['NO_LOYALTY']||0;
-  const tipos  = [
-    {tipo:'SIN_CANJE',   color:'#9ca3af',
-     label:'Afiliado sin beneficio registrado',
-     desc:'El afiliado se hospedó pero recepción no registró ninguno de los 3 beneficios en CB (toalla, desayuno ni tarifa de alojamiento)'},
-    {tipo:'LEAKAGE',     color:'#d97706',
-     label:'Botón de toalla o desayuno usado en huésped sin membresía',
-     desc:'Se presionó un botón loyalty de beneficio físico para un huésped que no es afiliado AKIN — error de registro que contamina métricas'},
-    {tipo:'MISUSE',      color:'#dc2626',
-     label:'Tarifa de alojamiento loyalty aplicada a no afiliado',
-     desc:'Se aplicó descuento de alojamiento loyalty a un huésped sin membresía AKIN — impacto directo en ingreso de la propiedad'},
-    {tipo:'TIER_INCORRECTO',color:'#d97706',
-     label:'Beneficio que no corresponde al tier del afiliado',
-     desc:'El afiliado es real pero recibió un beneficio incorrecto para su tier (ej: desayuno a Backpacker, que solo tiene toalla)'},
-    {tipo:'REVISAR',     color:'#6b7280',
-     label:'Requiere revisión manual',
-     desc:'Combinación ambigua de datos que no encaja en ninguna categoría — revisar caso a caso en MATCH_BASE'},
-  ];
-  let html = '';
-  if(noLoy>0) html += `<div class="sem-tip">ℹ️ <b>${fmt(noLoy)} reservas</b> son huéspedes regulares sin membresía — no son errores. Los afiliados loyalty representaron el <b>${pct(total-noLoy,total)}%</b> del total en MATCH_BASE.</div>`;
-  tipos.forEach(t=>{
-    const cnt = conteo[t.tipo]||0;
-    if(!cnt) return;
-    html += `<div class="sem-fila"><div class="sem-dot" style="background:${t.color}"></div><div class="sem-info"><div class="sem-label">${t.label}</div><div class="sem-desc">${t.desc}</div></div><div class="sem-count">${fmt(cnt)}</div></div>`;
-  });
-  if(Object.keys(conteo).some(k=>k!=='NO_LOYALTY'&&k!=='OK'&&(conteo[k]||0)>0)){
-    html += `<div class="sem-tip" style="margin-top:6px">💡 <b>Raíz del problema:</b> Los 3 beneficios se registran de forma distinta en CB — toalla y desayuno con <b>botones específicos</b> ($0 al afiliado) y tarifa con la <b>tarifa de alojamiento loyalty</b> según el tier. Usar el botón equivocado o en el huésped equivocado genera todos estos errores.</div>`;
-  }
-  document.getElementById('semaforo-wrap').innerHTML = html;
-}
-
-// ── TIERS ────────────────────────────────────────────────────
-
-function renderTiers(tiersDet, redTier, af){
-  const llegadas    = af.reduce((a,r)=>a+getA(r,'llegadas_akin'),0);
-  const confirmados = af.reduce((a,r)=>a+getA(r,'afiliados_cb'),0);
-  document.getElementById('tier-nota').innerHTML =
-    `ℹ️ <b>Fuentes:</b> ${fmt(llegadas)} llegadas AKIN y ${fmt(confirmados)} confirmados CB (01_Loyalty_Afiliados). Tiers → MATCH_BASE.<br>
-     <b>Redención correcta</b> = Error_Type OK únicamente · <b>Con error</b> = LEAKAGE/MISUSE/TIER_INCORRECTO · <b>Sin registro</b> = SIN_CANJE`;
-
-  const ORDEN = ['Tourist','Backpacker','Explorer','Nomad','Viajero'];
-  const BENS  = {
-    Tourist:    'Tarifa 15%',
-    Backpacker: 'Tarifa 15% + Toalla',
-    Explorer:   'Tarifa 20% + Toalla',
-    Nomad:      'Tarifa 20% + Toalla',
-    Viajero:    'Tarifa 25% + Toalla + Desayuno'
-  };
-
-  // Tabla resumen por tier (agrupado, sin filtro propiedad para ver el global)
-  const redAgr = {};
-  redTier.forEach(r=>{
-    if(!redAgr[r.Tier]) redAgr[r.Tier]={Total:0,OK:0,Con_Error:0,Sin_Registro:0};
-    redAgr[r.Tier].Total        += r.Total        ||0;
-    redAgr[r.Tier].OK           += r.OK           ||0;
-    redAgr[r.Tier].Con_Error    += r.Con_Error    ||0;
-    redAgr[r.Tier].Sin_Registro += r.Sin_Registro ||0;
-  });
-
-  let html = '';
-
-  if(Object.keys(redAgr).length>0){
-    html += `<table class="red-tier-tabla"><thead><tr>
-      <th>Tier</th><th>Beneficios</th><th>Total AKIN</th>
-      <th>✅ Redención OK</th><th>⚠️ Con error</th><th>❌ Sin registro</th>
-      <th>% Redención correcta</th>
-    </tr></thead><tbody>`;
-    ORDEN.filter(t=>redAgr[t]).forEach(tier=>{
-      const d   = redAgr[tier];
-      const pOK = d.Total>0 ? Math.round(d.OK/d.Total*100) : 0;
-      const col = pOK>50?'#16a34a':(pOK>0?'#d97706':'#dc2626');
-      html += `<tr>
-        <td><b>${tier}</b></td>
-        <td style="font-size:11px;color:var(--text-muted)">${BENS[tier]||''}</td>
-        <td>${fmt(d.Total)}</td>
-        <td style="color:#16a34a;font-weight:700">${fmt(d.OK)}</td>
-        <td style="color:#d97706;font-weight:${d.Con_Error>0?700:400}">${fmt(d.Con_Error)}</td>
-        <td style="color:#dc2626;font-weight:${d.Sin_Registro>0?700:400}">${fmt(d.Sin_Registro)}</td>
-        <td><span class="red-bar" style="width:${Math.min(pOK,80)}px;background:${col}"></span>
-            <b style="color:${col}">${pOK}%</b></td>
-      </tr>`;
-    });
-    html += '</tbody></table>';
-  }
-
-  // Detalle por propiedad
-  const porProp = {};
-  redTier.forEach(r=>{
-    if(!porProp[r.Propiedad]) porProp[r.Propiedad]={};
-    const key = r.Tier;
-    if(!porProp[r.Propiedad][key]) porProp[r.Propiedad][key]={Total:0,OK:0,Con_Error:0,Sin_Registro:0,Pct_Period:0};
-    porProp[r.Propiedad][key].Total        += r.Total        ||0;
-    porProp[r.Propiedad][key].OK           += r.OK           ||0;
-    porProp[r.Propiedad][key].Con_Error    += r.Con_Error    ||0;
-    porProp[r.Propiedad][key].Sin_Registro += r.Sin_Registro ||0;
-  });
-
-  // % del período por propiedad
-  Object.keys(porProp).forEach(prop=>{
-    const tiers = porProp[prop];
-    const total = Object.values(tiers).reduce((a,t)=>a+t.Total,0);
-    Object.keys(tiers).forEach(tier=>{ tiers[tier].Pct_Period = total>0?Math.round(tiers[tier].Total/total*100):0; });
-  });
-
-  Object.keys(porProp).sort().forEach(prop=>{
-    const tiers = porProp[prop];
-    const total = Object.values(tiers).reduce((a,t)=>a+t.Total,0);
-    const topTier = Object.entries(tiers).sort((a,b)=>b[1].Total-a[1].Total)[0];
-    html += `<div class="tier-propiedad">
-      <div class="tier-prop-titulo">${prop}</div>
-      <div class="tier-prop-sub">Tier más frecuente: <b style="color:var(--naranja)">${topTier?topTier[0]:'—'}</b> · ${fmt(total)} afiliados AKIN</div>`;
-    ORDEN.filter(t=>tiers[t]).forEach(tier=>{
-      const d   = tiers[tier];
-      const pOK  = d.Total>0 ? Math.round(d.OK/d.Total*100) : 0;
-      const pErr = d.Total>0 ? Math.round(d.Con_Error/d.Total*100) : 0;
-      const pSin = d.Total>0 ? Math.round(d.Sin_Registro/d.Total*100) : 0;
-      html += `<div class="tier-fila">
-        <div class="tier-izq">
-          <div class="tier-nombre">${tier}</div>
-          <div class="tier-bens">${BENS[tier]||''}</div>
-        </div>
-        <div class="tier-barras">
-          <div class="tier-barra-row">
-            <span class="tier-barra-label">OK</span>
-            <div class="tier-bar-wrap"><div class="tier-bar bar-verde" style="width:${pOK}%"></div></div>
-            <span style="font-size:11px;font-weight:700;color:#16a34a;width:35px">${pOK}%</span>
-          </div>
-          ${pErr>0?`<div class="tier-barra-row">
-            <span class="tier-barra-label">Con error</span>
-            <div class="tier-bar-wrap"><div class="tier-bar bar-amarillo" style="width:${pErr}%"></div></div>
-            <span style="font-size:11px;font-weight:700;color:#d97706;width:35px">${pErr}%</span>
-          </div>`:''}
-          ${pSin>0?`<div class="tier-barra-row">
-            <span class="tier-barra-label">Sin reg.</span>
-            <div class="tier-bar-wrap"><div class="tier-bar bar-rojo" style="width:${pSin}%"></div></div>
-            <span style="font-size:11px;font-weight:700;color:#dc2626;width:35px">${pSin}%</span>
-          </div>`:''}
-        </div>
-        <div class="tier-der">
-          <div class="tier-total">${fmt(d.Total)}</div>
-          <div class="tier-pct-periodo">${d.Pct_Period}% del período</div>
-        </div>
-      </div>`;
-    });
-    html += '</div>';
-  });
-
-  if(!html) html = '<p style="color:var(--text-muted);font-size:13px">No hay datos de tiers para el filtro seleccionado.</p>';
-  document.getElementById('tiers-seccion').innerHTML = html;
-}
-
-// ── EVOLUCIÓN ─────────────────────────────────────────────────
-
-function renderEvolucion(){
-  const prop  = document.getElementById('fil-propiedad').value;
-  const pais  = document.getElementById('fil-pais').value;
-  const desde = document.getElementById('evo-desde').value;
-  const hasta = document.getElementById('evo-hasta').value;
-  let af  = fil(DATA.afiliados||[], prop, pais);
-  let ben = fil(DATA.beneficios||[], prop, pais);
-  if(desde){ af=af.filter(r=>r['Período']>=desde); ben=ben.filter(r=>r['Período']>=desde); }
-  if(hasta){ af=af.filter(r=>r['Período']<=hasta); ben=ben.filter(r=>r['Período']<=hasta); }
-  const pers  = periodosSorted(af);
-  const props = uniq(af.map(r=>r['Propiedad']));
-  if(!pers.length){
-    document.getElementById('charts-grid').innerHTML='<p style="color:var(--text-muted);font-size:13px">No hay datos para el rango seleccionado.</p>';
-    return;
-  }
-  const COLORS = ['#F04B24','#ff6b47','#d97706','#16a34a','#3b82f6','#8b5cf6'];
-
-  const pt = p => ({
-    penet:  (()=>{ const a=af.filter(r=>r['Período']===p); const c=a.reduce((x,r)=>x+getA(r,'check_ins'),0); const cb=a.reduce((x,r)=>x+getA(r,'afiliados_cb'),0); return c>0?pct(cb,c):0; })(),
-    adq:    (()=>{ const a=af.filter(r=>r['Período']===p); const h=a.reduce((x,r)=>x+getA(r,'huespedes'),0); const n=a.reduce((x,r)=>x+getA(r,'nuevos'),0); return h>0?pct(n,h):0; })(),
-    nuevos: af.filter(r=>r['Período']===p).reduce((a,r)=>a+getA(r,'nuevos'),0),
-    ok:     (()=>{ const b=ben.filter(r=>r['Período']===p); const t=b.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0),0); const ok=b.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0)*((parseFloat(r['_pct_ok'])||0)/100),0); return t>0?Math.round(ok/t*1000)/10:0; })(),
-    error:  (()=>{ const b=ben.filter(r=>r['Período']===p); const t=b.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0),0); const er=b.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0)*((parseFloat(r['_pct_error'])||0)/100),0); return t>0?Math.round(er/t*1000)/10:0; })(),
-    toallas: ben.filter(r=>r['Período']===p).reduce((a,r)=>a+(parseFloat(r['_toallas_ok'])||0),0),
-    desay:   ben.filter(r=>r['Período']===p).reduce((a,r)=>a+(parseFloat(r['_desayunos_ok'])||0),0),
-    tarifa:  ben.filter(r=>r['Período']===p).reduce((a,r)=>a+(parseFloat(r['_tarifa_ok'])||0),0),
-  });
-  const pts = pers.map(p=>({p,d:pt(p)}));
-
-  const graficas = [
-    {id:'g-penet',t:'Penetración de afiliados (%)',sub:'KPI Adopción: % afiliados de check-ins',type:'line',
-     datasets:[{label:'% Penetración',data:pts.map(x=>x.d.penet),borderColor:'#F04B24',backgroundColor:'rgba(240,75,36,.1)',fill:true,tension:.4}]},
-    {id:'g-adq',t:'Tasa de adquisición (%)',sub:'KPI Adopción: % huéspedes que se afilian',type:'line',
-     datasets:[{label:'% Adquisición',data:pts.map(x=>x.d.adq),borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.1)',fill:true,tension:.4}]},
-    {id:'g-nuevos',t:'Nuevos afiliados',sub:'KPI Adopción: registros nuevos al programa',type:'bar',
-     datasets:[{label:'Nuevos',data:pts.map(x=>x.d.nuevos),backgroundColor:'#F04B24',borderRadius:6}]},
-    {id:'g-calidad',t:'Calidad de registro (%)',sub:'KPI Operación: % OK vs % Error en trans loyalty',type:'line',
-     datasets:[
-       {label:'% OK',data:pts.map(x=>x.d.ok),borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.1)',fill:true,tension:.4},
-       {label:'% Error',data:pts.map(x=>x.d.error),borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,.05)',fill:true,tension:.4}
-     ]},
-    {id:'g-perks',t:'Perks correctamente registrados',sub:'KPI Operación: perks OK por tipo',type:'bar',stacked:true,
-     datasets:[
-       {label:'Toallas OK',data:pts.map(x=>x.d.toallas),backgroundColor:'#F04B24',borderRadius:4},
-       {label:'Desayunos OK',data:pts.map(x=>x.d.desay),backgroundColor:'#ff6b47',borderRadius:4},
-       {label:'Tarifa OK',data:pts.map(x=>x.d.tarifa),backgroundColor:'#ffc4b8',borderRadius:4}
-     ]},
-    {id:'g-prop',t:'Afiliados CB por destino',sub:'KPI Adopción: participación por propiedad',type:'bar',
-     datasets:props.map((pr,i)=>({
-       label:pr,backgroundColor:COLORS[i%COLORS.length],borderRadius:6,
-       data:pers.map(p=>af.filter(r=>r['Período']===p&&r['Propiedad']===pr).reduce((a,r)=>a+getA(r,'afiliados_cb'),0))
-     }))},
-  ];
-
-  document.getElementById('charts-grid').innerHTML = graficas.map(g=>`
-    <div class="chart-card">
-      <div class="chart-titulo">${g.t}</div>
-      <div class="chart-sub">${g.sub}</div>
-      <div class="chart-wrap"><canvas id="${g.id}"></canvas></div>
-    </div>`).join('');
-
-  graficas.forEach(g=>{
-    if(CI[g.id]) CI[g.id].destroy();
-    CI[g.id] = new Chart(document.getElementById(g.id),{
-      type: g.type||'line',
-      data: {labels:pers, datasets:g.datasets},
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:g.datasets.length>1,labels:{font:{family:'Outfit'},boxWidth:12,padding:8}}},
-        scales:{
-          x:{ticks:{font:{family:'Outfit',size:10}},grid:{display:false}},
-          y:{ticks:{font:{family:'Outfit',size:10}},grid:{color:'#f0f0ee'},beginAtZero:true,stacked:g.stacked||false}
-        }
-      }
-    });
-  });
-}
-
-// ── HISTÓRICO ─────────────────────────────────────────────────
-
-function renderHistorico(){
-  const prop = document.getElementById('fil-propiedad').value;
-  const hP   = document.getElementById('hist-periodo').value;
-  const hPa  = document.getElementById('hist-pais').value;
-  let hist   = (DATA.historico||[]).filter(r=>
-    (!prop||r['Propiedad']===prop)&&
-    (!hP  ||r['Período']===hP)&&
-    (!hPa ||(r['País']||r['Pais'])===hPa)
-  );
-  // Tomar snapshot más reciente por período+propiedad
-  const snap = {};
-  hist.forEach(r=>{
-    const k = r['Período']+'||'+r['Propiedad'];
-    if(!snap[k]||r['Fecha_Snapshot']>snap[k]['Fecha_Snapshot']) snap[k]=r;
-  });
-  const rows = Object.values(snap).sort((a,b)=>
-    a['Período']<b['Período']?-1:a['Período']>b['Período']?1:
-    a['Propiedad']<b['Propiedad']?-1:1
-  );
-  const wrap = document.getElementById('hist-tabla-wrap');
-  if(!rows.length){
-    wrap.innerHTML='<p style="color:var(--text-muted);font-size:13px;padding:16px">No hay datos históricos para el filtro seleccionado.</p>';
-    document.getElementById('hist-charts').innerHTML='';
-    return;
-  }
-  wrap.innerHTML = `<table class="hist-tabla"><thead><tr>
-    <th>Período</th><th>Propiedad</th><th>País</th>
-    <th>Huéspedes</th><th>Check-ins</th><th>Afiliados CB</th>
-    <th>% Penetración</th><th>Nuevos</th><th>% Adquisición</th>
-    <th>Trans.</th><th>% OK</th><th>% Error</th>
-  </tr></thead><tbody>${rows.map(r=>`<tr>
-    <td><span class="badge-per">${r['Período']}</span></td>
-    <td>${r['Propiedad']}</td><td>${r['País']||r['Pais']||''}</td>
-    <td>${fmt(r['Huespedes_Totales'])}</td>
-    <td>${fmt(r['Check_ins'])}</td>
-    <td>${fmt(r['Afiliados_CB'])}</td>
-    <td class="hi">${fmtPct(r['Pct_Penetracion_Real'])}</td>
-    <td class="hi">${fmt(r['Nuevos_Afiliados'])}</td>
-    <td>${fmtPct(r['Pct_Adquisicion'])}</td>
-    <td>${fmt(r['Total_Trans'])}</td>
-    <td>${fmtPct(r['Pct_OK'])}</td>
-    <td>${fmtPct(r['Pct_Error'])}</td>
-  </tr>`).join('')}</tbody></table>`;
-
-  const pers2  = uniq(rows.map(r=>r['Período'])).sort();
-  const props2 = uniq(rows.map(r=>r['Propiedad']));
-  const COLORS = ['#F04B24','#ff6b47','#d97706','#16a34a'];
-  const hcG = [
-    {id:'hc-penet',t:'% Penetración histórica',sub:'KPI Adopción: evolución por período',type:'line',
-     datasets:props2.map((pr,i)=>({
-       label:pr,tension:.4,spanGaps:true,borderColor:COLORS[i%COLORS.length],fill:false,
-       data:pers2.map(p=>{ const f=rows.find(r=>r['Período']===p&&r['Propiedad']===pr); return f?parseFloat(f['Pct_Penetracion_Real'])||0:null; })
-     }))},
-    {id:'hc-nuevos',t:'Nuevos afiliados histórico',sub:'KPI Adopción: registros nuevos período a período',type:'bar',
-     datasets:props2.map((pr,i)=>({
-       label:pr,borderRadius:6,spanGaps:true,backgroundColor:COLORS[i%COLORS.length],
-       data:pers2.map(p=>{ const f=rows.find(r=>r['Período']===p&&r['Propiedad']===pr); return f?parseFloat(f['Nuevos_Afiliados'])||0:null; })
-     }))},
-  ];
-  document.getElementById('hist-charts').innerHTML = hcG.map(g=>`
-    <div class="chart-card">
-      <div class="chart-titulo">${g.t}</div>
-      <div class="chart-sub">${g.sub}</div>
-      <div class="chart-wrap"><canvas id="${g.id}"></canvas></div>
-    </div>`).join('');
-  hcG.forEach(g=>{
-    if(CI[g.id]) CI[g.id].destroy();
-    CI[g.id] = new Chart(document.getElementById(g.id),{
-      type:g.type,data:{labels:pers2,datasets:g.datasets},
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:props2.length>1,labels:{font:{family:'Outfit'},boxWidth:12,padding:8}}},
-        scales:{x:{ticks:{font:{family:'Outfit',size:10}},grid:{display:false}},
-                y:{ticks:{font:{family:'Outfit',size:10}},grid:{color:'#f0f0ee'},beginAtZero:true}}
-      }
-    });
-  });
-}
-
-// ── HALLAZGOS ─────────────────────────────────────────────────
-
-function renderHallazgos(hall){
-  const el = document.getElementById('hallazgos-lista');
-  if(!hall.length){
-    el.innerHTML='<p style="color:var(--text-muted);font-size:13px">No hay hallazgos para el filtro seleccionado.</p>';
-    return;
-  }
-  function sevClass(ico){
-    if(!ico) return 'sev-info';
-    if(ico.includes('🔴')) return 'sev-rojo';
-    if(ico.includes('⚠️')) return 'sev-amarillo';
-    if(ico.includes('✅')) return 'sev-verde';
-    return 'sev-info';
-  }
-  el.innerHTML = hall.map(h=>`<div class="hallazgo ${sevClass(h['Severidad']||'')}">
-    <div class="hallazgo-ico">${h['Severidad']||'ℹ️'}</div>
-    <div>
-      <div class="hallazgo-titulo">${h['Hallazgo']||''}</div>
-      <div class="hallazgo-meta">${h['Categoría']||''} · ${h['Propiedad']||''} · ${h['Período']||''}</div>
-      <div class="hallazgo-accion">→ ${h['Acción sugerida']||''}</div>
-    </div>
-    <div class="hallazgo-metrica">${h['Métrica']||''}</div>
-  </div>`).join('');
-}
-
-// ── SIN CANJE ─────────────────────────────────────────────────
-
-function renderSinCanje(sc){
-  document.getElementById('sincanje-total').textContent = sc.length;
-  const tourist = sc.filter(r=>(r['Tier']||'').toLowerCase().includes('tourist')).length;
-  const tabla   = sc.filter(r=>!(r['Tier']||'').toLowerCase().includes('tourist'));
-  document.getElementById('sincanje-cuerpo').innerHTML = `
-    <div class="sincanje-split">
-      <div class="sincanje-col">
-        <div class="sincanje-num">${fmt(tourist)}</div>
-        <div class="sincanje-label">🎫 Tier Tourist</div>
-        <span class="sincanje-badge" style="background:#dcfce7;color:#15803d">✅ Es lo esperado</span>
-        <div class="sincanje-desc" style="margin-top:8px">Solo reciben descuento de tarifa (15%) — toalla y desayuno no aplican para su tier</div>
-      </div>
-      <div class="sincanje-col">
-        <div class="sincanje-num" style="color:var(--rojo)">${fmt(tabla.length)}</div>
-        <div class="sincanje-label">⚠️ Sin beneficio registrado</div>
-        <span class="sincanje-badge" style="background:#fee2e2;color:#dc2626">Requiere revisión</span>
-        <div class="sincanje-desc" style="margin-top:8px">Backpacker o superior — deberían tener toalla y/o desayuno registrado en CB</div>
-      </div>
-    </div>
-    ${tabla.length ? `<div class="sincanje-tabla-wrap"><table class="sincanje-tabla">
-      <thead><tr><th>Nombre</th><th>Tier</th><th>Propiedad</th><th>Período</th><th>Noches</th><th># Reserva</th></tr></thead>
-      <tbody>${tabla.map(r=>`<tr>
-        <td>${r['Nombre']||'—'}</td>
-        <td><b>${r['Tier']||'—'}</b></td>
-        <td>${r['Propiedad']||'—'}</td>
-        <td>${r['Período']||'—'}</td>
-        <td>${r['Noches']||'—'}</td>
-        <td>${r['# Reserva']||'—'}</td>
-      </tr>`).join('')}</tbody>
-    </table></div>` : '<p style="padding:16px;font-size:13px;color:var(--text-muted)">No hay afiliados Backpacker+ sin beneficio para este filtro.</p>'}`;
-}
-
-function toggleSinCanje(){
-  const c = document.getElementById('sincanje-cuerpo');
-  const b = document.getElementById('sincanje-toggle-btn');
-  c.classList.toggle('open');
-  b.textContent = c.classList.contains('open') ? '▲' : '▼';
-}
-
-// ── MODALES ───────────────────────────────────────────────────
-
-function abrirModal(tipo){
-  const prop = document.getElementById('fil-propiedad').value;
-  const pais = document.getElementById('fil-pais').value;
-  const af   = fil(DATA.afiliados||[], prop, pais);
-  const ben  = fil(DATA.beneficios||[], prop, pais);
-  const errDet = (DATA.tiposErrorDetalle||[]).filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||r['País']===pais));
-
-  const totH  = af.reduce((a,r)=>a+getA(r,'huespedes'),0);
-  const totC  = af.reduce((a,r)=>a+getA(r,'check_ins'),0);
-  const totL  = af.reduce((a,r)=>a+getA(r,'llegadas_akin'),0);
-  const totA  = af.reduce((a,r)=>a+getA(r,'afiliados_cb'),0);
-  const totN  = af.reduce((a,r)=>a+getA(r,'nuevos'),0);
-  const totB  = ben.reduce((a,r)=>a+(parseFloat(r['_af_con_ben'])||0),0);
-  const totT  = ben.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0),0);
-  const totOK = ben.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0)*((parseFloat(r['_pct_ok'])||0)/100),0);
-  const totEr = ben.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0)*((parseFloat(r['_pct_error'])||0)/100),0);
-  const toOK  = ben.reduce((a,r)=>a+(parseFloat(r['_toallas_ok'])||0),0);
-  const toErr = ben.reduce((a,r)=>a+(parseFloat(r['_toallas_err'])||0),0);
-  const deOK  = ben.reduce((a,r)=>a+(parseFloat(r['_desayunos_ok'])||0),0);
-  const deErr = ben.reduce((a,r)=>a+(parseFloat(r['_desayunos_err'])||0),0);
-  const taOK  = ben.reduce((a,r)=>a+(parseFloat(r['_tarifa_ok'])||0),0);
-  const taErr = ben.reduce((a,r)=>a+(parseFloat(r['_tarifa_err'])||0),0);
-  const pOK   = totT>0 ? Math.round(totOK/totT*1000)/10 : 0;
-
-  const m = {
-    afiliados:`<div class="modal-titulo">Penetración de afiliados</div>
-      <div class="modal-sub">KPI Adopción: participación por destino · tasa de identificación en recepción</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Huéspedes totales</div><div class="valor">${fmt(totH)}</div></div>
-        <div class="modal-kpi"><div class="label">Check-ins CB</div><div class="valor">${fmt(totC)}</div></div>
-        <div class="modal-kpi"><div class="label">Llegadas en AKIN</div><div class="valor naranja">${fmt(totL)}</div></div>
-        <div class="modal-kpi"><div class="label">Confirmados en CB</div><div class="valor naranja">${fmt(totA)}</div></div>
-        <div class="modal-kpi"><div class="label">% Penetración</div><div class="valor naranja">${pct(totA,totC)}%</div></div>
-        <div class="modal-kpi"><div class="label">Match AKIN → CB</div><div class="valor">${pct(totA,totL)}%</div></div>
-      </div>
-      <div class="modal-nota">La diferencia entre llegadas AKIN y confirmados CB es normal — ambos sistemas usan nombres y números de reserva distintos y no siempre hay match exacto.</div>`,
-
-    crecimiento:`<div class="modal-titulo">Tasa de registro / huéspedes</div>
-      <div class="modal-sub">KPI Adopción: cuántos huéspedes se unen al programa</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Nuevos afiliados</div><div class="valor naranja">${fmt(totN)}</div></div>
-        <div class="modal-kpi"><div class="label">% Tasa de registro</div><div class="valor naranja">${pct(totN,totH)}%</div></div>
-        <div class="modal-kpi"><div class="label">Total huéspedes</div><div class="valor">${fmt(totH)}</div></div>
-        <div class="modal-kpi"><div class="label">Total check-ins CB</div><div class="valor">${fmt(totC)}</div></div>
-      </div>`,
-
-    beneficios:`<div class="modal-titulo">% de miembros que redimen</div>
-      <div class="modal-sub">KPI Operación: afiliados que recibieron al menos 1 de los 3 beneficios</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Afiliados confirmados</div><div class="valor">${fmt(totA)}</div></div>
-        <div class="modal-kpi"><div class="label">Con ≥1 beneficio</div><div class="valor naranja">${fmt(totB)}</div></div>
-        <div class="modal-kpi"><div class="label">Sin beneficio</div><div class="valor">${fmt(totA-totB)}</div></div>
-        <div class="modal-kpi"><div class="label">% Cobertura</div><div class="valor naranja">${pct(totB,totA)}%</div></div>
-      </div>
-      <div class="modal-nota">Un afiliado Tourist puede aparecer sin beneficio físico — solo tiene derecho a tarifa de alojamiento. Si tampoco aparece la tarifa, es SIN_CANJE real.</div>`,
-
-    operativo:`<div class="modal-titulo">% redenciones correctamente marcadas</div>
-      <div class="modal-sub">KPI Operación: calidad del registro de los 3 beneficios en Cloudbeds</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Total transacciones loyalty</div><div class="valor">${fmt(totT)}</div></div>
-        <div class="modal-kpi"><div class="label">Correctamente registradas ✅</div><div class="valor ${pOK>50?'naranja':'rojo'}">${fmt(Math.round(totOK))}</div></div>
-        <div class="modal-kpi"><div class="label">Con error de registro ❌</div><div class="valor rojo">${fmt(Math.round(totEr))}</div></div>
-        <div class="modal-kpi"><div class="label">% OK</div><div class="valor ${pOK>50?'naranja':'rojo'}">${totT>0?pOK+'%':'—'}</div></div>
-      </div>
-      ${totT>0&&pOK===0?'<div class="modal-alerta">🔴 <b>0% de transacciones correctas.</b> Hay registros loyalty en CB pero todos tienen errores de operación. Capacitación urgente requerida en todas las propiedades del filtro seleccionado.</div>':''}
-      <div class="modal-nota"><b>Los 3 tipos de error de registro:</b><br>
-        · <b>LEAKAGE:</b> botón toalla/desayuno en huésped sin membresía<br>
-        · <b>MISUSE:</b> tarifa loyalty a no afiliado — impacto directo en revenue<br>
-        · <b>TIER_INCORRECTO:</b> beneficio que no corresponde al tier del afiliado</div>`,
-
-    toallas:`<div class="modal-titulo">🧺 Toallas registradas</div>
-      <div class="modal-sub">Backpacker o superior · botón loyalty en CB · $0 al afiliado</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Total registradas</div><div class="valor">${fmt(sumF(ben,'Toallas registradas'))}</div></div>
-        <div class="modal-kpi"><div class="label">Correctas ($0 a afiliado) ✅</div><div class="valor naranja">${fmt(toOK)}</div></div>
-        <div class="modal-kpi"><div class="label">Cobradas al afiliado ❌</div><div class="valor">${fmt(sumF(ben,'Toallas cobradas a miembro'))}</div></div>
-        <div class="modal-kpi"><div class="label">A no afiliados (LEAKAGE) ❌</div><div class="valor">${fmt(sumF(ben,'Toallas gratis a no miembros'))}</div></div>
-      </div>`,
-
-    desayunos:`<div class="modal-titulo">🍳 Desayunos registrados</div>
-      <div class="modal-sub">Solo tier Viajero · 3+ noches · botón loyalty en CB · $0 al afiliado</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Total registrados</div><div class="valor">${fmt(sumF(ben,'Desayunos Total'))}</div></div>
-        <div class="modal-kpi"><div class="label">Correctos ($0 a afiliado) ✅</div><div class="valor naranja">${fmt(deOK)}</div></div>
-        <div class="modal-kpi"><div class="label">Botón incorrecto ❌</div><div class="valor rojo">${fmt(sumF(ben,'Desayunos Botón Incorrecto'))}</div></div>
-        <div class="modal-kpi"><div class="label">Mal cobrados ❌</div><div class="valor">${fmt(sumF(ben,'Desayunos Mal Cobrados'))}</div></div>
-      </div>
-      <div class="modal-nota">El botón de desayuno loyalty solo aplica para tier Viajero con 3+ noches. Usarlo en otros tiers genera TIER_INCORRECTO. Usarlo en no afiliados genera LEAKAGE.</div>`,
-
-    tarifa:`<div class="modal-titulo">🏷️ Tarifa de alojamiento loyalty</div>
-      <div class="modal-sub">Descuento en reserva según tier · se aplica en tarifa CB, no con botón</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">A afiliados ✅ (correcto)</div><div class="valor naranja">${fmt(taOK)}</div></div>
-        <div class="modal-kpi"><div class="label">A no afiliados ❌ (MISUSE)</div><div class="valor rojo">${fmt(taErr)}</div></div>
-      </div>
-      ${taErr>0?'<div class="modal-alerta">🔴 <b>MISUSE = impacto financiero real.</b> Aplicar tarifa loyalty a un no afiliado significa que la propiedad cobró menos de lo que debía. A diferencia de LEAKAGE (error de registro), aquí hay revenue que no se recuperó.</div>':''}`,
-  };
-
-  const c = m[tipo];
-  if(!c) return;
-  document.getElementById('modal-contenido').innerHTML = c;
-  document.getElementById('modal').classList.add('open');
-}
-
-function cerrarModal(){
-  document.getElementById('modal').classList.remove('open');
-}
-document.getElementById('modal').addEventListener('click', function(e){
-  if(e.target===this) cerrarModal();
-});
-
-init();
-</script>
 </body>
 </html>
