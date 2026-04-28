@@ -2,282 +2,354 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Viajero Hostels — Dashboard Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Viajero · Performance Hub</title>
 <style>
-  :root{
-    --coral:#E84C1E;
-    --coral-dark:#c73d17;
-    --cream:#F5EDD6;
-    --dark:#2C1810;
-    --gray:#8C7B72;
-    --gray-light:#f5f0eb;
-    --white:#fff;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh;}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-  /* HEADER */
-  header{
-    background:var(--dark);
-    padding:20px 40px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:12px;
-  }
-  .logo-wrap{display:flex;align-items:center;gap:14px;}
-  .logo-wrap img{height:44px;object-fit:contain;}
-  .logo-wrap .brand{color:var(--white);}
-  .logo-wrap .brand h1{font-size:18px;font-weight:700;letter-spacing:.3px;}
-  .logo-wrap .brand p{font-size:12px;color:var(--cream);opacity:.8;margin-top:2px;}
-  .header-meta{font-size:12px;color:var(--cream);opacity:.6;}
+:root {
+  --cream:  #F5EDD6;
+  --coral:  #E84C1E;
+  --salmon: #F07B54;
+  --peach:  #F5A98A;
+  --dark:   #2C1810;
+  --mid:    #7A4030;
+  --light:  #FAF3E8;
+  --gray:   #8C7B72;
+  --white:  #FFFFFF;
+}
 
-  /* HERO */
-  .hero{
-    background:linear-gradient(135deg,var(--coral) 0%,#c73d17 100%);
-    padding:48px 40px 40px;
-    text-align:center;
-    color:var(--white);
-  }
-  .hero h2{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px;}
-  .hero p{font-size:15px;opacity:.9;max-width:520px;margin:0 auto;}
+* { margin:0; padding:0; box-sizing:border-box; }
 
-  /* MINI STATS */
-  .mini-stats{
-    display:flex;
-    gap:16px;
-    justify-content:center;
-    flex-wrap:wrap;
-    margin-top:28px;
-  }
-  .mini-stat{
-    background:rgba(255,255,255,.15);
-    border:1px solid rgba(255,255,255,.25);
-    border-radius:12px;
-    padding:14px 22px;
-    min-width:130px;
-    text-align:center;
-  }
-  .mini-stat .val{font-size:24px;font-weight:800;}
-  .mini-stat .lbl{font-size:11px;opacity:.85;margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  min-height: 100vh;
+}
 
-  /* ALERTA */
-  .alert-banner{
-    display:none;
-    margin:24px 40px 0;
-    background:#fff3f0;
-    border:1.5px solid #f97316;
-    border-radius:12px;
-    padding:14px 20px;
-    font-size:13px;
-    color:#c2410c;
-    font-weight:500;
-    text-align:center;
-  }
-  .alert-banner.visible{display:block;}
+header {
+  background: var(--coral);
+  padding: 48px 40px;
+  text-align: center;
+}
 
-  /* MÓDULOS */
-  .section-title{
-    text-align:center;
-    margin:40px 0 8px;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:var(--gray);
-  }
-  .modules{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:20px;
-    padding:16px 40px 48px;
-    max-width:1100px;
-    margin:0 auto;
-  }
-  .module-card{
-    background:var(--white);
-    border-radius:16px;
-    padding:28px 24px;
-    text-decoration:none;
-    color:var(--dark);
-    box-shadow:0 2px 12px rgba(44,24,16,.07);
-    border:2px solid transparent;
-    transition:all .2s ease;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    position:relative;
-    overflow:hidden;
-  }
-  .module-card::before{
-    content:'';
-    position:absolute;
-    top:0;left:0;right:0;
-    height:4px;
-    background:var(--card-color, var(--coral));
-    border-radius:16px 16px 0 0;
-  }
-  .module-card:hover{
-    transform:translateY(-3px);
-    box-shadow:0 8px 28px rgba(44,24,16,.13);
-    border-color:var(--card-color, var(--coral));
-  }
-  .module-card.disabled{
-    opacity:.5;
-    pointer-events:none;
-    cursor:default;
-  }
-  .module-icon{font-size:30px;line-height:1;}
-  .module-card h3{font-size:16px;font-weight:700;margin:0;}
-  .module-card p{font-size:13px;color:var(--gray);line-height:1.5;flex:1;}
-  .module-card .tag{
-    display:inline-block;
-    font-size:10px;
-    font-weight:600;
-    letter-spacing:.5px;
-    text-transform:uppercase;
-    padding:3px 8px;
-    border-radius:20px;
-    background:var(--card-color, var(--coral));
-    color:#fff;
-    width:fit-content;
-  }
-  .module-card.disabled .tag{background:var(--gray);color:#fff;}
-  .module-card .tag.soon{background:#e5e7eb;color:#9ca3af;}
+.logo-wrap {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  /* FOOTER */
-  footer{
-    background:var(--dark);
-    color:var(--cream);
-    text-align:center;
-    padding:20px;
-    font-size:12px;
-    opacity:.7;
-  }
+.logo-img {
+  height: 56px;
+  width: auto;
+}
 
-  @media(max-width:600px){
-    header{padding:16px 20px;}
-    .hero{padding:32px 20px 28px;}
-    .hero h2{font-size:22px;}
-    .modules{padding:12px 20px 36px;gap:14px;}
-    .alert-banner{margin:16px 20px 0;}
-  }
+.logo-emoji {
+  font-size: 48px;
+  display: block;
+}
+
+header h1 {
+  color: var(--white);
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+header p {
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.header-ts {
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 10px;
+  letter-spacing: .3px;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 56px 24px;
+}
+
+.subtitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--coral);
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.modulos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.modulo-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid rgba(232,76,30,0.12);
+  text-decoration: none;
+  color: var(--dark);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.modulo-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 20px 20px 0 0;
+}
+
+.modulo-card.loyalty::before  { background: var(--coral); }
+.modulo-card.merch::before    { background: var(--salmon); }
+.modulo-card.upgrade::before  { background: var(--peach); }
+.modulo-card.kyto::before     { background: #B07A60; }
+
+.modulo-card:not(.disabled):hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(232,76,30,0.18);
+}
+
+.modulo-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.modulo-icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.modulo-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modulo-card p {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* Mini-stats del módulo Loyalty */
+.loyalty-stats {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.ls-stat {
+  background: #fff5f2;
+  border: 1px solid rgba(232,76,30,0.15);
+  border-radius: 10px;
+  padding: 8px 12px;
+  flex: 1;
+  min-width: 70px;
+  text-align: center;
+}
+
+.ls-stat .ls-num {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--coral);
+  display: block;
+  line-height: 1;
+}
+
+.ls-stat .ls-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--gray);
+  margin-top: 3px;
+  display: block;
+  line-height: 1.3;
+}
+
+.ls-alerta {
+  margin-top: 12px;
+  background: #fff5f2;
+  border-left: 3px solid var(--coral);
+  border-radius: 0 8px 8px 0;
+  padding: 8px 12px;
+  font-size: 11px;
+  color: var(--mid);
+  line-height: 1.5;
+}
+
+.badge-live {
+  background: var(--coral);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.badge-soon {
+  background: var(--cream);
+  color: var(--gray);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  border: 1px solid #D0C5B5;
+}
+
+footer {
+  text-align: center;
+  padding: 32px;
+  font-size: 12px;
+  color: var(--gray);
+  border-top: 1px solid rgba(232,76,30,0.1);
+  margin-top: 20px;
+}
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo-wrap">
-    <img src="img/logo-viajero.png" alt="Viajero Hostels" onerror="this.style.display='none'"/>
-    <div class="brand">
-      <h1>Viajero Hostels</h1>
-      <p>Panel de Gestión Operativa</p>
-    </div>
+    <img src="img/logo-viajero.png" alt="Viajero" class="logo-img"
+         onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='block'"/>
+    <span id="logo-fallback" class="logo-emoji" style="display:none">🦋</span>
   </div>
-  <div class="header-meta" id="hub-fecha">Cargando...</div>
+  <h1>Viajero Performance Hub</h1>
+  <p>Dashboard ejecutivo de operaciones · Uso interno Viajero Hostels</p>
+  <div class="header-ts" id="header-ts"></div>
 </header>
 
-<div class="hero">
-  <h2>Centro de Dashboards 🦋</h2>
-  <p>Métricas operativas de Loyalty, Mercancía, Upgrades y más, actualizadas desde Google Sheets.</p>
-  <div class="mini-stats" id="mini-stats">
-    <div class="mini-stat"><div class="val" id="ms-propiedades">—</div><div class="lbl">Propiedades</div></div>
-    <div class="mini-stat"><div class="val" id="ms-afiliados">—</div><div class="lbl">Afiliados CB</div></div>
-    <div class="mini-stat"><div class="val" id="ms-trans">—</div><div class="lbl">Transacciones</div></div>
-    <div class="mini-stat"><div class="val" id="ms-hallazgos">—</div><div class="lbl">Hallazgos activos</div></div>
+<main>
+  <p class="subtitle">Módulos disponibles</p>
+
+  <div class="modulos">
+
+    <a href="loyalty/" class="modulo-card loyalty">
+      <span class="modulo-icon">🎫</span>
+      <h2>Loyalty <span class="badge-live">Live</span></h2>
+      <p>Programa Viajero Go x Akin. Penetración, beneficios, error operativo y hallazgos por propiedad y período.</p>
+      <!-- Mini-stats cargados desde loyalty_data.json -->
+      <div class="loyalty-stats" id="loyalty-stats">
+        <div class="ls-stat"><span class="ls-num" id="ls-af">—</span><span class="ls-label">Afiliados CB</span></div>
+        <div class="ls-stat"><span class="ls-num" id="ls-ok">—</span><span class="ls-label">% OK (pond.)</span></div>
+        <div class="ls-stat"><span class="ls-num" id="ls-hall">—</span><span class="ls-label">Hallazgos</span></div>
+        <div class="ls-stat"><span class="ls-num" id="ls-per">—</span><span class="ls-label">Períodos</span></div>
+      </div>
+      <div class="ls-alerta" id="ls-alerta" style="display:none"></div>
+    </a>
+
+    <div class="modulo-card merch disabled">
+      <span class="modulo-icon">👕</span>
+      <h2>Merch Viajero <span class="badge-soon">Próximo</span></h2>
+      <p>Seguimiento de entregas de merch exclusivo Viajero. Inventario, canjes y distribución por propiedad.</p>
+    </div>
+
+    <div class="modulo-card upgrade disabled">
+      <span class="modulo-icon">🛏️</span>
+      <h2>Upgrades Recepción <span class="badge-soon">Próximo</span></h2>
+      <p>Upgrades de habitación gestionados por recepción. Tasas de conversión y satisfacción.</p>
+    </div>
+
+    <div class="modulo-card kyto disabled">
+      <span class="modulo-icon">🤖</span>
+      <h2>Upgrades Kyto <span class="badge-soon">Próximo</span></h2>
+      <p>Upgrades automatizados vía Kyto. Efectividad, revenue generado y tasa de aceptación.</p>
+    </div>
+
+    <div class="modulo-card kyto disabled">
+      <span class="modulo-icon">💬</span>
+      <h2>Conversaciones Kyto <span class="badge-soon">Próximo</span></h2>
+      <p>Análisis de conversaciones automatizadas. Volumen, temas frecuentes y resolución.</p>
+    </div>
+
   </div>
-</div>
+</main>
 
-<div class="alert-banner" id="alert-banner"></div>
-
-<p class="section-title">Módulos disponibles</p>
-
-<div class="modules">
-
-  <a href="loyalty/index.html" class="module-card" style="--card-color:#F04B24">
-    <div class="module-icon">🏅</div>
-    <h3>Loyalty Program</h3>
-    <p>Penetración, redención por tier, hallazgos operativos, sin canje y evolución histórica.</p>
-    <span class="tag">Activo</span>
-  </a>
-
-  <a href="merch/index.html" class="module-card disabled" style="--card-color:#7c3aed">
-    <div class="module-icon">🛍️</div>
-    <h3>Mercancía</h3>
-    <p>Ventas de productos Viajero por propiedad, rotación de inventario y top SKUs.</p>
-    <span class="tag soon">Próximamente</span>
-  </a>
-
-  <a href="upgrades-recepcion/index.html" class="module-card disabled" style="--card-color:#0ea5e9">
-    <div class="module-icon">⬆️</div>
-    <h3>Upgrades Recepción</h3>
-    <p>Conversión de upgrades ofrecidos en check-in, revenue generado y performance por agente.</p>
-    <span class="tag soon">Próximamente</span>
-  </a>
-
-  <a href="upgrades-kyto/index.html" class="module-card disabled" style="--card-color:#10b981">
-    <div class="module-icon">🤖</div>
-    <h3>Upgrades Kyto</h3>
-    <p>Upgrades gestionados vía automatización Kyto: tasa de conversión y revenue incremental.</p>
-    <span class="tag soon">Próximamente</span>
-  </a>
-
-  <a href="conversaciones-kyto/index.html" class="module-card disabled" style="--card-color:#f59e0b">
-    <div class="module-icon">💬</div>
-    <h3>Conversaciones Kyto</h3>
-    <p>Volumen de conversaciones, resolución automática vs. escalación y satisfacción del huésped.</p>
-    <span class="tag soon">Próximamente</span>
-  </a>
-
-</div>
-
-<footer>Viajero Hostels · Dashboard Hub · Datos actualizados desde Google Sheets</footer>
+<footer>
+  Viajero Hostels · Dashboard interno · No compartir externamente
+</footer>
 
 <script>
-const DATA_URL = 'data/loyalty_data.json';
-
-async function cargarMiniStats() {
+async function cargarLoyalty() {
   try {
-    const r    = await fetch(DATA_URL + '?t=' + Date.now());
-    const data = await r.json();
+    const r = await fetch('data/loyalty_data.json?t=' + Date.now());
+    const d = await r.json();
 
-    // Fecha
-    if (data.actualizado) {
-      const d = new Date(data.actualizado);
-      document.getElementById('hub-fecha').textContent =
-        'Actualizado: ' + d.toLocaleDateString('es-CR',{day:'2-digit',month:'short',year:'numeric'});
+    // Timestamp en el header
+    if (d.actualizado) {
+      const ts = new Date(d.actualizado).toLocaleString('es-CR', {
+        day: '2-digit', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+      document.getElementById('header-ts').textContent = 'Última actualización: ' + ts;
     }
 
-    // Mini stats
-    const props = [...new Set((data.afiliados||[]).map(a=>a.Propiedad))];
-    document.getElementById('ms-propiedades').textContent = props.length || '—';
+    const af  = d.afiliados  || [];
+    const ben = d.beneficios || [];
+    const hal = d.hallazgos  || [];
 
-    const totalCB = (data.afiliados||[]).reduce((s,a)=>s+(a._afiliados_cb||0),0);
-    document.getElementById('ms-afiliados').textContent = totalCB.toLocaleString('es-CR');
+    // Afiliados CB totales
+    const totCB = af.reduce((a, r) => a + (parseFloat(r['_afiliados_cb']) || 0), 0);
 
-    const totalTrans = (data.beneficios||[]).reduce((s,b)=>s+(b._total_trans||0),0);
-    document.getElementById('ms-trans').textContent = totalTrans.toLocaleString('es-CR');
+    // % OK ponderado por transacciones
+    const totT  = ben.reduce((a, r) => a + (parseFloat(r['_total_trans']) || 0), 0);
+    const totOK = ben.reduce((a, r) => {
+      const t = parseFloat(r['_total_trans']) || 0;
+      const ok = parseFloat(r['_pct_ok']) || 0;
+      return a + t * (ok / 100);
+    }, 0);
+    const pOK = totT > 0 ? Math.round(totOK / totT * 10) / 10 : null;
 
-    const nHallazgos = (data.hallazgos||[]).length;
-    document.getElementById('ms-hallazgos').textContent = nHallazgos;
+    // Períodos únicos
+    const pers = [...new Set(af.map(r => r['Período']).filter(Boolean))];
 
-    // Alerta si hay hallazgos críticos
-    const criticos = (data.hallazgos||[]).filter(h=>h.Severidad==='Crítica');
+    document.getElementById('ls-af').textContent   = totCB > 0 ? totCB : '—';
+    document.getElementById('ls-ok').textContent   = pOK !== null ? pOK + '%' : '—';
+    document.getElementById('ls-hall').textContent = hal.length || '0';
+    document.getElementById('ls-per').textContent  = pers.length || '—';
+
+    // Alerta si hay hallazgos críticos (🔴)
+    const criticos = hal.filter(h => (h['Severidad'] || '').includes('🔴'));
     if (criticos.length > 0) {
-      const banner = document.getElementById('alert-banner');
-      banner.textContent = `⚠️ ${criticos.length} hallazgo${criticos.length>1?'s':''} crítico${criticos.length>1?'s':''} detectado${criticos.length>1?'s':''} — revisa el módulo Loyalty`;
-      banner.classList.add('visible');
+      const al = document.getElementById('ls-alerta');
+      al.style.display = 'block';
+      al.innerHTML = `🔴 <b>${criticos.length} hallazgo${criticos.length > 1 ? 's' : ''} crítico${criticos.length > 1 ? 's' : ''}</b> requieren atención · Ver módulo`;
     }
 
-  } catch(e) {
-    document.getElementById('hub-fecha').textContent = 'Sin datos disponibles';
+  } catch (e) {
+    // Si no hay datos, no mostrar nada (los guiones ya están)
+    console.log('loyalty_data.json no disponible aún');
   }
 }
 
-cargarMiniStats();
+cargarLoyalty();
 </script>
+
 </body>
 </html>
