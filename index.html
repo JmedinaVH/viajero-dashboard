@@ -3,1178 +3,281 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Viajero Loyalty · Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<title>Viajero Hostels — Dashboard Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-:root{
-  --naranja:#F04B24;--naranja-light:#ff6b47;--naranja-pale:#fff3f0;
-  --gris:#585856;--gris-light:#f5f5f4;--gris-border:#e8e8e6;
-  --verde:#16a34a;--amarillo:#d97706;--rojo:#dc2626;
-  --text:#1a1a18;--text-muted:#6b6b69;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Outfit',sans-serif;background:#fafaf9;color:var(--text);font-size:15px}
-.header{background:var(--naranja);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(240,75,36,.3)}
-.header-left{display:flex;align-items:center;gap:12px}
-.btn-hub{color:#fff;text-decoration:none;font-size:13px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:5px 14px;white-space:nowrap}
-.btn-hub:hover{background:rgba(255,255,255,.3)}
-.logo-header{height:34px;width:auto}
-.header-right{text-align:right;color:rgba(255,255,255,.9)}
-.header-right .titulo{font-size:14px;font-weight:700}
-.header-right .subtitulo{font-size:11px;opacity:.8;margin-top:1px}
-.filtros-wrap{background:#fff;border-bottom:2px solid var(--naranja);padding:12px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:sticky;top:56px;z-index:90}
-.filtro-grupo{display:flex;align-items:center;gap:8px}
-.filtro-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--naranja)}
-.filtro-select{border:1.5px solid var(--gris-border);border-radius:8px;padding:6px 10px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;background:#fff;cursor:pointer}
-.filtro-select:focus{outline:none;border-color:var(--naranja)}
-.periodo-rango{font-size:12px;color:var(--text-muted);margin-left:auto;font-weight:500}
-.main{max-width:1200px;margin:0 auto;padding:24px 24px 60px}
-.timestamp{font-size:12px;color:var(--text-muted);margin-bottom:20px;display:flex;align-items:center;gap:6px}
-.timestamp::before{content:'⏱';font-size:14px}
-.sec-titulo{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--naranja);margin:32px 0 14px;padding-bottom:6px;border-bottom:2px solid var(--naranja-pale)}
-.kpi-panel{background:#fff;border-radius:14px;border:1.5px solid var(--gris-border);overflow:hidden;margin-bottom:8px}
-.kpi-panel-header{background:var(--naranja-pale);padding:12px 18px;border-bottom:1px solid var(--gris-border)}
-.kpi-panel-titulo{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--naranja)}
-.kpi-panel-desc{font-size:11px;color:var(--text-muted);margin-top:2px}
-.kpi-item{display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid var(--gris-border)}
-.kpi-item:last-child{border-bottom:none}
-.kpi-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.dot-verde{background:var(--verde)}.dot-amarillo{background:var(--amarillo)}
-.kpi-nombre{font-size:13px;font-weight:600;flex:1}
-.kpi-donde{font-size:11px;color:var(--text-muted);margin-top:1px}
-.kpi-status{font-size:10px;font-weight:700;padding:2px 10px;border-radius:20px;white-space:nowrap}
-.status-verde{background:#dcfce7;color:#15803d}
-.status-amarillo{background:#fef3c7;color:#92400e}
-.hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:8px}
-.hero-card{background:#fff;border-radius:14px;padding:18px 20px;border:1.5px solid var(--gris-border);cursor:pointer;transition:all .2s}
-.hero-card:hover{border-color:var(--naranja);box-shadow:0 4px 16px rgba(240,75,36,.12);transform:translateY(-2px)}
-.hero-etiqueta{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:4px;display:flex;align-items:center;gap:6px}
-.semaforo{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
-.s-rojo{background:var(--rojo)}.s-verde{background:var(--verde)}.s-amarillo{background:var(--amarillo)}
-.hero-q{font-size:13px;font-weight:700;margin-bottom:6px;line-height:1.3}
-.hero-num{font-size:40px;font-weight:800;line-height:1;color:var(--naranja);margin-bottom:4px}
-.hero-desc{font-size:12px;color:var(--text-muted);line-height:1.4}
-.hero-link{font-size:11px;color:var(--naranja);margin-top:8px;display:block;font-weight:600}
-.embudo{display:flex;align-items:center;background:#fff;border-radius:14px;border:1.5px solid var(--gris-border);padding:20px 16px;overflow-x:auto;margin-bottom:8px}
-.embudo-paso{text-align:center;min-width:95px;flex:1}
-.embudo-paso .ico{font-size:24px;margin-bottom:4px}
-.embudo-paso .num{font-size:26px;font-weight:800;line-height:1}
-.embudo-paso .num.hi{color:var(--naranja)}
-.embudo-paso .etiq{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-top:2px;font-weight:600;line-height:1.3}
-.embudo-paso .pct{font-size:10px;color:var(--text-muted);margin-top:3px}
-.embudo-flecha{font-size:16px;color:var(--gris-border);flex-shrink:0;padding:0 2px}
-.beneficios-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:8px}
-.ben-card{background:#fff;border-radius:12px;border:1.5px solid var(--gris-border);padding:16px 18px;cursor:pointer;transition:all .2s}
-.ben-card:hover{border-color:var(--naranja);box-shadow:0 3px 12px rgba(240,75,36,.1)}
-.ben-titulo{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted);margin-bottom:8px}
-.ben-num{font-size:34px;font-weight:800}
-.ben-sub{font-size:11px;color:var(--text-muted);margin-top:4px;line-height:1.3}
-.ben-badges{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
-.badge-ok{background:#dcfce7;color:#15803d}
-.badge-err{background:#fee2e2;color:#dc2626}
-.sem-fila{display:flex;align-items:flex-start;gap:12px;background:#fff;border-radius:10px;border:1.5px solid var(--gris-border);padding:12px 16px;margin-bottom:8px}
-.sem-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:3px}
-.sem-info{flex:1}
-.sem-label{font-size:13px;font-weight:600}
-.sem-desc{font-size:11px;color:var(--text-muted);margin-top:2px;line-height:1.4}
-.sem-count{font-size:20px;font-weight:800;white-space:nowrap}
-.sem-tip{font-size:12px;background:#fffbeb;border-left:3px solid var(--amarillo);padding:10px 14px;border-radius:0 8px 8px 0;margin:8px 0;color:#92400e;line-height:1.5}
-.sem-tip.info{background:var(--gris-light);border-color:var(--gris);color:var(--gris)}
-.tier-nota{font-size:11px;background:var(--naranja-pale);border-left:3px solid var(--naranja);padding:8px 12px;border-radius:0 8px 8px 0;color:var(--gris);margin-bottom:12px;line-height:1.5}
-.tier-propiedad{background:#fff;border-radius:12px;border:1.5px solid var(--gris-border);padding:16px 18px;margin-bottom:12px}
-.tier-prop-titulo{font-size:14px;font-weight:700;margin-bottom:2px}
-.tier-prop-sub{font-size:11px;color:var(--text-muted);margin-bottom:12px}
-.tier-fila{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gris-border)}
-.tier-fila:last-child{border-bottom:none}
-.tier-izq{width:170px;flex-shrink:0}
-.tier-nombre{font-size:13px;font-weight:700}
-.tier-bens{font-size:10px;color:var(--text-muted);margin-top:1px}
-.tier-barras{flex:1;display:flex;flex-direction:column;gap:3px}
-.tier-barra-row{display:flex;align-items:center;gap:6px}
-.tier-barra-label{font-size:9px;width:70px;text-align:right;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
-.tier-bar-wrap{flex:1;background:var(--gris-light);border-radius:20px;height:7px;overflow:hidden}
-.tier-bar{height:100%;border-radius:20px}
-.bar-verde{background:var(--verde)}.bar-amarillo{background:var(--amarillo)}.bar-rojo{background:var(--rojo)}
-.tier-der{text-align:right;min-width:100px}
-.tier-total{font-size:13px;font-weight:700}
-.tier-pct-periodo{font-size:11px;color:var(--text-muted);margin-top:1px}
-.red-tier-tabla{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border-radius:10px;overflow:hidden;border:1.5px solid var(--gris-border);margin-bottom:16px}
-.red-tier-tabla th{background:var(--naranja);color:#fff;padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.6px}
-.red-tier-tabla td{padding:8px 12px;border-bottom:1px solid var(--gris-border)}
-.red-tier-tabla tr:last-child td{border-bottom:none}
-.red-tier-tabla tr:hover td{background:var(--naranja-pale)}
-.hi{color:var(--naranja);font-weight:700}
-.red-bar{display:inline-block;height:6px;border-radius:3px;vertical-align:middle;margin-right:6px}
-.tier-ref{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border-radius:10px;overflow:hidden;border:1.5px solid var(--gris-border);margin-bottom:20px}
-.tier-ref th{background:var(--naranja);color:#fff;padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.6px}
-.tier-ref td{padding:8px 12px;border-bottom:1px solid var(--gris-border)}
-.tier-ref tr:last-child td{border-bottom:none}
-.chk{color:var(--verde);font-weight:700}
-.crs{color:#d1d5db}
-.evolucion-filtros{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;background:#fff;border-radius:10px;border:1.5px solid var(--gris-border);padding:12px 16px;align-items:center}
-.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:8px}
-.chart-card{background:#fff;border-radius:12px;border:1.5px solid var(--gris-border);padding:16px 18px}
-.chart-titulo{font-size:12px;font-weight:700;margin-bottom:3px}
-.chart-sub{font-size:11px;color:var(--text-muted);margin-bottom:12px}
-.chart-wrap{position:relative;height:160px}
-.hist-controles{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:#fff;border-radius:10px;border:1.5px solid var(--gris-border);padding:12px 16px;margin-bottom:12px}
-.hist-search{border:1.5px solid var(--gris-border);border-radius:8px;padding:6px 12px;font-family:'Outfit',sans-serif;font-size:13px;flex:1;min-width:160px}
-.hist-search:focus{outline:none;border-color:var(--naranja)}
-.hist-info{font-size:11px;color:var(--text-muted);margin-bottom:10px;background:var(--gris-light);border-radius:8px;padding:8px 12px}
-.hist-grupo{margin-bottom:12px;border-radius:12px;overflow:hidden;border:1.5px solid var(--gris-border)}
-.hist-grupo-header{background:var(--naranja-pale);padding:10px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none}
-.hist-grupo-nombre{font-size:13px;font-weight:700;color:var(--naranja)}
-.hist-grupo-meta{font-size:11px;color:var(--text-muted)}
-.hist-grupo-toggle{font-size:12px;color:var(--naranja);font-weight:700}
-.hist-grupo-body{display:none;overflow-x:auto}
-.hist-grupo-body.open{display:block}
-.hist-tabla{width:100%;border-collapse:collapse;font-size:12px;background:#fff}
-.hist-tabla th{background:#fff;color:var(--text-muted);padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.6px;border-bottom:2px solid var(--gris-border);white-space:nowrap}
-.hist-tabla td{padding:8px 12px;border-bottom:1px solid var(--gris-border);white-space:nowrap}
-.hist-tabla tr:last-child td{border-bottom:none}
-.hist-tabla tr:hover td{background:var(--naranja-pale)}
-.badge-per{display:inline-block;background:var(--naranja);color:#fff;border-radius:20px;padding:2px 10px;font-size:10px;font-weight:600}
-.hist-no-results{padding:20px;text-align:center;color:var(--text-muted);font-size:13px}
-.hallazgo{border-radius:12px;padding:14px 16px;display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:start;margin-bottom:10px;border-left:4px solid transparent}
-.hallazgo.sev-rojo{background:#fff5f5;border-color:var(--rojo)}
-.hallazgo.sev-amarillo{background:#fffbeb;border-color:var(--amarillo)}
-.hallazgo.sev-verde{background:#f0fdf4;border-color:var(--verde)}
-.hallazgo-ico{font-size:20px;padding-top:2px}
-.hallazgo-titulo{font-size:13px;font-weight:700;line-height:1.4}
-.hallazgo-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
-.hallazgo-accion{font-size:11px;font-weight:600;margin-top:5px}
-.hallazgo.sev-rojo .hallazgo-accion{color:var(--rojo)}
-.hallazgo.sev-amarillo .hallazgo-accion{color:var(--amarillo)}
-.hallazgo.sev-verde .hallazgo-accion{color:var(--verde)}
-.hallazgo-metrica{font-size:15px;font-weight:800;white-space:nowrap}
-.hallazgo.sev-rojo .hallazgo-metrica{color:var(--rojo)}
-.hallazgo.sev-amarillo .hallazgo-metrica{color:var(--amarillo)}
-.hallazgo.sev-verde .hallazgo-metrica{color:var(--verde)}
+  :root{
+    --coral:#E84C1E;
+    --coral-dark:#c73d17;
+    --cream:#F5EDD6;
+    --dark:#2C1810;
+    --gray:#8C7B72;
+    --gray-light:#f5f0eb;
+    --white:#fff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh;}
 
-/* SIN CANJE */
-.sc-header-row{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;padding:4px 0}
-.sc-toggle-btn{font-size:12px;color:var(--naranja);padding:4px 12px;border:1.5px solid var(--naranja);border-radius:20px;font-weight:600}
-.sc-total-num{font-size:22px;font-weight:800;color:var(--naranja)}
-.sc-cuerpo{background:#fff;border-radius:12px;border:1.5px solid var(--gris-border);overflow:hidden;margin-top:8px;display:none}
-.sc-cuerpo.open{display:block}
-.sc-split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--gris-border)}
-.sc-col{background:#fff;padding:20px;text-align:center}
-.sc-ico{font-size:24px;margin-bottom:6px}
-.sc-num{font-size:42px;font-weight:800;line-height:1}
-.sc-num.tourist{color:var(--rojo)}
-.sc-num.backpacker{color:var(--rojo)}
-.sc-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:6px 0 4px}
-.sc-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:8px}
-.sc-badge.problema{background:#fee2e2;color:#dc2626}
-.sc-desc{font-size:11px;color:var(--text-muted);line-height:1.5;margin-bottom:8px}
-.sc-accion{font-size:11px;font-weight:600;color:var(--rojo);background:#fff5f5;border-left:3px solid var(--rojo);padding:8px 10px;border-radius:0 6px 6px 0;text-align:left;line-height:1.5}
-.sc-tabla-header{padding:12px 16px;background:var(--gris-light);border-top:1px solid var(--gris-border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.sc-tabla-titulo{font-size:12px;font-weight:700;color:var(--rojo)}
-.sc-search{border:1.5px solid var(--gris-border);border-radius:8px;padding:5px 10px;font-family:'Outfit',sans-serif;font-size:12px;width:200px}
-.sc-search:focus{outline:none;border-color:var(--naranja)}
-.sc-tabla-wrap{overflow-x:auto;max-height:320px;overflow-y:auto}
-.sc-tabla{width:100%;border-collapse:collapse;font-size:12px}
-.sc-tabla th{background:#fff;position:sticky;top:0;color:var(--text-muted);padding:8px 12px;text-align:left;font-weight:700;font-size:10px;text-transform:uppercase;border-bottom:2px solid var(--gris-border)}
-.sc-tabla td{padding:8px 12px;border-bottom:1px solid var(--gris-border)}
-.sc-tabla tr:hover td{background:var(--naranja-pale)}
-.sc-nota{font-size:11px;padding:10px 16px;color:var(--text-muted);background:var(--gris-light);border-top:1px solid var(--gris-border);line-height:1.5}
+  /* HEADER */
+  header{
+    background:var(--dark);
+    padding:20px 40px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .logo-wrap{display:flex;align-items:center;gap:14px;}
+  .logo-wrap img{height:44px;object-fit:contain;}
+  .logo-wrap .brand{color:var(--white);}
+  .logo-wrap .brand h1{font-size:18px;font-weight:700;letter-spacing:.3px;}
+  .logo-wrap .brand p{font-size:12px;color:var(--cream);opacity:.8;margin-top:2px;}
+  .header-meta{font-size:12px;color:var(--cream);opacity:.6;}
 
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:16px;padding:28px;max-width:580px;width:92%;max-height:85vh;overflow-y:auto;position:relative}
-.modal-close{position:absolute;top:14px;right:16px;font-size:22px;cursor:pointer;color:var(--text-muted);background:none;border:none}
-.modal-titulo{font-size:18px;font-weight:800;margin-bottom:4px}
-.modal-sub{font-size:13px;color:var(--text-muted);margin-bottom:16px}
-.modal-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.modal-kpi{background:var(--gris-light);border-radius:10px;padding:12px 14px}
-.modal-kpi .label{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted);margin-bottom:4px;font-weight:700}
-.modal-kpi .valor{font-size:20px;font-weight:800}
-.modal-kpi .valor.naranja{color:var(--naranja)}
-.modal-kpi .valor.rojo{color:var(--rojo)}
-.modal-nota{font-size:12px;background:var(--naranja-pale);border-left:3px solid var(--naranja);padding:10px 14px;border-radius:0 8px 8px 0;color:var(--gris);line-height:1.5;margin-top:10px}
-.modal-alerta{font-size:12px;background:#fff5f5;border-left:3px solid var(--rojo);padding:10px 14px;border-radius:0 8px 8px 0;color:#7f1d1d;line-height:1.5;margin-top:10px}
-.flujo-box{background:var(--gris-light);border-radius:10px;padding:14px 16px;margin:12px 0;font-size:12px;line-height:1.8}
-.flujo-box b{color:var(--naranja)}
-.footer{text-align:center;padding:24px;font-size:11px;color:var(--text-muted);border-top:1px solid var(--gris-border);margin-top:32px}
-@media(max-width:600px){
-  .main{padding:16px 12px 48px}
-  .filtros-wrap{padding:10px 12px;gap:10px}
-  .embudo{flex-wrap:wrap}.embudo-flecha{display:none}
-  .hero-num{font-size:34px}
-  .sc-split{grid-template-columns:1fr}
-  .modal-kpis{grid-template-columns:1fr}
-}
+  /* HERO */
+  .hero{
+    background:linear-gradient(135deg,var(--coral) 0%,#c73d17 100%);
+    padding:48px 40px 40px;
+    text-align:center;
+    color:var(--white);
+  }
+  .hero h2{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px;}
+  .hero p{font-size:15px;opacity:.9;max-width:520px;margin:0 auto;}
+
+  /* MINI STATS */
+  .mini-stats{
+    display:flex;
+    gap:16px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:28px;
+  }
+  .mini-stat{
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:12px;
+    padding:14px 22px;
+    min-width:130px;
+    text-align:center;
+  }
+  .mini-stat .val{font-size:24px;font-weight:800;}
+  .mini-stat .lbl{font-size:11px;opacity:.85;margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+
+  /* ALERTA */
+  .alert-banner{
+    display:none;
+    margin:24px 40px 0;
+    background:#fff3f0;
+    border:1.5px solid #f97316;
+    border-radius:12px;
+    padding:14px 20px;
+    font-size:13px;
+    color:#c2410c;
+    font-weight:500;
+    text-align:center;
+  }
+  .alert-banner.visible{display:block;}
+
+  /* MÓDULOS */
+  .section-title{
+    text-align:center;
+    margin:40px 0 8px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--gray);
+  }
+  .modules{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:20px;
+    padding:16px 40px 48px;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .module-card{
+    background:var(--white);
+    border-radius:16px;
+    padding:28px 24px;
+    text-decoration:none;
+    color:var(--dark);
+    box-shadow:0 2px 12px rgba(44,24,16,.07);
+    border:2px solid transparent;
+    transition:all .2s ease;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    position:relative;
+    overflow:hidden;
+  }
+  .module-card::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;
+    height:4px;
+    background:var(--card-color, var(--coral));
+    border-radius:16px 16px 0 0;
+  }
+  .module-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 28px rgba(44,24,16,.13);
+    border-color:var(--card-color, var(--coral));
+  }
+  .module-card.disabled{
+    opacity:.5;
+    pointer-events:none;
+    cursor:default;
+  }
+  .module-icon{font-size:30px;line-height:1;}
+  .module-card h3{font-size:16px;font-weight:700;margin:0;}
+  .module-card p{font-size:13px;color:var(--gray);line-height:1.5;flex:1;}
+  .module-card .tag{
+    display:inline-block;
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:20px;
+    background:var(--card-color, var(--coral));
+    color:#fff;
+    width:fit-content;
+  }
+  .module-card.disabled .tag{background:var(--gray);color:#fff;}
+  .module-card .tag.soon{background:#e5e7eb;color:#9ca3af;}
+
+  /* FOOTER */
+  footer{
+    background:var(--dark);
+    color:var(--cream);
+    text-align:center;
+    padding:20px;
+    font-size:12px;
+    opacity:.7;
+  }
+
+  @media(max-width:600px){
+    header{padding:16px 20px;}
+    .hero{padding:32px 20px 28px;}
+    .hero h2{font-size:22px;}
+    .modules{padding:12px 20px 36px;gap:14px;}
+    .alert-banner{margin:16px 20px 0;}
+  }
 </style>
 </head>
 <body>
 
-<header class="header">
-  <div class="header-left">
-    <a class="btn-hub" href="../index.html">← Hub</a>
-    <img src="../img/logo-viajero.png" alt="Viajero" class="logo-header" onerror="this.style.display='none'"/>
+<header>
+  <div class="logo-wrap">
+    <img src="img/logo-viajero.png" alt="Viajero Hostels" onerror="this.style.display='none'"/>
+    <div class="brand">
+      <h1>Viajero Hostels</h1>
+      <p>Panel de Gestión Operativa</p>
+    </div>
   </div>
-  <div class="header-right">
-    <div class="titulo">Loyalty · Viajero Go × Akin</div>
-    <div class="subtitulo" id="ts-header">Cargando…</div>
-  </div>
+  <div class="header-meta" id="hub-fecha">Cargando...</div>
 </header>
 
-<div class="filtros-wrap">
-  <div class="filtro-grupo">
-    <span class="filtro-label">Propiedad</span>
-    <select class="filtro-select" id="fil-propiedad" onchange="aplicarFiltros()"><option value="">Todas</option></select>
-  </div>
-  <div class="filtro-grupo">
-    <span class="filtro-label">País</span>
-    <select class="filtro-select" id="fil-pais" onchange="aplicarFiltros()"><option value="">Todos</option></select>
-  </div>
-  <div class="periodo-rango" id="rango-periodo">—</div>
-</div>
-
-<main class="main">
-  <div class="timestamp" id="timestamp-txt">Cargando datos…</div>
-
-  <!-- PANEL 4 PREGUNTAS -->
-  <div class="sec-titulo">Las 4 preguntas que este dashboard responde</div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:8px">
-    <div class="kpi-panel">
-      <div class="kpi-panel-header">
-        <div class="kpi-panel-titulo">📈 Adopción del programa</div>
-        <div class="kpi-panel-desc">¿Cuántos afiliados nos visitan y crece el programa?</div>
-      </div>
-      <div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">¿Cuántos afiliados nos visitaron?</div><div class="kpi-donde">% penetración = afiliados CB / check-ins CB</div></div><span class="kpi-status status-verde">✅ KPI 01</span></div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">¿Está creciendo el programa?</div><div class="kpi-donde">Nuevos afiliados y % tasa de registro sobre huéspedes</div></div><span class="kpi-status status-verde">✅ KPI 04</span></div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">Distribución por destino y tier</div><div class="kpi-donde">Filtro propiedad + evolución por período</div></div><span class="kpi-status status-verde">✅ Disponible</span></div>
-      </div>
-    </div>
-    <div class="kpi-panel">
-      <div class="kpi-panel-header">
-        <div class="kpi-panel-titulo">🎁 Operación y registro de beneficios</div>
-        <div class="kpi-panel-desc">¿Los afiliados reciben su beneficio y recepción lo registra bien?</div>
-      </div>
-      <div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">¿Los afiliados reciben su beneficio?</div><div class="kpi-donde">% afiliados CB con ≥1 beneficio registrado correctamente</div></div><span class="kpi-status status-verde">✅ KPI 02</span></div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">¿Lo estamos registrando bien?</div><div class="kpi-donde">% OK ponderado por transacciones loyalty en CB</div></div><span class="kpi-status status-verde">✅ KPI 03</span></div>
-        <div class="kpi-item"><div class="kpi-dot dot-verde"></div><div><div class="kpi-nombre">Afiliados sin beneficio por tier</div><div class="kpi-donde">Tourist (sin tarifa) + Backpacker+ (sin toalla/desayuno)</div></div><span class="kpi-status status-verde">✅ Disponible</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sec-titulo">📈 Adopción · ¿Cuántos afiliados nos visitaron y crece el programa?</div>
-  <div class="hero-grid" id="hero-adopcion"></div>
-  <div style="margin:16px 0 6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted)">¿Cómo fluyen los huéspedes por el programa?</div>
-  <div class="embudo" id="embudo"></div>
-
-  <div class="sec-titulo">🎁 Operación · ¿Los afiliados reciben su beneficio y lo registramos bien?</div>
-  <div class="hero-grid" id="hero-operacion"></div>
-  <div style="margin:16px 0 6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted)">¿Cómo se están registrando los 3 beneficios?</div>
-  <div class="beneficios-grid" id="ben-grid"></div>
-  <div style="margin:20px 0 6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-muted)">¿Qué errores de registro se encontraron?</div>
-  <div id="semaforo-wrap"></div>
-
-  <div class="sec-titulo">¿Qué tier de afiliados nos visita más? · Por propiedad</div>
-  <table class="tier-ref">
-    <thead><tr><th>Tier</th><th>Descuento alojamiento</th><th>Cómo se registra</th><th>Toalla ($0)</th><th>Desayuno ($0)</th></tr></thead>
-    <tbody>
-      <tr><td><b>Tourist</b></td><td>15%</td><td>Recepción selecciona tarifa loyalty en CB al check-in</td><td class="crs">—</td><td class="crs">—</td></tr>
-      <tr><td><b>Backpacker</b></td><td>15%</td><td>Tarifa loyalty + botón toalla en CB</td><td class="chk">✅</td><td class="crs">—</td></tr>
-      <tr><td><b>Explorer</b></td><td>20%</td><td>Tarifa loyalty + botón toalla en CB</td><td class="chk">✅</td><td class="crs">—</td></tr>
-      <tr><td><b>Nomad</b></td><td>20%</td><td>Tarifa loyalty + botón toalla en CB</td><td class="chk">✅</td><td class="crs">—</td></tr>
-      <tr><td><b>Viajero</b></td><td>25%</td><td>Tarifa loyalty + botón toalla + botón desayuno en CB</td><td class="chk">✅</td><td class="chk">✅ (3+ noches)</td></tr>
-    </tbody>
-  </table>
-  <div class="tier-nota" id="tier-nota"></div>
-  <div id="tiers-seccion"></div>
-
-  <div class="sec-titulo">Evolución por período</div>
-  <div class="evolucion-filtros">
-    <span class="filtro-label">Desde</span>
-    <select class="filtro-select" id="evo-desde" onchange="renderEvolucion()"><option value="">Todos</option></select>
-    <span class="filtro-label">Hasta</span>
-    <select class="filtro-select" id="evo-hasta" onchange="renderEvolucion()"><option value="">Todos</option></select>
-    <span style="font-size:11px;color:var(--text-muted)">· Respeta filtro propiedad/país</span>
-  </div>
-  <div class="charts-grid" id="charts-grid"></div>
-
-  <div class="sec-titulo">Histórico comparativo · Todos los períodos</div>
-  <div class="hist-controles">
-    <span class="filtro-label">Período</span>
-    <select class="filtro-select" id="hist-periodo" onchange="renderHistorico()"><option value="">Todos</option></select>
-    <span class="filtro-label">País</span>
-    <select class="filtro-select" id="hist-pais" onchange="renderHistorico()"><option value="">Todos</option></select>
-    <input type="text" class="hist-search" id="hist-search" placeholder="🔍 Buscar propiedad…" oninput="renderHistorico()"/>
-  </div>
-  <div class="hist-info">📊 Agrupado por propiedad · toca para expandir · % penetración = afiliados CB / check-ins (calculado desde crudos)</div>
-  <div id="hist-grupos"></div>
-  <div class="charts-grid" id="hist-charts"></div>
-
-  <div class="sec-titulo">Hallazgos del período · Acciones recomendadas</div>
-  <div id="hallazgos-lista"></div>
-
-  <!-- SIN CANJE — colapsado por defecto -->
-  <div class="sec-titulo" style="margin-bottom:6px">
-    <div class="sc-header-row" onclick="toggleSinCanje()">
-      <span>Afiliados sin beneficio registrado</span>
-      <span class="sc-total-num" id="sc-total-num">—</span>
-      <span class="sc-toggle-btn" id="sc-toggle-btn">▼ Ver detalle</span>
-    </div>
-  </div>
-  <div class="sc-cuerpo" id="sc-cuerpo"></div>
-</main>
-
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <button class="modal-close" onclick="cerrarModal()">×</button>
-    <div id="modal-contenido"></div>
+<div class="hero">
+  <h2>Centro de Dashboards 🦋</h2>
+  <p>Métricas operativas de Loyalty, Mercancía, Upgrades y más, actualizadas desde Google Sheets.</p>
+  <div class="mini-stats" id="mini-stats">
+    <div class="mini-stat"><div class="val" id="ms-propiedades">—</div><div class="lbl">Propiedades</div></div>
+    <div class="mini-stat"><div class="val" id="ms-afiliados">—</div><div class="lbl">Afiliados CB</div></div>
+    <div class="mini-stat"><div class="val" id="ms-trans">—</div><div class="lbl">Transacciones</div></div>
+    <div class="mini-stat"><div class="val" id="ms-hallazgos">—</div><div class="lbl">Hallazgos activos</div></div>
   </div>
 </div>
 
-<footer class="footer">Viajero Hostels · Loyalty Viajero Go × Akin · Dashboard interno · No compartir externamente</footer>
+<div class="alert-banner" id="alert-banner"></div>
+
+<p class="section-title">Módulos disponibles</p>
+
+<div class="modules">
+
+  <a href="loyalty/index.html" class="module-card" style="--card-color:#F04B24">
+    <div class="module-icon">🏅</div>
+    <h3>Loyalty Program</h3>
+    <p>Penetración, redención por tier, hallazgos operativos, sin canje y evolución histórica.</p>
+    <span class="tag">Activo</span>
+  </a>
+
+  <a href="merch/index.html" class="module-card disabled" style="--card-color:#7c3aed">
+    <div class="module-icon">🛍️</div>
+    <h3>Mercancía</h3>
+    <p>Ventas de productos Viajero por propiedad, rotación de inventario y top SKUs.</p>
+    <span class="tag soon">Próximamente</span>
+  </a>
+
+  <a href="upgrades-recepcion/index.html" class="module-card disabled" style="--card-color:#0ea5e9">
+    <div class="module-icon">⬆️</div>
+    <h3>Upgrades Recepción</h3>
+    <p>Conversión de upgrades ofrecidos en check-in, revenue generado y performance por agente.</p>
+    <span class="tag soon">Próximamente</span>
+  </a>
+
+  <a href="upgrades-kyto/index.html" class="module-card disabled" style="--card-color:#10b981">
+    <div class="module-icon">🤖</div>
+    <h3>Upgrades Kyto</h3>
+    <p>Upgrades gestionados vía automatización Kyto: tasa de conversión y revenue incremental.</p>
+    <span class="tag soon">Próximamente</span>
+  </a>
+
+  <a href="conversaciones-kyto/index.html" class="module-card disabled" style="--card-color:#f59e0b">
+    <div class="module-icon">💬</div>
+    <h3>Conversaciones Kyto</h3>
+    <p>Volumen de conversaciones, resolución automática vs. escalación y satisfacción del huésped.</p>
+    <span class="tag soon">Próximamente</span>
+  </a>
+
+</div>
+
+<footer>Viajero Hostels · Dashboard Hub · Datos actualizados desde Google Sheets</footer>
 
 <script>
-const DATA_URL = '../data/loyalty_data.json';
-let DATA = null;
-const CI = {};
+const DATA_URL = 'data/loyalty_data.json';
 
-async function init() {
+async function cargarMiniStats() {
   try {
-    const r = await fetch(DATA_URL + '?t=' + Date.now());
-    DATA = await r.json();
+    const r    = await fetch(DATA_URL + '?t=' + Date.now());
+    const data = await r.json();
+
+    // Fecha
+    if (data.actualizado) {
+      const d = new Date(data.actualizado);
+      document.getElementById('hub-fecha').textContent =
+        'Actualizado: ' + d.toLocaleDateString('es-CR',{day:'2-digit',month:'short',year:'numeric'});
+    }
+
+    // Mini stats
+    const props = [...new Set((data.afiliados||[]).map(a=>a.Propiedad))];
+    document.getElementById('ms-propiedades').textContent = props.length || '—';
+
+    const totalCB = (data.afiliados||[]).reduce((s,a)=>s+(a._afiliados_cb||0),0);
+    document.getElementById('ms-afiliados').textContent = totalCB.toLocaleString('es-CR');
+
+    const totalTrans = (data.beneficios||[]).reduce((s,b)=>s+(b._total_trans||0),0);
+    document.getElementById('ms-trans').textContent = totalTrans.toLocaleString('es-CR');
+
+    const nHallazgos = (data.hallazgos||[]).length;
+    document.getElementById('ms-hallazgos').textContent = nHallazgos;
+
+    // Alerta si hay hallazgos críticos
+    const criticos = (data.hallazgos||[]).filter(h=>h.Severidad==='Crítica');
+    if (criticos.length > 0) {
+      const banner = document.getElementById('alert-banner');
+      banner.textContent = `⚠️ ${criticos.length} hallazgo${criticos.length>1?'s':''} crítico${criticos.length>1?'s':''} detectado${criticos.length>1?'s':''} — revisa el módulo Loyalty`;
+      banner.classList.add('visible');
+    }
+
   } catch(e) {
-    document.getElementById('timestamp-txt').textContent = '❌ Error cargando datos. Verifica que data/loyalty_data.json existe.';
-    return;
+    document.getElementById('hub-fecha').textContent = 'Sin datos disponibles';
   }
-  const ts = DATA.actualizado
-    ? new Date(DATA.actualizado).toLocaleString('es-CR',{dateStyle:'long',timeStyle:'short'}) : '—';
-  document.getElementById('ts-header').textContent = 'Actualizado: ' + ts;
-  document.getElementById('timestamp-txt').textContent = ts;
-  poblarFiltros();
-  aplicarFiltros();
 }
 
-// ── UTILIDADES ──────────────────────────────────────────
-
-function uniq(arr){ return [...new Set(arr.filter(Boolean))]; }
-function periodosSorted(arr,col){ col=col||'Período'; return uniq(arr.map(r=>r[col])).sort(); }
-function fmt(n){ if(n===null||n===undefined||n==='') return '—'; return Number(n).toLocaleString('es-CR'); }
-function fmtInt(n){ if(n===null||n===undefined||n==='') return '—'; return Math.round(Number(n)).toLocaleString('es-CR'); }
-function pct(a,b){ if(!b) return 0; return Math.round(a/b*1000)/10; }
-
-// fmtPct: devuelve '—' si vacío/null, formatea número como %
-function fmtPct(v){
-  if(v===null||v===undefined||v===''||v==='—') return '—';
-  const n = parseFloat(v);
-  if(isNaN(n)) return '—';
-  return Math.round(n*10)/10 + '%';
-}
-
-// fmtMetrica: formatea métricas de hallazgos
-// Si es decimal < 1 → asume que es proporción → multiplica × 100
-// Si ya es string formateado → lo devuelve tal cual
-function fmtMetrica(v){
-  if(v===null||v===undefined||v==='') return '—';
-  if(typeof v === 'string' && v.includes('%')) return v; // ya formateado
-  if(typeof v === 'string' && v.includes('trans')) return v; // "0% OK / 30 trans"
-  if(typeof v === 'string' && v.includes('afiliados')) return v;
-  if(typeof v === 'string' && v.includes('reserva')) return v;
-  if(typeof v === 'string' && v.includes('nuevos')) return v;
-  const n = parseFloat(v);
-  if(isNaN(n)) return v;
-  // Decimal puro (ej: 0.102) → es un porcentaje sin formatear
-  if(n > 0 && n < 1) return (Math.round(n * 1000)/10) + '%';
-  // Ya es un porcentaje razonable (ej: 10.2 o 65)
-  if(n >= 1 && n <= 100) return (Math.round(n*10)/10) + '%';
-  return v;
-}
-
-function sumF(arr,campo){ return arr.reduce((a,r)=>a+(parseFloat(r[campo])||0),0); }
-function getA(r,campo){ return parseFloat(r['_'+campo])||0; }
-function fil(arr,prop,pais){ return arr.filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||(r['Pais']||r['País'])===pais)); }
-function esTourist(tier){ return tier.trim().toLowerCase()==='tourist'; }
-
-// ── FILTROS ─────────────────────────────────────────────
-
-function poblarFiltros(){
-  const af = DATA.afiliados||[];
-  fill('fil-propiedad', uniq(af.map(r=>r['Propiedad'])).sort());
-  fill('fil-pais',      uniq(af.map(r=>r['Pais']||r['País'])).sort());
-  const pers = periodosSorted(af);
-  fill('evo-desde',pers); fill('evo-hasta',pers);
-  const hAf = DATA.historico||[];
-  fill('hist-periodo', periodosSorted(hAf,'Período'));
-  fill('hist-pais',    uniq(hAf.map(r=>r['País']||r['Pais'])).sort());
-}
-
-function fill(id,arr){
-  const sel=document.getElementById(id);
-  arr.forEach(v=>{ if(!v) return; const o=document.createElement('option'); o.value=o.textContent=v; sel.appendChild(o); });
-}
-
-function aplicarFiltros(){
-  const prop = document.getElementById('fil-propiedad').value;
-  const pais = document.getElementById('fil-pais').value;
-  const af        = fil(DATA.afiliados||[],prop,pais);
-  const ben       = fil(DATA.beneficios||[],prop,pais);
-  const hall      = (DATA.hallazgos||[]).filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||(r['País']||r['Pais'])===pais));
-  const sc        = (DATA.sinCanje||[]).filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||(r['País']||r['Pais'])===pais));
-  const errDet    = (DATA.tiposErrorDetalle||[]).filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||r['País']===pais));
-  const tiersDet  = (DATA.tiersDetalle||[]).filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||r['País']===pais));
-  const redTier   = (DATA.redencionPorTier||[]).filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||r['País']===pais));
-  const pers = periodosSorted(af);
-  document.getElementById('rango-periodo').textContent =
-    pers.length ? 'Período: '+pers[0]+(pers.length>1?' → '+pers[pers.length-1]:'') : '';
-  renderHeroAdopcion(af,ben,errDet);
-  renderHeroOperacion(af,ben);
-  renderEmbudo(af,ben);
-  renderBeneficios(ben);
-  renderSemaforo(errDet,af);
-  renderTiers(tiersDet,redTier,af);
-  renderHallazgos(hall);
-  renderSinCanje(sc);
-  renderEvolucion();
-  renderHistorico();
-}
-
-// ── HERO ADOPCIÓN ────────────────────────────────────────
-
-function renderHeroAdopcion(af,ben,errDet){
-  const totH = af.reduce((a,r)=>a+getA(r,'huespedes'),0);
-  const totC = af.reduce((a,r)=>a+getA(r,'check_ins'),0);
-  const totA = af.reduce((a,r)=>a+getA(r,'afiliados_cb'),0);
-  const totN = af.reduce((a,r)=>a+getA(r,'nuevos'),0);
-  const pPenet = totC>0?pct(totA,totC):0;
-  const pAdq   = totH>0?pct(totN,totH):0;
-
-  document.getElementById('hero-adopcion').innerHTML = [
-    { sem:pPenet<15?'rojo':'verde',
-      label:'KPI 01 · Penetración',
-      kpi:'¿Cuántos afiliados nos visitaron?',
-      val:pPenet+'%',
-      desc:fmt(totA)+' afiliados de '+fmt(totC)+' check-ins en CB',
-      modal:'afiliados' },
-    { sem:totN>0?'verde':'amarillo',
-      label:'KPI 04 · Crecimiento',
-      kpi:'¿Está creciendo el programa?',
-      val:fmtInt(totN)+' nuevos',
-      desc:pAdq+'% de '+fmt(totH)+' huéspedes se afiliaron',
-      modal:'crecimiento' },
-  ].map(c=>`<div class="hero-card" onclick="abrirModal('${c.modal}')">
-    <div class="hero-etiqueta"><span class="semaforo s-${c.sem}"></span>${c.label}</div>
-    <div class="hero-q">${c.kpi}</div>
-    <div class="hero-num">${c.val}</div>
-    <div class="hero-desc">${c.desc}</div>
-    <span class="hero-link">Toca para ver el detalle →</span>
-  </div>`).join('');
-}
-
-// ── HERO OPERACIÓN ───────────────────────────────────────
-// KPI 02 usa afiliados CB (164) como base — no AKIN (171)
-
-function renderHeroOperacion(af,ben){
-  // Base correcta: afiliados CB confirmados
-  const totA   = af.reduce((a,r)=>a+getA(r,'afiliados_cb'),0);
-  const totBen = ben.reduce((a,r)=>a+(parseFloat(r['_af_con_ben'])||0),0);
-  const totT   = ben.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0),0);
-  const sumOK  = ben.reduce((a,r)=>{ const t=parseFloat(r['_total_trans'])||0,ok=parseFloat(r['_pct_ok'])||0; return a+t*(ok/100); },0);
-  const pOK    = totT>0?Math.round(sumOK/totT*1000)/10:null;
-  // KPI 02: base = totA (CB), no llegadas AKIN
-  const pCob   = totA>0?pct(totBen,totA):0;
-
-  document.getElementById('hero-operacion').innerHTML = [
-    { sem:pCob<50?'rojo':(pCob<80?'amarillo':'verde'),
-      label:'KPI 02 · Cobertura de beneficios',
-      kpi:'¿Los afiliados reciben su beneficio?',
-      val:pCob+'%',
-      desc:fmt(totBen)+' de '+fmt(totA)+' afiliados CB con ≥1 beneficio registrado',
-      modal:'beneficios' },
-    { sem:(pOK===null)?'amarillo':(pOK===0&&totT>0?'rojo':(pOK<70?'rojo':(pOK<90?'amarillo':'verde'))),
-      label:'KPI 03 · Calidad de registro',
-      kpi:'¿Lo estamos registrando bien?',
-      val:totT>0?(pOK+'%'):'Sin trans.',
-      desc:fmt(totT)+' transacciones loyalty en Cloudbeds',
-      modal:'operativo' },
-  ].map(c=>`<div class="hero-card" onclick="abrirModal('${c.modal}')">
-    <div class="hero-etiqueta"><span class="semaforo s-${c.sem}"></span>${c.label}</div>
-    <div class="hero-q">${c.kpi}</div>
-    <div class="hero-num">${c.val}</div>
-    <div class="hero-desc">${c.desc}</div>
-    <span class="hero-link">Toca para ver el detalle →</span>
-  </div>`).join('');
-}
-
-// ── EMBUDO ───────────────────────────────────────────────
-
-function renderEmbudo(af,ben){
-  const h  = af.reduce((a,r)=>a+getA(r,'huespedes'),0);
-  const c  = af.reduce((a,r)=>a+getA(r,'check_ins'),0);
-  const l  = af.reduce((a,r)=>a+getA(r,'llegadas_akin'),0);
-  const cb = af.reduce((a,r)=>a+getA(r,'afiliados_cb'),0);
-  const b  = ben.reduce((a,r)=>a+(parseFloat(r['_af_con_ben'])||0),0);
-  const t  = ben.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0),0);
-  const ok = ben.reduce((a,r)=>{ const tr=parseFloat(r['_total_trans'])||0,p=parseFloat(r['_pct_ok'])||0; return a+tr*(p/100); },0);
-  const pasos=[
-    {ico:'🏠',num:h,   label:'HUÉSPEDES\nTOTALES',base:null},
-    {ico:'📋',num:c,   label:'CHECK-INS\nREGISTRADOS',base:h},
-    {ico:'🎫',num:l,   label:'LLEGADAS\nEN AKIN',base:c},
-    {ico:'✅',num:cb,  label:'CONFIRMADOS\nEN CB',base:l},
-    {ico:'🎁',num:b,   label:'CON BENEFICIO\nREGISTRADO',base:cb},
-    {ico:'⭐',num:Math.round(ok),label:'REGISTRADO\nCORRECTAMENTE',base:t},
-  ];
-  document.getElementById('embudo').innerHTML=pasos.map((p,i)=>`
-    ${i>0?'<span class="embudo-flecha">›</span>':''}
-    <div class="embudo-paso">
-      <div class="ico">${p.ico}</div>
-      <div class="num${i>0?' hi':''}">${fmt(p.num)}</div>
-      <div class="etiq">${p.label.replace('\n','<br>')}</div>
-      ${p.base&&p.base>0?`<div class="pct">${pct(p.num,p.base)}% del paso anterior</div>`:''}
-    </div>`).join('');
-}
-
-// ── BENEFICIOS ───────────────────────────────────────────
-
-function renderBeneficios(ben){
-  const toReg=sumF(ben,'Toallas registradas');
-  const toOK =ben.reduce((a,r)=>a+(parseFloat(r['_toallas_ok'])||0),0);
-  const toErr=ben.reduce((a,r)=>a+(parseFloat(r['_toallas_err'])||0),0);
-  const deReg=sumF(ben,'Desayunos Total');
-  const deOK =ben.reduce((a,r)=>a+(parseFloat(r['_desayunos_ok'])||0),0);
-  const deErr=ben.reduce((a,r)=>a+(parseFloat(r['_desayunos_err'])||0),0);
-  const taOK =ben.reduce((a,r)=>a+(parseFloat(r['_tarifa_ok'])||0),0);
-  const taErr=ben.reduce((a,r)=>a+(parseFloat(r['_tarifa_err'])||0),0);
-  document.getElementById('ben-grid').innerHTML=[
-    {t:'🧺 Toallas',num:toReg,sub:'Backpacker+ · recepción usa botón loyalty CB · $0 al afiliado',ok:toOK,err:toErr,m:'toallas'},
-    {t:'🍳 Desayunos',num:deReg,sub:'Solo tier Viajero · 3+ noches · botón loyalty CB · $0',ok:deOK,err:deErr,m:'desayunos'},
-    {t:'🏷️ Tarifa alojamiento',num:taOK+taErr,sub:'TODOS los tiers · recepción selecciona tarifa loyalty en CB al check-in',ok:taOK,err:taErr,m:'tarifa'},
-  ].map(c=>`<div class="ben-card" onclick="abrirModal('${c.m}')">
-    <div class="ben-titulo">${c.t}</div>
-    <div class="ben-num">${fmt(c.num)}</div>
-    <div class="ben-sub">${c.sub}</div>
-    <div class="ben-badges">
-      <span class="badge badge-ok">${fmt(c.ok)} correctos</span>
-      <span class="badge badge-err">${fmt(c.err)} con error</span>
-    </div></div>`).join('');
-}
-
-// ── SEMÁFORO DE ERRORES ──────────────────────────────────
-// Nota actualizada: usa afiliados CB (164) no MATCH_BASE (202)
-
-function renderSemaforo(errDet,af){
-  const totA = af.reduce((a,r)=>a+getA(r,'afiliados_cb'),0);
-  const totC = af.reduce((a,r)=>a+getA(r,'check_ins'),0);
-  const pctLoy = totC>0?pct(totA,totC):0;
-
-  const conteo={};
-  errDet.forEach(r=>{ conteo[r.Error_Type]=(conteo[r.Error_Type]||0)+1; });
-  const noLoy = conteo['NO_LOYALTY']||0;
-  const tipos=[
-    {tipo:'SIN_CANJE',  color:'#9ca3af',
-     label:'Afiliado sin beneficio registrado',
-     desc:'El afiliado se hospedó pero recepción no aplicó tarifa loyalty ni registró beneficios en CB'},
-    {tipo:'LEAKAGE',    color:'#d97706',
-     label:'Botón loyalty usado en huésped sin membresía',
-     desc:'Se presionó botón toalla o desayuno para un huésped que no es afiliado AKIN'},
-    {tipo:'MISUSE',     color:'#dc2626',
-     label:'Tarifa loyalty aplicada a no afiliado',
-     desc:'Se aplicó descuento de alojamiento loyalty a huésped sin membresía — impacto directo en revenue'},
-    {tipo:'TIER_INCORRECTO', color:'#d97706',
-     label:'Beneficio no corresponde al tier del afiliado',
-     desc:'El afiliado es real pero recibió un beneficio que no le corresponde según su tier'},
-  ];
-  let html='';
-  // Nota usando afiliados CB (164), no el 202 de MATCH_BASE
-  if(noLoy>0) html+=`<div class="sem-tip info">ℹ️ <b>${fmt(noLoy)} reservas</b> corresponden a huéspedes regulares sin membresía AKIN — no son errores operativos del programa.<br>Los <b>${fmt(totA)} afiliados confirmados</b> representaron el <b>${pctLoy}%</b> de los check-ins del período.</div>`;
-  tipos.forEach(t=>{
-    const cnt=conteo[t.tipo]||0;
-    if(!cnt) return;
-    html+=`<div class="sem-fila">
-      <div class="sem-dot" style="background:${t.color}"></div>
-      <div class="sem-info"><div class="sem-label">${t.label}</div><div class="sem-desc">${t.desc}</div></div>
-      <div class="sem-count">${fmt(cnt)}</div>
-    </div>`;
-  });
-  if(Object.keys(conteo).some(k=>k!=='NO_LOYALTY'&&k!=='OK'&&(conteo[k]||0)>0)){
-    html+=`<div class="sem-tip" style="margin-top:6px">💡 <b>Raíz común:</b> Recepción debe hacer <b>dos cosas</b> al recibir un afiliado:<br>
-    1. <b>Check-in:</b> identificar tier por nota en reserva o consultando AKIN → seleccionar tarifa loyalty (todos los tiers)<br>
-    2. <b>Durante estadía:</b> presionar botón toalla / desayuno en CB (solo Backpacker o superior)</div>`;
-  }
-  document.getElementById('semaforo-wrap').innerHTML=html;
-}
-
-// ── TIERS ────────────────────────────────────────────────
-
-function renderTiers(tiersDet,redTier,af){
-  const llegadas    = af.reduce((a,r)=>a+getA(r,'llegadas_akin'),0);
-  const confirmados = af.reduce((a,r)=>a+getA(r,'afiliados_cb'),0);
-  document.getElementById('tier-nota').innerHTML=
-    `ℹ️ <b>Fuente:</b> ${fmt(llegadas)} llegadas AKIN · ${fmt(confirmados)} confirmados CB · <b>Redención correcta</b> = solo Error_Type OK en MATCH_BASE`;
-
-  const ORDEN=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
-  const BENS={Tourist:'Tarifa 15% (seleccionar en CB)',Backpacker:'Tarifa 15% + Toalla',Explorer:'Tarifa 20% + Toalla',Nomad:'Tarifa 20% + Toalla',Viajero:'Tarifa 25% + Toalla + Desayuno'};
-
-  const redAgr={};
-  redTier.forEach(r=>{
-    if(!redAgr[r.Tier]) redAgr[r.Tier]={Total:0,OK:0,Con_Error:0,Sin_Registro:0};
-    redAgr[r.Tier].Total        +=(r.Total        ||0);
-    redAgr[r.Tier].OK           +=(r.OK           ||0);
-    redAgr[r.Tier].Con_Error    +=(r.Con_Error    ||0);
-    redAgr[r.Tier].Sin_Registro +=(r.Sin_Registro ||0);
-  });
-
-  let html='';
-  if(Object.keys(redAgr).length){
-    html+=`<table class="red-tier-tabla"><thead><tr>
-      <th>Tier</th><th>Beneficios</th><th>Total</th>
-      <th>✅ Tarifa+beneficios OK</th><th>⚠️ Con error</th><th>❌ Sin registro</th>
-      <th>% Registro correcto</th></tr></thead><tbody>`;
-    ORDEN.filter(t=>redAgr[t]).forEach(tier=>{
-      const d=redAgr[tier];
-      const pOK=d.Total>0?Math.round(d.OK/d.Total*100):0;
-      const col=pOK>50?'#16a34a':(pOK>0?'#d97706':'#dc2626');
-      html+=`<tr>
-        <td><b>${tier}</b></td>
-        <td style="font-size:11px;color:var(--text-muted)">${BENS[tier]||''}</td>
-        <td>${fmt(d.Total)}</td>
-        <td style="color:#16a34a;font-weight:700">${fmt(d.OK)}</td>
-        <td style="color:#d97706;font-weight:${d.Con_Error>0?700:400}">${fmt(d.Con_Error)}</td>
-        <td style="color:#dc2626;font-weight:${d.Sin_Registro>0?700:400}">${fmt(d.Sin_Registro)}</td>
-        <td><span class="red-bar" style="width:${Math.min(pOK,80)}px;background:${col}"></span><b style="color:${col}">${pOK}%</b></td>
-      </tr>`;
-    });
-    html+='</tbody></table>';
-  }
-
-  const porProp={};
-  redTier.forEach(r=>{
-    if(!porProp[r.Propiedad]) porProp[r.Propiedad]={};
-    if(!porProp[r.Propiedad][r.Tier]) porProp[r.Propiedad][r.Tier]={Total:0,OK:0,Con_Error:0,Sin_Registro:0};
-    porProp[r.Propiedad][r.Tier].Total        +=(r.Total        ||0);
-    porProp[r.Propiedad][r.Tier].OK           +=(r.OK           ||0);
-    porProp[r.Propiedad][r.Tier].Con_Error    +=(r.Con_Error    ||0);
-    porProp[r.Propiedad][r.Tier].Sin_Registro +=(r.Sin_Registro ||0);
-  });
-
-  Object.keys(porProp).sort().forEach(prop=>{
-    const tiers=porProp[prop];
-    const total=Object.values(tiers).reduce((a,t)=>a+t.Total,0);
-    const top=Object.entries(tiers).sort((a,b)=>b[1].Total-a[1].Total)[0];
-    html+=`<div class="tier-propiedad">
-      <div class="tier-prop-titulo">${prop}</div>
-      <div class="tier-prop-sub">Tier más frecuente: <b style="color:var(--naranja)">${top?top[0]:'—'}</b> · ${fmt(total)} afiliados AKIN</div>`;
-    ORDEN.filter(t=>tiers[t]).forEach(tier=>{
-      const d=tiers[tier];
-      const pOK =d.Total>0?Math.round(d.OK          /d.Total*100):0;
-      const pErr=d.Total>0?Math.round(d.Con_Error    /d.Total*100):0;
-      const pSin=d.Total>0?Math.round(d.Sin_Registro /d.Total*100):0;
-      const pPer=total>0?Math.round(d.Total/total*100):0;
-      html+=`<div class="tier-fila">
-        <div class="tier-izq"><div class="tier-nombre">${tier}</div><div class="tier-bens">${BENS[tier]||''}</div></div>
-        <div class="tier-barras">
-          <div class="tier-barra-row">
-            <span class="tier-barra-label">OK</span>
-            <div class="tier-bar-wrap"><div class="tier-bar bar-verde" style="width:${pOK}%"></div></div>
-            <span style="font-size:11px;font-weight:700;color:#16a34a;width:35px">${pOK}%</span>
-          </div>
-          ${pErr>0?`<div class="tier-barra-row">
-            <span class="tier-barra-label">Con error</span>
-            <div class="tier-bar-wrap"><div class="tier-bar bar-amarillo" style="width:${pErr}%"></div></div>
-            <span style="font-size:11px;font-weight:700;color:#d97706;width:35px">${pErr}%</span>
-          </div>`:''}
-          ${pSin>0?`<div class="tier-barra-row">
-            <span class="tier-barra-label">Sin reg.</span>
-            <div class="tier-bar-wrap"><div class="tier-bar bar-rojo" style="width:${pSin}%"></div></div>
-            <span style="font-size:11px;font-weight:700;color:#dc2626;width:35px">${pSin}%</span>
-          </div>`:''}
-        </div>
-        <div class="tier-der">
-          <div class="tier-total">${fmt(d.Total)}</div>
-          <div class="tier-pct-periodo">${pPer}% del período</div>
-        </div>
-      </div>`;
-    });
-    html+='</div>';
-  });
-  if(!html) html='<p style="color:var(--text-muted);font-size:13px">No hay datos de tiers para este filtro.</p>';
-  document.getElementById('tiers-seccion').innerHTML=html;
-}
-
-// ── EVOLUCIÓN ────────────────────────────────────────────
-
-function renderEvolucion(){
-  const prop =document.getElementById('fil-propiedad').value;
-  const pais =document.getElementById('fil-pais').value;
-  const desde=document.getElementById('evo-desde').value;
-  const hasta=document.getElementById('evo-hasta').value;
-  let af =fil(DATA.afiliados||[],prop,pais);
-  let ben=fil(DATA.beneficios||[],prop,pais);
-  if(desde){af=af.filter(r=>r['Período']>=desde);ben=ben.filter(r=>r['Período']>=desde);}
-  if(hasta){af=af.filter(r=>r['Período']<=hasta);ben=ben.filter(r=>r['Período']<=hasta);}
-  const pers=periodosSorted(af);
-  const props=uniq(af.map(r=>r['Propiedad']));
-  if(!pers.length){
-    document.getElementById('charts-grid').innerHTML='<p style="color:var(--text-muted);font-size:13px">No hay datos para el rango.</p>';
-    return;
-  }
-  const COLORS=['#F04B24','#ff6b47','#d97706','#16a34a','#3b82f6','#8b5cf6'];
-
-  const pt=p=>({
-    penet:(()=>{ const a=af.filter(r=>r['Período']===p); const c=a.reduce((x,r)=>x+getA(r,'check_ins'),0),cb=a.reduce((x,r)=>x+getA(r,'afiliados_cb'),0); return c>0?pct(cb,c):0; })(),
-    adq:  (()=>{ const a=af.filter(r=>r['Período']===p); const h=a.reduce((x,r)=>x+getA(r,'huespedes'),0),n=a.reduce((x,r)=>x+getA(r,'nuevos'),0); return h>0?pct(n,h):0; })(),
-    nuevos:af.filter(r=>r['Período']===p).reduce((a,r)=>a+getA(r,'nuevos'),0),
-    ok:(()=>{ const b=ben.filter(r=>r['Período']===p); const t=b.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0),0),ok=b.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0)*((parseFloat(r['_pct_ok'])||0)/100),0); return t>0?Math.round(ok/t*1000)/10:0; })(),
-    error:(()=>{ const b=ben.filter(r=>r['Período']===p); const t=b.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0),0),er=b.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0)*((parseFloat(r['_pct_error'])||0)/100),0); return t>0?Math.round(er/t*1000)/10:0; })(),
-    toallas:ben.filter(r=>r['Período']===p).reduce((a,r)=>a+(parseFloat(r['_toallas_ok'])||0),0),
-    desay:  ben.filter(r=>r['Período']===p).reduce((a,r)=>a+(parseFloat(r['_desayunos_ok'])||0),0),
-    tarifa: ben.filter(r=>r['Período']===p).reduce((a,r)=>a+(parseFloat(r['_tarifa_ok'])||0),0),
-  });
-  const pts=pers.map(p=>({p,d:pt(p)}));
-
-  const graficas=[
-    {id:'g-penet',t:'KPI 01 · % Penetración de afiliados',sub:'Afiliados CB / check-ins CB por período',type:'line',yPct:true,
-     datasets:[{label:'% Penetración',data:pts.map(x=>x.d.penet),borderColor:'#F04B24',backgroundColor:'rgba(240,75,36,.1)',fill:true,tension:.4}]},
-    {id:'g-adq',t:'KPI 04 · % Tasa de adquisición',sub:'Nuevos afiliados / huéspedes totales por período',type:'line',yPct:true,
-     datasets:[{label:'% Adquisición',data:pts.map(x=>x.d.adq),borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.1)',fill:true,tension:.4}]},
-    {id:'g-nuevos',t:'KPI 04 · Nuevos afiliados por período',sub:'Cantidad de nuevos registros al programa',type:'bar',yPct:false,
-     datasets:[{label:'Nuevos',data:pts.map(x=>Math.round(x.d.nuevos)),backgroundColor:'#F04B24',borderRadius:6}]},
-    {id:'g-calidad',t:'KPI 03 · Calidad de registro (%)',sub:'% transacciones OK vs % con error en CB',type:'line',yPct:true,
-     datasets:[
-       {label:'% OK',data:pts.map(x=>x.d.ok),borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.1)',fill:true,tension:.4},
-       {label:'% Error',data:pts.map(x=>x.d.error),borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,.05)',fill:true,tension:.4}
-     ]},
-    {id:'g-perks',t:'KPI 02 · Beneficios correctamente registrados',sub:'Toallas + desayunos + tarifa OK por período',type:'bar',yPct:false,stacked:true,
-     datasets:[
-       {label:'Toallas OK',data:pts.map(x=>Math.round(x.d.toallas)),backgroundColor:'#F04B24',borderRadius:4},
-       {label:'Desayunos OK',data:pts.map(x=>Math.round(x.d.desay)),backgroundColor:'#ff6b47',borderRadius:4},
-       {label:'Tarifa OK',data:pts.map(x=>Math.round(x.d.tarifa)),backgroundColor:'#ffc4b8',borderRadius:4}
-     ]},
-    {id:'g-prop',t:'Afiliados confirmados CB por propiedad',sub:'Comparación entre propiedades por período',type:'bar',yPct:false,
-     datasets:props.map((pr,i)=>({
-       label:pr,backgroundColor:COLORS[i%COLORS.length],borderRadius:6,
-       data:pers.map(p=>af.filter(r=>r['Período']===p&&r['Propiedad']===pr).reduce((a,r)=>a+getA(r,'afiliados_cb'),0))
-     }))},
-  ];
-
-  document.getElementById('charts-grid').innerHTML=graficas.map(g=>`
-    <div class="chart-card">
-      <div class="chart-titulo">${g.t}</div>
-      <div class="chart-sub">${g.sub}</div>
-      <div class="chart-wrap"><canvas id="${g.id}"></canvas></div>
-    </div>`).join('');
-
-  graficas.forEach(g=>{
-    if(CI[g.id]) CI[g.id].destroy();
-    CI[g.id]=new Chart(document.getElementById(g.id),{
-      type:g.type||'line',
-      data:{labels:pers,datasets:g.datasets},
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:g.datasets.length>1,labels:{font:{family:'Outfit'},boxWidth:12,padding:8}}},
-        scales:{
-          x:{ticks:{font:{family:'Outfit',size:10}},grid:{display:false}},
-          y:{
-            ticks:{
-              font:{family:'Outfit',size:10},
-              // Añadir % en eje Y cuando el dato es porcentaje
-              callback: g.yPct ? v=>v+'%' : v=>v
-            },
-            grid:{color:'#f0f0ee'},
-            beginAtZero:true,
-            stacked:g.stacked||false
-          }
-        }
-      }
-    });
-  });
-}
-
-// ── HISTÓRICO ────────────────────────────────────────────
-
-function renderHistorico(){
-  const prop  =document.getElementById('fil-propiedad').value;
-  const hP    =document.getElementById('hist-periodo').value;
-  const hPa   =document.getElementById('hist-pais').value;
-  const buscar=(document.getElementById('hist-search').value||'').toLowerCase().trim();
-
-  let hist=(DATA.historico||[]).filter(r=>
-    (!prop||r['Propiedad']===prop)&&
-    (!hP  ||r['Período']===hP)&&
-    (!hPa ||(r['País']||r['Pais'])===hPa)&&
-    (!buscar||r['Propiedad'].toLowerCase().includes(buscar))
-  );
-
-  // Snapshot más reciente por período+propiedad
-  const snap={};
-  hist.forEach(r=>{
-    const k=r['Período']+'||'+r['Propiedad'];
-    if(!snap[k]||r['Fecha_Snapshot']>snap[k]['Fecha_Snapshot']) snap[k]=r;
-  });
-  const rows=Object.values(snap).sort((a,b)=>
-    a['Propiedad']<b['Propiedad']?-1:a['Propiedad']>b['Propiedad']?1:
-    a['Período']<b['Período']?-1:1
-  );
-
-  const wrap=document.getElementById('hist-grupos');
-  if(!rows.length){
-    wrap.innerHTML='<div class="hist-no-results">No hay datos para el filtro seleccionado.</div>';
-    document.getElementById('hist-charts').innerHTML='';
-    return;
-  }
-
-  const porProp={};
-  rows.forEach(r=>{ const p=r['Propiedad']; if(!porProp[p]) porProp[p]=[]; porProp[p].push(r); });
-
-  wrap.innerHTML=Object.keys(porProp).sort().map((prop,idx)=>{
-    const filas=porProp[prop];
-    const id='hg-'+idx;
-    const pais=filas[0]['País']||filas[0]['Pais']||'';
-    const periodos=filas.map(r=>`<span class="badge-per" style="margin-right:4px">${r['Período']}</span>`).join('');
-    return `<div class="hist-grupo">
-      <div class="hist-grupo-header" onclick="toggleHistGrupo('${id}')">
-        <div>
-          <div class="hist-grupo-nombre">${prop}</div>
-          <div class="hist-grupo-meta">${pais} · ${filas.length} período${filas.length>1?'s':''} · ${periodos}</div>
-        </div>
-        <span class="hist-grupo-toggle" id="tg-${id}">▼</span>
-      </div>
-      <div class="hist-grupo-body" id="${id}">
-        <table class="hist-tabla">
-          <thead><tr>
-            <th>Período</th><th>Huéspedes</th><th>Check-ins CB</th>
-            <th>Afiliados CB</th><th>% Penetración</th>
-            <th>Nuevos</th><th>% Adquisición</th>
-            <th>Trans.</th><th>% OK</th><th>% Error</th>
-          </tr></thead>
-          <tbody>${filas.map(r=>{
-            // Recalcular % penetración desde crudos si los datos están disponibles
-            const cb = parseInt(r['Afiliados_CB'])||0;
-            const ci = parseInt(r['Check_ins'])||0;
-            const hu = parseInt(r['Huespedes_Totales'])||0;
-            const nv = parseInt(r['Nuevos_Afiliados'])||0;
-            const pPenetCalc = ci > 0 ? (Math.round(cb/ci*1000)/10)+'%' : '—';
-            const pAdqCalc   = hu > 0 ? (Math.round(nv/hu*1000)/10)+'%' : '—';
-            return `<tr>
-              <td><span class="badge-per">${r['Período']}</span></td>
-              <td>${fmt(r['Huespedes_Totales'])}</td>
-              <td>${fmt(r['Check_ins'])}</td>
-              <td>${fmt(r['Afiliados_CB'])}</td>
-              <td class="hi">${pPenetCalc}</td>
-              <td class="hi">${fmtInt(r['Nuevos_Afiliados'])}</td>
-              <td>${pAdqCalc}</td>
-              <td>${fmt(r['Total_Trans'])}</td>
-              <td>${fmtPct(r['Pct_OK'])}</td>
-              <td>${fmtPct(r['Pct_Error'])}</td>
-            </tr>`;
-          }).join('')}</tbody>
-        </table>
-      </div>
-    </div>`;
-  }).join('');
-
-  // Abrir primera propiedad por defecto
-  toggleHistGrupo('hg-0');
-
-  // Gráficas históricas
-  const props2=Object.keys(porProp).sort();
-  const pers2=uniq(rows.map(r=>r['Período'])).sort();
-  const COLORS=['#F04B24','#ff6b47','#d97706','#16a34a'];
-  const hcG=[
-    {id:'hc-penet',t:'% Penetración histórica',sub:'Afiliados CB / check-ins CB por período',type:'line',yPct:true,
-     datasets:props2.map((pr,i)=>({
-       label:pr,tension:.4,spanGaps:true,borderColor:COLORS[i%COLORS.length],fill:false,
-       // Recalcular desde crudos
-       data:pers2.map(p=>{
-         const f=rows.find(r=>r['Período']===p&&r['Propiedad']===pr);
-         if(!f) return null;
-         const cb=parseInt(f['Afiliados_CB'])||0, ci=parseInt(f['Check_ins'])||0;
-         return ci>0 ? Math.round(cb/ci*1000)/10 : null;
-       })
-     }))},
-    {id:'hc-nuevos',t:'Nuevos afiliados histórico',sub:'Crecimiento del programa período a período',type:'bar',yPct:false,
-     datasets:props2.map((pr,i)=>({
-       label:pr,borderRadius:6,backgroundColor:COLORS[i%COLORS.length],
-       data:pers2.map(p=>{
-         const f=rows.find(r=>r['Período']===p&&r['Propiedad']===pr);
-         return f ? Math.round(parseInt(f['Nuevos_Afiliados'])||0) : null;
-       })
-     }))},
-  ];
-
-  document.getElementById('hist-charts').innerHTML=hcG.map(g=>`
-    <div class="chart-card">
-      <div class="chart-titulo">${g.t}</div>
-      <div class="chart-sub">${g.sub}</div>
-      <div class="chart-wrap"><canvas id="${g.id}"></canvas></div>
-    </div>`).join('');
-
-  hcG.forEach(g=>{
-    if(CI[g.id]) CI[g.id].destroy();
-    CI[g.id]=new Chart(document.getElementById(g.id),{
-      type:g.type,data:{labels:pers2,datasets:g.datasets},
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:props2.length>1,labels:{font:{family:'Outfit'},boxWidth:12,padding:8}}},
-        scales:{
-          x:{ticks:{font:{family:'Outfit',size:10}},grid:{display:false}},
-          y:{ticks:{font:{family:'Outfit',size:10},callback:g.yPct?v=>v+'%':v=>v},grid:{color:'#f0f0ee'},beginAtZero:true}
-        }
-      }
-    });
-  });
-}
-
-function toggleHistGrupo(id){
-  const body=document.getElementById(id);
-  const tog=document.getElementById('tg-'+id);
-  if(!body) return;
-  const open=body.classList.toggle('open');
-  if(tog) tog.textContent=open?'▲':'▼';
-}
-
-// ── HALLAZGOS ────────────────────────────────────────────
-
-function renderHallazgos(hall){
-  const el=document.getElementById('hallazgos-lista');
-  if(!hall.length){
-    el.innerHTML='<p style="color:var(--text-muted);font-size:13px">No hay hallazgos para el filtro seleccionado.</p>';
-    return;
-  }
-  function sevClass(ico){
-    if(!ico) return 'sev-amarillo';
-    if(ico.includes('🔴')) return 'sev-rojo';
-    if(ico.includes('⚠️')) return 'sev-amarillo';
-    if(ico.includes('✅')) return 'sev-rojo'; // en hallazgos ✅ era un bug visual — todos son problemas
-    return 'sev-amarillo';
-  }
-  // Plural correcto
-  function pluralTrans(n){
-    const i=parseInt(n)||0;
-    return i===1 ? '1 transacción' : fmt(i)+' transacciones';
-  }
-
-  el.innerHTML=hall.map(h=>{
-    // Formatear métrica correctamente
-    let metrica = h['Métrica']||'';
-    metrica = fmtMetrica(metrica);
-    // Arreglar plural en el título
-    let titulo = (h['Hallazgo']||'').replace(/(\d+) transacciones loyalty/,(m,n)=>pluralTrans(n)+' loyalty');
-
-    return `<div class="hallazgo ${sevClass(h['Severidad']||'')}">
-      <div class="hallazgo-ico">🔴</div>
-      <div>
-        <div class="hallazgo-titulo">${titulo}</div>
-        <div class="hallazgo-meta">${h['Categoría']||''} · ${h['Propiedad']||''} · ${h['Período']||''}</div>
-        <div class="hallazgo-accion">→ ${h['Acción sugerida']||''}</div>
-      </div>
-      <div class="hallazgo-metrica">${metrica}</div>
-    </div>`;
-  }).join('');
-}
-
-// ── SIN CANJE ────────────────────────────────────────────
-// FIX: Tourist y Backpacker+ son AMBOS problemas
-// Tourist = no se aplicó tarifa loyalty (recepción no la seleccionó en CB)
-// Backpacker+ = no se aplicó tarifa NI beneficios físicos
-
-function renderSinCanje(sc){
-  document.getElementById('sc-total-num').textContent = sc.length || '—';
-
-  const tourist     = sc.filter(r=>esTourist(r['Tier']||''));
-  const backplusArr = sc.filter(r=>!esTourist(r['Tier']||''));
-
-  document.getElementById('sc-cuerpo').innerHTML=`
-    <div class="sc-split">
-      <div class="sc-col">
-        <div class="sc-ico">🎫</div>
-        <div class="sc-num tourist">${fmt(tourist.length)}</div>
-        <div class="sc-label">Tier Tourist</div>
-        <span class="sc-badge problema">❌ Sin tarifa loyalty aplicada</span>
-        <div class="sc-desc">Tourist solo tiene descuento de alojamiento (15%). Recepción debe seleccionarlo manualmente en CB al hacer check-in — no es una tarifa pública.</div>
-        <div class="sc-accion">→ Al check-in: ver nota de reserva en CB → identificar tier en Akin → seleccionar tarifa loyalty manualmente</div>
-      </div>
-      <div class="sc-col">
-        <div class="sc-ico">⚠️</div>
-        <div class="sc-num backpacker">${fmt(backplusArr.length)}</div>
-        <div class="sc-label">Backpacker o superior</div>
-        <span class="sc-badge problema">❌ Sin tarifa ni beneficios registrados</span>
-        <div class="sc-desc">Deben tener tarifa loyalty aplicada Y beneficios físicos registrados (toalla, y desayuno si son Viajero con 3+ noches).</div>
-        <div class="sc-accion">→ Check-in: seleccionar tarifa loyalty · Durante estadía: usar botones toalla/desayuno en CB según tier</div>
-      </div>
-    </div>
-    ${backplusArr.length>0?`
-    <div class="sc-tabla-header">
-      <div class="sc-tabla-titulo">⚠️ ${backplusArr.length} afiliados Backpacker+ sin ningún beneficio registrado</div>
-      <input type="text" class="sc-search" id="sc-search" placeholder="🔍 Buscar nombre, tier…" oninput="filtrarSinCanje()"/>
-    </div>
-    <div class="sc-tabla-wrap">
-      <table class="sc-tabla" id="sc-tabla">
-        <thead><tr><th>Nombre</th><th>Tier</th><th>Propiedad</th><th>Período</th><th>Noches</th><th># Reserva</th></tr></thead>
-        <tbody id="sc-tbody">${backplusArr.map(r=>`<tr>
-          <td>${r['Nombre']||'—'}</td>
-          <td><b>${r['Tier']||'Sin tier'}</b></td>
-          <td>${r['Propiedad']||'—'}</td>
-          <td>${r['Período']||'—'}</td>
-          <td>${r['Noches']||'—'}</td>
-          <td>${r['# Reserva']||'—'}</td>
-        </tr>`).join('')}</tbody>
-      </table>
-    </div>
-    <div class="sc-nota">💡 Los Tourist (${tourist.length}) no se muestran en tabla porque el error es el mismo para todos: recepción no seleccionó la tarifa loyalty al check-in. Revisar reservas del período y verificar si la tarifa fue aplicada.</div>
-    `:'<p style="padding:16px;font-size:13px;color:var(--text-muted)">No hay afiliados Backpacker+ sin beneficio para este filtro. ✅</p>'}`;
-
-  window._scRevision = backplusArr;
-}
-
-function filtrarSinCanje(){
-  const q=(document.getElementById('sc-search').value||'').toLowerCase();
-  const tbody=document.getElementById('sc-tbody');
-  if(!tbody||!window._scRevision) return;
-  const filtrados=window._scRevision.filter(r=>
-    (r['Nombre']||'').toLowerCase().includes(q)||
-    (r['Tier']||'').toLowerCase().includes(q)||
-    (r['Propiedad']||'').toLowerCase().includes(q)
-  );
-  tbody.innerHTML=filtrados.map(r=>`<tr>
-    <td>${r['Nombre']||'—'}</td>
-    <td><b>${r['Tier']||'Sin tier'}</b></td>
-    <td>${r['Propiedad']||'—'}</td>
-    <td>${r['Período']||'—'}</td>
-    <td>${r['Noches']||'—'}</td>
-    <td>${r['# Reserva']||'—'}</td>
-  </tr>`).join('');
-}
-
-function toggleSinCanje(){
-  const c=document.getElementById('sc-cuerpo');
-  const b=document.getElementById('sc-toggle-btn');
-  c.classList.toggle('open');
-  b.textContent=c.classList.contains('open')?'▲ Ocultar':'▼ Ver detalle';
-}
-
-// ── MODALES ──────────────────────────────────────────────
-
-function abrirModal(tipo){
-  const prop=document.getElementById('fil-propiedad').value;
-  const pais=document.getElementById('fil-pais').value;
-  const af  =fil(DATA.afiliados||[],prop,pais);
-  const ben =fil(DATA.beneficios||[],prop,pais);
-  const errDet=(DATA.tiposErrorDetalle||[]).filter(r=>(!prop||r['Propiedad']===prop)&&(!pais||r['País']===pais));
-
-  const totH =af.reduce((a,r)=>a+getA(r,'huespedes'),0);
-  const totC =af.reduce((a,r)=>a+getA(r,'check_ins'),0);
-  const totL =af.reduce((a,r)=>a+getA(r,'llegadas_akin'),0);
-  const totA =af.reduce((a,r)=>a+getA(r,'afiliados_cb'),0);
-  const totN =af.reduce((a,r)=>a+getA(r,'nuevos'),0);
-  const totB =ben.reduce((a,r)=>a+(parseFloat(r['_af_con_ben'])||0),0);
-  const totT =ben.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0),0);
-  const sumOK=ben.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0)*((parseFloat(r['_pct_ok'])||0)/100),0);
-  const sumEr=ben.reduce((a,r)=>a+(parseFloat(r['_total_trans'])||0)*((parseFloat(r['_pct_error'])||0)/100),0);
-  const toOK =ben.reduce((a,r)=>a+(parseFloat(r['_toallas_ok'])||0),0);
-  const toErr=ben.reduce((a,r)=>a+(parseFloat(r['_toallas_err'])||0),0);
-  const deOK =ben.reduce((a,r)=>a+(parseFloat(r['_desayunos_ok'])||0),0);
-  const deErr=ben.reduce((a,r)=>a+(parseFloat(r['_desayunos_err'])||0),0);
-  const taOK =ben.reduce((a,r)=>a+(parseFloat(r['_tarifa_ok'])||0),0);
-  const taErr=ben.reduce((a,r)=>a+(parseFloat(r['_tarifa_err'])||0),0);
-  const pOK  =totT>0?Math.round(sumOK/totT*1000)/10:0;
-  const pCob =totA>0?pct(totBen,totA):0; // base = CB (164)
-
-  const m={
-    afiliados:`<div class="modal-titulo">KPI 01 · Penetración de afiliados</div>
-      <div class="modal-sub">¿Cuántos afiliados nos visitaron?</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Huéspedes totales</div><div class="valor">${fmt(totH)}</div></div>
-        <div class="modal-kpi"><div class="label">Check-ins CB</div><div class="valor">${fmt(totC)}</div></div>
-        <div class="modal-kpi"><div class="label">Llegadas en Akin</div><div class="valor naranja">${fmt(totL)}</div></div>
-        <div class="modal-kpi"><div class="label">Confirmados en CB</div><div class="valor naranja">${fmt(totA)}</div></div>
-        <div class="modal-kpi"><div class="label">% Penetración (CB/check-ins)</div><div class="valor naranja">${pct(totA,totC)}%</div></div>
-        <div class="modal-kpi"><div class="label">Match Akin → CB</div><div class="valor">${pct(totA,totL)}%</div></div>
-      </div>
-      <div class="modal-nota">La diferencia entre llegadas Akin (${fmt(totL)}) y confirmados CB (${fmt(totA)}) es normal — los sistemas usan nombres y criterios distintos y no siempre hay match exacto.</div>`,
-
-    crecimiento:`<div class="modal-titulo">KPI 04 · ¿Está creciendo el programa?</div>
-      <div class="modal-sub">Nuevos afiliados + tasa de registro sobre total de huéspedes</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Nuevos afiliados</div><div class="valor naranja">${fmtInt(totN)}</div></div>
-        <div class="modal-kpi"><div class="label">% Tasa de registro</div><div class="valor naranja">${pct(totN,totH)}%</div></div>
-        <div class="modal-kpi"><div class="label">Huéspedes totales</div><div class="valor">${fmt(totH)}</div></div>
-        <div class="modal-kpi"><div class="label">Check-ins CB</div><div class="valor">${fmt(totC)}</div></div>
-      </div>`,
-
-    beneficios:`<div class="modal-titulo">KPI 02 · ¿Los afiliados reciben su beneficio?</div>
-      <div class="modal-sub">% de afiliados CB con ≥1 beneficio correctamente registrado en Cloudbeds</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Afiliados CB confirmados</div><div class="valor">${fmt(totA)}</div></div>
-        <div class="modal-kpi"><div class="label">Con ≥1 beneficio ✅</div><div class="valor naranja">${fmt(totB)}</div></div>
-        <div class="modal-kpi"><div class="label">Sin ningún beneficio ❌</div><div class="valor rojo">${fmt(totA-totB)}</div></div>
-        <div class="modal-kpi"><div class="label">% Cobertura</div><div class="valor naranja">${pCob}%</div></div>
-      </div>
-      <div class="flujo-box">
-        <b>Flujo de registro que debe seguir recepción:</b><br>
-        1. Al check-in → ver nota en reserva CB → consultar Akin si es necesario → identificar tier<br>
-        2. Seleccionar <b>tarifa loyalty</b> en CB (aplica para TODOS los tiers — no es tarifa pública)<br>
-        3. Backpacker+: durante estadía → presionar <b>botón toalla</b> en CB ($0 al afiliado)<br>
-        4. Tier Viajero con 3+ noches: también presionar <b>botón desayuno</b>
-      </div>`,
-
-    operativo:`<div class="modal-titulo">KPI 03 · ¿Lo estamos registrando bien?</div>
-      <div class="modal-sub">% de transacciones loyalty correctamente marcadas en Cloudbeds</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Total transacciones loyalty</div><div class="valor">${fmt(totT)}</div></div>
-        <div class="modal-kpi"><div class="label">Correctas ✅</div><div class="valor ${pOK>50?'naranja':'rojo'}">${fmt(Math.round(sumOK))}</div></div>
-        <div class="modal-kpi"><div class="label">Con error ❌</div><div class="valor rojo">${fmt(Math.round(sumEr))}</div></div>
-        <div class="modal-kpi"><div class="label">% OK</div><div class="valor ${pOK>50?'naranja':'rojo'}">${totT>0?pOK+'%':'—'}</div></div>
-      </div>
-      ${totT>0&&pOK===0?'<div class="modal-alerta">🔴 <b>0% de transacciones correctas.</b> Hay registros en CB pero todos tienen errores de clasificación. Capacitación urgente necesaria.</div>':''}
-      <div class="modal-nota"><b>Los 3 tipos de error que se detectan:</b><br>
-        · <b>LEAKAGE:</b> botón toalla/desayuno presionado en huésped que no es afiliado<br>
-        · <b>MISUSE:</b> tarifa loyalty aplicada a no afiliado — pérdida de revenue<br>
-        · <b>TIER_INCORRECTO:</b> beneficio que no corresponde al tier del afiliado</div>`,
-
-    toallas:`<div class="modal-titulo">🧺 Toallas registradas</div>
-      <div class="modal-sub">Backpacker o superior · botón loyalty CB · $0 al afiliado</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Total registradas</div><div class="valor">${fmt(sumF(ben,'Toallas registradas'))}</div></div>
-        <div class="modal-kpi"><div class="label">Correctas ✅</div><div class="valor naranja">${fmt(toOK)}</div></div>
-        <div class="modal-kpi"><div class="label">Cobradas al afiliado ❌</div><div class="valor">${fmt(sumF(ben,'Toallas cobradas a miembro'))}</div></div>
-        <div class="modal-kpi"><div class="label">A no afiliados (LEAKAGE) ❌</div><div class="valor">${fmt(sumF(ben,'Toallas gratis a no miembros'))}</div></div>
-      </div>
-      <div class="modal-nota">El botón de toalla loyalty aplica $0 al afiliado. Si se presiona para alguien que no es afiliado, queda como LEAKAGE en MATCH_BASE.</div>`,
-
-    desayunos:`<div class="modal-titulo">🍳 Desayunos registrados</div>
-      <div class="modal-sub">Solo tier Viajero · 3+ noches · botón loyalty CB · $0 al afiliado</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Total registrados</div><div class="valor">${fmt(sumF(ben,'Desayunos Total'))}</div></div>
-        <div class="modal-kpi"><div class="label">Correctos ✅</div><div class="valor naranja">${fmt(deOK)}</div></div>
-        <div class="modal-kpi"><div class="label">Botón incorrecto ❌</div><div class="valor rojo">${fmt(sumF(ben,'Desayunos Botón Incorrecto'))}</div></div>
-        <div class="modal-kpi"><div class="label">Mal cobrados ❌</div><div class="valor">${fmt(sumF(ben,'Desayunos Mal Cobrados'))}</div></div>
-      </div>
-      <div class="modal-nota">El botón de desayuno loyalty solo aplica para tier Viajero con 3+ noches. Presionarlo en otro tier genera TIER_INCORRECTO.</div>`,
-
-    tarifa:`<div class="modal-titulo">🏷️ Tarifa de alojamiento loyalty</div>
-      <div class="modal-sub">Aplica a TODOS los tiers · recepción la selecciona manualmente en CB al check-in</div>
-      <div class="modal-kpis">
-        <div class="modal-kpi"><div class="label">Aplicada correctamente ✅</div><div class="valor naranja">${fmt(taOK)}</div></div>
-        <div class="modal-kpi"><div class="label">A no afiliados (MISUSE) ❌</div><div class="valor rojo">${fmt(taErr)}</div></div>
-      </div>
-      ${taErr>0?'<div class="modal-alerta">🔴 <b>MISUSE = pérdida de revenue real.</b> Aplicar tarifa loyalty a un no afiliado significa cobrar menos de lo que corresponde — no se puede recuperar retroactivamente.</div>':''}
-      <div class="flujo-box"><b>Recordatorio de proceso:</b><br>La tarifa loyalty NO es pública — recepción debe:<br>1. Identificar el tier del huésped (nota en reserva o Akin)<br>2. Seleccionar manualmente la tarifa correspondiente en CB<br>3. Nunca aplicar esta tarifa sin verificar membresía AKIN activa</div>`,
-  };
-
-  const c=m[tipo];
-  if(!c) return;
-  document.getElementById('modal-contenido').innerHTML=c;
-  document.getElementById('modal').classList.add('open');
-}
-
-function cerrarModal(){
-  document.getElementById('modal').classList.remove('open');
-}
-document.getElementById('modal').addEventListener('click',function(e){
-  if(e.target===this) cerrarModal();
-});
-
-init();
+cargarMiniStats();
 </script>
 </body>
 </html>
