@@ -1,10 +1,10 @@
 {
-  "actualizado": "2026-04-28T05:23:10.962Z",
+  "actualizado": "2026-04-28T19:05:31.472Z",
   "afiliados": [
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
-      "Región": null,
+      "Región": "",
       "Pais": "Colombia",
       "Check ins - CB": 635,
       "Huespedes Totales - CB": 908,
@@ -17,12 +17,21 @@
       "% Adquisición": 0.03634361233480176,
       "Fecha inicio": "2026-04-01",
       "Fecha fin": "2026-04-15",
-      "Última actualización: Mon Apr 20 2026 22:39:15 GMT-0500 (Colombia Standard Time)": null
+      "": "",
+      "Última actualización: Mon Apr 20 2026 22:39:15 GMT-0500 (Colombia Standard Time)": "",
+      "_huespedes": 908,
+      "_check_ins": 635,
+      "_llegadas_akin": 67,
+      "_afiliados_cb": 65,
+      "_nuevos": 33,
+      "_penetracion_real": 10.2,
+      "_penetracion_pot": 10.6,
+      "_pct_adquisicion": 3.6
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
-      "Región": null,
+      "Región": "",
       "Pais": "Colombia",
       "Check ins - CB": 345,
       "Huespedes Totales - CB": 460,
@@ -35,12 +44,21 @@
       "% Adquisición": 0.015217391304347827,
       "Fecha inicio": "2026-04-16",
       "Fecha fin": "2026-04-30",
-      "Última actualización: Mon Apr 20 2026 22:39:15 GMT-0500 (Colombia Standard Time)": null
+      "": "",
+      "Última actualización: Mon Apr 20 2026 22:39:15 GMT-0500 (Colombia Standard Time)": "",
+      "_huespedes": 460,
+      "_check_ins": 345,
+      "_llegadas_akin": 28,
+      "_afiliados_cb": 28,
+      "_nuevos": 7,
+      "_penetracion_real": 8.1,
+      "_penetracion_pot": 8.1,
+      "_pct_adquisicion": 1.5
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
-      "Región": null,
+      "Región": "",
       "Pais": "Costa Rica",
       "Check ins - CB": 529,
       "Huespedes Totales - CB": 764,
@@ -53,12 +71,21 @@
       "% Adquisición": 0.07198952879581152,
       "Fecha inicio": "2026-04-01",
       "Fecha fin": "2026-04-15",
-      "Última actualización: Mon Apr 20 2026 22:39:15 GMT-0500 (Colombia Standard Time)": null
+      "": "",
+      "Última actualización: Mon Apr 20 2026 22:39:15 GMT-0500 (Colombia Standard Time)": "",
+      "_huespedes": 764,
+      "_check_ins": 529,
+      "_llegadas_akin": 54,
+      "_afiliados_cb": 48,
+      "_nuevos": 55,
+      "_penetracion_real": 9.1,
+      "_penetracion_pot": 10.2,
+      "_pct_adquisicion": 7.2
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
-      "Región": null,
+      "Región": "",
       "Pais": "Costa Rica",
       "Check ins - CB": 313,
       "Huespedes Totales - CB": 416,
@@ -71,7 +98,16 @@
       "% Adquisición": 0.021634615384615384,
       "Fecha inicio": "2026-04-16",
       "Fecha fin": "2026-04-30",
-      "Última actualización: Mon Apr 20 2026 22:39:15 GMT-0500 (Colombia Standard Time)": null
+      "": "",
+      "Última actualización: Mon Apr 20 2026 22:39:15 GMT-0500 (Colombia Standard Time)": "",
+      "_huespedes": 416,
+      "_check_ins": 313,
+      "_llegadas_akin": 23,
+      "_afiliados_cb": 23,
+      "_nuevos": 9,
+      "_penetracion_real": 7.3,
+      "_penetracion_pot": 7.3,
+      "_pct_adquisicion": 2.2
     }
   ],
   "beneficios": [
@@ -103,7 +139,18 @@
       "Tarifa Loyalty en miembros": 0,
       "Tarifa Loyalty en no miembros": 0,
       "%OK": 0,
-      "% Error Operativo": 1
+      "% Error Operativo": 1,
+      "": "",
+      "_total_trans": 30,
+      "_pct_ok": 0,
+      "_pct_error": 100,
+      "_toallas_ok": 0,
+      "_toallas_err": 0,
+      "_desayunos_ok": 0,
+      "_desayunos_err": 30,
+      "_tarifa_ok": 0,
+      "_tarifa_err": 0,
+      "_af_con_ben": 4
     },
     {
       "Período": "Abr Q2 2026",
@@ -133,7 +180,18 @@
       "Tarifa Loyalty en miembros": 0,
       "Tarifa Loyalty en no miembros": 1,
       "%OK": 0,
-      "% Error Operativo": 1
+      "% Error Operativo": 1,
+      "": "",
+      "_total_trans": 15,
+      "_pct_ok": 0,
+      "_pct_error": 100,
+      "_toallas_ok": 0,
+      "_toallas_err": 0,
+      "_desayunos_ok": 0,
+      "_desayunos_err": 14,
+      "_tarifa_ok": 0,
+      "_tarifa_err": 1,
+      "_af_con_ben": 1
     },
     {
       "Período": "Abr Q1 2026",
@@ -163,7 +221,18 @@
       "Tarifa Loyalty en miembros": 0,
       "Tarifa Loyalty en no miembros": 1,
       "%OK": 0,
-      "% Error Operativo": 1
+      "% Error Operativo": 1,
+      "": "",
+      "_total_trans": 1,
+      "_pct_ok": 0,
+      "_pct_error": 100,
+      "_toallas_ok": 0,
+      "_toallas_err": 0,
+      "_desayunos_ok": 0,
+      "_desayunos_err": 0,
+      "_tarifa_ok": 0,
+      "_tarifa_err": 1,
+      "_af_con_ben": 0
     },
     {
       "Período": "Abr Q2 2026",
@@ -193,7 +262,18 @@
       "Tarifa Loyalty en miembros": 0,
       "Tarifa Loyalty en no miembros": 0,
       "%OK": 0,
-      "% Error Operativo": 0
+      "% Error Operativo": 0,
+      "": "",
+      "_total_trans": 0,
+      "_pct_ok": null,
+      "_pct_error": null,
+      "_toallas_ok": 0,
+      "_toallas_err": 0,
+      "_desayunos_ok": 0,
+      "_desayunos_err": 0,
+      "_tarifa_ok": 0,
+      "_tarifa_err": 0,
+      "_af_con_ben": 0
     }
   ],
   "hallazgos": [
@@ -201,141 +281,131 @@
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Severidad": "CRÍTICO",
-      "Categoría": "Penetración",
-      "Hallazgo": "Penetración de afiliados por debajo del 15% — el programa no está siendo identificado correctamente en recepción",
+      "Severidad": "⚠️",
+      "Categoría": "Adopción · Penetración",
+      "Hallazgo": "Penetración de afiliados por debajo del 15% — el afiliado no está siendo identificado en recepción",
       "Métrica": 0.102,
-      "Acción sugerida": "Reforzar identificación de afiliados en el check-in y entrenar al equipo de recepción"
+      "Acción sugerida": "Reforzar identificación de afiliados en check-in y capacitar al equipo de recepción"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Severidad": "ATENCIÓN",
-      "Categoría": "Registro en Cloudbeds",
-      "Hallazgo": "Se usó el botón de desayuno loyalty para registrar ventas a huéspedes NO afiliados — error de categorización en el sistema",
-      "Métrica": "30 casos",
-      "Acción sugerida": "Capacitar a recepción en el uso del botón correcto al vender desayunos a huéspedes sin tier Viajero"
+      "Severidad": "🔴",
+      "Categoría": "Operación · 0% correcto",
+      "Hallazgo": "30 transacciones loyalty registradas pero NINGUNA correctamente — 100% error operativo",
+      "Métrica": "0% OK / 30 trans",
+      "Acción sugerida": "Capacitación urgente: revisar uso de botones loyalty en CB — toalla, desayuno y tarifa tienen registros distintos por tier"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Severidad": "ATENCIÓN",
-      "Categoría": "Cobertura de beneficios",
-      "Hallazgo": "Afiliados confirmados que se hospedaron sin ningún beneficio registrado en Cloudbeds",
-      "Métrica": "64 afiliados",
-      "Acción sugerida": "Revisar si son tier Tourist (solo descuento) o si recepción no los identificó durante el check-in"
-    },
-    {
-      "Período": "Abr Q1 2026",
-      "Propiedad": "Viajero Cartagena - Centro Hostel",
-      "País": "Colombia",
-      "Severidad": "POSITIVO",
-      "Categoría": "Crecimiento del programa",
-      "Hallazgo": "Alto número de nuevos afiliados este período",
-      "Métrica": "33 nuevos afiliados",
-      "Acción sugerida": "Identificar qué está funcionando y replicarlo en otras propiedades"
+      "Severidad": "⚠️",
+      "Categoría": "Operación · Cobertura baja",
+      "Hallazgo": "Menos del 50% de afiliados confirmados recibieron al menos 1 beneficio registrado en CB",
+      "Métrica": "6.2% (4/65)",
+      "Acción sugerida": "Revisar si el tier de los afiliados sin beneficio es Tourist o si hay error de identificación en check-in"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Severidad": "CRÍTICO",
-      "Categoría": "Penetración",
-      "Hallazgo": "Penetración de afiliados por debajo del 15% — el programa no está siendo identificado correctamente en recepción",
+      "Severidad": "⚠️",
+      "Categoría": "Adopción · Penetración",
+      "Hallazgo": "Penetración de afiliados por debajo del 15% — el afiliado no está siendo identificado en recepción",
       "Métrica": 0.081,
-      "Acción sugerida": "Reforzar identificación de afiliados en el check-in y entrenar al equipo de recepción"
+      "Acción sugerida": "Reforzar identificación de afiliados en check-in y capacitar al equipo de recepción"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Severidad": "ATENCIÓN",
-      "Categoría": "Registro en Cloudbeds",
-      "Hallazgo": "Se usó el botón de desayuno loyalty para registrar ventas a huéspedes NO afiliados — error de categorización en el sistema",
-      "Métrica": "14 casos",
-      "Acción sugerida": "Capacitar a recepción en el uso del botón correcto al vender desayunos a huéspedes sin tier Viajero"
+      "Severidad": "🔴",
+      "Categoría": "Operación · 0% correcto",
+      "Hallazgo": "15 transacciones loyalty registradas pero NINGUNA correctamente — 100% error operativo",
+      "Métrica": "0% OK / 15 trans",
+      "Acción sugerida": "Capacitación urgente: revisar uso de botones loyalty en CB — toalla, desayuno y tarifa tienen registros distintos por tier"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Severidad": "CRÍTICO",
-      "Categoría": "Tarifa Loyalty",
-      "Hallazgo": "Tarifa loyalty aplicada a huéspedes NO afiliados — impacto directo en el ingreso de la propiedad",
-      "Métrica": "1 reservas",
-      "Acción sugerida": "Verificar estas reservas y revisar el proceso de validación de membresía al momento de la reserva"
+      "Severidad": "🔴",
+      "Categoría": "Operación · MISUSE",
+      "Hallazgo": "Tarifa de descuento loyalty aplicada a huéspedes sin membresía AKIN — pérdida directa de revenue",
+      "Métrica": "1 reserva(s)",
+      "Acción sugerida": "Validar membresía AKIN antes de asignar tarifa loyalty en la reserva de Cloudbeds"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Severidad": "ATENCIÓN",
-      "Categoría": "Cobertura de beneficios",
-      "Hallazgo": "Afiliados confirmados que se hospedaron sin ningún beneficio registrado en Cloudbeds",
-      "Métrica": "27 afiliados",
-      "Acción sugerida": "Revisar si son tier Tourist (solo descuento) o si recepción no los identificó durante el check-in"
+      "Severidad": "⚠️",
+      "Categoría": "Operación · Cobertura baja",
+      "Hallazgo": "Menos del 50% de afiliados confirmados recibieron al menos 1 beneficio registrado en CB",
+      "Métrica": "3.6% (1/28)",
+      "Acción sugerida": "Revisar si el tier de los afiliados sin beneficio es Tourist o si hay error de identificación en check-in"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Severidad": "CRÍTICO",
-      "Categoría": "Penetración",
-      "Hallazgo": "Penetración de afiliados por debajo del 15% — el programa no está siendo identificado correctamente en recepción",
+      "Severidad": "⚠️",
+      "Categoría": "Adopción · Penetración",
+      "Hallazgo": "Penetración de afiliados por debajo del 15% — el afiliado no está siendo identificado en recepción",
       "Métrica": 0.091,
-      "Acción sugerida": "Reforzar identificación de afiliados en el check-in y entrenar al equipo de recepción"
+      "Acción sugerida": "Reforzar identificación de afiliados en check-in y capacitar al equipo de recepción"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Severidad": "CRÍTICO",
-      "Categoría": "Tarifa Loyalty",
-      "Hallazgo": "Tarifa loyalty aplicada a huéspedes NO afiliados — impacto directo en el ingreso de la propiedad",
-      "Métrica": "1 reservas",
-      "Acción sugerida": "Verificar estas reservas y revisar el proceso de validación de membresía al momento de la reserva"
+      "Severidad": "✅",
+      "Categoría": "Adopción · Crecimiento",
+      "Hallazgo": "Alto número de nuevos afiliados — el programa está creciendo bien en esta propiedad",
+      "Métrica": "55 nuevos",
+      "Acción sugerida": "Identificar qué canal o práctica está funcionando y replicarlo en otras propiedades"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Severidad": "ATENCIÓN",
-      "Categoría": "Cobertura de beneficios",
-      "Hallazgo": "Afiliados confirmados que se hospedaron sin ningún beneficio registrado en Cloudbeds",
-      "Métrica": "50 afiliados",
-      "Acción sugerida": "Revisar si son tier Tourist (solo descuento) o si recepción no los identificó durante el check-in"
+      "Severidad": "🔴",
+      "Categoría": "Operación · 0% correcto",
+      "Hallazgo": "1 transacciones loyalty registradas pero NINGUNA correctamente — 100% error operativo",
+      "Métrica": "0% OK / 1 trans",
+      "Acción sugerida": "Capacitación urgente: revisar uso de botones loyalty en CB — toalla, desayuno y tarifa tienen registros distintos por tier"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Severidad": "POSITIVO",
-      "Categoría": "Crecimiento del programa",
-      "Hallazgo": "Alto número de nuevos afiliados este período",
-      "Métrica": "55 nuevos afiliados",
-      "Acción sugerida": "Identificar qué está funcionando y replicarlo en otras propiedades"
+      "Severidad": "🔴",
+      "Categoría": "Operación · MISUSE",
+      "Hallazgo": "Tarifa de descuento loyalty aplicada a huéspedes sin membresía AKIN — pérdida directa de revenue",
+      "Métrica": "1 reserva(s)",
+      "Acción sugerida": "Validar membresía AKIN antes de asignar tarifa loyalty en la reserva de Cloudbeds"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Severidad": "CRÍTICO",
-      "Categoría": "Penetración",
-      "Hallazgo": "Penetración de afiliados por debajo del 15% — el programa no está siendo identificado correctamente en recepción",
+      "Severidad": "⚠️",
+      "Categoría": "Adopción · Penetración",
+      "Hallazgo": "Penetración de afiliados por debajo del 15% — el afiliado no está siendo identificado en recepción",
       "Métrica": 0.073,
-      "Acción sugerida": "Reforzar identificación de afiliados en el check-in y entrenar al equipo de recepción"
+      "Acción sugerida": "Reforzar identificación de afiliados en check-in y capacitar al equipo de recepción"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Severidad": "ATENCIÓN",
-      "Categoría": "Cobertura de beneficios",
-      "Hallazgo": "Afiliados confirmados que se hospedaron sin ningún beneficio registrado en Cloudbeds",
-      "Métrica": "25 afiliados",
-      "Acción sugerida": "Revisar si son tier Tourist (solo descuento) o si recepción no los identificó durante el check-in"
+      "Severidad": "🔴",
+      "Categoría": "Operación · Sin canje total",
+      "Hallazgo": "23 afiliados confirmados en CB pero 0 beneficios registrados en el período",
+      "Métrica": "23 afiliados / 0 trans",
+      "Acción sugerida": "Verificar si son tier Tourist (solo tarifa) o si recepción no identificó a los afiliados en check-in"
     }
   ],
   "sinCanje": [
@@ -346,9 +416,9 @@
       "Nombre": "Antoine Saffaye",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-01",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -357,9 +427,9 @@
       "Nombre": "Jan Ryszard Peski",
       "Tier": "Backpacker",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-01",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -368,9 +438,9 @@
       "Nombre": "Isaac arvid teodor Eriksson",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-01",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -379,9 +449,9 @@
       "Nombre": "Eve Waddell",
       "Tier": "Explorer",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-01",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -390,9 +460,9 @@
       "Nombre": "Alex Peter Frew",
       "Tier": "Backpacker",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-01",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -401,9 +471,9 @@
       "Nombre": "Laura Baksaite",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-02",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -412,9 +482,9 @@
       "Nombre": "Andres Almonte",
       "Tier": "Backpacker",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-02",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -423,9 +493,9 @@
       "Nombre": "Raine Serenity Chiarello",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-02",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -434,9 +504,9 @@
       "Nombre": "James Cristopher Naylor",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-02",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -445,9 +515,9 @@
       "Nombre": "Michaela Cromwell",
       "Tier": "Backpacker",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-02",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -456,9 +526,9 @@
       "Nombre": "Tim-lukas Wulf",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-02",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -467,9 +537,9 @@
       "Nombre": "Isaac Arvid Teodor Eriksson",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-02",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -478,9 +548,9 @@
       "Nombre": "Henry Bustillo",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-02",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -489,9 +559,9 @@
       "Nombre": "Ege Semih Kozoglu",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -500,9 +570,9 @@
       "Nombre": "Andres Almonte",
       "Tier": "Backpacker",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -511,9 +581,9 @@
       "Nombre": "Michaela Cromwell",
       "Tier": "Backpacker",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -522,9 +592,9 @@
       "Nombre": "Isaac Arvid Teodor Eriksson",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -533,9 +603,9 @@
       "Nombre": "Timothée Bayard",
       "Tier": "Backpacker",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -544,9 +614,9 @@
       "Nombre": "Cezar Sánchez Pinheiro",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-04",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -555,9 +625,9 @@
       "Nombre": "Sebastian Yamamoto",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-04",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -566,9 +636,9 @@
       "Nombre": "Holly Cronin",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-04",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -577,9 +647,9 @@
       "Nombre": "Crystian Moya Sanchez",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-05",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -588,9 +658,9 @@
       "Nombre": "Ceren Esen",
       "Tier": "Viajero",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-05",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -599,9 +669,9 @@
       "Nombre": "Chester Javier Vazquez Villavicencio",
       "Tier": "Explorer",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-05",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -610,9 +680,9 @@
       "Nombre": "Adrien Pilette",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-06",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -621,9 +691,9 @@
       "Nombre": "Cillian Gallagher",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-06",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -632,9 +702,9 @@
       "Nombre": "Niroshan Valentine Jeya Rupan",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-06",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -643,9 +713,9 @@
       "Nombre": "Chester Javier Vazquez Villavicencio",
       "Tier": "Explorer",
       "Noches": 6,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-06",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -654,9 +724,9 @@
       "Nombre": "Joanna Petrova",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-06",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -665,9 +735,9 @@
       "Nombre": "Andres Mendieta",
       "Tier": "Backpacker",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-06",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -676,9 +746,9 @@
       "Nombre": "Marilena Schade",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-06",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -687,9 +757,9 @@
       "Nombre": "Daniel Victor Freire Dias",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-07",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -698,9 +768,9 @@
       "Nombre": "Ieva Andraityte",
       "Tier": "Backpacker",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-07",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -709,9 +779,9 @@
       "Nombre": "Alexander Angus Maclean",
       "Tier": "Backpacker",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-07",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -720,9 +790,9 @@
       "Nombre": "Joseph Daniel Pledger",
       "Tier": "Backpacker",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-08",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -731,9 +801,9 @@
       "Nombre": "Anna-lena Lotz",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-08",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -742,9 +812,9 @@
       "Nombre": "Mayra Tatiana Infante vargas",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-08",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -753,9 +823,9 @@
       "Nombre": "Sophie Thomson",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-08",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -764,9 +834,9 @@
       "Nombre": "Klara Reichert",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-09",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -775,9 +845,9 @@
       "Nombre": "Aimee Pulley",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-09",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -786,9 +856,9 @@
       "Nombre": "Alexander Angus Maclean",
       "Tier": "Backpacker",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-09",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -797,9 +867,9 @@
       "Nombre": "Dragos Gherasim",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-09",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -808,9 +878,9 @@
       "Nombre": "Nicolas Valencia Garza",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-10",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -819,9 +889,9 @@
       "Nombre": "Annick Mubina Breitenbach",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-10",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -830,9 +900,9 @@
       "Nombre": "Mikaela Medalaine Vella",
       "Tier": "Backpacker",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-10",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -841,9 +911,9 @@
       "Nombre": "Andres Leonardo Bonilla Mendieta",
       "Tier": "Backpacker",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-10",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -852,9 +922,9 @@
       "Nombre": "Dario Bernardin",
       "Tier": "Tourist",
       "Noches": 5,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-11",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -863,9 +933,9 @@
       "Nombre": "Hayden Simmons",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-11",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -874,9 +944,9 @@
       "Nombre": "Félix Jonathan Eusebio Puello",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-11",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -885,9 +955,9 @@
       "Nombre": "Alice Braun",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-11",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -896,9 +966,9 @@
       "Nombre": "Annabella Hornung",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-12",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -907,9 +977,9 @@
       "Nombre": "Sophie Thomson",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-12",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -918,9 +988,9 @@
       "Nombre": "Max Verburg",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-12",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -929,9 +999,9 @@
       "Nombre": "Chester Javier Vazquez Villavicencio",
       "Tier": "Explorer",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-12",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -940,9 +1010,9 @@
       "Nombre": "John Eusebio",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-12",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -951,9 +1021,9 @@
       "Nombre": "Mylena Micaella de Brito",
       "Tier": "Backpacker",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -962,9 +1032,9 @@
       "Nombre": "Wandecleya Martins de Melo",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -973,9 +1043,9 @@
       "Nombre": "Megan Keech",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -984,9 +1054,9 @@
       "Nombre": "Daniela Itzel Trujillo Ramirez",
       "Tier": "Backpacker",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -995,9 +1065,9 @@
       "Nombre": "Brenda Liduvina Salinas Juarez",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-14",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1006,9 +1076,9 @@
       "Nombre": "Louise Keel",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-15",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1017,9 +1087,9 @@
       "Nombre": "Nina Regenold",
       "Tier": "Backpacker",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-15",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1028,9 +1098,9 @@
       "Nombre": "Isobel Radford",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-15",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1039,9 +1109,9 @@
       "Nombre": "Andres Leonardo Bonilla Mendieta",
       "Tier": "Backpacker",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-15",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1050,9 +1120,9 @@
       "Nombre": "Zohar Eshed",
       "Tier": "Backpacker",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-16",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1061,9 +1131,9 @@
       "Nombre": "Kate Bailey",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-17",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1072,9 +1142,9 @@
       "Nombre": "Isobel Radford",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-17",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1083,9 +1153,9 @@
       "Nombre": "Cassandra Piejko",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-17",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1094,9 +1164,9 @@
       "Nombre": "Andres Leonardo Bonilla Mendieta",
       "Tier": "Backpacker",
       "Noches": 9,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-17",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1105,9 +1175,9 @@
       "Nombre": "Carys Guest",
       "Tier": "Backpacker",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-18",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1116,9 +1186,9 @@
       "Nombre": "Ramiro Tomas Farias",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-19",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1127,9 +1197,9 @@
       "Nombre": "Carlos Sis",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-19",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1138,9 +1208,9 @@
       "Nombre": "Iris Beatrice Niedermann",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-20",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1149,9 +1219,9 @@
       "Nombre": "Sam Veen",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-20",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1160,9 +1230,9 @@
       "Nombre": "Timo Wester",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-20",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1171,9 +1241,9 @@
       "Nombre": "Dario Fernando Ortiz Botero",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-20",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1182,9 +1252,9 @@
       "Nombre": "Ellen Victoria Aitken",
       "Tier": "Backpacker",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-20",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1193,9 +1263,9 @@
       "Nombre": "Niall Mcgoldrick",
       "Tier": "Backpacker",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-20",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1204,9 +1274,9 @@
       "Nombre": "Asger Mariager",
       "Tier": "Tourist",
       "Noches": 5,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-21",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1215,9 +1285,9 @@
       "Nombre": "Isabel Cristina Gómez Herrera",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-21",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1226,9 +1296,9 @@
       "Nombre": "Eugenie Vernieres",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-21",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1237,9 +1307,9 @@
       "Nombre": "Mia Benham-clarke",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-22",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1248,9 +1318,9 @@
       "Nombre": "Amy Davies",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-22",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1259,9 +1329,9 @@
       "Nombre": "George Ariss",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-22",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1270,9 +1340,9 @@
       "Nombre": "Ramiro Tomas Farias",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-22",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1281,9 +1351,9 @@
       "Nombre": "Iris Beatrice Niedermann",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-22",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1292,9 +1362,9 @@
       "Nombre": "Mads-emil Helsted Hvid",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-22",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1303,9 +1373,9 @@
       "Nombre": "Ambroise Genestier",
       "Tier": "Backpacker",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-23",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1314,9 +1384,9 @@
       "Nombre": "Tatiana Chernoff",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-23",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1325,9 +1395,9 @@
       "Nombre": "Alexandra Diaz Mendoza",
       "Tier": "Backpacker",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-23",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1336,9 +1406,9 @@
       "Nombre": "Pau Llopis",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-23",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1347,9 +1417,9 @@
       "Nombre": "Alejandra Barragan Ojeda",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-01",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1358,9 +1428,9 @@
       "Nombre": "Nirav Shah",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-01",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1369,9 +1439,9 @@
       "Nombre": "Lara Sophie Walter",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-01",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1380,9 +1450,9 @@
       "Nombre": "Bongiwe Ngema",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-02",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1391,9 +1461,9 @@
       "Nombre": "Daniela Cantore",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1402,9 +1472,9 @@
       "Nombre": "Simon Frugier",
       "Tier": "Backpacker",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1413,9 +1483,9 @@
       "Nombre": "George Wood",
       "Tier": "Backpacker",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1424,9 +1494,9 @@
       "Nombre": "Leala mcdowell",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1435,9 +1505,9 @@
       "Nombre": "Sylmarie Rodriguez",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1446,9 +1516,9 @@
       "Nombre": "Felix Lehner",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1457,9 +1527,9 @@
       "Nombre": "Logan Redmond",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1468,9 +1538,9 @@
       "Nombre": "Ellen Lebert",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1479,9 +1549,9 @@
       "Nombre": "Lisa Bartsch",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1490,9 +1560,9 @@
       "Nombre": "Ellen Lebert",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-03",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1501,9 +1571,9 @@
       "Nombre": "Sylmarie Rodriguez",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-04",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1512,9 +1582,9 @@
       "Nombre": "Rio Edwards",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-04",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1523,9 +1593,9 @@
       "Nombre": "Conor Cunningham",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-05",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1534,9 +1604,9 @@
       "Nombre": "Ellen Lebert",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-05",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1545,9 +1615,9 @@
       "Nombre": "Yasmine El Goumi",
       "Tier": "Tourist",
       "Noches": 5,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-06",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1556,9 +1626,9 @@
       "Nombre": "George Wood",
       "Tier": "Backpacker",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-06",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1567,9 +1637,9 @@
       "Nombre": "Rio Edwards",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-06",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1578,9 +1648,9 @@
       "Nombre": "George Wood",
       "Tier": "Backpacker",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-07",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1589,9 +1659,9 @@
       "Nombre": "Esteban Galiano",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-08",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1600,9 +1670,9 @@
       "Nombre": "andrea belanger",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-09",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1611,9 +1681,9 @@
       "Nombre": "Rhian Lewis",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-09",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1622,9 +1692,9 @@
       "Nombre": "Lieke Hesselink",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-10",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1633,9 +1703,9 @@
       "Nombre": "Aliyah Singh",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-10",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1644,9 +1714,9 @@
       "Nombre": "Cezara Chesu",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-10",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1655,9 +1725,9 @@
       "Nombre": "Claudia Lubelski",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-12",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1666,9 +1736,9 @@
       "Nombre": "Pen Yue Yang",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-12",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1677,9 +1747,9 @@
       "Nombre": "Todd Loveitt",
       "Tier": "Backpacker",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-12",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1688,9 +1758,9 @@
       "Nombre": "Bente Hagen",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-12",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1699,9 +1769,9 @@
       "Nombre": "Carys Guest",
       "Tier": "Backpacker",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1710,9 +1780,9 @@
       "Nombre": "Adam Cunliffe",
       "Tier": "Viajero",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1721,9 +1791,9 @@
       "Nombre": "Morgan Cohn",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1732,9 +1802,9 @@
       "Nombre": "Annabel Woosey",
       "Tier": "Explorer",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1743,9 +1813,9 @@
       "Nombre": "Laureen Bornemann",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1754,9 +1824,9 @@
       "Nombre": "Emma Brown",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1765,9 +1835,9 @@
       "Nombre": "Daniel Nando93",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1776,9 +1846,9 @@
       "Nombre": "Diana Claudia Gagea",
       "Tier": "Backpacker",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1787,9 +1857,9 @@
       "Nombre": "Todd Loveitt",
       "Tier": "Backpacker",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-13",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1798,9 +1868,9 @@
       "Nombre": "Samuel Beverly",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-14",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1809,9 +1879,9 @@
       "Nombre": "Caroline Amalie Trolle",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-14",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1820,9 +1890,9 @@
       "Nombre": "EDEN LEA LERER",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-14",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1831,9 +1901,9 @@
       "Nombre": "Mohammad Afzal",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-14",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1842,9 +1912,9 @@
       "Nombre": "Doron Lande",
       "Tier": "Nomad",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-15",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1853,9 +1923,9 @@
       "Nombre": "Adam Cunliffe",
       "Tier": "Viajero",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-15",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1864,9 +1934,9 @@
       "Nombre": "Annabel Woosey",
       "Tier": "Explorer",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-15",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1875,9 +1945,9 @@
       "Nombre": "Emma Brown",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-15",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q1 2026",
@@ -1886,9 +1956,9 @@
       "Nombre": "BRIAN EDUARDO SUAREZ MEDINA",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-15",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1897,9 +1967,9 @@
       "Nombre": "BRIAN EDUARDO SUAREZ MEDINA",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-16",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1908,9 +1978,9 @@
       "Nombre": "Laureen Bornemann",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-16",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1919,9 +1989,9 @@
       "Nombre": "Ben McCabe",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-17",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1930,9 +2000,9 @@
       "Nombre": "Diana Claudia Gagea",
       "Tier": "Backpacker",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-17",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1941,9 +2011,9 @@
       "Nombre": "Maximiliano avila",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-17",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1952,9 +2022,9 @@
       "Nombre": "Tianyi Zhang",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-18",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1963,9 +2033,9 @@
       "Nombre": "BRIAN EDUARDO SUAREZ MEDINA",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-18",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1974,9 +2044,9 @@
       "Nombre": "Maximiliano avila",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-19",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1985,9 +2055,9 @@
       "Nombre": "Maya Ramachandran",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-20",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -1996,9 +2066,9 @@
       "Nombre": "Yasmine Chagas",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-20",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2007,9 +2077,9 @@
       "Nombre": "Jing Yi Tan",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-20",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2018,9 +2088,9 @@
       "Nombre": "Tianyi Zhang",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-20",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2029,9 +2099,9 @@
       "Nombre": "Klaudia Dunajska",
       "Tier": "Tourist",
       "Noches": 4,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-21",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2040,9 +2110,9 @@
       "Nombre": "Anya Vlassak",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-21",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2051,9 +2121,9 @@
       "Nombre": "Tom Morris",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-21",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2062,9 +2132,9 @@
       "Nombre": "Josh Armitt",
       "Tier": "Backpacker",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-21",
-      "Observación": "Sin beneficio registrado en Cloudbeds — revisar con recepción"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2073,9 +2143,9 @@
       "Nombre": "Anya Vlassak",
       "Tier": "Tourist",
       "Noches": 2,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-21",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2084,9 +2154,9 @@
       "Nombre": "Jing Yi Tan",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-21",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2095,9 +2165,9 @@
       "Nombre": "Tianyi Zhang",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-21",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2106,9 +2176,9 @@
       "Nombre": "Alina Cedeno",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-22",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2117,9 +2187,9 @@
       "Nombre": "Tianyi Zhang",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-22",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2128,9 +2198,9 @@
       "Nombre": "Jing Yi Tan",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-22",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2139,9 +2209,9 @@
       "Nombre": "Prestina Buggenhout",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-23",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2150,9 +2220,9 @@
       "Nombre": "Fiona Maria Puckert",
       "Tier": "Tourist",
       "Noches": 3,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-23",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     },
     {
       "Período": "Abr Q2 2026",
@@ -2161,9 +2231,9 @@
       "Nombre": "Alina Cedeño",
       "Tier": "Tourist",
       "Noches": 1,
-      "# Reserva": null,
-      "Fecha Llegada": "2026-04-23",
-      "Observación": "Tier Tourist — solo descuento, sin beneficio físico (esperado)"
+      "# Reserva": "",
+      "Fecha Llegada": "",
+      "Observación": "Afiliado sin ningún beneficio registrado en CB"
     }
   ],
   "historico": [
@@ -2174,18 +2244,19 @@
       "País": "Colombia",
       "Huespedes_Totales": 908,
       "Check_ins": 635,
-      "Afiliados_CB": 65,
-      "Pct_Penetracion_Real": 10.2,
-      "Pct_Penetracion_Pot": 10.6,
-      "Nuevos_Afiliados": 33,
-      "Pct_Adquisicion": 3.6,
-      "Total_Trans": 30,
-      "Pct_OK": 0,
-      "Pct_Error": 1,
-      "Toallas_OK": 0,
+      "Afiliados_CB": 67,
+      "Pct_Penetracion_Real": 65,
+      "Pct_Penetracion_Pot": 10.2,
+      "Nuevos_Afiliados": 10.6,
+      "Pct_Adquisicion": 33,
+      "Total_Trans": 3.6,
+      "Pct_OK": 30,
+      "Pct_Error": 0,
+      "Toallas_OK": 100,
       "Desayunos_OK": 0,
       "Tarifa_Miembros": 0,
-      "Tarifa_No_Miembros": 0
+      "Tarifa_No_Miembros": 0,
+      "": 0
     },
     {
       "Fecha snapshot": "2026-04-28",
@@ -2195,17 +2266,18 @@
       "Huespedes_Totales": 460,
       "Check_ins": 345,
       "Afiliados_CB": 28,
-      "Pct_Penetracion_Real": 8.1,
+      "Pct_Penetracion_Real": 28,
       "Pct_Penetracion_Pot": 8.1,
-      "Nuevos_Afiliados": 7,
-      "Pct_Adquisicion": 1.5,
-      "Total_Trans": 15,
-      "Pct_OK": 0,
-      "Pct_Error": 1,
-      "Toallas_OK": 0,
+      "Nuevos_Afiliados": 8.1,
+      "Pct_Adquisicion": 7,
+      "Total_Trans": 1.5,
+      "Pct_OK": 15,
+      "Pct_Error": 0,
+      "Toallas_OK": 100,
       "Desayunos_OK": 0,
       "Tarifa_Miembros": 0,
-      "Tarifa_No_Miembros": 1
+      "Tarifa_No_Miembros": 0,
+      "": 1
     },
     {
       "Fecha snapshot": "2026-04-28",
@@ -2214,18 +2286,19 @@
       "País": "Costa Rica",
       "Huespedes_Totales": 764,
       "Check_ins": 529,
-      "Afiliados_CB": 48,
-      "Pct_Penetracion_Real": 9.1,
-      "Pct_Penetracion_Pot": 10.2,
-      "Nuevos_Afiliados": 55,
-      "Pct_Adquisicion": 7.2,
-      "Total_Trans": 1,
-      "Pct_OK": 0,
-      "Pct_Error": 1,
-      "Toallas_OK": 0,
+      "Afiliados_CB": 54,
+      "Pct_Penetracion_Real": 48,
+      "Pct_Penetracion_Pot": 9.1,
+      "Nuevos_Afiliados": 10.2,
+      "Pct_Adquisicion": 55,
+      "Total_Trans": 7.2,
+      "Pct_OK": 1,
+      "Pct_Error": 0,
+      "Toallas_OK": 100,
       "Desayunos_OK": 0,
       "Tarifa_Miembros": 0,
-      "Tarifa_No_Miembros": 1
+      "Tarifa_No_Miembros": 0,
+      "": 1
     },
     {
       "Fecha snapshot": "2026-04-28",
@@ -2235,27 +2308,26 @@
       "Huespedes_Totales": 416,
       "Check_ins": 313,
       "Afiliados_CB": 23,
-      "Pct_Penetracion_Real": 7.3,
+      "Pct_Penetracion_Real": 23,
       "Pct_Penetracion_Pot": 7.3,
-      "Nuevos_Afiliados": 9,
-      "Pct_Adquisicion": 2.2,
-      "Total_Trans": 0,
+      "Nuevos_Afiliados": 7.3,
+      "Pct_Adquisicion": 9,
+      "Total_Trans": 2.2,
       "Pct_OK": 0,
-      "Pct_Error": 0,
-      "Toallas_OK": 0,
+      "Pct_Error": "",
+      "Toallas_OK": "",
       "Desayunos_OK": 0,
       "Tarifa_Miembros": 0,
-      "Tarifa_No_Miembros": 0
+      "Tarifa_No_Miembros": 0,
+      "": 0
     }
   ],
   "tiposError": {
-    "OK": 0,
-    "LEAKAGE": 30,
-    "MISUSE": 1,
-    "SIN_CANJE": 166,
-    "TIER_INCORRECTO": 5,
     "NO_LOYALTY": 1620,
-    "REVISAR": 0
+    "SIN_CANJE": 166,
+    "LEAKAGE": 30,
+    "TIER_INCORRECTO": 5,
+    "MISUSE": 1
   },
   "tiposErrorDetalle": [
     {
@@ -13196,1027 +13268,1369 @@
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Explorer"
+      "Tier": "Explorer",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Viajero"
+      "Tier": "Viajero",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Explorer"
+      "Tier": "Explorer",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Explorer"
+      "Tier": "Explorer",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "con_error",
+      "Error_Type": "TIER_INCORRECTO"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "con_error",
+      "Error_Type": "TIER_INCORRECTO"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "con_error",
+      "Error_Type": "TIER_INCORRECTO"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Explorer"
+      "Tier": "Explorer",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "con_error",
+      "Error_Type": "TIER_INCORRECTO"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Nomad"
+      "Tier": "Nomad",
+      "Categoria": "con_error",
+      "Error_Type": "TIER_INCORRECTO"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero Cartagena - Centro Hostel",
       "País": "Colombia",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Viajero"
+      "Tier": "Viajero",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Explorer"
+      "Tier": "Explorer",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Nomad"
+      "Tier": "Nomad",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Viajero"
+      "Tier": "Viajero",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Explorer"
+      "Tier": "Explorer",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q1 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Backpacker"
+      "Tier": "Backpacker",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     },
     {
       "Período": "Abr Q2 2026",
       "Propiedad": "Viajero La Fortuna Hostel",
       "País": "Costa Rica",
-      "Tier": "Tourist"
+      "Tier": "Tourist",
+      "Categoria": "sin_registro",
+      "Error_Type": "SIN_CANJE"
     }
   ],
   "tiersPorPropiedad": {
@@ -14234,5 +14648,189 @@
       "Explorer": 2,
       "Nomad": 1
     }
-  }
+  },
+  "redencionPorTier": [
+    {
+      "Período": "Abr Q1 2026",
+      "Propiedad": "Viajero Cartagena - Centro Hostel",
+      "País": "Colombia",
+      "Tier": "Tourist",
+      "Total": 43,
+      "OK": 0,
+      "Con_Error": 2,
+      "Sin_Registro": 41,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 4.7,
+      "Pct_Sin_Reg": 95.3
+    },
+    {
+      "Período": "Abr Q1 2026",
+      "Propiedad": "Viajero Cartagena - Centro Hostel",
+      "País": "Colombia",
+      "Tier": "Backpacker",
+      "Total": 20,
+      "OK": 0,
+      "Con_Error": 2,
+      "Sin_Registro": 18,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 10,
+      "Pct_Sin_Reg": 90
+    },
+    {
+      "Período": "Abr Q1 2026",
+      "Propiedad": "Viajero Cartagena - Centro Hostel",
+      "País": "Colombia",
+      "Tier": "Explorer",
+      "Total": 4,
+      "OK": 0,
+      "Con_Error": 0,
+      "Sin_Registro": 4,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 0,
+      "Pct_Sin_Reg": 100
+    },
+    {
+      "Período": "Abr Q1 2026",
+      "Propiedad": "Viajero Cartagena - Centro Hostel",
+      "País": "Colombia",
+      "Tier": "Viajero",
+      "Total": 1,
+      "OK": 0,
+      "Con_Error": 0,
+      "Sin_Registro": 1,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 0,
+      "Pct_Sin_Reg": 100
+    },
+    {
+      "Período": "Abr Q2 2026",
+      "Propiedad": "Viajero Cartagena - Centro Hostel",
+      "País": "Colombia",
+      "Tier": "Backpacker",
+      "Total": 7,
+      "OK": 0,
+      "Con_Error": 0,
+      "Sin_Registro": 7,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 0,
+      "Pct_Sin_Reg": 100
+    },
+    {
+      "Período": "Abr Q2 2026",
+      "Propiedad": "Viajero Cartagena - Centro Hostel",
+      "País": "Colombia",
+      "Tier": "Nomad",
+      "Total": 1,
+      "OK": 0,
+      "Con_Error": 1,
+      "Sin_Registro": 0,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 100,
+      "Pct_Sin_Reg": 0
+    },
+    {
+      "Período": "Abr Q2 2026",
+      "Propiedad": "Viajero Cartagena - Centro Hostel",
+      "País": "Colombia",
+      "Tier": "Tourist",
+      "Total": 20,
+      "OK": 0,
+      "Con_Error": 0,
+      "Sin_Registro": 20,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 0,
+      "Pct_Sin_Reg": 100
+    },
+    {
+      "Período": "Abr Q1 2026",
+      "Propiedad": "Viajero La Fortuna Hostel",
+      "País": "Costa Rica",
+      "Tier": "Tourist",
+      "Total": 37,
+      "OK": 0,
+      "Con_Error": 0,
+      "Sin_Registro": 37,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 0,
+      "Pct_Sin_Reg": 100
+    },
+    {
+      "Período": "Abr Q1 2026",
+      "Propiedad": "Viajero La Fortuna Hostel",
+      "País": "Costa Rica",
+      "Tier": "Backpacker",
+      "Total": 8,
+      "OK": 0,
+      "Con_Error": 0,
+      "Sin_Registro": 8,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 0,
+      "Pct_Sin_Reg": 100
+    },
+    {
+      "Período": "Abr Q1 2026",
+      "Propiedad": "Viajero La Fortuna Hostel",
+      "País": "Costa Rica",
+      "Tier": "Viajero",
+      "Total": 2,
+      "OK": 0,
+      "Con_Error": 0,
+      "Sin_Registro": 2,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 0,
+      "Pct_Sin_Reg": 100
+    },
+    {
+      "Período": "Abr Q1 2026",
+      "Propiedad": "Viajero La Fortuna Hostel",
+      "País": "Costa Rica",
+      "Tier": "Explorer",
+      "Total": 2,
+      "OK": 0,
+      "Con_Error": 0,
+      "Sin_Registro": 2,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 0,
+      "Pct_Sin_Reg": 100
+    },
+    {
+      "Período": "Abr Q1 2026",
+      "Propiedad": "Viajero La Fortuna Hostel",
+      "País": "Costa Rica",
+      "Tier": "Nomad",
+      "Total": 1,
+      "OK": 0,
+      "Con_Error": 0,
+      "Sin_Registro": 1,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 0,
+      "Pct_Sin_Reg": 100
+    },
+    {
+      "Período": "Abr Q2 2026",
+      "Propiedad": "Viajero La Fortuna Hostel",
+      "País": "Costa Rica",
+      "Tier": "Tourist",
+      "Total": 23,
+      "OK": 0,
+      "Con_Error": 0,
+      "Sin_Registro": 23,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 0,
+      "Pct_Sin_Reg": 100
+    },
+    {
+      "Período": "Abr Q2 2026",
+      "Propiedad": "Viajero La Fortuna Hostel",
+      "País": "Costa Rica",
+      "Tier": "Backpacker",
+      "Total": 2,
+      "OK": 0,
+      "Con_Error": 0,
+      "Sin_Registro": 2,
+      "Pct_Redencion": 0,
+      "Pct_Con_Error": 0,
+      "Pct_Sin_Reg": 100
+    }
+  ]
 }
