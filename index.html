@@ -2,261 +2,243 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Viajero · Performance Hub</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Viajero · Dashboard Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-:root {
-  --cream:  #F5EDD6;
-  --coral:  #E84C1E;
-  --salmon: #F07B54;
-  --peach:  #F5A98A;
-  --dark:   #2C1810;
-  --mid:    #7A4030;
-  --light:  #FAF3E8;
-  --gray:   #8C7B72;
-  --white:  #FFFFFF;
+:root{
+  --coral:#E84C1E; --coral-dark:#c73d17; --coral-soft:#FEF0EB;
+  --cream:#FDF6EE; --cream-mid:#F5EDD6; --cream-dark:#EDE0CC;
+  --dark:#2C1810; --mid:#7A4030; --gris:#8C7B72;
+  --border:#E8DDD4; --white:#fff;
 }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh;}
 
-* { margin:0; padding:0; box-sizing:border-box; }
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--cream);
-  color: var(--dark);
-  min-height: 100vh;
+/* ── HEADER ── */
+header{
+  background:var(--coral);
+  padding:0 48px;
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
-
-header {
-  background: var(--coral);
-  padding: 48px 40px;
-  text-align: center;
+.h-left{display:flex;align-items:center;gap:16px;}
+.h-logo{
+  height:40px;object-fit:contain;
+  filter:brightness(0) invert(1);
+  flex-shrink:0;
 }
+.h-divider{width:1.5px;height:34px;background:rgba(255,255,255,.3);flex-shrink:0;}
+.h-text{}
+.h-title{font-size:18px;font-weight:800;color:#fff;line-height:1.1;}
+.h-sub{font-size:11px;font-weight:500;color:rgba(255,255,255,.65);margin-top:2px;}
 
-.logo-wrap {
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.h-right{display:flex;align-items:center;gap:20px;}
+.h-ts-wrap{text-align:right;}
+.h-ts-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.5);}
+.h-ts-val{font-size:12px;font-weight:600;color:rgba(255,255,255,.85);margin-top:1px;}
+.h-pill{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.15);
+  border:1.5px solid rgba(255,255,255,.25);
+  border-radius:10px;
+  padding:6px 14px;
+  font-size:11px;font-weight:700;color:#fff;
+  white-space:nowrap;
 }
+.h-pill .dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;box-shadow:0 0 6px #4ade80;}
 
-.logo-img {
-  height: 56px;
-  width: auto;
+/* ── MAIN ── */
+main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
+
+/* ── INTRO ── */
+.intro{margin-bottom:36px;}
+.intro h1{font-size:26px;font-weight:800;color:var(--dark);line-height:1.2;}
+.intro p{font-size:14px;color:var(--gris);margin-top:8px;max-width:540px;line-height:1.6;}
+
+/* ── GRID ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+
+/* ── CARD ── */
+.card{
+  background:var(--white);
+  border-radius:20px;
+  border:1.5px solid var(--border);
+  overflow:hidden;
+  text-decoration:none;
+  display:block;
+  transition:transform .2s, box-shadow .2s;
+  position:relative;
 }
+.card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(44,24,16,.13);}
+.card.disabled{opacity:.5;cursor:not-allowed;pointer-events:none;}
 
-.logo-emoji {
-  font-size: 48px;
-  display: block;
+/* tira de color top */
+.card-bar{height:5px;width:100%;background:var(--card-color,var(--coral));}
+
+.card-body{padding:26px 24px 22px;}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;}
+.card-ico{
+  width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;flex-shrink:0;
+  background:var(--card-soft,var(--coral-soft));
 }
+.card-status{font-size:10px;font-weight:700;padding:4px 10px;border-radius:8px;flex-shrink:0;margin-top:4px;}
+.s-live   {background:#dcfce7;color:#15803d;}
+.s-pronto {background:#fef9c3;color:#854d0e;}
+.s-wip    {background:#dbeafe;color:#1d4ed8;}
 
-header h1 {
-  color: var(--white);
-  font-size: 36px;
-  font-weight: 800;
-  letter-spacing: -1px;
+.card-name{font-size:17px;font-weight:800;color:var(--dark);margin-bottom:5px;line-height:1.2;}
+.card-desc{font-size:12px;color:var(--gris);line-height:1.55;}
+.card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:18px;padding-top:14px;border-top:1.5px solid var(--border);
 }
+.card-link{font-size:12px;font-weight:700;color:var(--card-color,var(--coral));display:flex;align-items:center;gap:4px;}
+.card-link .arr{transition:transform .2s;}
+.card:hover .arr{transform:translateX(4px);}
+.card-metrics{display:flex;gap:10px;}
+.card-m{font-size:10px;color:var(--gris);font-weight:600;}
 
-header p {
-  color: rgba(255,255,255,0.8);
-  font-size: 14px;
-  margin-top: 8px;
+/* ── SECTION LABEL ── */
+.sec-label{
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+  color:var(--gris);margin-bottom:12px;margin-top:32px;
+  display:flex;align-items:center;gap:10px;
 }
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
-.header-ts {
-  font-size: 11px;
-  color: rgba(255,255,255,0.6);
-  margin-top: 10px;
-  letter-spacing: .3px;
-}
-
-main {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 56px 24px;
-}
-
-.subtitle {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--coral);
-  margin-bottom: 28px;
-  text-align: center;
-}
-
-.modulos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.modulo-card {
-  background: var(--white);
-  border-radius: 20px;
-  padding: 32px;
-  border: 1px solid rgba(232,76,30,0.12);
-  text-decoration: none;
-  color: var(--dark);
-  transition: all 0.25s ease;
-  position: relative;
-  overflow: hidden;
-  display: block;
-}
-
-.modulo-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  border-radius: 20px 20px 0 0;
-}
-
-.modulo-card.loyalty::before  { background: var(--coral); }
-.modulo-card.merch::before    { background: var(--salmon); }
-.modulo-card.upgrade::before  { background: var(--peach); }
-.modulo-card.kyto::before     { background: #B07A60; }
-
-.modulo-card:not(.disabled):hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 48px rgba(232,76,30,0.18);
-}
-
-.modulo-card.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.modulo-icon {
-  font-size: 40px;
-  margin-bottom: 16px;
-  display: block;
-}
-
-.modulo-card h2 {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.modulo-card p {
-  font-size: 13px;
-  color: var(--gray);
-  line-height: 1.6;
-}
-
-.badge-live {
-  background: var(--coral);
-  color: white;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding: 3px 8px;
-  border-radius: 20px;
-  text-transform: uppercase;
-}
-
-.badge-soon {
-  background: var(--cream);
-  color: var(--gray);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding: 3px 8px;
-  border-radius: 20px;
-  text-transform: uppercase;
-  border: 1px solid #D0C5B5;
-}
-
-footer {
-  text-align: center;
-  padding: 32px;
-  font-size: 12px;
-  color: var(--gray);
-  border-top: 1px solid rgba(232,76,30,0.1);
-  margin-top: 20px;
+@media(max-width:640px){
+  header{padding:0 20px;height:auto;min-height:64px;padding-top:12px;padding-bottom:12px;}
+  .h-right{display:none;}
+  main{padding:28px 20px 60px;}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-wrap">
-    <img src="img/logo-viajero.png" alt="Viajero" class="logo-img"
-      onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='block'"/>
-    <span id="logo-fallback" class="logo-emoji" style="display:none">🦋</span>
+  <!-- Izquierda: logo + nombre workspace -->
+  <div class="h-left">
+    <img class="h-logo" src="img/logo-viajero.png" alt="Viajero"
+      onerror="this.style.display='none';document.getElementById('logo-fb').style.display='block'"/>
+    <span id="logo-fb" style="font-size:30px;display:none">🦋</span>
+    <div class="h-divider"></div>
+    <div class="h-text">
+      <div class="h-title">Dashboard Hub</div>
+      <div class="h-sub">Viajero Hostels · Analytics & Operations</div>
+    </div>
   </div>
-  <h1>Viajero Performance Hub</h1>
-  <p>Dashboard ejecutivo de operaciones · Uso interno Viajero Hostels</p>
-  <div class="header-ts" id="header-ts"></div>
+
+  <!-- Derecha: estado + timestamp -->
+  <div class="h-right">
+    <div class="h-ts-wrap">
+      <div class="h-ts-label">Última actualización</div>
+      <div class="h-ts-val" id="h-ts">—</div>
+    </div>
+    <div class="h-pill">
+      <div class="dot"></div>
+      Live
+    </div>
+  </div>
 </header>
 
 <main>
-  <p class="subtitle">Módulos disponibles</p>
 
-  <div class="modulos">
+  <div class="intro">
+    <h1>¿Qué quieres revisar hoy?</h1>
+    <p>Selecciona un módulo para ver el dashboard correspondiente. Los datos se actualizan vía Google Sheets + Apps Script.</p>
+  </div>
 
-    <a href="loyalty/" class="modulo-card loyalty">
-      <span class="modulo-icon">🎫</span>
-      <h2>Loyalty <span class="badge-live">Live</span></h2>
-      <p>Programa Viajero Go x Akin. Penetración, beneficios, error operativo y hallazgos por propiedad y período.</p>
+  <!-- Módulos activos -->
+  <div class="sec-label">Módulos activos</div>
+  <div class="grid">
+
+    <a href="loyalty/index.html" class="card" style="--card-color:#E84C1E;--card-soft:#FEF0EB;">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-ico">🦋</div>
+          <span class="card-status s-live">● Live</span>
+        </div>
+        <div class="card-name">Loyalty Program</div>
+        <div class="card-desc">Afiliados, redención por tier, hallazgos operativos, sin canje y evolución histórica del programa Viajero Go.</div>
+        <div class="card-footer">
+          <span class="card-link">Ver dashboard <span class="arr">→</span></span>
+          <div class="card-metrics">
+            <span class="card-m">Afiliados · Tiers · Hallazgos</span>
+          </div>
+        </div>
+      </div>
     </a>
 
-    <div class="modulo-card merch disabled">
-      <span class="modulo-icon">👕</span>
-      <h2>Merch Viajero <span class="badge-soon">Próximo</span></h2>
-      <p>Seguimiento de entregas de merch exclusivo Viajero. Inventario, canjes y distribución por propiedad.</p>
+    <div class="card disabled" style="--card-color:#7c3aed;--card-soft:#ede9fe;">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-ico">🛍️</div>
+          <span class="card-status s-pronto">Próximamente</span>
+        </div>
+        <div class="card-name">Merch & Retail</div>
+        <div class="card-desc">Ventas de productos en recepción, análisis de inventario y rendimiento por propiedad.</div>
+        <div class="card-footer">
+          <span class="card-link" style="color:var(--gris)">En construcción</span>
+        </div>
+      </div>
     </div>
 
-    <div class="modulo-card upgrade disabled">
-      <span class="modulo-icon">🛏️</span>
-      <h2>Upgrades Recepción <span class="badge-soon">Próximo</span></h2>
-      <p>Upgrades de habitación gestionados por recepción. Tasas de conversión y satisfacción.</p>
+    <div class="card disabled" style="--card-color:#0ea5e9;--card-soft:#e0f2fe;">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-ico">⬆️</div>
+          <span class="card-status s-pronto">Próximamente</span>
+        </div>
+        <div class="card-name">Upgrades Recepción</div>
+        <div class="card-desc">Conversión de upgrades ofrecidos en check-in por propiedad, período y tipo de habitación.</div>
+        <div class="card-footer">
+          <span class="card-link" style="color:var(--gris)">En construcción</span>
+        </div>
+      </div>
     </div>
 
-    <div class="modulo-card kyto disabled">
-      <span class="modulo-icon">🤖</span>
-      <h2>Upgrades Kyto <span class="badge-soon">Próximo</span></h2>
-      <p>Upgrades automatizados vía Kyto. Efectividad, revenue generado y tasa de aceptación.</p>
-    </div>
-
-    <div class="modulo-card kyto disabled">
-      <span class="modulo-icon">💬</span>
-      <h2>Conversaciones Kyto <span class="badge-soon">Próximo</span></h2>
-      <p>Análisis de conversaciones automatizadas. Volumen, temas frecuentes y resolución.</p>
+    <div class="card disabled" style="--card-color:#10b981;--card-soft:#d1fae5;">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-ico">💬</div>
+          <span class="card-status s-pronto">Próximamente</span>
+        </div>
+        <div class="card-name">Upgrades & Conv. Kyto</div>
+        <div class="card-desc">Conversaciones y upgrades gestionados desde Kyto: tasa de respuesta, tiempo y conversión.</div>
+        <div class="card-footer">
+          <span class="card-link" style="color:var(--gris)">En construcción</span>
+        </div>
+      </div>
     </div>
 
   </div>
 </main>
 
-<footer>
-  Viajero Hostels · Dashboard interno · No compartir externamente
-</footer>
-
 <script>
-async function cargarTimestamp() {
-  try {
-    const r = await fetch('data/loyalty_data.json?t=' + Date.now());
-    const d = await r.json();
-    if (d.actualizado) {
-      const ts = new Date(d.actualizado).toLocaleString('es-CR', {
-        day: '2-digit', month: 'short', year: 'numeric',
-        hour: '2-digit', minute: '2-digit'
-      });
-      document.getElementById('header-ts').textContent = 'Última actualización: ' + ts;
+// Intentar leer timestamp del JSON de loyalty
+(async()=>{
+  try{
+    const r=await fetch('data/loyalty_data.json?t='+Date.now());
+    const d=await r.json();
+    if(d.actualizado){
+      const dt=new Date(d.actualizado);
+      document.getElementById('h-ts').textContent=
+        dt.toLocaleDateString('es-CR',{day:'2-digit',month:'short',year:'numeric'})+
+        ' '+dt.toLocaleTimeString('es-CR',{hour:'2-digit',minute:'2-digit'});
     }
-  } catch(e) {
-    // Sin datos aún, no pasa nada
+  }catch(e){
+    document.getElementById('h-ts').textContent='Sin datos aún';
   }
-}
-cargarTimestamp();
+})();
 </script>
-
 </body>
 </html>
