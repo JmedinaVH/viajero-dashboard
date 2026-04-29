@@ -53,7 +53,7 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 /* MODAL TOOLTIP */
 #tip-overlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(30,16,10,.45);align-items:center;justify-content:center;padding:20px;}
 #tip-overlay.show{display:flex;}
-#tip-box{background:#fff;border-radius:16px;max-width:340px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(30,16,10,.25);position:relative;animation:popIn .2s ease;}
+#tip-box{background:#fff;border-radius:16px;max-width:360px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(30,16,10,.25);position:relative;animation:popIn .2s ease;}
 @keyframes popIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
 #tip-box h4{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:8px;}
 #tip-box p{font-size:13px;color:var(--gris);line-height:1.6;}
@@ -81,7 +81,7 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .kpi-toggle{font-size:11px;font-weight:700;color:var(--coral);background:none;border:none;cursor:pointer;font-family:'Outfit',sans-serif;padding:0;display:flex;align-items:center;gap:5px;transition:.15s;white-space:nowrap;}
 .kpi-toggle:hover{opacity:.75;}
 .kpi-secundario{overflow:hidden;max-height:0;transition:max-height .35s ease;}
-.kpi-secundario.abierto{max-height:600px;}
+.kpi-secundario.abierto{max-height:900px;}
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:14px;}
 
 /* KPI CARDS */
@@ -102,12 +102,15 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .s-val{font-size:26px;font-weight:800;line-height:1;}
 .s-lbl{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-top:5px;display:flex;align-items:center;justify-content:center;gap:4px;}
 .s-tipo{font-size:10px;font-weight:600;padding:3px 9px;border-radius:8px;display:inline-block;margin-top:7px;}
+.s-pct{font-size:11px;font-weight:600;color:var(--gris);margin-top:3px;}
 .s-verde    .s-val{color:var(--ok);}
 .s-amarillo .s-val{color:var(--warn);}
 .s-rojo     .s-val{color:var(--err);}
+.s-gris     .s-val{color:var(--gris);}
 .s-verde    .s-tipo{background:var(--ok-bg);color:var(--ok);}
 .s-amarillo .s-tipo{background:var(--warn-bg);color:var(--warn);}
 .s-rojo     .s-tipo{background:var(--err-bg);color:var(--err);}
+.s-gris     .s-tipo{background:var(--cream-dark);color:var(--mid);}
 
 /* ACORDEÓN */
 .ac{background:#fff;border-radius:16px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:10px;transition:box-shadow .2s;}
@@ -212,6 +215,16 @@ tbody tr:hover td{background:var(--cream);}
 .ch-box h3{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;}
 .ch-wrap{position:relative;height:200px;}
 
+/* BARRA MINI BENEFICIO */
+.ben-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.ben-bar-lbl{font-size:12px;font-weight:600;color:var(--dark);min-width:100px;}
+.ben-bar-track{flex:1;background:var(--cream-dark);border-radius:99px;height:10px;overflow:hidden;}
+.ben-bar-fill{height:100%;border-radius:99px;transition:width .6s;}
+.ben-bar-n{font-size:11px;font-weight:700;color:var(--dark);min-width:40px;text-align:right;}
+
+/* BANNER CONTEXTO */
+.ctx-banner{font-size:11px;background:var(--cream-mid);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:12px;color:var(--mid);display:flex;align-items:flex-start;gap:8px;line-height:1.6;}
+
 .empty{text-align:center;padding:32px;color:var(--gris);font-size:13px;}
 
 @media(max-width:640px){
@@ -251,7 +264,7 @@ tbody tr:hover td{background:var(--cream);}
     <span id="logo-fb" class="h-logo-fb">VIAJERO</span>
     <div class="h-sep"></div>
     <div>
-      <div class="h-title">Loyalty Program</div>
+      <div class="h-title">💎 Loyalty Program</div>
       <div class="h-sub">Viajero Go × Akin · Dashboard operativo</div>
     </div>
   </div>
@@ -270,86 +283,92 @@ tbody tr:hover td{background:var(--cream);}
 
 <main>
 
-  <!-- 1. RESUMEN DEL PERÍODO -->
-  <div class="sec">
-    <div class="sec-hdr"><h2>Resumen del período</h2><div class="linea"></div></div>
-    <div id="kpi-row"></div>
-  </div>
+<!-- 1. RESUMEN DEL PERÍODO -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Resumen del período</h2><div class="linea"></div></div>
+  <div id="kpi-row"></div>
+</div>
 
-  <!-- 2. SEMÁFORO -->
-  <div class="sec">
-    <div class="sec-hdr"><h2>Semáforo operativo</h2><div class="linea"></div></div>
-    <div class="semaforo" id="semaforo"></div>
+<!-- 2. SEMÁFORO -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Semáforo operativo</h2><div class="linea"></div></div>
+  <div id="sem-total" style="font-size:12px;color:var(--gris);margin-bottom:10px;"></div>
+  <div class="ctx-banner">
+    📍 <span><b>Fase: Adopción inicial</b> · El programa lleva ~3 meses activo. El objetivo operativo es reducir Sin Canje y alcanzar los primeros registros OK. Cuando se incorporen las 30 propiedades podrás comparar cuáles lideran en ejecución perfecta.</span>
   </div>
+  <div class="semaforo" id="semaforo"></div>
+</div>
 
-  <!-- 3. BENEFICIO MÁS REDIMIDO -->
-  <div class="sec">
-    <div class="sec-hdr"><h2>Beneficio más redimido</h2><div class="linea"></div></div>
-    <div id="bene-container"></div>
-  </div>
+<!-- 3. BENEFICIO MÁS REDIMIDO -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Beneficio más redimido</h2><div class="linea"></div></div>
+  <div id="bene-container"></div>
+</div>
 
-  <!-- 4. HALLAZGOS -->
-  <div class="sec">
-    <div class="sec-hdr"><h2>Hallazgos</h2><span class="cnt" id="hall-cnt">0</span><div class="linea"></div></div>
-    <div id="hall-container"></div>
-  </div>
+<!-- 4. HALLAZGOS -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Hallazgos</h2><span class="cnt" id="hall-cnt">0</span><div class="linea"></div></div>
+  <div id="hall-container"></div>
+</div>
 
-  <!-- 5. SIN CANJE -->
-  <div class="sec">
-    <div class="sec-hdr"><h2>Sin Canje</h2><div class="linea"></div></div>
-    <div id="sc-container"></div>
-  </div>
+<!-- 5. SIN CANJE -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Sin Canje</h2><div class="linea"></div></div>
+  <div id="sc-container"></div>
+</div>
 
-  <!-- 6. HISTÓRICO -->
-  <div class="sec">
-    <div class="sec-hdr"><h2>Histórico</h2><div class="linea"></div></div>
-    <div class="ac">
-      <div class="ac-head" onclick="toggleAc(this)">
-        <div class="ac-left"><span class="ac-ico">📅</span>
-          <div><div class="ac-tit">Evolución por temporada</div><div class="ac-sub">Penetración, afiliados y transacciones por propiedad</div></div>
-        </div><span class="ac-arr">▼</span>
+<!-- 6. HISTÓRICO -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Histórico</h2><div class="linea"></div></div>
+  <div class="ac">
+    <div class="ac-head" onclick="toggleAc(this)">
+      <div class="ac-left"><span class="ac-ico">📅</span>
+        <div><div class="ac-tit">Evolución por temporada</div>
+        <div class="ac-sub">Penetración, afiliados y transacciones por propiedad</div></div>
+      </div><span class="ac-arr">▼</span>
+    </div>
+    <div class="ac-body">
+      <div class="hist-ctrl">
+        <span>Últimas</span>
+        <input type="range" id="hn" min="1" max="10" value="4" oninput="renderHistorico()"/>
+        <span id="hl">4 temporadas</span>
       </div>
-      <div class="ac-body">
-        <div class="hist-ctrl">
-          <span>Últimas</span>
-          <input type="range" id="hn" min="1" max="10" value="4" oninput="renderHistorico()"/>
-          <span id="hl">4 temporadas</span>
-        </div>
-        <div id="hist-body"></div>
+      <div id="hist-body"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 7. TIERS -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Detalle por tier</h2><div class="linea"></div></div>
+  <div class="ac">
+    <div class="ac-head" onclick="toggleAc(this)">
+      <div class="ac-left"><span class="ac-ico">🏅</span>
+        <div><div class="ac-tit">Redención por tier</div>
+        <div class="ac-sub">Qué debía registrarse vs qué se registró</div></div>
+      </div><span class="ac-arr">▼</span>
+    </div>
+    <div class="ac-body"><div class="tiers-g" id="tiers-g"></div></div>
+  </div>
+</div>
+
+<!-- 8. GRÁFICAS -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Gráficas</h2><div class="linea"></div></div>
+  <div class="ac">
+    <div class="ac-head" onclick="toggleAc(this)">
+      <div class="ac-left"><span class="ac-ico">📊</span>
+        <div><div class="ac-tit">Distribución de errores y tiers</div></div>
+      </div><span class="ac-arr">▼</span>
+    </div>
+    <div class="ac-body">
+      <div class="charts-r">
+        <div class="ch-box"><h3>Tipos de error</h3><div class="ch-wrap"><canvas id="ch-err"></canvas></div></div>
+        <div class="ch-box"><h3>Redención por tier</h3><div class="ch-wrap"><canvas id="ch-tier"></canvas></div></div>
       </div>
     </div>
   </div>
-
-  <!-- 7. TIERS -->
-  <div class="sec">
-    <div class="sec-hdr"><h2>Detalle por tier</h2><div class="linea"></div></div>
-    <div class="ac">
-      <div class="ac-head" onclick="toggleAc(this)">
-        <div class="ac-left"><span class="ac-ico">🏅</span>
-          <div><div class="ac-tit">Redención por tier</div><div class="ac-sub">Qué debía registrarse vs qué se registró</div></div>
-        </div><span class="ac-arr">▼</span>
-      </div>
-      <div class="ac-body"><div class="tiers-g" id="tiers-g"></div></div>
-    </div>
-  </div>
-
-  <!-- 8. GRÁFICAS -->
-  <div class="sec">
-    <div class="sec-hdr"><h2>Gráficas</h2><div class="linea"></div></div>
-    <div class="ac">
-      <div class="ac-head" onclick="toggleAc(this)">
-        <div class="ac-left"><span class="ac-ico">📊</span>
-          <div><div class="ac-tit">Distribución de errores y tiers</div></div>
-        </div><span class="ac-arr">▼</span>
-      </div>
-      <div class="ac-body">
-        <div class="charts-r">
-          <div class="ch-box"><h3>Tipos de error</h3><div class="ch-wrap"><canvas id="ch-err"></canvas></div></div>
-          <div class="ch-box"><h3>Redención por tier</h3><div class="ch-wrap"><canvas id="ch-tier"></canvas></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>
 
 </main>
 
@@ -359,18 +378,17 @@ let DATA=null, chErr=null, chTier=null, SC_DATA=[], MB_DATA=[];
 
 // ── TOOLTIPS ──────────────────────────────────────────────────────
 const TIPS={
-  'Afiliados CB':{t:'¿Qué son los Afiliados CB?',b:'Huéspedes miembros Viajero Go que se hospedaron y fueron registrados en CloudBeds. Es la base real del programa: sin registro en CB no se pueden aplicar beneficios.'},
-  'Nuevos Afiliados':{t:'¿Qué son Nuevos Afiliados?',b:'Huéspedes que se inscribieron al programa durante este período. El % muestra qué tan bien está enrolando recepción en el check-in.'},
-  '% Penetración':{t:'¿Qué es % Penetración?',b:'Porcentaje de check-ins que son miembros Viajero Go registrados en CB. Meta sugerida: >15%. Indica qué tan bien adopta la propiedad el programa.'},
-  '% Miembros que Redimen':{t:'¿Qué es % Miembros que Redimen?',b:'De todos los afiliados CB del período, cuántos tuvieron al menos una transacción loyalty registrada correctamente. Mide si el programa es atractivo y se usa — diferente al % OK que mide la calidad del registro operativo.'},
-  '% OK Transacciones':{t:'¿Qué es % OK Transacciones?',b:'Porcentaje de transacciones loyalty registradas sin errores: tarifa correcta al miembro correcto con el descuento que corresponde a su tier.'},
-  'Sin Canje':{t:'¿Qué es Sin Canje?',b:'Miembros Viajero Go que se hospedaron pero no tuvieron ningún beneficio loyalty registrado en CB: ni tarifa, ni toalla, ni desayuno.'},
-  'Leakage':{t:'¿Qué es Leakage?',b:'Fuga de beneficios: ocurre cuando recepción aplica tarifa loyalty o beneficios a un huésped que NO es miembro del programa. Genera pérdida de revenue.'},
-  'Tier Incorrecto':{t:'¿Qué es Tier Incorrecto?',b:'El tier aplicado en CloudBeds no coincide con el tier real del miembro en Akin. Ejemplo: se aplicó tarifa Backpacker a un Nomad que debería tener 20%.'},
-  'Misuse':{t:'¿Qué es Misuse?',b:'Uso indebido: aplicación de tarifa o beneficio loyalty fuera del flujo correcto definido. Puede haber un miembro, pero el proceso no se siguió.'},
-  'OK':{t:'Redenciones OK',b:'Transacciones loyalty registradas sin ningún error: tarifa correcta, descuento correcto según tier. Esta es la meta para todas las transacciones.'},
-  'Beneficio más redimido':{t:'¿Qué mide esta sección?',b:'Comparativo de qué beneficio loyalty se registra más en CB: tarifa con descuento, botón toalla ($0) o botón desayuno. Solo se cuentan redenciones correctas (sin error).'},
-  '% Penetración':{t:'¿Qué es % Penetración?',b:'Porcentaje de check-ins que son miembros Viajero Go registrados en CB. Meta sugerida: >15%.'},
+  'Huéspedes del programa':{t:'¿Qué son los Huéspedes del programa?',b:'De todos los huéspedes que se hospedaron en el período, estos son los que tienen membresía Viajero Go activa registrada en CloudBeds. Es el universo real del programa: sin membresía en CB no aplican beneficios.'},
+  'Afiliados en check-ins':{t:'¿Qué mide Afiliados en check-ins?',b:'Del total de check-ins realizados en el período, cuántos correspondieron a miembros Viajero Go registrados en CloudBeds. Meta sugerida: >15%. Indica qué tan bien está adoptando el programa cada propiedad.'},
+  'Nuevos Afiliados':{t:'¿Qué son Nuevos Afiliados?',b:'Huéspedes que se inscribieron al programa Viajero Go por primera vez durante este período. El % de adquisición muestra qué tan bien está enrolando recepción en el check-in.'},
+  '% Miembros que Redimen':{t:'¿Qué es % Miembros que Redimen?',b:'De todos los afiliados CB del período, cuántos tuvieron al menos una transacción loyalty registrada de forma perfecta (Error_Type = OK). Mide si el programa se ejecuta correctamente. Al tener datos de 30 propiedades, permitirá identificar cuáles lideran en ejecución y cuáles necesitan refuerzo.'},
+  '% OK Transacciones':{t:'¿Qué es % OK Transacciones?',b:'Porcentaje de transacciones loyalty registradas sin ningún error: tarifa correcta al miembro correcto con el descuento que corresponde exactamente a su tier. Es la métrica de excelencia operativa — actualmente en fase inicial mientras el equipo aprende el proceso.'},
+  'Beneficio más redimido':{t:'¿Qué mide esta sección?',b:'Comparativo de qué beneficio loyalty se registra correctamente con más frecuencia: tarifa con descuento, botón toalla ($0) o botón desayuno. Solo se cuentan redenciones sin error. Si se muestran todas las propiedades, los datos son a nivel cadena.'},
+  'OK':{t:'Transacciones OK ✅',b:'Transacciones loyalty registradas perfectamente: tarifa correcta para el tier correcto, beneficios aplicados según las reglas del programa y el huésped es miembro activo. Es la meta de cada interacción loyalty. Actualmente en cero porque el programa está en fase inicial — al escalar a 30 propiedades esta métrica mostrará cuáles lo están haciendo bien.'},
+  'Sin Canje':{t:'Sin Canje ❌',b:'Miembros Viajero Go que se hospedaron pero no tuvieron ningún beneficio loyalty registrado en CB: ni tarifa, ni toalla, ni desayuno. Es una oportunidad perdida para el miembro y para el programa. El principal foco de mejora en esta etapa.'},
+  'Leakage':{t:'Leakage — Alerta 🔴',b:'Recepción aplicó un botón loyalty o tarifa con descuento a un huésped que NO es miembro del programa. No implica pérdida automática en todos los casos: si el huésped pagó el precio correcto aunque se usó el botón, el impacto financiero puede ser nulo. La pérdida real ocurre cuando el botón se registró a $0 o se dio descuento de alojamiento sin cobrar la diferencia. Requiere revisión caso por caso en el drill-down.'},
+  'Tier Incorrecto':{t:'Tier Incorrecto ⚠️',b:'El tier aplicado en CloudBeds no coincide con el tier real del miembro en Akin. Ejemplo: se aplicó tarifa Backpacker (15%) a un miembro Nomad que debería recibir 20%. Puede ser a favor o en contra del miembro — siempre debe corregirse.'},
+  'Misuse':{t:'Misuse 🚫',b:'Uso indebido del programa: aplicación de tarifa o beneficio loyalty fuera del flujo correcto definido. Puede haber un miembro, pero el proceso no se siguió o hay indicios de un uso no autorizado. Cada caso debe investigarse individualmente.'},
 };
 function openTip(k){
   const t=TIPS[k];if(!t)return;
@@ -396,7 +414,7 @@ function openDrill(titulo,subtitulo,rows,cols){
   document.getElementById('drill-sub').textContent=subtitulo;
   const cont=document.getElementById('drill-content');
   if(!rows||!rows.length){
-    cont.innerHTML='<div class="drill-empty">Sin registros para mostrar. Verifica que el JSON incluya los campos de nombre y reserva en tiersDetalle.</div>';
+    cont.innerHTML='<div class="drill-empty">Sin registros para mostrar. Verifica que el JSON incluya los campos requeridos en tiersDetalle.</div>';
     document.getElementById('drill-overlay').classList.add('show');
     return;
   }
@@ -411,15 +429,20 @@ function closeDrill(e){
   document.getElementById('drill-overlay').classList.remove('show');
 }
 function drillTipoError(tipo,titulo){
-  const rows=MB_DATA.filter(r=>(r.Error_Type||'')=== tipo);
+  const fp=gf('f-prop'),ft=gf('f-per');
+  const rows=(DATA.tiersDetalle||[]).filter(r=>
+    (r.Error_Type||'')=== tipo &&
+    (!fp||(r.Propiedad||'')=== fp) &&
+    (!ft||(r.Periodo||r.Período||'')=== ft)
+  );
   const cols=[
-    {key:'Nombre',label:'Nombre huésped'},
-    {key:'Reserva',label:'Reserva'},
-    {key:'Propiedad',label:'Propiedad'},
-    {key:'Periodo',label:'Período'},
-    {key:'Tier_AKIN',label:'Tier real (Akin)'},
-    {key:'Tier_CB',label:'Tier en CB'},
-    {key:'Noches',label:'Noches'},
+    {key:'Nombre',    label:'Nombre huésped'},
+    {key:'Reserva',   label:'Reserva'},
+    {key:'FechaIN',   label:'Fecha llegada'},
+    {key:'Noches',    label:'Noches'},
+    {key:'Propiedad', label:'Propiedad'},
+    {key:'Periodo',   label:'Período'},
+    {key:'Tier_AKIN', label:'Tier real (Akin)'},
   ];
   openDrill(titulo,`${rows.length} registro(s) con este tipo de error`,rows,cols);
 }
@@ -465,23 +488,28 @@ function toggleAc(h){
 // ── KPIs ──────────────────────────────────────────────────────────
 function renderKPIs(afs,bens,mb){
   const s=(arr,k)=>arr.reduce((t,r)=>t+(parseFloat(r[k])||0),0);
-  const hu=s(afs,'_huespedes'),ci=s(afs,'_check_ins'),cb=s(afs,'_afiliados_cb'),nv=s(afs,'_nuevos');
+  const hu=s(afs,'_huespedes');
+  const ci=s(afs,'_check_ins');
+  const cb=s(afs,'_afiliados_cb');
+  const nv=s(afs,'_nuevos');
   const tOK=s(bens,'_tarifa_ok'),toOK=s(bens,'_toallas_ok'),dOK=s(bens,'_desayunos_ok');
   const bOK=tOK+toOK+dOK;
   const bER=s(bens,'_tarifa_err')+s(bens,'_toallas_err')+s(bens,'_desayunos_err');
-  const tB=bOK+bER,tt=s(bens,'_total_trans');
+  const tB=bOK+bER, tt=s(bens,'_total_trans');
   const lk=mb.filter(r=>r.Error_Type==='LEAKAGE').length;
   const tiI=mb.filter(r=>r.Error_Type==='TIER_INCORRECTO').length;
   const sc=(DATA.sinCanje||[]).filter(r=>{
     const p=gf('f-per'),pr=gf('f-prop');
     return(!p||(r.Período||'')=== p)&&(!pr||(r.Propiedad||'')=== pr);
   }).length;
+
   const pOK=tB>0?bOK/tB*100:null;
   const pLoy=ci>0?cb/ci*100:0;
+  const pHue=hu>0?cb/hu*100:0;
   const colOK=pOK===null?'var(--gris)':pOK>=80?'var(--ok)':pOK>=50?'#eab308':'var(--err)';
   const colLoy=pLoy>=15?'var(--ok)':pLoy>=8?'#eab308':'var(--err)';
+  const colHue=pHue>=10?'var(--ok)':pHue>=5?'#eab308':'var(--err)';
 
-  // % Miembros que redimen
   const reservasOK=new Set(
     mb.filter(r=>r.Error_Type==='OK'&&(r.Reserva||r['# Reserva']))
       .map(r=>r.Reserva||r['# Reserva'])
@@ -489,6 +517,10 @@ function renderKPIs(afs,bens,mb){
   const mbOK=reservasOK.size>0?reservasOK.size:mb.filter(r=>r.Error_Type==='OK').length;
   const pRed=cb>0?mbOK/cb*100:0;
   const colRed=pRed>=60?'var(--ok)':pRed>=30?'#eab308':'var(--err)';
+
+  const fp=gf('f-prop');
+  const nivelLabel=fp?fp:'Cadena completa';
+  const benPorProp=fp?null:calcBenPorProp(bens);
 
   const kpiCard=(k)=>{
     const drillClick=k.drill&&tiI>0?`onclick="drillTipoError('TIER_INCORRECTO','Tier Incorrecto — detalle')" style="cursor:pointer"`:'';
@@ -501,51 +533,138 @@ function renderKPIs(afs,bens,mb){
     </div>`;
   };
 
-  // GRUPO 1: Lo más importante — siempre visible
   const principales=[
-    {key:'Afiliados CB',val:fmtN(cb),col:'var(--coral)',sub:`de ${fmtN(ci)} check-ins · ${fmtP(cb,ci)} penetración`},
-    {key:'% Penetración',val:(Math.round(pLoy*10)/10).toFixed(1)+'%',col:colLoy,sub:'Miembros loyalty vs check-ins',
-     badge:pLoy>=15?'✅ Meta':pLoy>=8?'⚠️ En proceso':'🔴 Bajo meta',
-     bcls:pLoy>=15?'b-ok':pLoy>=8?'b-warn':'b-err'},
-    {key:'% Miembros que Redimen',val:cb>0?(Math.round(pRed*10)/10).toFixed(1)+'%':'—',col:colRed,
-     sub:`${fmtN(mbOK)} de ${fmtN(cb)} con beneficio OK`,
-     badge:pRed>=60?'✅ Buen uso':pRed>=30?'⚠️ Moderado':'🔴 Bajo',
-     bcls:pRed>=60?'b-ok':pRed>=30?'b-warn':'b-err'},
-    {key:'% OK Transacciones',val:pOK!==null?(Math.round(pOK*10)/10).toFixed(1)+'%':'—',col:colOK,
-     sub:`${fmtN(bOK)} correctas / ${fmtN(tt)} totales`},
-  ];
-
-  // GRUPO 2: Detalle operativo — colapsable
-  const secundarias=[
-    {key:'Nuevos Afiliados',val:fmtN(nv),col:'#0369a1',sub:`${fmtP(nv,hu)} de ${fmtN(hu)} huéspedes`},
-    {key:'Sin Canje',val:fmtN(sc),col:'var(--err)',sub:'Sin tarifa ni beneficios',badge:'Revisar',bcls:'b-err'},
-    {key:'Leakage',val:fmtN(lk),col:lk>0?'var(--err)':'var(--ok)',sub:'Beneficios a no miembros',
-     badge:lk===0?'✅ Sin casos':'🔴 Crítico',bcls:lk===0?'b-ok':'b-err'},
-    {key:'Tier Incorrecto',val:fmtN(tiI),col:tiI>0?'#7c3aed':'var(--ok)',sub:`de ${fmtN(cb)} afiliados CB`,
-     badge:tiI>0?'Ver quiénes →':null,bcls:'b-err',drill:true},
+    {
+      key:'Huéspedes del programa',
+      val:fmtN(cb),
+      col:colHue,
+      sub:`de ${fmtN(hu)} huéspedes · ${fmtP(cb,hu)} son miembros`,
+      badge:pHue>=10?'✅ Buena cobertura':pHue>=5?'⚠️ En proceso':'🔴 Baja cobertura',
+      bcls:pHue>=10?'b-ok':pHue>=5?'b-warn':'b-err',
+    },
+    {
+      key:'Afiliados en check-ins',
+      val:(Math.round(pLoy*10)/10).toFixed(1)+'%',
+      col:colLoy,
+      sub:`${fmtN(cb)} de ${fmtN(ci)} check-ins son afiliados`,
+      badge:pLoy>=15?'✅ Meta':pLoy>=8?'⚠️ En proceso':'🔴 Bajo meta',
+      bcls:pLoy>=15?'b-ok':pLoy>=8?'b-warn':'b-err',
+    },
+    {
+      key:'Nuevos Afiliados',
+      val:fmtN(nv),
+      col:'#0369a1',
+      sub:`${fmtP(nv,hu)} de adquisición sobre ${fmtN(hu)} huéspedes`,
+    },
   ];
 
   const hayErrores=sc>0||lk>0||tiI>0;
   const puntito=hayErrores?`<span style="width:7px;height:7px;border-radius:50%;background:var(--err);display:inline-block;flex-shrink:0;"></span>`:'';
 
+  const kpiCalidad=[
+    {
+      key:'% Miembros que Redimen',
+      val:cb>0?(Math.round(pRed*10)/10).toFixed(1)+'%':'—',
+      col:pRed>0?colRed:'var(--gris)',
+      sub:mbOK>0?`${fmtN(mbOK)} de ${fmtN(cb)} con registro OK`:`Meta a alcanzar · 0 registros OK aún`,
+      badge:mbOK>0?(pRed>=60?'✅ Buen uso':pRed>=30?'⚠️ Moderado':'🔴 Bajo'):'⏳ Fase inicial',
+      bcls:mbOK>0?(pRed>=60?'b-ok':pRed>=30?'b-warn':'b-err'):'b-gray',
+    },
+    {
+      key:'% OK Transacciones',
+      val:pOK!==null&&pOK>0?(Math.round(pOK*10)/10).toFixed(1)+'%':'0%',
+      col:pOK>0?colOK:'var(--gris)',
+      sub:bOK>0?`${fmtN(bOK)} correctas de ${fmtN(tt||tB)} totales`:`Meta a alcanzar · en fase de adopción`,
+      badge:pOK>0?(pOK>=80?'✅ Excelente':pOK>=50?'⚠️ Regular':'🔴 Bajo'):'⏳ Fase inicial',
+      bcls:pOK>0?(pOK>=80?'b-ok':pOK>=50?'b-warn':'b-err'):'b-gray',
+    },
+  ];
+
+  const kpiErrores=[
+    {key:'Sin Canje',val:fmtN(sc),col:'var(--err)',sub:'Sin tarifa ni beneficios',badge:'Revisar',bcls:'b-err'},
+    {key:'Leakage',val:fmtN(lk),col:lk>0?'var(--err)':'var(--ok)',sub:'Alerta — revisar caso por caso',
+      badge:lk===0?'✅ Sin alertas':'🔴 Requiere revisión',bcls:lk===0?'b-ok':'b-err'},
+    {key:'Tier Incorrecto',val:fmtN(tiI),col:tiI>0?'#7c3aed':'var(--ok)',sub:`de ${fmtN(cb)} afiliados CB`,
+      badge:tiI>0?'Ver quiénes →':null,bcls:'b-err',drill:true},
+  ];
+
+  const totalBen=tOK+toOK+dOK||1;
+  const benItems=[
+    {ico:'🏷️',lbl:'Tarifa',n:tOK,col:'#B83D16'},
+    {ico:'🛁',lbl:'Toalla',n:toOK,col:'#0369a1'},
+    {ico:'🍳',lbl:'Desayuno',n:dOK,col:'#065f46'},
+  ];
+  const benBarHtml=`
+    <div style="background:#fff;border-radius:16px;padding:20px 18px;border:1.5px solid var(--border);
+                position:relative;overflow:hidden;">
+      <div class="k-glow" style="background:#B83D16"></div>
+      <div class="k-top">
+        <div class="k-lbl">Beneficio más redimido</div>${infoBtn('Beneficio más redimido')}
+      </div>
+      <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:12px;">${nivelLabel}</div>
+      ${benItems.map(b=>{
+        const pct=Math.round(b.n/totalBen*100);
+        const isTop=b.n===Math.max(tOK,toOK,dOK)&&b.n>0;
+        return`<div class="ben-bar-row">
+          <span class="ben-bar-lbl">${b.ico} ${b.lbl}${isTop?` <span style="font-size:9px;background:var(--coral);color:#fff;padding:1px 6px;border-radius:4px;font-weight:700;">Top</span>`:''}
+          </span>
+          <div class="ben-bar-track">
+            <div class="ben-bar-fill" style="width:${pct}%;background:${b.col}"></div>
+          </div>
+          <span class="ben-bar-n">${fmtN(b.n)}</span>
+        </div>`;
+      }).join('')}
+      ${benPorProp&&benPorProp.length?`
+        <div style="margin-top:12px;font-size:10px;font-weight:700;color:var(--gris);
+                    text-transform:uppercase;letter-spacing:.5px;padding-top:10px;
+                    border-top:1px solid var(--cream-dark);">Por propiedad</div>
+        ${benPorProp.map(p=>`<div style="display:flex;justify-content:space-between;font-size:11px;
+                                         padding:3px 0;border-bottom:1px solid var(--cream-dark);">
+          <span style="color:var(--dark)">${p.prop}</span>
+          <span style="font-weight:700;color:var(--coral)">${p.top} (${fmtN(p.n)})</span>
+        </div>`).join('')}`:''}
+    </div>`;
+
   document.getElementById('kpi-row').innerHTML=`
     <div class="kpi-grupo">
-      <div class="kpi-grupo-label">Adopción y calidad</div>
+      <div class="kpi-grupo-label">Adopción y crecimiento</div>
       <div class="kpi-grid">${principales.map(k=>kpiCard(k)).join('')}</div>
     </div>
     <div class="kpi-grupo" style="margin-bottom:0">
       <div class="kpi-grupo-label">
-        Detalle operativo
+        Detalle operativo y calidad
         <button class="kpi-toggle" onclick="toggleKpiSec(this)">
-          ${puntito} Ver errores y crecimiento <span id="kpi-arr">▼</span>
+          ${puntito} Ver métricas y errores <span id="kpi-arr">▼</span>
         </button>
       </div>
       <div class="kpi-secundario" id="kpi-sec">
-        <div class="kpi-grid" style="padding-top:2px;">${secundarias.map(k=>kpiCard(k)).join('')}</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
+                    color:var(--gris);margin:0 0 8px;">Calidad del programa</div>
+        <div class="kpi-grid" style="padding-bottom:14px;">${kpiCalidad.map(k=>kpiCard(k)).join('')}${benBarHtml}</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
+                    color:var(--gris);margin:14px 0 8px;padding-top:14px;border-top:1px solid var(--border);">Errores operativos</div>
+        <div class="kpi-grid">${kpiErrores.map(k=>kpiCard(k)).join('')}</div>
       </div>
     </div>`;
 
-  renderBeneficios(tOK,toOK,dOK,tt);
+  renderBeneficios(tOK,toOK,dOK,tt,bens);
+}
+
+function calcBenPorProp(bens){
+  const map={};
+  bens.forEach(r=>{
+    const p=r.Propiedad||'';
+    if(!map[p])map[p]={tOK:0,toOK:0,dOK:0};
+    map[p].tOK+=(parseFloat(r._tarifa_ok)||0);
+    map[p].toOK+=(parseFloat(r._toallas_ok)||0);
+    map[p].dOK+=(parseFloat(r._desayunos_ok)||0);
+  });
+  return Object.entries(map).map(([prop,v])=>{
+    let top='Tarifa',n=v.tOK;
+    if(v.toOK>n){top='Toalla';n=v.toOK;}
+    if(v.dOK>n){top='Desayuno';n=v.dOK;}
+    return{prop,top,n};
+  }).sort((a,b)=>b.n-a.n);
 }
 
 function toggleKpiSec(btn){
@@ -556,7 +675,7 @@ function toggleKpiSec(btn){
 }
 
 // ── BENEFICIOS ────────────────────────────────────────────────────
-function renderBeneficios(tOK,toOK,dOK,tt){
+function renderBeneficios(tOK,toOK,dOK,tt,bens){
   const cont=document.getElementById('bene-container');
   if(!cont)return;
   const total=tOK+toOK+dOK||1;
@@ -570,7 +689,7 @@ function renderBeneficios(tOK,toOK,dOK,tt){
     tOK>=toOK&&tOK>=dOK?'<b>Tarifa</b> lidera: el programa se reconoce como descuento económico. Buena base, pero hay oportunidad de aumentar toalla y desayuno.':null,
     toOK>=tOK&&toOK>=dOK?'<b>Toalla</b> lidera: recepción está siguiendo el flujo completo para Backpacker+. Buen indicador de ejecución operativa.':null,
     dOK>=tOK&&dOK>=toOK?'<b>Desayuno</b> lidera: excelente adopción del beneficio premium (Nomad/Viajero 3+ noches).':null,
-  ].filter(Boolean)[0]||'';
+  ].filter(Boolean)[0]||'Sin redenciones OK registradas aún — el programa está en fase inicial de adopción.';
   const lowBenes=items.filter(i=>i.n===0).map(i=>i.lbl);
   const alerta=lowBenes.length?`⚠️ <b>${lowBenes.join(' y ')}</b> en 0 — verificar si el tier corresponde o si falta capacitación en recepción.`:'';
 
@@ -582,14 +701,14 @@ function renderBeneficios(tOK,toOK,dOK,tt){
           <div class="ac-sub">Solo redenciones correctas · ${fmtN(tOK+toOK+dOK)} registros OK de ${fmtN(tt)} totales</div>
         </div>
       </div>
-      <div class="ac-meta"><span class="ac-badge b-coral">${top.ico} ${top.lbl} lidera</span></div>
+      <div class="ac-meta"><span class="ac-badge b-coral">${top.n>0?top.ico+' '+top.lbl+' lidera':'⏳ Sin OK aún'}</span></div>
       <span class="ac-arr" style="transform:rotate(180deg)">▼</span>
     </div>
     <div class="ac-body vis">
       <div style="display:flex;flex-direction:column;gap:16px;max-width:620px;margin-bottom:20px;">
         ${items.map(it=>{
           const pct=Math.round(it.n/total*1000)/10;
-          const isTop=it.lbl===top.lbl;
+          const isTop=it.lbl===top.lbl&&top.n>0;
           return`<div style="display:flex;align-items:center;gap:14px;">
             <div style="font-size:22px;width:34px;text-align:center;flex-shrink:0">${it.ico}</div>
             <div style="flex:1;">
@@ -620,31 +739,65 @@ function renderBeneficios(tOK,toOK,dOK,tt){
 
 // ── SEMÁFORO ──────────────────────────────────────────────────────
 function renderSemaforo(mb,afs){
-  const ci=afs.reduce((s,r)=>s+(parseFloat(r._check_ins)||0),0);
-  const cb=afs.reduce((s,r)=>s+(parseFloat(r._afiliados_cb)||0),0);
-  const pLoy=ci>0?cb/ci*100:0;
-  const tipos={SIN_CANJE:0,LEAKAGE:0,MISUSE:0,OK:0};
-  mb.forEach(r=>{const t=r.Error_Type||'';if(t in tipos)tipos[t]++;});
-  const bens=filtrar(DATA.beneficios||[],'Período','Propiedad','Pais');
-  const bOK=bens.reduce((s,r)=>s+(parseFloat(r._tarifa_ok)||0)+(parseFloat(r._toallas_ok)||0)+(parseFloat(r._desayunos_ok)||0),0);
-  const bER=bens.reduce((s,r)=>s+(parseFloat(r._tarifa_err)||0)+(parseFloat(r._toallas_err)||0)+(parseFloat(r._desayunos_err)||0),0);
-  const tB=bOK+bER,pOK=tB>0?bOK/tB*100:0;
+  const todos=mb;
+  const tipos={SIN_CANJE:0,LEAKAGE:0,MISUSE:0,OK:0,TIER_INCORRECTO:0,NO_LOYALTY:0};
+  todos.forEach(r=>{const t=r.Error_Type||'NO_LOYALTY';if(t in tipos)tipos[t]++;});
+  const totalLoy=tipos.SIN_CANJE+tipos.LEAKAGE+tipos.MISUSE+tipos.OK+tipos.TIER_INCORRECTO||1;
+
+  document.getElementById('sem-total').innerHTML=
+    `<b>${fmtN(totalLoy)}</b> transacciones loyalty en el período · ` +
+    `${fmtN(tipos.NO_LOYALTY)} check-ins sin membresía (no aplica programa)`;
 
   const items=[
-    {key:'% Penetración',      val:(Math.round(pLoy*10)/10).toFixed(1)+'%',tipo:'loyalty vs check-ins',    cls:pLoy>=15?'s-verde':pLoy>=8?'s-amarillo':'s-rojo'},
-    {key:'% OK Transacciones', val:pOK>0?(Math.round(pOK*10)/10).toFixed(1)+'%':'0%',tipo:'sin error',     cls:pOK>=80?'s-verde':pOK>=50?'s-amarillo':'s-rojo'},
-    {key:'Sin Canje',          val:fmtN(tipos.SIN_CANJE),tipo:'sin registro',       cls:tipos.SIN_CANJE===0?'s-verde':tipos.SIN_CANJE<20?'s-amarillo':'s-rojo'},
-    {key:'Leakage',            val:fmtN(tipos.LEAKAGE),  tipo:'fuga de beneficios', cls:tipos.LEAKAGE===0?'s-verde':tipos.LEAKAGE<10?'s-amarillo':'s-rojo'},
-    {key:'Misuse',             val:fmtN(tipos.MISUSE),   tipo:'uso indebido',        cls:tipos.MISUSE===0?'s-verde':'s-rojo',drill:true},
-    {key:'OK',                 val:fmtN(tipos.OK),        tipo:'registros correctos', cls:tipos.OK>0?'s-verde':'s-amarillo'},
+    {
+      key:'OK',
+      val:fmtN(tipos.OK),
+      pct:fmtP(tipos.OK,totalLoy),
+      tipo:tipos.OK>0?'registros perfectos':'meta · fase inicial',
+      cls:tipos.OK>0?'s-verde':'s-gris',
+      drill:false,
+    },
+    {
+      key:'Sin Canje',
+      val:fmtN(tipos.SIN_CANJE),
+      pct:fmtP(tipos.SIN_CANJE,totalLoy),
+      tipo:'sin registro',
+      cls:tipos.SIN_CANJE===0?'s-verde':tipos.SIN_CANJE<20?'s-amarillo':'s-rojo',
+      drill:true,drillKey:'SIN_CANJE',
+    },
+    {
+      key:'Leakage',
+      val:fmtN(tipos.LEAKAGE),
+      pct:fmtP(tipos.LEAKAGE,totalLoy),
+      tipo:'alerta · revisar caso a caso',
+      cls:tipos.LEAKAGE===0?'s-verde':tipos.LEAKAGE<10?'s-amarillo':'s-rojo',
+      drill:true,drillKey:'LEAKAGE',
+    },
+    {
+      key:'Tier Incorrecto',
+      val:fmtN(tipos.TIER_INCORRECTO),
+      pct:fmtP(tipos.TIER_INCORRECTO,totalLoy),
+      tipo:'tier equivocado',
+      cls:tipos.TIER_INCORRECTO===0?'s-verde':tipos.TIER_INCORRECTO<5?'s-amarillo':'s-rojo',
+      drill:true,drillKey:'TIER_INCORRECTO',
+    },
+    {
+      key:'Misuse',
+      val:fmtN(tipos.MISUSE),
+      pct:fmtP(tipos.MISUSE,totalLoy),
+      tipo:'uso indebido',
+      cls:tipos.MISUSE===0?'s-verde':'s-rojo',
+      drill:true,drillKey:'MISUSE',
+    },
   ];
 
   document.getElementById('semaforo').innerHTML=items.map(i=>`
     <div class="s-item ${i.cls}"
-      ${i.drill&&tipos.MISUSE>0?`onclick="drillTipoError('MISUSE','Misuse — detalle de casos')" style="cursor:pointer"`:'style="cursor:default"'}>
+      ${i.drill&&tipos[i.drillKey]>0?`onclick="drillTipoError('${i.drillKey}','${i.key} — detalle de casos')" style="cursor:pointer"`:'style="cursor:default"'}>
       <div class="s-val">${i.val}</div>
+      <div class="s-pct">${i.pct} del total</div>
       <div class="s-lbl">${i.key} ${infoBtn(i.key)}</div>
-      <div class="s-tipo">${i.drill&&tipos.MISUSE>0?'Click para ver quién':i.tipo}</div>
+      <div class="s-tipo">${i.drill&&tipos[i.drillKey||'']>0?'Click para ver detalle →':i.tipo}</div>
     </div>`).join('');
 }
 
@@ -679,7 +832,7 @@ function renderHallazgos(hall){
     let txt='',drillType=null;
     if(a.includes('tourist'))                                            txt=`${g.total} huéspedes Tourist sin tarifa loyalty`;
     else if(a.includes('toalla'))                                        txt=`${g.total} huéspedes Backpacker+ sin tarifa ni beneficios`;
-    else if(a.includes('botones'))                                       {txt=`${g.total} transacciones con leakage`;drillType='LEAKAGE';}
+    else if(a.includes('botones'))                                       {txt=`${g.total} alertas de leakage`;drillType='LEAKAGE';}
     else if(a.includes('tier')||g.cat.toLowerCase().includes('tier'))   {txt=`${g.total} huéspedes con tier incorrecto`;drillType='TIER_INCORRECTO';}
     else if(a.includes('misuse')||g.cat.toLowerCase().includes('misuse')){txt=`${g.total} caso(s) de uso indebido`;drillType='MISUSE';}
     else if(a.includes('enrolamiento'))                                  txt=`${Object.keys(g.porPropiedad).length} propiedad(es) con baja penetración`;
@@ -693,23 +846,22 @@ function renderHallazgos(hall){
   const clsM={Crítica:'critica',Alta:'alta',Media:'media'};
   let uid=0,html='';
 
-  ;[...ORD,...Object.keys(porCat).filter(c=>!ORD.includes(c))].filter(c=>porCat[c]).forEach(cat=>{
+  [...ORD,...Object.keys(porCat).filter(c=>!ORD.includes(c))].filter(c=>porCat[c]).forEach(cat=>{
     html+=`<div class="hall-grp"><div class="hall-grp-t">${cat}</div>`;
     porCat[cat].sort((a,b)=>({Crítica:0,Alta:1,Media:2}[a.sev]??3)-({Crítica:0,Alta:1,Media:2}[b.sev]??3)).forEach(g=>{
       const props=Object.entries(g.porPropiedad).sort((a,b)=>b[1]-a[1]);
       const multiProp=props.length>1;
-      const hasDrill=g.drillType&&MB_DATA.filter(r=>r.Error_Type===g.drillType).length>0;
+      const hasDrill=g.drillType&&(DATA.tiersDetalle||[]).filter(r=>r.Error_Type===g.drillType).length>0;
       const id=`hvm-${uid++}`;
       const propResumen=props.length===1?`<b>${props[0][0]}</b>`:`<b>${props[0][0]}</b> y ${props.length-1} más`;
 
       html+=`<div class="hall-card ${clsM[g.sev]||'media'} ${hasDrill?'clickable':''}"
-          ${hasDrill?`onclick="drillTipoError('${g.drillType}','${g.txt} — detalle')"`:''}>
+        ${hasDrill?`onclick="drillTipoError('${g.drillType}','${g.txt} — detalle')"`:''}>
         <div class="hall-dot"></div>
         <div class="hall-info">
           <div class="hall-txt">${g.txt}</div>
           <div class="hall-tip">💡 ${g.accion} · ${propResumen}</div>
-          ${multiProp?`
-          <div id="${id}" style="display:none;margin-top:10px;">
+          ${multiProp?`<div id="${id}" style="display:none;margin-top:10px;">
             ${props.map(([p,n])=>`<div class="hall-prop-row">
               <span style="color:var(--dark);font-weight:600;">${p}</span>
               <span style="font-weight:800;color:var(--mid);">${fmtN(n)}</span>
@@ -801,15 +953,16 @@ function filtrarSC(){
   const wrap=document.getElementById('sc-tabla');
   if(!rows.length){wrap.innerHTML='<div class="empty">Sin registros Backpacker+ para este filtro</div>';return;}
   wrap.innerHTML=`<table>
-    <thead><tr><th>Nombre</th><th>Reserva</th><th>Período</th><th>Propiedad</th><th>Tier</th><th>Noches</th><th>¿Qué registrar?</th></tr></thead>
+    <thead><tr><th>Nombre</th><th>Reserva</th><th>Fecha llegada</th><th>Período</th><th>Propiedad</th><th>Tier</th><th>Noches</th><th>¿Qué registrar?</th></tr></thead>
     <tbody>${rows.map(r=>`<tr>
       <td><b>${r.Nombre||'—'}</b></td>
       <td>${r.Reserva||r['# Reserva']||'—'}</td>
+      <td>${r.FechaIN||r['Fecha llegada']||'—'}</td>
       <td>${r.Período||'—'}</td>
       <td>${r.Propiedad||'—'}</td>
       <td>${r.Tier||'—'}</td>
       <td>${r.Noches||'—'}</td>
-      <td>${r['Qué debía registrarse']||r['¿Qué debía registrarse?']||'—'}</td>
+      <td>${r['Qué debía registrarse']||'—'}</td>
     </tr>`).join('')}</tbody>
   </table>`;
 }
@@ -900,7 +1053,9 @@ function renderCharts(mb){
   if(chErr)chErr.destroy();
   chErr=new Chart(document.getElementById('ch-err'),{
     type:'doughnut',
-    data:{labels:Object.keys(tipos),datasets:[{data:Object.values(tipos),backgroundColor:['#dc2626','#f97316','#eab308','#7c3aed','#B83D16','#15803d'],borderWidth:2,borderColor:'#fff'}]},
+    data:{labels:Object.keys(tipos),datasets:[{data:Object.values(tipos),
+      backgroundColor:['#dc2626','#f97316','#eab308','#7c3aed','#B83D16','#15803d','#64748b'],
+      borderWidth:2,borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11}}}}}
   });
   const ORDEN=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
