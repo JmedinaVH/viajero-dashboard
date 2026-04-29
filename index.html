@@ -7,99 +7,58 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --coral:#E84C1E; --coral-dark:#c73d17; --coral-soft:#FEF0EB;
-  --cream:#FDF6EE; --cream-mid:#F5EDD6; --cream-dark:#EDE0CC;
-  --dark:#2C1810; --mid:#7A4030; --gris:#8C7B72;
-  --border:#E8DDD4; --white:#fff;
+  --coral:#B83D16;--coral-soft:#F5EAE5;
+  --cream:#F4EFE9;--cream-mid:#EDE5DA;--cream-dark:#E0D5C8;
+  --dark:#1E100A;--mid:#6B3A28;--gris:#7A6E68;
+  --border:#DDD4CA;--white:#fff;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh;}
 
-/* ── HEADER ── */
-header{
-  background:var(--coral);
-  padding:0 48px;
-  height:72px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
+/* HEADER */
+header{background:var(--dark);padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;}
 .h-left{display:flex;align-items:center;gap:16px;}
 .h-logo{height:40px;object-fit:contain;flex-shrink:0;}
-.h-logo-fb{font-size:30px;display:none;}
-.h-divider{width:1.5px;height:34px;background:rgba(255,255,255,.3);flex-shrink:0;}
+.h-logo-fb{font-size:13px;font-weight:800;color:#fff;letter-spacing:.5px;display:none;}
+.h-divider{width:1.5px;height:34px;background:rgba(255,255,255,.2);flex-shrink:0;}
 .h-title{font-size:18px;font-weight:800;color:#fff;line-height:1.1;}
-.h-sub{font-size:11px;font-weight:500;color:rgba(255,255,255,.65);margin-top:2px;}
-
+.h-sub{font-size:11px;font-weight:500;color:rgba(255,255,255,.5);margin-top:2px;}
 .h-right{display:flex;align-items:center;gap:20px;}
 .h-ts-wrap{text-align:right;}
-.h-ts-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.5);}
-.h-ts-val{font-size:12px;font-weight:600;color:rgba(255,255,255,.85);margin-top:1px;}
-.h-pill{
-  display:flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,.15);
-  border:1.5px solid rgba(255,255,255,.25);
-  border-radius:10px;
-  padding:6px 14px;
-  font-size:11px;font-weight:700;color:#fff;
-  white-space:nowrap;
-}
+.h-ts-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.4);}
+.h-ts-val{font-size:12px;font-weight:600;color:rgba(255,255,255,.75);margin-top:1px;}
+.h-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);border-radius:10px;padding:6px 14px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap;}
 .h-pill .dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;box-shadow:0 0 6px #4ade80;}
 
-/* ── MAIN ── */
+/* MAIN */
 main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
-
-/* ── INTRO ── */
 .intro{margin-bottom:36px;}
-.intro h1{font-size:26px;font-weight:800;color:var(--dark);line-height:1.2;}
+.intro h1{font-size:26px;font-weight:800;color:var(--dark);}
+.intro p{font-size:13px;color:var(--gris);margin-top:6px;}
 
-/* ── SECTION LABEL ── */
-.sec-label{
-  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
-  color:var(--gris);margin-bottom:12px;margin-top:32px;
-  display:flex;align-items:center;gap:10px;
-}
+/* SECTION LABEL */
+.sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--gris);margin-bottom:14px;margin-top:32px;display:flex;align-items:center;gap:10px;}
 .sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* ── GRID ── */
+/* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;}
 
-/* ── CARD ── */
-.card{
-  background:var(--white);
-  border-radius:20px;
-  border:1.5px solid var(--border);
-  overflow:hidden;
-  text-decoration:none;
-  display:block;
-  transition:transform .2s, box-shadow .2s;
-  position:relative;
-}
-.card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(44,24,16,.13);}
-.card.disabled{opacity:.48;cursor:not-allowed;pointer-events:none;}
-
-.card-bar{height:5px;width:100%;background:var(--card-color,var(--coral));}
-
+/* CARD */
+.card{background:var(--white);border-radius:18px;border:1.5px solid var(--border);overflow:hidden;text-decoration:none;display:block;transition:transform .2s,box-shadow .2s;}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(30,16,10,.1);}
+.card.disabled{opacity:.42;cursor:not-allowed;pointer-events:none;}
+.card-bar{height:4px;width:100%;background:var(--card-color,var(--coral));}
 .card-body{padding:26px 24px 22px;}
-.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;}
-.card-ico{
-  width:52px;height:52px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:26px;flex-shrink:0;
-  background:var(--card-soft,var(--coral-soft));
-}
-.card-status{font-size:10px;font-weight:700;padding:4px 10px;border-radius:8px;flex-shrink:0;margin-top:4px;}
-.s-live  {background:#dcfce7;color:#15803d;}
-.s-pronto{background:#fef9c3;color:#854d0e;}
-
-.card-name{font-size:17px;font-weight:800;color:var(--dark);margin-bottom:5px;line-height:1.2;}
-.card-desc{font-size:12px;color:var(--gris);line-height:1.55;}
-.card-footer{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-top:18px;padding-top:14px;border-top:1.5px solid var(--border);
-}
-.card-link{font-size:12px;font-weight:700;color:var(--card-color,var(--coral));display:flex;align-items:center;gap:4px;}
-.card-link .arr{transition:transform .2s;}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px;}
+.card-ico{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--card-soft,var(--coral-soft));font-size:24px;}
+.card-status{font-size:10px;font-weight:700;padding:4px 10px;border-radius:7px;flex-shrink:0;margin-top:4px;white-space:nowrap;letter-spacing:.3px;}
+.s-live  {background:#dcfce7;color:#166534;}
+.s-pronto{background:#fef9c3;color:#713f12;}
+.card-name{font-size:17px;font-weight:800;color:var(--dark);margin-bottom:6px;line-height:1.2;}
+.card-desc{font-size:12px;color:var(--gris);line-height:1.65;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding-top:14px;border-top:1.5px solid var(--border);}
+.card-link{font-size:12px;font-weight:700;color:var(--card-color,var(--coral));display:flex;align-items:center;gap:5px;}
+.arr{transition:transform .2s;display:inline-block;}
 .card:hover .arr{transform:translateX(4px);}
 .card-tag{font-size:10px;color:var(--gris);font-weight:600;}
 
@@ -115,46 +74,38 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
 
 <header>
   <div class="h-left">
-    <img class="h-logo"
-      src="02_Logo-Viajero_Vertical-Blanco.png"
-      alt="Viajero"
+    <img class="h-logo" src="02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero"
       onerror="this.style.display='none';document.getElementById('logo-fb').style.display='block'"/>
-    <span id="logo-fb" class="h-logo-fb">💎</span>
+    <span id="logo-fb" class="h-logo-fb">VIAJERO</span>
     <div class="h-divider"></div>
     <div>
       <div class="h-title">Mercadeo Dashboard</div>
       <div class="h-sub">Viajero Hostels · Analytics & Operations</div>
     </div>
   </div>
-
   <div class="h-right">
     <div class="h-ts-wrap">
       <div class="h-ts-label">Última actualización</div>
       <div class="h-ts-val" id="h-ts">—</div>
     </div>
-    <div class="h-pill">
-      <div class="dot"></div>
-      Live
-    </div>
+    <div class="h-pill"><div class="dot"></div>Live</div>
   </div>
 </header>
 
 <main>
-
   <div class="intro">
     <h1>¿Qué quieres revisar hoy?</h1>
+    <p>Selecciona un módulo para ver su dashboard.</p>
   </div>
 
-  <!-- Módulos activos -->
   <div class="sec-label">Módulos activos</div>
   <div class="grid">
-
-    <a href="loyalty/index.html" class="card" style="--card-color:#E84C1E;--card-soft:#FEF0EB;">
+    <a href="loyalty/index.html" class="card" style="--card-color:#B83D16;--card-soft:#F5EAE5;">
       <div class="card-bar"></div>
       <div class="card-body">
         <div class="card-top">
-          <div class="card-ico">🦋</div>
-          <span class="card-status s-live">● Live</span>
+          <div class="card-ico">💎</div>
+          <span class="card-status s-live">Live</span>
         </div>
         <div class="card-name">Loyalty Program</div>
         <div class="card-desc">Afiliados, redención por tier, hallazgos operativos, sin canje y evolución histórica del programa Viajero Go.</div>
@@ -164,18 +115,16 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
         </div>
       </div>
     </a>
-
   </div>
 
-  <!-- Próximamente -->
   <div class="sec-label">Próximamente</div>
   <div class="grid">
 
-    <div class="card disabled" style="--card-color:#7c3aed;--card-soft:#ede9fe;">
+    <div class="card disabled" style="--card-color:#5b21b6;--card-soft:#ede9fe;">
       <div class="card-bar"></div>
       <div class="card-body">
         <div class="card-top">
-          <div class="card-ico">🛍️</div>
+          <div class="card-ico">🎒</div>
           <span class="card-status s-pronto">Próximamente</span>
         </div>
         <div class="card-name">Merch & Retail</div>
@@ -186,11 +135,11 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
       </div>
     </div>
 
-    <div class="card disabled" style="--card-color:#0ea5e9;--card-soft:#e0f2fe;">
+    <div class="card disabled" style="--card-color:#0369a1;--card-soft:#e0f2fe;">
       <div class="card-bar"></div>
       <div class="card-body">
         <div class="card-top">
-          <div class="card-ico">⬆️</div>
+          <div class="card-ico">🛎️</div>
           <span class="card-status s-pronto">Próximamente</span>
         </div>
         <div class="card-name">Upgrades Recepción</div>
@@ -201,11 +150,11 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
       </div>
     </div>
 
-    <div class="card disabled" style="--card-color:#10b981;--card-soft:#d1fae5;">
+    <div class="card disabled" style="--card-color:#065f46;--card-soft:#d1fae5;">
       <div class="card-bar"></div>
       <div class="card-body">
         <div class="card-top">
-          <div class="card-ico">⬆️💬</div>
+          <div class="card-ico">📲</div>
           <span class="card-status s-pronto">Próximamente</span>
         </div>
         <div class="card-name">Upgrades Kyto</div>
@@ -216,7 +165,7 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
       </div>
     </div>
 
-    <div class="card disabled" style="--card-color:#f59e0b;--card-soft:#fef3c7;">
+    <div class="card disabled" style="--card-color:#92400e;--card-soft:#fef3c7;">
       <div class="card-bar"></div>
       <div class="card-body">
         <div class="card-top">
@@ -245,9 +194,7 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
         dt.toLocaleDateString('es-CR',{day:'2-digit',month:'short',year:'numeric'})+
         ' · '+dt.toLocaleTimeString('es-CR',{hour:'2-digit',minute:'2-digit'});
     }
-  }catch(e){
-    document.getElementById('h-ts').textContent='Sin datos aún';
-  }
+  }catch(e){document.getElementById('h-ts').textContent='Sin datos aún';}
 })();
 </script>
 </body>
