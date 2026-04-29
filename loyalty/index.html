@@ -8,60 +8,41 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root{
-  --coral:#E84C1E; --coral-dark:#c73d17; --coral-soft:#FEF0EB;
-  --cream:#FDF6EE; --cream-mid:#F5EDD6; --cream-dark:#EDE0CC;
-  --dark:#2C1810; --mid:#7A4030; --gris:#8C7B72;
-  --border:#E8DDD4; --white:#fff;
-  --ok:#15803d; --ok-bg:#dcfce7;
-  --warn:#854d0e; --warn-bg:#fef9c3;
-  --err:#dc2626; --err-bg:#fee2e2;
-  --orange:#c2410c; --orange-bg:#fff3f0;
+  --coral:#E84C1E;--coral-dark:#c73d17;--coral-soft:#FEF0EB;
+  --cream:#FDF6EE;--cream-mid:#F5EDD6;--cream-dark:#EDE0CC;
+  --dark:#2C1810;--mid:#7A4030;--gris:#8C7B72;
+  --border:#E8DDD4;--white:#fff;
+  --ok:#15803d;--ok-bg:#dcfce7;
+  --warn:#854d0e;--warn-bg:#fef9c3;
+  --err:#dc2626;--err-bg:#fee2e2;
+  --orange:#c2410c;--orange-bg:#fff3f0;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);font-size:14px;line-height:1.5;}
 
-/* ── HEADER CORAL ── */
+/* ── HEADER ── */
 header{
-  background:var(--coral);
-  padding:0 36px;
+  background:var(--coral);padding:0 36px;
   display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:10px;min-height:68px;
 }
 .h-left{display:flex;align-items:center;gap:14px;}
-<img class="h-logo" src="../02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero"
-  onerror="this.style.display='none';document.getElementById('logo-fb').style.display='block'"/>
+.h-logo{height:38px;object-fit:contain;}
+.h-logo-fb{font-size:28px;display:none;}
 .h-sep{width:1px;height:32px;background:rgba(255,255,255,.3);}
-.h-title{color:var(--white);font-size:17px;font-weight:700;}
-.h-sub{color:rgba(255,255,255,.75);font-size:11px;margin-top:1px;}
+.h-title{color:#fff;font-size:17px;font-weight:700;}
+.h-sub{color:rgba(255,255,255,.7);font-size:11px;margin-top:1px;}
 .h-right{display:flex;align-items:center;gap:10px;}
-.btn-hub{
-  display:flex;align-items:center;gap:5px;
-  color:var(--white);font-size:12px;font-weight:600;text-decoration:none;
-  padding:7px 15px;border-radius:8px;
-  border:1.5px solid rgba(255,255,255,.4);
-  transition:.2s;
-}
-.btn-hub:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.7);}
+.btn-hub{display:flex;align-items:center;gap:5px;color:#fff;font-size:12px;font-weight:600;text-decoration:none;padding:7px 15px;border-radius:8px;border:1.5px solid rgba(255,255,255,.4);transition:.2s;}
+.btn-hub:hover{background:rgba(255,255,255,.15);}
 .h-ts{font-size:11px;color:rgba(255,255,255,.6);}
 
-/* ── BARRA FILTROS ── */
-.filtros{
-  background:var(--dark);
-  padding:10px 36px;
-  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-}
+/* ── FILTROS ── */
+.filtros{background:var(--dark);padding:10px 36px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
 .fg label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.5);margin-bottom:3px;}
-.fg select{
-  font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;
-  padding:6px 26px 6px 10px;border:1.5px solid rgba(255,255,255,.15);
-  border-radius:8px;background:rgba(255,255,255,.08);color:var(--white);
-  cursor:pointer;appearance:none;min-width:130px;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='rgba(255,255,255,.6)' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 8px center;
-  transition:.2s;
-}
+.fg select{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:6px 26px 6px 10px;border:1.5px solid rgba(255,255,255,.15);border-radius:8px;background:rgba(255,255,255,.08);color:#fff;cursor:pointer;appearance:none;min-width:130px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='rgba(255,255,255,.6)' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;transition:.2s;}
 .fg select option{background:var(--dark);}
-.fg select:focus{outline:none;border-color:rgba(255,255,255,.5);background-color:rgba(255,255,255,.15);}
+.fg select:focus{outline:none;border-color:rgba(255,255,255,.5);}
 
 /* ── MAIN ── */
 main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
@@ -73,50 +54,33 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .sec-hdr .linea{flex:1;height:1px;background:var(--border);}
 .sec-hdr .cnt{background:var(--coral);color:#fff;font-size:10px;padding:2px 9px;border-radius:10px;font-weight:700;}
 
-/* ── TOOLTIP MODAL ── */
-#tip-overlay{
-  display:none;position:fixed;inset:0;z-index:9999;
-  background:rgba(44,24,16,.45);
-  align-items:center;justify-content:center;
-  padding:20px;
-}
+/* ── MODAL INFO (tooltip) ── */
+#tip-overlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(44,24,16,.4);align-items:center;justify-content:center;padding:20px;}
 #tip-overlay.show{display:flex;}
-#tip-box{
-  background:var(--white);border-radius:16px;max-width:340px;width:100%;
-  padding:24px;box-shadow:0 20px 60px rgba(44,24,16,.25);
-  position:relative;animation:popIn .2s ease;
-}
+#tip-box{background:#fff;border-radius:16px;max-width:340px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(44,24,16,.25);position:relative;animation:popIn .2s ease;}
 @keyframes popIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
 #tip-box h4{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:8px;}
 #tip-box p{font-size:13px;color:var(--gris);line-height:1.6;}
-#tip-close{
-  position:absolute;top:12px;right:14px;
-  font-size:18px;cursor:pointer;color:var(--gris);
-  background:none;border:none;font-family:'Outfit',sans-serif;
-  line-height:1;
-}
-#tip-close:hover{color:var(--dark);}
+#tip-close{position:absolute;top:12px;right:14px;font-size:20px;cursor:pointer;color:var(--gris);background:none;border:none;font-family:'Outfit',sans-serif;line-height:1;}
 
-/* ── BOTÓN INFO ── */
-.info-btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:17px;height:17px;border-radius:50%;
-  background:var(--coral-soft);color:var(--coral);
-  font-size:10px;font-weight:800;cursor:pointer;
-  border:1.5px solid var(--coral);flex-shrink:0;
-  transition:.2s;font-style:normal;
-}
+/* ── MODAL DRILL-DOWN ── */
+#drill-overlay{display:none;position:fixed;inset:0;z-index:9500;background:rgba(44,24,16,.5);align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;}
+#drill-overlay.show{display:flex;}
+#drill-box{background:#fff;border-radius:20px;width:100%;max-width:820px;padding:28px;box-shadow:0 24px 80px rgba(44,24,16,.3);position:relative;animation:popIn .2s ease;margin:auto;}
+#drill-box h3{font-size:17px;font-weight:800;color:var(--dark);margin-bottom:4px;}
+#drill-box .drill-sub{font-size:12px;color:var(--gris);margin-bottom:20px;}
+#drill-close{position:absolute;top:16px;right:18px;font-size:22px;cursor:pointer;color:var(--gris);background:none;border:none;font-family:'Outfit',sans-serif;line-height:1;}
+#drill-close:hover{color:var(--dark);}
+.drill-wrap{overflow-x:auto;border-radius:10px;border:1.5px solid var(--border);}
+.drill-empty{text-align:center;padding:32px;color:var(--gris);font-size:13px;}
+
+/* ── INFO BTN ── */
+.info-btn{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:var(--coral-soft);color:var(--coral);font-size:10px;font-weight:800;cursor:pointer;border:1.5px solid var(--coral);flex-shrink:0;transition:.2s;font-style:normal;}
 .info-btn:hover{background:var(--coral);color:#fff;}
 
 /* ── KPI CARDS ── */
 .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:14px;}
-.kpi{
-  background:var(--white);border-radius:16px;padding:20px 18px;
-  border:1.5px solid var(--border);
-  position:relative;overflow:hidden;
-  transition:box-shadow .2s,transform .2s;
-  cursor:default;
-}
+.kpi{background:#fff;border-radius:16px;padding:20px 18px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s;cursor:default;}
 .kpi:hover{box-shadow:0 8px 28px rgba(232,76,30,.12);transform:translateY(-3px);}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--kc,var(--coral));border-radius:16px 16px 0 0;}
 .kpi .k-glow{position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:var(--kc,var(--coral));opacity:.06;}
@@ -126,13 +90,17 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .kpi .k-sub{font-size:11px;color:var(--gris);line-height:1.4;}
 .kpi .k-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:8px;margin-top:8px;}
 
+/* Barra de beneficios dentro del KPI */
+.bene-bars{margin-top:10px;display:flex;flex-direction:column;gap:5px;}
+.bene-row{display:flex;align-items:center;gap:7px;font-size:11px;}
+.bene-lbl{width:56px;color:var(--gris);font-weight:600;flex-shrink:0;}
+.bene-track{flex:1;height:6px;background:var(--cream-dark);border-radius:3px;overflow:hidden;}
+.bene-fill{height:100%;border-radius:3px;transition:width .5s;}
+.bene-n{font-size:10px;font-weight:700;color:var(--dark);min-width:22px;text-align:right;}
+
 /* ── SEMÁFORO ── */
-.semaforo{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;}
-.s-item{
-  background:var(--white);border-radius:14px;padding:16px 14px;
-  border:1.5px solid var(--border);text-align:center;
-  transition:transform .2s,box-shadow .2s;cursor:default;
-}
+.semaforo{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+.s-item{background:#fff;border-radius:14px;padding:16px 14px;border:1.5px solid var(--border);text-align:center;transition:transform .2s,box-shadow .2s;cursor:default;}
 .s-item:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(44,24,16,.1);}
 .s-val{font-size:26px;font-weight:800;line-height:1;}
 .s-lbl{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-top:5px;display:flex;align-items:center;justify-content:center;gap:4px;}
@@ -145,7 +113,7 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .s-rojo     .s-tipo{background:var(--err-bg);color:var(--err);}
 
 /* ── ACORDEÓN ── */
-.ac{background:var(--white);border-radius:16px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:10px;transition:box-shadow .2s;}
+.ac{background:#fff;border-radius:16px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:10px;transition:box-shadow .2s;}
 .ac:hover{box-shadow:0 4px 16px rgba(44,24,16,.07);}
 .ac-head{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;cursor:pointer;transition:background .15s;user-select:none;}
 .ac-head:hover{background:var(--cream);}
@@ -169,8 +137,8 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 /* ── HALLAZGOS ── */
 .hall-grp{margin-bottom:18px;}
 .hall-grp-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gris);padding:6px 0;margin-bottom:8px;border-bottom:1.5px solid var(--cream-dark);display:flex;align-items:center;gap:6px;}
-.hall-card{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:12px;margin-bottom:8px;border:1px solid transparent;transition:transform .15s;cursor:default;}
-.hall-card:hover{transform:translateX(4px);}
+.hall-card{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:12px;margin-bottom:8px;border:1px solid transparent;transition:transform .15s,box-shadow .15s;cursor:pointer;}
+.hall-card:hover{transform:translateX(4px);box-shadow:0 3px 12px rgba(44,24,16,.1);}
 .hall-card.critica{background:var(--err-bg);border-color:#fca5a5;}
 .hall-card.alta   {background:var(--orange-bg);border-color:#fed7aa;}
 .hall-card.media  {background:var(--warn-bg);border-color:#fde68a;}
@@ -181,10 +149,13 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .hall-info{flex:1;}
 .hall-txt{font-size:13px;font-weight:600;margin-bottom:3px;color:var(--dark);}
 .hall-tip{font-size:11px;color:var(--gris);line-height:1.4;}
-.hall-n{font-size:26px;font-weight:800;flex-shrink:0;min-width:44px;text-align:right;}
+.hall-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
+.hall-n{font-size:26px;font-weight:800;}
 .hall-card.critica .hall-n{color:var(--err);}
 .hall-card.alta    .hall-n{color:#f97316;}
 .hall-card.media   .hall-n{color:#eab308;}
+.hall-ver{font-size:10px;font-weight:700;color:var(--coral);white-space:nowrap;}
+.hall-card:hover .hall-ver{text-decoration:underline;}
 
 /* ── SIN CANJE ── */
 .sc-cats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
@@ -197,7 +168,7 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .sc-t{font-size:12px;font-weight:700;margin:5px 0 7px;}
 .sc-d{font-size:11px;color:var(--gris);line-height:1.5;}
 .sc-q{width:100%;padding:9px 13px;border:1.5px solid var(--border);border-radius:10px;font-family:'Outfit',sans-serif;font-size:13px;margin-bottom:10px;background:var(--cream);transition:.2s;}
-.sc-q:focus{outline:none;border-color:var(--coral);background:var(--white);}
+.sc-q:focus{outline:none;border-color:var(--coral);background:#fff;}
 .sc-wrap{overflow-x:auto;max-height:320px;border-radius:10px;border:1.5px solid var(--border);}
 
 /* ── TABLA ── */
@@ -240,7 +211,6 @@ tbody tr:hover td{background:var(--cream);}
 .ch-box h3{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;}
 .ch-wrap{position:relative;height:200px;}
 
-/* ── EMPTY ── */
 .empty{text-align:center;padding:32px;color:var(--gris);font-size:13px;}
 
 @media(max-width:640px){
@@ -259,6 +229,16 @@ tbody tr:hover td{background:var(--cream);}
     <button id="tip-close" onclick="closeTip()">×</button>
     <h4 id="tip-title"></h4>
     <p id="tip-body"></p>
+  </div>
+</div>
+
+<!-- DRILL-DOWN MODAL -->
+<div id="drill-overlay" onclick="closeDrill(event)">
+  <div id="drill-box">
+    <button id="drill-close" onclick="closeDrill()">×</button>
+    <h3 id="drill-title"></h3>
+    <div class="drill-sub" id="drill-sub"></div>
+    <div id="drill-content"></div>
   </div>
 </div>
 
@@ -282,18 +262,9 @@ tbody tr:hover td{background:var(--cream);}
 
 <!-- FILTROS -->
 <div class="filtros">
-  <div class="fg">
-    <label>Período</label>
-    <select id="f-per" onchange="render()"><option value="">Todos</option></select>
-  </div>
-  <div class="fg">
-    <label>Propiedad</label>
-    <select id="f-prop" onchange="render()"><option value="">Todas</option></select>
-  </div>
-  <div class="fg">
-    <label>País</label>
-    <select id="f-pais" onchange="render()"><option value="">Todos</option></select>
-  </div>
+  <div class="fg"><label>Período</label><select id="f-per" onchange="render()"><option value="">Todos</option></select></div>
+  <div class="fg"><label>Propiedad</label><select id="f-prop" onchange="render()"><option value="">Todas</option></select></div>
+  <div class="fg"><label>País</label><select id="f-pais" onchange="render()"><option value="">Todos</option></select></div>
 </div>
 
 <main>
@@ -327,14 +298,9 @@ tbody tr:hover td{background:var(--cream);}
     <div class="sec-hdr"><h2>Histórico</h2><div class="linea"></div></div>
     <div class="ac">
       <div class="ac-head" onclick="toggleAc(this)">
-        <div class="ac-left">
-          <span class="ac-ico">📅</span>
-          <div>
-            <div class="ac-tit">Evolución por temporada</div>
-            <div class="ac-sub">Penetración, afiliados y transacciones por propiedad</div>
-          </div>
-        </div>
-        <span class="ac-arr">▼</span>
+        <div class="ac-left"><span class="ac-ico">📅</span>
+          <div><div class="ac-tit">Evolución por temporada</div><div class="ac-sub">Penetración, afiliados y transacciones por propiedad</div></div>
+        </div><span class="ac-arr">▼</span>
       </div>
       <div class="ac-body">
         <div class="hist-ctrl">
@@ -352,18 +318,11 @@ tbody tr:hover td{background:var(--cream);}
     <div class="sec-hdr"><h2>Detalle por tier</h2><div class="linea"></div></div>
     <div class="ac">
       <div class="ac-head" onclick="toggleAc(this)">
-        <div class="ac-left">
-          <span class="ac-ico">🏅</span>
-          <div>
-            <div class="ac-tit">Redención por tier</div>
-            <div class="ac-sub">Qué debía registrarse vs qué se registró</div>
-          </div>
-        </div>
-        <span class="ac-arr">▼</span>
+        <div class="ac-left"><span class="ac-ico">🏅</span>
+          <div><div class="ac-tit">Redención por tier</div><div class="ac-sub">Qué debía registrarse vs qué se registró</div></div>
+        </div><span class="ac-arr">▼</span>
       </div>
-      <div class="ac-body">
-        <div class="tiers-g" id="tiers-g"></div>
-      </div>
+      <div class="ac-body"><div class="tiers-g" id="tiers-g"></div></div>
     </div>
   </div>
 
@@ -372,13 +331,9 @@ tbody tr:hover td{background:var(--cream);}
     <div class="sec-hdr"><h2>Gráficas</h2><div class="linea"></div></div>
     <div class="ac">
       <div class="ac-head" onclick="toggleAc(this)">
-        <div class="ac-left">
-          <span class="ac-ico">📊</span>
-          <div>
-            <div class="ac-tit">Distribución de errores y tiers</div>
-          </div>
-        </div>
-        <span class="ac-arr">▼</span>
+        <div class="ac-left"><span class="ac-ico">📊</span>
+          <div><div class="ac-tit">Distribución de errores y tiers</div></div>
+        </div><span class="ac-arr">▼</span>
       </div>
       <div class="ac-body">
         <div class="charts-r">
@@ -392,49 +347,66 @@ tbody tr:hover td{background:var(--cream);}
 </main>
 
 <script>
-const DATA_URL = '../data/loyalty_data.json';
-let DATA=null, chErr=null, chTier=null, SC_DATA=[];
+const DATA_URL='../data/loyalty_data.json';
+let DATA=null, chErr=null, chTier=null, SC_DATA=[], MB_DATA=[];
 
-// ── Tooltip modal ─────────────────────────────────────────────────
-const TIPS = {
-  'Afiliados CB':         {t:'¿Qué son los Afiliados CB?', b:'Huéspedes miembros Viajero Go que se hospedaron y fueron registrados en CloudBeds (CB). Es la base real del programa: si no están en CB, no se pueden registrar sus beneficios.'},
-  'Nuevos Afiliados':     {t:'¿Qué son Nuevos Afiliados?', b:'Huéspedes que se inscribieron al programa Viajero Go durante este período. El % muestra qué tan efectiva es la recepción enrolando nuevos miembros en el check-in.'},
-  'Sin Canje':            {t:'¿Qué es Sin Canje?', b:'Miembros Viajero Go que se hospedaron pero no tuvieron ningún beneficio loyalty registrado en CB: ni tarifa loyalty, ni toalla, ni desayuno. Representa una oportunidad perdida de fidelización.'},
-  'Leakage':              {t:'¿Qué es Leakage?', b:'Fuga de beneficios: ocurre cuando recepción aplica tarifa loyalty o botones de beneficio (toalla, desayuno) a un huésped que NO es miembro del programa. Genera pérdida de revenue para la propiedad.'},
-  'Tier Incorrecto':      {t:'¿Qué es Tier Incorrecto?', b:'Casos donde el tier aplicado en CloudBeds no coincide con el tier real del miembro en Akin. Ejemplo: recepción aplicó tarifa Backpacker a un miembro Nomad, que debería tener 20% de descuento.'},
-  '% OK Transacciones':   {t:'¿Qué es % OK Transacciones?', b:'Porcentaje de transacciones loyalty registradas correctamente: tarifa al miembro correcto con el descuento correcto, toalla a $0, desayuno al tier que corresponde. Un 0% indica que todas las transacciones tienen algún error de registro.'},
-  '% Penetración':        {t:'¿Qué es % Penetración?', b:'Porcentaje de check-ins que son miembros Viajero Go registrados en CloudBeds. Meta sugerida: >15%. Indica qué tan bien está adoptando la propiedad el programa loyalty.'},
-  'Misuse':               {t:'¿Qué es Misuse?', b:'Uso indebido del sistema: aplicación de tarifa o beneficio loyalty fuera del flujo correcto definido. Diferente al leakage: aquí sí puede haber un miembro, pero el proceso no se siguió correctamente.'},
-  'OK':                   {t:'Redenciones OK', b:'Transacciones loyalty registradas sin ningún error: tarifa correcta al miembro correcto, con el descuento correcto según su tier. Esta es la meta de todas las transacciones.'},
+// ── TOOLTIPS ──────────────────────────────────────────────────────
+const TIPS={
+  'Afiliados CB':{t:'¿Qué son los Afiliados CB?',b:'Huéspedes miembros Viajero Go que se hospedaron y fueron registrados en CloudBeds. Es la base real del programa: sin registro en CB no se pueden aplicar beneficios.'},
+  'Nuevos Afiliados':{t:'¿Qué son Nuevos Afiliados?',b:'Huéspedes que se inscribieron al programa durante este período. El % muestra qué tan bien está enrolando recepción en el check-in.'},
+  'Sin Canje':{t:'¿Qué es Sin Canje?',b:'Miembros Viajero Go que se hospedaron pero no tuvieron ningún beneficio loyalty registrado en CB: ni tarifa, ni toalla, ni desayuno.'},
+  'Leakage':{t:'¿Qué es Leakage?',b:'Fuga de beneficios: ocurre cuando recepción aplica tarifa loyalty o beneficios a un huésped que NO es miembro del programa. Genera pérdida de revenue.'},
+  'Tier Incorrecto':{t:'¿Qué es Tier Incorrecto?',b:'El tier aplicado en CloudBeds no coincide con el tier real del miembro en Akin. Ejemplo: se aplicó tarifa Backpacker a un Nomad que debería tener 20%.'},
+  '% OK Transacciones':{t:'¿Qué es % OK Transacciones?',b:'Porcentaje de transacciones loyalty registradas sin errores: tarifa correcta al miembro correcto con el descuento que corresponde a su tier.'},
+  '% Penetración':{t:'¿Qué es % Penetración?',b:'Porcentaje de check-ins que son miembros Viajero Go registrados en CB. Meta sugerida: >15%. Indica qué tan bien adopta la propiedad el programa.'},
+  'Misuse':{t:'¿Qué es Misuse?',b:'Uso indebido: aplicación de tarifa o beneficio loyalty fuera del flujo correcto definido. Puede haber un miembro, pero el proceso no se siguió.'},
+  'OK':{t:'Redenciones OK',b:'Transacciones loyalty registradas sin ningún error: tarifa correcta, descuento correcto según tier. Esta es la meta para todas las transacciones.'},
+  'Beneficio más redimido':{t:'¿Qué mide esta sección?',b:'Comparativo de qué beneficio loyalty se registra más en CloudBeds: tarifa con descuento, botón toalla ($0) o botón desayuno. Sólo se cuentan redenciones correctas (sin error).'},
 };
+function openTip(k){const t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
+function closeTip(e){if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;document.getElementById('tip-overlay').classList.remove('show');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('tip-overlay').classList.remove('show');document.getElementById('drill-overlay').classList.remove('show');}});
+const infoBtn=k=>`<i class="info-btn" onclick="openTip('${k}')">i</i>`;
 
-function openTip(key){
-  const t=TIPS[key];
-  if(!t)return;
-  document.getElementById('tip-title').textContent=t.t;
-  document.getElementById('tip-body').textContent=t.b;
-  document.getElementById('tip-overlay').classList.add('show');
+// ── DRILL-DOWN ────────────────────────────────────────────────────
+function openDrill(titulo, subtitulo, rows, cols){
+  document.getElementById('drill-title').textContent=titulo;
+  document.getElementById('drill-sub').textContent=subtitulo;
+  const cont=document.getElementById('drill-content');
+  if(!rows||!rows.length){cont.innerHTML='<div class="drill-empty">Sin registros para mostrar. Verifica que el JSON incluya los campos de nombre y reserva.</div>';document.getElementById('drill-overlay').classList.add('show');return;}
+  cont.innerHTML=`<div class="drill-wrap"><table>
+    <thead><tr>${cols.map(c=>`<th>${c.label}</th>`).join('')}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${r[c.key]||'—'}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table></div>`;
+  document.getElementById('drill-overlay').classList.add('show');
 }
-function closeTip(e){
-  if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;
-  document.getElementById('tip-overlay').classList.remove('show');
+function closeDrill(e){if(e&&e.target!==document.getElementById('drill-overlay')&&e.target!==document.getElementById('drill-close'))return;document.getElementById('drill-overlay').classList.remove('show');}
+
+function drillTipoError(tipo, titulo){
+  const rows=MB_DATA.filter(r=>(r.Error_Type||'')=== tipo);
+  const cols=[
+    {key:'Nombre',label:'Nombre huésped'},
+    {key:'Reserva',label:'Reserva'},
+    {key:'Propiedad',label:'Propiedad'},
+    {key:'Periodo',label:'Período'},
+    {key:'Tier_AKIN',label:'Tier real (Akin)'},
+    {key:'Tier_CB',label:'Tier en CB'},
+    {key:'Noches',label:'Noches'},
+  ];
+  openDrill(titulo, `${rows.length} registro(s) con este tipo de error`, rows, cols);
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('tip-overlay').classList.remove('show');});
 
-const infoBtn = (key) =>
-  `<i class="info-btn" onclick="openTip('${key}')">i</i>`;
+// ── FORMATO ───────────────────────────────────────────────────────
+const fmtN=n=>Math.round(Number(n)||0).toLocaleString('es-CR');
+const fmtP=(a,b)=>b>0?(Math.round(a/b*1000)/10).toFixed(1)+'%':'—';
+const clsP=v=>{const n=parseFloat(v);return isNaN(n)||v===''?'':n>=80?'pct-ok':n>=50?'pct-warn':'pct-err';};
+const corP=v=>{let n=parseFloat(v);if(isNaN(n)||v===''||v===null)return null;if(n>0&&n<1.5)n=Math.round(n*1000)/10;else n=Math.round(n*10)/10;return n;};
 
-// ── Formato ───────────────────────────────────────────────────────
-const fmtN = n => Math.round(Number(n)||0).toLocaleString('es-CR');
-const fmtP = (a,b) => b>0?(Math.round(a/b*1000)/10).toFixed(1)+'%':'—';
-const clsP = v => { const n=parseFloat(v); return isNaN(n)||v===''?'':n>=80?'pct-ok':n>=50?'pct-warn':'pct-err'; };
-const corP = v => { let n=parseFloat(v); if(isNaN(n)||v===''||v===null)return null; if(n>0&&n<1.5)n=Math.round(n*1000)/10; else n=Math.round(n*10)/10; return n; };
-
-// ── Filtros ───────────────────────────────────────────────────────
+// ── FILTROS ───────────────────────────────────────────────────────
 const gf=id=>document.getElementById(id).value;
 function filtrar(arr,kP='Período',kPr='Propiedad',kPa='País'){
   const p=gf('f-per'),pr=gf('f-prop'),pa=gf('f-pais');
-  return arr.filter(r=>(!p||(r[kP]||'')=== p)&&(!pr||(r[kPr]||'')=== pr)&&(!pa||(r[kPa]||r['Pais']||'')=== pa));
+  return arr.filter(r=>(!p||(r[kP]||r['Periodo']||'')=== p)&&(!pr||(r[kPr]||'')=== pr)&&(!pa||(r[kPa]||r['Pais']||'')=== pa));
 }
 function poblarFiltros(){
   const afs=DATA.afiliados||[];
@@ -445,47 +417,49 @@ function poblarFiltros(){
   fill('f-pais',[...new Set(afs.map(a=>a.Pais||a.País).filter(Boolean))].sort());
 }
 
-// ── Acordeón ──────────────────────────────────────────────────────
-function toggleAc(h){
-  h.classList.toggle('open');
-  const b=h.nextElementSibling;
-  b.classList.toggle('vis');
-  h.querySelector('.ac-arr').style.transform=b.classList.contains('vis')?'rotate(180deg)':'';
-}
+// ── ACORDEÓN ──────────────────────────────────────────────────────
+function toggleAc(h){h.classList.toggle('open');const b=h.nextElementSibling;b.classList.toggle('vis');h.querySelector('.ac-arr').style.transform=b.classList.contains('vis')?'rotate(180deg)':'';}
 
 // ── KPIs ──────────────────────────────────────────────────────────
-function renderKPIs(afs,bens,mb){
+function renderKPIs(afs, bens, mb){
   const s=(arr,k)=>arr.reduce((t,r)=>t+(parseFloat(r[k])||0),0);
   const hu=s(afs,'_huespedes'),ci=s(afs,'_check_ins'),cb=s(afs,'_afiliados_cb'),nv=s(afs,'_nuevos');
-  const bOK=s(bens,'_toallas_ok')+s(bens,'_desayunos_ok')+s(bens,'_tarifa_ok');
-  const bER=s(bens,'_toallas_err')+s(bens,'_desayunos_err')+s(bens,'_tarifa_err');
+  const tOK=s(bens,'_tarifa_ok'),toOK=s(bens,'_toallas_ok'),dOK=s(bens,'_desayunos_ok');
+  const bOK=tOK+toOK+dOK;
+  const bER=s(bens,'_tarifa_err')+s(bens,'_toallas_err')+s(bens,'_desayunos_err');
   const tB=bOK+bER, tt=s(bens,'_total_trans');
   const lk=mb.filter(r=>r.Error_Type==='LEAKAGE').length;
   const tiI=mb.filter(r=>r.Error_Type==='TIER_INCORRECTO').length;
-  const sc=(DATA.sinCanje||[]).filter(r=>{const p=gf('f-per'),pr=gf('f-prop');return(!p||(r.Período||'')==p)&&(!pr||(r.Propiedad||'')==pr);}).length;
+  const sc=(DATA.sinCanje||[]).filter(r=>{const p=gf('f-per'),pr=gf('f-prop');return(!p||(r.Período||'')=== p)&&(!pr||(r.Propiedad||'')=== pr);}).length;
   const pOK=tB>0?bOK/tB*100:null;
   const colOK=pOK===null?'var(--gris)':pOK>=80?'var(--ok)':pOK>=50?'var(--warn)':'var(--err)';
 
+  // Beneficio más redimido
+  const maxB=Math.max(tOK,toOK,dOK)||1;
+  const benTop=tOK>=toOK&&tOK>=dOK?'Tarifa':toOK>=dOK?'Toalla':'Desayuno';
+
   const cards=[
-    {key:'Afiliados CB',    val:fmtN(cb),   col:'var(--coral)',
-     sub:`de ${fmtN(ci)} check-ins · ${fmtP(cb,ci)} penetración`,
-     badge:null},
-    {key:'Nuevos Afiliados',val:fmtN(nv),   col:'#0ea5e9',
-     sub:`${fmtP(nv,hu)} de ${fmtN(hu)} huéspedes`},
-    {key:'Sin Canje',       val:fmtN(sc),   col:'var(--err)',
-     sub:'Sin tarifa ni beneficios registrados',
-     badge:'Revisar',bcls:'b-err'},
-    {key:'Leakage',         val:fmtN(lk),   col:lk>0?'var(--err)':'var(--ok)',
-     sub:'Beneficios aplicados a no miembros',
-     badge:lk===0?'✅ Sin casos':'🔴 Crítico',bcls:lk===0?'b-ok':'b-err'},
-    {key:'Tier Incorrecto', val:fmtN(tiI),  col:'#7c3aed',
-     sub:`de ${fmtN(cb)} afiliados CB`},
-    {key:'% OK Transacciones',val:pOK!==null?(Math.round(pOK*10)/10).toFixed(1)+'%':'—',col:colOK,
-     sub:`${fmtN(bOK)} correctas / ${fmtN(tt)} totales`},
+    {key:'Afiliados CB',val:fmtN(cb),col:'var(--coral)',sub:`de ${fmtN(ci)} check-ins · ${fmtP(cb,ci)} penetración`},
+    {key:'Nuevos Afiliados',val:fmtN(nv),col:'#0ea5e9',sub:`${fmtP(nv,hu)} de ${fmtN(hu)} huéspedes`},
+    {key:'Sin Canje',val:fmtN(sc),col:'var(--err)',sub:'Sin tarifa ni beneficios registrados',badge:'Revisar',bcls:'b-err'},
+    {key:'Leakage',val:fmtN(lk),col:lk>0?'var(--err)':'var(--ok)',sub:'Beneficios aplicados a no miembros',badge:lk===0?'✅ Sin casos':'🔴 Crítico',bcls:lk===0?'b-ok':'b-err'},
+    {key:'Tier Incorrecto',val:fmtN(tiI),col:'#7c3aed',sub:`de ${fmtN(cb)} afiliados CB`,badge:tiI>0?'Ver quiénes →':null,bcls:'b-err',drill:true},
+    {key:'% OK Transacciones',val:pOK!==null?(Math.round(pOK*10)/10).toFixed(1)+'%':'—',col:colOK,sub:`${fmtN(bOK)} correctas / ${fmtN(tt)} totales`},
+    {key:'Beneficio más redimido',val:benTop,col:'#10b981',sub:'Redenciones OK por tipo',extra:{tOK,toOK,dOK,maxB}},
   ];
 
-  document.getElementById('kpi-row').innerHTML=cards.map(k=>`
-    <div class="kpi" style="--kc:${k.col}">
+  document.getElementById('kpi-row').innerHTML=cards.map(k=>{
+    let extraHtml='';
+    if(k.extra){
+      const {tOK,toOK,dOK,maxB}=k.extra;
+      extraHtml=`<div class="bene-bars">
+        <div class="bene-row"><span class="bene-lbl">Tarifa</span><div class="bene-track"><div class="bene-fill" style="width:${tOK/maxB*100}%;background:#E84C1E"></div></div><span class="bene-n">${fmtN(tOK)}</span></div>
+        <div class="bene-row"><span class="bene-lbl">Toalla</span><div class="bene-track"><div class="bene-fill" style="width:${toOK/maxB*100}%;background:#0ea5e9"></div></div><span class="bene-n">${fmtN(toOK)}</span></div>
+        <div class="bene-row"><span class="bene-lbl">Desayuno</span><div class="bene-track"><div class="bene-fill" style="width:${dOK/maxB*100}%;background:#10b981"></div></div><span class="bene-n">${fmtN(dOK)}</span></div>
+      </div>`;
+    }
+    const drillClick=k.drill?`onclick="drillTipoError('TIER_INCORRECTO','Tier Incorrecto — detalle de casos')" style="cursor:pointer"`:'';
+    return`<div class="kpi" style="--kc:${k.col}" ${drillClick}>
       <div class="k-glow"></div>
       <div class="k-top">
         <div class="k-lbl">${k.key}</div>
@@ -493,63 +467,72 @@ function renderKPIs(afs,bens,mb){
       </div>
       <div class="k-val">${k.val}</div>
       <div class="k-sub">${k.sub||''}</div>
-      ${k.badge?`<span class="k-badge ${k.bcls||''}" style="background:${k.col};color:#fff">${k.badge}</span>`:''}
-    </div>`).join('');
+      ${k.badge?`<span class="k-badge ${k.bcls||''}">${k.badge}</span>`:''}
+      ${extraHtml}
+    </div>`;
+  }).join('');
 }
 
-// ── Semáforo ──────────────────────────────────────────────────────
-function renderSemaforo(mb){
-  const tipos={NO_LOYALTY:0,SIN_CANJE:0,LEAKAGE:0,TIER_INCORRECTO:0,MISUSE:0,OK:0};
-  mb.forEach(r=>{const t=r.Error_Type||'NO_LOYALTY';if(t in tipos)tipos[t]++;});
-  const afs=filtrar(DATA.afiliados||[],'Período','Propiedad','Pais');
-  const cb=afs.reduce((s,r)=>s+(parseFloat(r._afiliados_cb)||0),0);
+// ── SEMÁFORO (sin Tier Incorrecto — ya está en KPIs) ─────────────
+function renderSemaforo(mb, afs){
   const ci=afs.reduce((s,r)=>s+(parseFloat(r._check_ins)||0),0);
+  const cb=afs.reduce((s,r)=>s+(parseFloat(r._afiliados_cb)||0),0);
   const pLoy=ci>0?cb/ci*100:0;
+  const tipos={SIN_CANJE:0,LEAKAGE:0,MISUSE:0,OK:0,NO_LOYALTY:0};
+  mb.forEach(r=>{const t=r.Error_Type||'NO_LOYALTY';if(t in tipos)tipos[t]++;});
+  const bens=filtrar(DATA.beneficios||[],'Período','Propiedad','Pais');
+  const bOK=bens.reduce((s,r)=>s+(parseFloat(r._tarifa_ok)||0)+(parseFloat(r._toallas_ok)||0)+(parseFloat(r._desayunos_ok)||0),0);
+  const bER=bens.reduce((s,r)=>s+(parseFloat(r._tarifa_err)||0)+(parseFloat(r._toallas_err)||0)+(parseFloat(r._desayunos_err)||0),0);
+  const tB=bOK+bER, pOK=tB>0?bOK/tB*100:0;
 
   const items=[
-    {key:'% Penetración',    val:(Math.round(pLoy*10)/10).toFixed(1)+'%',tipo:'loyalty vs check-ins',cls:pLoy>=15?'s-verde':pLoy>=8?'s-amarillo':'s-rojo'},
-    {key:'Sin Canje',        val:fmtN(tipos.SIN_CANJE),tipo:'sin registro',    cls:tipos.SIN_CANJE===0?'s-verde':tipos.SIN_CANJE<20?'s-amarillo':'s-rojo'},
-    {key:'Leakage',          val:fmtN(tipos.LEAKAGE), tipo:'fuga de beneficios',cls:tipos.LEAKAGE===0?'s-verde':tipos.LEAKAGE<10?'s-amarillo':'s-rojo'},
-    {key:'Tier Incorrecto',  val:fmtN(tipos.TIER_INCORRECTO),tipo:'error de registro',cls:tipos.TIER_INCORRECTO===0?'s-verde':tipos.TIER_INCORRECTO<5?'s-amarillo':'s-rojo'},
-    {key:'Misuse',           val:fmtN(tipos.MISUSE),  tipo:'uso indebido',    cls:tipos.MISUSE===0?'s-verde':'s-rojo'},
-    {key:'OK',               val:fmtN(tipos.OK),       tipo:'registros correctos',cls:tipos.OK>0?'s-verde':'s-amarillo'},
+    {key:'% Penetración',val:(Math.round(pLoy*10)/10).toFixed(1)+'%',tipo:'loyalty vs check-ins',cls:pLoy>=15?'s-verde':pLoy>=8?'s-amarillo':'s-rojo'},
+    {key:'% OK Transacciones',val:pOK>0?(Math.round(pOK*10)/10).toFixed(1)+'%':'0%',tipo:'transacciones sin error',cls:pOK>=80?'s-verde':pOK>=50?'s-amarillo':'s-rojo'},
+    {key:'Sin Canje',val:fmtN(tipos.SIN_CANJE),tipo:'sin registro',cls:tipos.SIN_CANJE===0?'s-verde':tipos.SIN_CANJE<20?'s-amarillo':'s-rojo'},
+    {key:'Leakage',val:fmtN(tipos.LEAKAGE),tipo:'fuga de beneficios',cls:tipos.LEAKAGE===0?'s-verde':tipos.LEAKAGE<10?'s-amarillo':'s-rojo'},
+    {key:'Misuse',val:fmtN(tipos.MISUSE),tipo:'uso indebido',cls:tipos.MISUSE===0?'s-verde':'s-rojo',drill:true},
+    {key:'OK',val:fmtN(tipos.OK),tipo:'registros correctos',cls:tipos.OK>0?'s-verde':'s-amarillo'},
   ];
 
   document.getElementById('semaforo').innerHTML=items.map(i=>`
-    <div class="s-item ${i.cls}">
+    <div class="s-item ${i.cls}" ${i.drill&&tipos.MISUSE>0?`onclick="drillTipoError('MISUSE','Misuse — detalle de casos')" style="cursor:pointer"`:''}>
       <div class="s-val">${i.val}</div>
       <div class="s-lbl">${i.key} ${infoBtn(i.key)}</div>
-      <div class="s-tipo">${i.tipo}</div>
+      <div class="s-tipo">${i.drill&&tipos.MISUSE>0?'👆 Click para ver quién':i.tipo}</div>
     </div>`).join('');
 }
 
-// ── Hallazgos ─────────────────────────────────────────────────────
+// ── HALLAZGOS ─────────────────────────────────────────────────────
 function renderHallazgos(hall){
   const cont=document.getElementById('hall-container');
   if(!hall.length){cont.innerHTML='<div class="empty">✅ Sin hallazgos para este filtro</div>';document.getElementById('hall-cnt').textContent='0';return;}
+
   const map={};
   hall.forEach(h=>{
-    const key=(h['Categoría']||'')+'|'+(h['Acción sugerida']||'')+'|'+(h['Severidad']||'');
-    if(!map[key])map[key]={cat:h['Categoría']||'General',sev:h['Severidad']||'Media',accion:h['Acción sugerida']||'',total:0,props:new Set()};
+    const key=(h['Categoría']||'')+'|'+(h['Acción sugerida']||'')+'|'+(h['Severidad']||'')+'|'+(h['Error_Type']||'');
+    if(!map[key])map[key]={cat:h['Categoría']||'General',sev:h['Severidad']||'Media',accion:h['Acción sugerida']||'',errorType:h['Error_Type']||'',total:0,props:new Set()};
     const m=(h.Hallazgo||'').match(/^(\d+)/);
     if(m)map[key].total+=parseInt(m[1]);
+    else map[key].total+=1;
     if(h.Propiedad)map[key].props.add(h.Propiedad);
   });
+
   const porCat={};
   Object.values(map).forEach(g=>{
     if(!porCat[g.cat])porCat[g.cat]=[];
     const a=g.accion.toLowerCase();
-    let txt='';
-    if(a.includes('tourist'))         txt=`${g.total} huéspedes Tourist sin tarifa loyalty`;
-    else if(a.includes('toalla'))     txt=`${g.total} huéspedes Backpacker+ sin tarifa ni beneficios`;
-    else if(a.includes('botones'))    txt=`${g.total} transacciones con leakage`;
-    else if(a.includes('tier'))       txt=`${g.total} huéspedes con tier incorrecto`;
-    else if(a.includes('misuse'))     txt=`${g.total} caso(s) de uso indebido`;
-    else if(a.includes('enrolamiento'))txt=`${g.props.size} propiedad(es) con baja penetración`;
-    else if(a.includes('capacitación'))txt=`% redención bajo en ${g.props.size} propiedad(es)`;
+    let txt='',drillType=null;
+    if(a.includes('tourist'))           {txt=`${g.total} huéspedes Tourist sin tarifa loyalty`;}
+    else if(a.includes('toalla'))       {txt=`${g.total} huéspedes Backpacker+ sin tarifa ni beneficios`;}
+    else if(a.includes('botones'))      {txt=`${g.total} transacciones con leakage`;drillType='LEAKAGE';}
+    else if(a.includes('tier')||g.cat.toLowerCase().includes('tier')){txt=`${g.total} huéspedes con tier incorrecto`;drillType='TIER_INCORRECTO';}
+    else if(a.includes('misuse')||g.cat.toLowerCase().includes('misuse')){txt=`${g.total} caso(s) de uso indebido`;drillType='MISUSE';}
+    else if(a.includes('enrolamiento')) {txt=`${g.props.size} propiedad(es) con baja penetración`;}
+    else if(a.includes('capacitación')) {txt=`% redención bajo en ${g.props.size} propiedad(es)`;}
     else txt=`${g.total} casos`;
-    porCat[g.cat].push({...g,txt});
+    porCat[g.cat].push({...g,txt,drillType});
   });
+
   document.getElementById('hall-cnt').textContent=Object.values(map).length;
   const ORD=['Sin canje','Leakage','Tier incorrecto','Misuse','Operación','Adopción'];
   const clsM={Crítica:'critica',Alta:'alta',Media:'media'};
@@ -558,13 +541,18 @@ function renderHallazgos(hall){
     html+=`<div class="hall-grp"><div class="hall-grp-t">${cat}</div>`;
     porCat[cat].sort((a,b)=>({Crítica:0,Alta:1,Media:2}[a.sev]??3)-({Crítica:0,Alta:1,Media:2}[b.sev]??3)).forEach(g=>{
       const ps=[...g.props].filter(Boolean).join(', ');
-      html+=`<div class="hall-card ${clsM[g.sev]||'media'}">
+      const hasDrill=g.drillType&&MB_DATA.filter(r=>r.Error_Type===g.drillType).length>0;
+      const drillAttr=hasDrill?`onclick="drillTipoError('${g.drillType}','${g.txt} — detalle')"`:'' ;
+      html+=`<div class="hall-card ${clsM[g.sev]||'media'}" ${drillAttr}>
         <div class="hall-dot"></div>
         <div class="hall-info">
           <div class="hall-txt">${g.txt}</div>
           <div class="hall-tip">💡 ${g.accion}${ps?` · <b>${ps}</b>`:''}</div>
         </div>
-        <div class="hall-n">${g.total}</div>
+        <div class="hall-right">
+          <div class="hall-n">${g.total}</div>
+          ${hasDrill?`<span class="hall-ver">Ver quiénes →</span>`:''}
+        </div>
       </div>`;
     });
     html+='</div>';
@@ -573,15 +561,14 @@ function renderHallazgos(hall){
     <div class="ac-head open" onclick="toggleAc(this)">
       <div class="ac-left"><span class="ac-ico">🔍</span>
         <div><div class="ac-tit">Hallazgos consolidados</div>
-        <div class="ac-sub">${Object.values(map).length} tipos de problema detectados</div></div>
-      </div>
-      <span class="ac-arr" style="transform:rotate(180deg)">▼</span>
+        <div class="ac-sub">${Object.values(map).length} tipos de problema · click en cualquiera para ver detalle</div></div>
+      </div><span class="ac-arr" style="transform:rotate(180deg)">▼</span>
     </div>
     <div class="ac-body vis">${html}</div>
   </div>`;
 }
 
-// ── Sin Canje ─────────────────────────────────────────────────────
+// ── SIN CANJE ─────────────────────────────────────────────────────
 function renderSinCanje(sc){
   SC_DATA=sc;
   const t=sc.filter(r=>(r.Tier||'').trim().toLowerCase()==='tourist').length;
@@ -604,7 +591,7 @@ function renderSinCanje(sc){
           <div class="sc-cat t">
             <div class="sc-n">${t}</div>
             <div class="sc-t">🏷️ Tourist — Sin tarifa loyalty</div>
-            <div class="sc-d">Recepción debe seleccionar la tarifa loyalty manualmente en CB al check-in, consultando la nota de reserva o Akin. No es tarifa pública.</div>
+            <div class="sc-d">Recepción debe seleccionar la tarifa loyalty manualmente en CB al check-in, consultando la nota de reserva o Akin.</div>
           </div>
           <div class="sc-cat b">
             <div class="sc-n">${b}</div>
@@ -612,7 +599,7 @@ function renderSinCanje(sc){
             <div class="sc-d">Debían recibir tarifa loyalty + botón toalla. Si es Viajero con 3+ noches, también botón desayuno.</div>
           </div>
         </div>
-        <p style="font-size:12px;color:var(--gris);margin-bottom:8px">Detalle de afiliados Backpacker+ (buscar por nombre, propiedad, período o tier):</p>
+        <p style="font-size:12px;color:var(--gris);margin-bottom:8px">Afiliados Backpacker+ sin canje (buscar por nombre, propiedad, período o tier):</p>
         <input class="sc-q" id="sc-q" type="text" placeholder="Buscar..." oninput="filtrarSC()"/>
         <div class="sc-wrap" id="sc-tabla"></div>
       </div>
@@ -643,7 +630,7 @@ function filtrarSC(){
   </table>`;
 }
 
-// ── Histórico ─────────────────────────────────────────────────────
+// ── HISTÓRICO ─────────────────────────────────────────────────────
 function renderHistorico(){
   const hist=filtrar(DATA.historico||[],'Período','Propiedad','País');
   const n=parseInt(document.getElementById('hn').value);
@@ -676,10 +663,10 @@ function renderHistorico(){
 }
 function tH(h){const b=h.nextElementSibling;b.classList.toggle('op');h.querySelector('span:last-child').textContent=b.classList.contains('op')?'▲':'▼';}
 
-// ── Tiers ─────────────────────────────────────────────────────────
+// ── TIERS ─────────────────────────────────────────────────────────
 function renderTiers(rd){
   if(!rd.length){document.getElementById('tiers-g').innerHTML='<div class="empty">Sin datos</div>';return;}
-  const BENS={Tourist:'Tarifa 15% (seleccionar en CB)',Backpacker:'Tarifa 15% + Toalla ($0)',Explorer:'Tarifa 20% + Toalla ($0)',Nomad:'Tarifa 20% + Toalla ($0)',Viajero:'Tarifa 25% + Toalla + Desayuno (3+ noches)'};
+  const BENS={Tourist:'Tarifa 15%',Backpacker:'Tarifa 15% + Toalla',Explorer:'Tarifa 20% + Toalla',Nomad:'Tarifa 20% + Toalla',Viajero:'Tarifa 25% + Toalla + Desayuno (3+ noches)'};
   const ORDEN=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
   const map={};
   rd.forEach(r=>{const t=r.Tier||'Sin tier';if(!map[t])map[t]={ok:0,err:0,sin:0};map[t].ok+=(parseInt(r.OK)||0);map[t].err+=(parseInt(r.Con_Error)||0);map[t].sin+=(parseInt(r.Sin_Registro)||0);});
@@ -696,7 +683,7 @@ function renderTiers(rd){
   }).join('');
 }
 
-// ── Charts ────────────────────────────────────────────────────────
+// ── CHARTS ────────────────────────────────────────────────────────
 function renderCharts(mb){
   const tipos={};mb.forEach(r=>{const t=r.Error_Type||'NO_LOYALTY';tipos[t]=(tipos[t]||0)+1;});
   if(chErr)chErr.destroy();
@@ -707,8 +694,8 @@ function renderCharts(mb){
   const ORDEN=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
   const tm={};
   mb.forEach(r=>{const t=r.Tier_AKIN||r.Tier||'Sin tier';if(!tm[t])tm[t]={ok:0,err:0,sin:0};
-    const c=r.Categoria||(r.Error_Type==='OK'?'ok':r.Error_Type===''||r.Error_Type==='NO_LOYALTY'||r.Error_Type==='SIN_CANJE'?'sin_registro':'con_error');
-    if(c==='ok')tm[t].ok++;else if(c==='con_error')tm[t].err++;else tm[t].sin++;
+    const et=r.Error_Type||'';
+    if(et==='OK')tm[t].ok++;else if(et===''||et==='NO_LOYALTY'||et==='SIN_CANJE')tm[t].sin++;else tm[t].err++;
   });
   const tL=ORDEN.filter(t=>tm[t]);
   if(chTier)chTier.destroy();
@@ -718,7 +705,7 @@ function renderCharts(mb){
   });
 }
 
-// ── Render ────────────────────────────────────────────────────────
+// ── RENDER PRINCIPAL ──────────────────────────────────────────────
 function render(){
   if(!DATA)return;
   const afs =filtrar(DATA.afiliados||[],'Período','Propiedad','Pais');
@@ -727,8 +714,9 @@ function render(){
   const hall=filtrar(DATA.hallazgos||[],'Período','Propiedad','País');
   const sc  =filtrar(DATA.sinCanje||[],'Período','Propiedad','País');
   const rd  =filtrar(DATA.redencionPorTier||[],'Período','Propiedad','País');
+  MB_DATA=mb;
   renderKPIs(afs,bens,mb);
-  renderSemaforo(mb);
+  renderSemaforo(mb,afs);
   renderHallazgos(hall);
   renderSinCanje(sc);
   renderHistorico();
@@ -736,7 +724,7 @@ function render(){
   renderCharts(mb);
 }
 
-// ── Init ──────────────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────────────
 (async()=>{
   try{
     const r=await fetch(DATA_URL+'?t='+Date.now());
