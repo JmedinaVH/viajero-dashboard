@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Viajero · Dashboard Hub</title>
+<title>Viajero · Mercadeo Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -25,13 +25,9 @@ header{
   justify-content:space-between;
 }
 .h-left{display:flex;align-items:center;gap:16px;}
-.h-logo{
-  height:40px;object-fit:contain;
-  filter:brightness(0) invert(1);
-  flex-shrink:0;
-}
+.h-logo{height:40px;object-fit:contain;flex-shrink:0;}
+.h-logo-fb{font-size:30px;display:none;}
 .h-divider{width:1.5px;height:34px;background:rgba(255,255,255,.3);flex-shrink:0;}
-.h-text{}
 .h-title{font-size:18px;font-weight:800;color:#fff;line-height:1.1;}
 .h-sub{font-size:11px;font-weight:500;color:rgba(255,255,255,.65);margin-top:2px;}
 
@@ -56,10 +52,17 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
 /* ── INTRO ── */
 .intro{margin-bottom:36px;}
 .intro h1{font-size:26px;font-weight:800;color:var(--dark);line-height:1.2;}
-.intro p{font-size:14px;color:var(--gris);margin-top:8px;max-width:540px;line-height:1.6;}
+
+/* ── SECTION LABEL ── */
+.sec-label{
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+  color:var(--gris);margin-bottom:12px;margin-top:32px;
+  display:flex;align-items:center;gap:10px;
+}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
 /* ── GRID ── */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;}
 
 /* ── CARD ── */
 .card{
@@ -73,9 +76,8 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
   position:relative;
 }
 .card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(44,24,16,.13);}
-.card.disabled{opacity:.5;cursor:not-allowed;pointer-events:none;}
+.card.disabled{opacity:.48;cursor:not-allowed;pointer-events:none;}
 
-/* tira de color top */
 .card-bar{height:5px;width:100%;background:var(--card-color,var(--coral));}
 
 .card-body{padding:26px 24px 22px;}
@@ -87,9 +89,8 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
   background:var(--card-soft,var(--coral-soft));
 }
 .card-status{font-size:10px;font-weight:700;padding:4px 10px;border-radius:8px;flex-shrink:0;margin-top:4px;}
-.s-live   {background:#dcfce7;color:#15803d;}
-.s-pronto {background:#fef9c3;color:#854d0e;}
-.s-wip    {background:#dbeafe;color:#1d4ed8;}
+.s-live  {background:#dcfce7;color:#15803d;}
+.s-pronto{background:#fef9c3;color:#854d0e;}
 
 .card-name{font-size:17px;font-weight:800;color:var(--dark);margin-bottom:5px;line-height:1.2;}
 .card-desc{font-size:12px;color:var(--gris);line-height:1.55;}
@@ -100,40 +101,32 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
 .card-link{font-size:12px;font-weight:700;color:var(--card-color,var(--coral));display:flex;align-items:center;gap:4px;}
 .card-link .arr{transition:transform .2s;}
 .card:hover .arr{transform:translateX(4px);}
-.card-metrics{display:flex;gap:10px;}
-.card-m{font-size:10px;color:var(--gris);font-weight:600;}
-
-/* ── SECTION LABEL ── */
-.sec-label{
-  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
-  color:var(--gris);margin-bottom:12px;margin-top:32px;
-  display:flex;align-items:center;gap:10px;
-}
-.sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.card-tag{font-size:10px;color:var(--gris);font-weight:600;}
 
 @media(max-width:640px){
   header{padding:0 20px;height:auto;min-height:64px;padding-top:12px;padding-bottom:12px;}
   .h-right{display:none;}
   main{padding:28px 20px 60px;}
+  .grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <!-- Izquierda: logo + nombre workspace -->
   <div class="h-left">
-    <img class="h-logo" src="img/logo-viajero.png" alt="Viajero"
+    <img class="h-logo"
+      src="02_Logo-Viajero_Vertical-Blanco.png"
+      alt="Viajero"
       onerror="this.style.display='none';document.getElementById('logo-fb').style.display='block'"/>
-    <span id="logo-fb" style="font-size:30px;display:none">🦋</span>
+    <span id="logo-fb" class="h-logo-fb">🦋</span>
     <div class="h-divider"></div>
-    <div class="h-text">
-      <div class="h-title">Dashboard Hub</div>
+    <div>
+      <div class="h-title">Mercadeo Dashboard</div>
       <div class="h-sub">Viajero Hostels · Analytics & Operations</div>
     </div>
   </div>
 
-  <!-- Derecha: estado + timestamp -->
   <div class="h-right">
     <div class="h-ts-wrap">
       <div class="h-ts-label">Última actualización</div>
@@ -150,7 +143,6 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
 
   <div class="intro">
     <h1>¿Qué quieres revisar hoy?</h1>
-    <p>Selecciona un módulo para ver el dashboard correspondiente. Los datos se actualizan vía Google Sheets + Apps Script.</p>
   </div>
 
   <!-- Módulos activos -->
@@ -168,12 +160,16 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
         <div class="card-desc">Afiliados, redención por tier, hallazgos operativos, sin canje y evolución histórica del programa Viajero Go.</div>
         <div class="card-footer">
           <span class="card-link">Ver dashboard <span class="arr">→</span></span>
-          <div class="card-metrics">
-            <span class="card-m">Afiliados · Tiers · Hallazgos</span>
-          </div>
+          <span class="card-tag">Afiliados · Tiers · Hallazgos</span>
         </div>
       </div>
     </a>
+
+  </div>
+
+  <!-- Próximamente -->
+  <div class="sec-label">Próximamente</div>
+  <div class="grid">
 
     <div class="card disabled" style="--card-color:#7c3aed;--card-soft:#ede9fe;">
       <div class="card-bar"></div>
@@ -209,11 +205,26 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
       <div class="card-bar"></div>
       <div class="card-body">
         <div class="card-top">
+          <div class="card-ico">⬆️💬</div>
+          <span class="card-status s-pronto">Próximamente</span>
+        </div>
+        <div class="card-name">Upgrades Kyto</div>
+        <div class="card-desc">Upgrades gestionados desde Kyto antes del check-in: tasa de conversión, tiempo de respuesta y revenue generado.</div>
+        <div class="card-footer">
+          <span class="card-link" style="color:var(--gris)">En construcción</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card disabled" style="--card-color:#f59e0b;--card-soft:#fef3c7;">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
           <div class="card-ico">💬</div>
           <span class="card-status s-pronto">Próximamente</span>
         </div>
-        <div class="card-name">Upgrades & Conv. Kyto</div>
-        <div class="card-desc">Conversaciones y upgrades gestionados desde Kyto: tasa de respuesta, tiempo y conversión.</div>
+        <div class="card-name">Conversaciones Kyto</div>
+        <div class="card-desc">Volumen, tiempos de respuesta y satisfacción en las conversaciones gestionadas por Kyto por propiedad.</div>
         <div class="card-footer">
           <span class="card-link" style="color:var(--gris)">En construcción</span>
         </div>
@@ -224,7 +235,6 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
 </main>
 
 <script>
-// Intentar leer timestamp del JSON de loyalty
 (async()=>{
   try{
     const r=await fetch('data/loyalty_data.json?t='+Date.now());
@@ -233,7 +243,7 @@ main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
       const dt=new Date(d.actualizado);
       document.getElementById('h-ts').textContent=
         dt.toLocaleDateString('es-CR',{day:'2-digit',month:'short',year:'numeric'})+
-        ' '+dt.toLocaleTimeString('es-CR',{hour:'2-digit',minute:'2-digit'});
+        ' · '+dt.toLocaleTimeString('es-CR',{hour:'2-digit',minute:'2-digit'});
     }
   }catch(e){
     document.getElementById('h-ts').textContent='Sin datos aún';
