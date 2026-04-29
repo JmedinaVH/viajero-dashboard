@@ -28,8 +28,8 @@ header{
   flex-wrap:wrap;gap:10px;min-height:68px;
 }
 .h-left{display:flex;align-items:center;gap:14px;}
-.h-logo{height:38px;object-fit:contain;filter:brightness(0) invert(1);}
-.h-logo-fb{font-size:28px;display:none;}
+<img class="h-logo" src="../02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero"
+  onerror="this.style.display='none';document.getElementById('logo-fb').style.display='block'"/>
 .h-sep{width:1px;height:32px;background:rgba(255,255,255,.3);}
 .h-title{color:var(--white);font-size:17px;font-weight:700;}
 .h-sub{color:rgba(255,255,255,.75);font-size:11px;margin-top:1px;}
@@ -265,7 +265,7 @@ tbody tr:hover td{background:var(--cream);}
 <!-- HEADER -->
 <header>
   <div class="h-left">
-    <img class="h-logo" src="../img/logo-viajero.png" alt="Viajero"
+    <img class="h-logo" src="../02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero"
       onerror="this.style.display='none';document.getElementById('logo-fb').style.display='block'"/>
     <span id="logo-fb" class="h-logo-fb">🦋</span>
     <div class="h-sep"></div>
