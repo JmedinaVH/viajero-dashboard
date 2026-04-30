@@ -822,7 +822,7 @@ function renderHallazgos(hall){
   }
   const byTipo={};
   hall.forEach(h=>{
-    const tipo=(h['Categoría']||'')+'|'+(h['Acción sugerida']||'')+'|'+(h['Severidad']||'')+'|'+(h['Error_Type']||'');
+    const tipo=(h['Categoría']||'')+'|'+(h['Severidad']||'')+'|'+(h['Error_Type']||'');
     if(!byTipo[tipo])byTipo[tipo]={
       cat:h['Categoría']||'General',sev:h['Severidad']||'Media',
       accion:h['Acción sugerida']||'',errorType:h['Error_Type']||'',
