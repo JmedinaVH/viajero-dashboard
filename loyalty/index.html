@@ -390,6 +390,8 @@ const TIPS={
   'Leakage':{t:'Leakage — Alerta 🔴',b:'Recepción aplicó un botón loyalty o tarifa con descuento a un huésped que NO es miembro del programa. No implica pérdida automática en todos los casos: si el huésped pagó el precio correcto aunque se usó el botón, el impacto financiero puede ser nulo. La pérdida real ocurre cuando el botón se registró a $0 o se dio descuento de alojamiento sin cobrar la diferencia. Requiere revisión caso por caso en el drill-down.'},
   'Tier Incorrecto':{t:'Tier Incorrecto ⚠️',b:'El tier aplicado en CloudBeds no coincide con el tier real del miembro en Akin. Ejemplo: se aplicó tarifa Backpacker (15%) a un miembro Nomad que debería recibir 20%. Puede ser a favor o en contra del miembro — siempre debe corregirse.'},
   'Misuse':{t:'Misuse 🚫',b:'Uso indebido del programa: aplicación de tarifa o beneficio loyalty fuera del flujo correcto definido. Puede haber un miembro, pero el proceso no se siguió o hay indicios de un uso no autorizado. Cada caso debe investigarse individualmente.'},
+  'Penetración Loyalty':{t:'¿Qué es Penetración Loyalty?',b:'De todos los check-ins del período, cuántos correspondieron a miembros activos de Viajero Go. El cruce es automático — si un miembro llega, aparece. Un % bajo indica que los miembros del programa no están eligiendo el hostel: es un indicador de fidelización y atracción de la base de miembros.'
+},
 };
 function openTip(k){
   const t=TIPS[k];if(!t)return;
@@ -557,6 +559,14 @@ function renderKPIs(afs,bens,mb){
       col:'#0369a1',
       sub:`${fmtP(nv,hu)} de adquisición sobre ${fmtN(hu)} huéspedes`,
     },
+    {
+  key:'Penetración Loyalty',
+  val:(Math.round(pLoy*10)/10).toFixed(1)+'%',
+  col:colLoy,
+  sub:`${fmtN(cb)} miembros llegaron de ${fmtN(ci)} check-ins`,
+  badge:pLoy>=15?'✅ Buena penetración':pLoy>=8?'⚠️ En proceso':'🔴 Baja penetración',
+  bcls:pLoy>=15?'b-ok':pLoy>=8?'b-warn':'b-err',
+  },
   ];
 
   const hayErrores=sc>0||lk>0||tiI>0;
