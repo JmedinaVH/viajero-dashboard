@@ -1,185 +1,205 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Dashboard Hub · Viajero Hostels</title>
-  <link rel="icon" href="favicon-32x32.png" type="image/png"/>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --dark:#1E100A; --cream:#F4EFE9; --gris:#7A6E68; --border:#DDD4CA;
-      --coral:#F04B24; --purple:#5b21b6; --blue:#0369a1;
-      --green:#065f46; --amber:#92400e;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:'Outfit',sans-serif;background:#f8f5f2;color:var(--dark);min-height:100vh;}
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Viajero · Mercadeo Dashboard</title>
+<link rel="icon" type="image/png" href="favicon-32x32.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+--coral:#B83D16;--coral-soft:#F5EAE5;
+--cream:#F4EFE9;--cream-mid:#EDE5DA;--cream-dark:#E0D5C8;
+--dark:#1E100A;--mid:#6B3A28;--gris:#7A6E68;
+--border:#DDD4CA;--white:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh;}
 
-    header{background:var(--dark);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:72px;box-shadow:0 2px 16px rgba(0,0,0,.4);}
-    header img{height:42px;}
-    .header-right{text-align:right;}
-    .header-title{color:#fff;font-size:15px;font-weight:600;letter-spacing:.3px;}
-    .header-sub{color:rgba(255,255,255,.45);font-size:12px;margin-top:2px;}
+/* HEADER */
+header{background:var(--dark);padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;}
+.h-left{display:flex;align-items:center;gap:16px;}
+.h-logo{height:40px;object-fit:contain;flex-shrink:0;}
+.h-logo-fb{font-size:13px;font-weight:800;color:#fff;letter-spacing:.5px;display:none;}
+.h-divider{width:1.5px;height:34px;background:rgba(255,255,255,.2);flex-shrink:0;}
+.h-title{font-size:18px;font-weight:800;color:#fff;line-height:1.1;}
+.h-sub{font-size:11px;font-weight:500;color:rgba(255,255,255,.5);margin-top:2px;}
+.h-right{display:flex;align-items:center;gap:20px;}
+.h-ts-wrap{text-align:right;}
+.h-ts-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.4);}
+.h-ts-val{font-size:12px;font-weight:600;color:rgba(255,255,255,.75);margin-top:1px;}
+.h-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);border-radius:10px;padding:6px 14px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap;}
+.h-pill .dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;box-shadow:0 0 6px #4ade80;}
 
-    main{padding:48px 40px;max-width:1200px;margin:0 auto;}
-    .hub-intro{text-align:center;margin-bottom:48px;}
-    .hub-intro h1{font-size:28px;font-weight:700;color:var(--dark);margin-bottom:8px;}
-    .hub-intro p{font-size:15px;color:var(--gris);max-width:520px;margin:0 auto;}
+/* MAIN */
+main{max-width:1100px;margin:0 auto;padding:44px 48px 80px;}
+.intro{margin-bottom:36px;}
+.intro h1{font-size:26px;font-weight:800;color:var(--dark);}
+.intro p{font-size:13px;color:var(--gris);margin-top:6px;}
 
-    .modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
+/* SECTION LABEL */
+.sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--gris);margin-bottom:14px;margin-top:32px;display:flex;align-items:center;gap:10px;}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
-    .module-card{border-radius:20px;padding:28px 30px;text-decoration:none;color:var(--dark);background:#fff;border:1px solid var(--border);transition:transform .2s, box-shadow .2s;position:relative;overflow:hidden;display:block;}
-    .module-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.12);}
-    .module-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
-    .module-card.loyalty::before{background:var(--coral);}
-    .module-card.merch::before{background:var(--purple);}
-    .module-card.upgrades::before{background:var(--blue);}
-    .module-card.uky::before{background:var(--green);}
-    .module-card.cky::before{background:var(--amber);}
-    .module-card.disabled{opacity:.45;cursor:not-allowed;pointer-events:none;}
-    .module-card.disabled:hover{transform:none;box-shadow:none;}
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;}
 
-    .module-icon{font-size:36px;margin-bottom:14px;display:block;}
-    .module-name{font-size:17px;font-weight:700;margin-bottom:6px;}
-    .module-desc{font-size:13px;color:var(--gris);line-height:1.55;margin-bottom:18px;}
-    .module-meta{display:flex;justify-content:space-between;align-items:center;}
-    .module-status{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.3px;}
-    .status-live{background:#d1fae5;color:#065f46;}
-    .status-soon{background:var(--cream);color:var(--gris);}
-    .module-arrow{font-size:20px;color:var(--gris);transition:transform .2s;}
-    .module-card:hover .module-arrow{transform:translateX(4px);}
+/* CARD */
+.card{background:var(--white);border-radius:18px;border:1.5px solid var(--border);overflow:hidden;text-decoration:none;display:block;transition:transform .2s,box-shadow .2s;}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(30,16,10,.1);}
+.card.disabled{opacity:.42;cursor:not-allowed;pointer-events:none;}
+.card-bar{height:4px;width:100%;background:var(--card-color,var(--coral));}
+.card-body{padding:26px 24px 22px;}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px;}
+.card-ico{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--card-soft,var(--coral-soft));font-size:24px;}
+.card-status{font-size:10px;font-weight:700;padding:4px 10px;border-radius:7px;flex-shrink:0;margin-top:4px;white-space:nowrap;letter-spacing:.3px;}
+.s-live  {background:#dcfce7;color:#166534;}
+.s-pronto{background:#fef9c3;color:#713f12;}
+.card-name{font-size:17px;font-weight:800;color:var(--dark);margin-bottom:6px;line-height:1.2;}
+.card-desc{font-size:12px;color:var(--gris);line-height:1.65;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding-top:14px;border-top:1.5px solid var(--border);}
+.card-link{font-size:12px;font-weight:700;color:var(--card-color,var(--coral));display:flex;align-items:center;gap:5px;}
+.arr{transition:transform .2s;display:inline-block;}
+.card:hover .arr{transform:translateX(4px);}
+.card-tag{font-size:10px;color:var(--gris);font-weight:600;}
 
-    .module-kpis{display:flex;gap:16px;margin-bottom:18px;flex-wrap:wrap;}
-    .mini-kpi{text-align:center;}
-    .mini-kpi-val{font-size:20px;font-weight:700;color:var(--dark);}
-    .mini-kpi-lbl{font-size:10px;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;}
-
-    .divider-h{height:1px;background:var(--border);margin:0 0 16px;}
-
-    footer{text-align:center;padding:32px;color:var(--gris);font-size:12px;border-top:1px solid var(--border);}
-  </style>
+@media(max-width:640px){
+header{padding:0 20px;height:auto;min-height:64px;padding-top:12px;padding-bottom:12px;}
+.h-right{display:none;}
+main{padding:28px 20px 60px;}
+.grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
 
 <header>
-  <img src="02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero Hostels"/>
-  <div class="header-right">
-    <div class="header-title">Centro de Datos</div>
-    <div class="header-sub" id="headerSub">Cargando…</div>
+  <div class="h-left">
+    <img class="h-logo" src="02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero"
+      onerror="this.style.display='none';document.getElementById('logo-fb').style.display='block'"/>
+    <span id="logo-fb" class="h-logo-fb">VIAJERO</span>
+    <div class="h-divider"></div>
+    <div>
+      <div class="h-title">Mercadeo Dashboard</div>
+      <div class="h-sub">Viajero Hostels · Analytics & Operations</div>
+    </div>
+  </div>
+  <div class="h-right">
+    <div class="h-ts-wrap">
+      <div class="h-ts-label">Última actualización</div>
+      <div class="h-ts-val" id="h-ts">—</div>
+    </div>
+    <div class="h-pill"><div class="dot"></div>Live</div>
   </div>
 </header>
 
 <main>
-  <div class="hub-intro">
-    <h1>Dashboard Operativo</h1>
-    <p>Todos los módulos de análisis de Viajero Hostels en un solo lugar.</p>
+  <div class="intro">
+    <h1>¿Qué quieres revisar hoy?</h1>
+    <p>Selecciona un módulo para ver su dashboard.</p>
   </div>
 
-  <div class="modules-grid">
+  <div class="sec-label">Módulos activos</div>
+  <div class="grid">
 
-    <!-- LOYALTY -->
-    <a href="loyalty/index.html" class="module-card loyalty">
-      <span class="module-icon">🎖</span>
-      <div class="module-name">Programa Loyalty</div>
-      <div class="module-desc">Afiliados, beneficios, hallazgos operativos, tiers y KPIs del programa de fidelización.</div>
-      <div class="module-kpis" id="loyaltyKpis">
-        <div class="mini-kpi"><div class="mini-kpi-val" id="loy-afiliados">—</div><div class="mini-kpi-lbl">Afiliados</div></div>
-        <div class="mini-kpi"><div class="mini-kpi-val" id="loy-leakage">—</div><div class="mini-kpi-lbl">Leakage</div></div>
-        <div class="mini-kpi"><div class="mini-kpi-val" id="loy-st">—</div><div class="mini-kpi-lbl">Sin canje</div></div>
-      </div>
-      <div class="divider-h"></div>
-      <div class="module-meta">
-        <span class="module-status status-live">● En vivo</span>
-        <span class="module-arrow">→</span>
+    <a href="loyalty/index.html" class="card" style="--card-color:#B83D16;--card-soft:#F5EAE5;">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-ico">💎</div>
+          <span class="card-status s-live">Live</span>
+        </div>
+        <div class="card-name">Loyalty Program</div>
+        <div class="card-desc">Afiliados, redención por tier, hallazgos operativos, sin canje y evolución histórica del programa Viajero Go.</div>
+        <div class="card-footer">
+          <span class="card-link">Ver dashboard <span class="arr">→</span></span>
+          <span class="card-tag">Afiliados · Tiers · Hallazgos</span>
+        </div>
       </div>
     </a>
 
-    <!-- MERCH -->
-    <a href="merch/index.html" class="module-card merch">
-      <span class="module-icon">🛍</span>
-      <div class="module-name">Merchandise</div>
-      <div class="module-desc">Inventario, ventas por hostal, sell-through y rotación por producto en todos los puntos de venta.</div>
-      <div class="module-kpis">
-        <div class="mini-kpi"><div class="mini-kpi-val" id="merch-uds">—</div><div class="mini-kpi-lbl">Uds vendidas</div></div>
-        <div class="mini-kpi"><div class="mini-kpi-val" id="merch-ing">—</div><div class="mini-kpi-lbl">Ingresos est.</div></div>
-        <div class="mini-kpi"><div class="mini-kpi-val" id="merch-st">—</div><div class="mini-kpi-lbl">Sell-through</div></div>
-      </div>
-      <div class="divider-h"></div>
-      <div class="module-meta">
-        <span class="module-status status-live">● En vivo</span>
-        <span class="module-arrow">→</span>
-      </div>
-    </a>
-
-    <!-- UPGRADES -->
-    <a href="#" class="module-card upgrades disabled">
-      <span class="module-icon">⬆️</span>
-      <div class="module-name">Upgrades</div>
-      <div class="module-desc">Análisis de upgrades de habitación, conversión y revenue incremental por propiedad.</div>
-      <div class="divider-h"></div>
-      <div class="module-meta">
-        <span class="module-status status-soon">Próximamente</span>
-        <span class="module-arrow">→</span>
+    <a href="merch/index.html" class="card" style="--card-color:#5b21b6;--card-soft:#ede9fe;">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-ico">🛍</div>
+          <span class="card-status s-live">Live</span>
+        </div>
+        <div class="card-name">Merch & Retail</div>
+        <div class="card-desc">Ventas de productos en recepción, análisis de inventario, sell-through y rendimiento por propiedad.</div>
+        <div class="card-footer">
+          <span class="card-link">Ver dashboard <span class="arr">→</span></span>
+          <span class="card-tag">Inventario · Ventas · ST%</span>
+        </div>
       </div>
     </a>
 
-    <!-- UKY -->
-    <a href="#" class="module-card uky disabled">
-      <span class="module-icon">🔑</span>
-      <div class="module-name">Uky</div>
-      <div class="module-desc">Métricas de acceso, ocupación y gestión de llaves digitales en las propiedades.</div>
-      <div class="divider-h"></div>
-      <div class="module-meta">
-        <span class="module-status status-soon">Próximamente</span>
-        <span class="module-arrow">→</span>
-      </div>
-    </a>
+  </div>
 
-    <!-- CKY -->
-    <a href="#" class="module-card cky disabled">
-      <span class="module-icon">☕</span>
-      <div class="module-name">Cky</div>
-      <div class="module-desc">Seguimiento de consumo, ventas y preferencias en los puntos de alimentos y bebidas.</div>
-      <div class="divider-h"></div>
-      <div class="module-meta">
-        <span class="module-status status-soon">Próximamente</span>
-        <span class="module-arrow">→</span>
+  <div class="sec-label">Próximamente</div>
+  <div class="grid">
+
+    <div class="card disabled" style="--card-color:#0369a1;--card-soft:#e0f2fe;">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-ico">🛎️</div>
+          <span class="card-status s-pronto">Próximamente</span>
+        </div>
+        <div class="card-name">Upgrades Recepción</div>
+        <div class="card-desc">Conversión de upgrades ofrecidos en check-in por propiedad, período y tipo de habitación.</div>
+        <div class="card-footer">
+          <span class="card-link" style="color:var(--gris)">En construcción</span>
+        </div>
       </div>
-    </a>
+    </div>
+
+    <div class="card disabled" style="--card-color:#065f46;--card-soft:#d1fae5;">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-ico">📲</div>
+          <span class="card-status s-pronto">Próximamente</span>
+        </div>
+        <div class="card-name">Upgrades Kyto</div>
+        <div class="card-desc">Upgrades gestionados desde Kyto antes del check-in: tasa de conversión, tiempo de respuesta y revenue generado.</div>
+        <div class="card-footer">
+          <span class="card-link" style="color:var(--gris)">En construcción</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card disabled" style="--card-color:#92400e;--card-soft:#fef3c7;">
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-ico">💬</div>
+          <span class="card-status s-pronto">Próximamente</span>
+        </div>
+        <div class="card-name">Conversaciones Kyto</div>
+        <div class="card-desc">Volumen, tiempos de respuesta y satisfacción en las conversaciones gestionadas por Kyto por propiedad.</div>
+        <div class="card-footer">
+          <span class="card-link" style="color:var(--gris)">En construcción</span>
+        </div>
+      </div>
+    </div>
 
   </div>
 </main>
 
-<footer>Viajero Hostels · Centro de Datos · <span id="footerDate"></span></footer>
-
 <script>
-// Cargar KPIs de loyalty
-fetch('data/loyalty_data.json?t='+Date.now())
-  .then(r=>r.json())
-  .then(d=>{
-    const k = d.kpis || {};
-    document.getElementById('loy-afiliados').textContent = (k.totalAfiliados||'—').toLocaleString?.('es-CO') || k.totalAfiliados || '—';
-    document.getElementById('loy-leakage').textContent   = k.leakage != null ? k.leakage : '—';
-    document.getElementById('loy-st').textContent        = k.sinCanje != null ? k.sinCanje : '—';
-    const act = d.actualizado ? new Date(d.actualizado) : null;
-    if (act) document.getElementById('headerSub').textContent =
-      'Actualizado ' + act.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});
-  })
-  .catch(()=>{ document.getElementById('headerSub').textContent = 'datos/loyalty_data.json no encontrado'; });
-
-// Cargar KPIs de merch
-fetch('data/merch_data.json?t='+Date.now())
-  .then(r=>r.json())
-  .then(d=>{
-    const k = d.kpis || {};
-    document.getElementById('merch-uds').textContent = (k.totalUnidades||0).toLocaleString('es-CO');
-    document.getElementById('merch-ing').textContent = '$' + Math.round((k.totalIngresos||0)/1000).toLocaleString('es-CO') + 'k';
-    document.getElementById('merch-st').textContent  = (k.sellThrGlobal||0) + '%';
-  })
-  .catch(()=>{});
-
-document.getElementById('footerDate').textContent =
-  new Date().toLocaleDateString('es-CO',{day:'2-digit',month:'long',year:'numeric'});
+(async()=>{
+try{
+const r=await fetch('data/loyalty_data.json?t='+Date.now());
+const d=await r.json();
+if(d.actualizado){
+const dt=new Date(d.actualizado);
+document.getElementById('h-ts').textContent=
+dt.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+
+' · '+dt.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+}
+}catch(e){document.getElementById('h-ts').textContent='Sin datos aún';}
+})();
 </script>
 </body>
 </html>
