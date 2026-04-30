@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Viajero · Merch Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --coral:#F04B24;--coral-dark:#d03d1a;--coral-soft:#FEF0EC;
+  --cream:#F4EFE9;--cream-mid:#EDE5DA;--cream-dark:#E0D5C8;
+  --dark:#1E100A;--mid:#6B3A28;--gris:#7A6E68;
+  --border:#DDD4CA;--white:#fff;
+  --ok:#15803d;--ok-bg:#dcfce7;
+  --warn:#854d0e;--warn-bg:#fef9c3;
+  --err:#dc2626;--err-bg:#fee2e2;
+  --blue:#0369a1;--blue-bg:#e0f2fe;
+  --purple:#7c3aed;--purple-bg:#ede9fe;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);font-size:14px;line-height:1.5;}
+
+/* HEADER */
+header{background:var(--dark);padding:0 36px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;min-height:68px;}
+.h-left{display:flex;align-items:center;gap:14px;}
+.h-logo{height:38px;object-fit:contain;}
+.h-logo-fb{font-size:13px;font-weight:800;color:#fff;letter-spacing:.5px;display:none;}
+.h-sep{width:1px;height:32px;background:rgba(255,255,255,.2);}
+.h-title{color:#fff;font-size:17px;font-weight:700;}
+.h-sub{color:rgba(255,255,255,.5);font-size:11px;margin-top:1px;}
+.h-right{display:flex;align-items:center;gap:10px;}
+.btn-hub{display:flex;align-items:center;gap:5px;color:#fff;font-size:12px;font-weight:600;text-decoration:none;padding:7px 15px;border-radius:8px;border:1.5px solid rgba(255,255,255,.2);transition:.2s;}
+.btn-hub:hover{background:rgba(255,255,255,.1);}
+.h-ts{font-size:11px;color:rgba(255,255,255,.4);}
+
+/* FILTROS */
+.filtros{background:var(--coral);padding:10px 36px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:0;z-index:500;box-shadow:0 4px 12px rgba(30,16,10,.15);}
+.fg label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.6);margin-bottom:3px;}
+.fg select{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:6px 26px 6px 10px;border:1.5px solid rgba(255,255,255,.2);border-radius:8px;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;appearance:none;min-width:160px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='rgba(255,255,255,.6)' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;}
+.fg select option{background:var(--dark);}
+.fg select:focus{outline:none;border-color:rgba(255,255,255,.5);}
+.f-corte{font-size:11px;color:rgba(255,255,255,.6);margin-left:auto;}
+
+/* MAIN */
+main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
+
+/* SECCIÓN */
+.sec{margin-bottom:32px;}
+.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.sec-hdr h2{font-size:12px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}
+.sec-hdr .linea{flex:1;height:1px;background:var(--border);}
+
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
+.kpi{background:#fff;border-radius:16px;padding:20px 18px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s;}
+.kpi:hover{box-shadow:0 8px 28px rgba(240,75,36,.1);transform:translateY(-3px);}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--kc,var(--coral));border-radius:16px 16px 0 0;}
+.kpi .k-glow{position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:var(--kc,var(--coral));opacity:.05;}
+.kpi .k-top{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
+.kpi .k-lbl{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;flex:1;}
+.kpi .k-val{font-size:28px;font-weight:800;line-height:1;color:var(--kc,var(--dark));margin-bottom:5px;}
+.kpi .k-sub{font-size:11px;color:var(--gris);line-height:1.4;}
+.kpi .k-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:8px;margin-top:8px;}
+.b-ok{background:var(--ok-bg);color:var(--ok);}
+.b-warn{background:var(--warn-bg);color:var(--warn);}
+.b-err{background:var(--err-bg);color:var(--err);}
+.b-blue{background:var(--blue-bg);color:var(--blue);}
+.b-coral{background:var(--coral);color:#fff;}
+
+/* DOS COLUMNAS */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+
+/* CARD */
+.card{background:#fff;border-radius:16px;padding:22px 24px;border:1.5px solid var(--border);}
+.card-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gris);margin-bottom:16px;}
+
+/* BARRAS */
+.bar-list{display:flex;flex-direction:column;gap:10px;}
+.bar-row{display:flex;align-items:center;gap:10px;}
+.bar-lbl{font-size:12px;font-weight:600;width:140px;flex-shrink:0;color:var(--dark);}
+.bar-track{flex:1;background:var(--cream-dark);border-radius:4px;height:22px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;background:var(--coral);display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:11px;color:#fff;font-weight:700;transition:width .6s;}
+.bar-fill.blue{background:var(--blue);}
+.bar-fill.ok{background:var(--ok);}
+.bar-n{font-size:12px;font-weight:700;color:var(--dark);min-width:30px;text-align:right;}
+
+/* CITY GRID */
+.city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+.city-card{background:#fff;border-radius:14px;padding:18px;border:1.5px solid var(--border);transition:.2s;}
+.city-card:hover{box-shadow:0 4px 16px rgba(240,75,36,.08);transform:translateY(-2px);}
+.city-name{font-size:15px;font-weight:800;color:var(--dark);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.city-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.city-stat{font-size:12px;color:var(--gris);margin-bottom:4px;}
+.city-stat strong{color:var(--dark);font-weight:700;}
+.city-top{font-size:11px;background:var(--cream);padding:6px 10px;border-radius:8px;margin-top:8px;color:var(--gris);}
+.city-top strong{color:var(--coral);}
+
+/* HEATMAP */
+.heatmap{display:flex;flex-direction:column;gap:4px;overflow-x:auto;}
+.hm-row{display:flex;gap:4px;align-items:center;}
+.hm-lbl{font-size:12px;font-weight:600;width:140px;flex-shrink:0;color:var(--dark);}
+.hm-head{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gris);width:60px;flex-shrink:0;text-align:center;}
+.hm-cell{width:60px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
+.hm-total{font-size:13px;font-weight:800;color:var(--dark);width:50px;text-align:center;flex-shrink:0;}
+.hm-green{background:var(--ok);}
+.hm-warn{background:#eab308;}
+.hm-err{background:var(--err);}
+.hm-gray{background:#aaa;}
+.hm-legend{display:flex;gap:20px;margin-top:14px;flex-wrap:wrap;}
+.hm-leg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gris);}
+.hm-leg-dot{width:12px;height:12px;border-radius:4px;}
+
+/* TABLA */
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead th{background:var(--cream-mid);color:var(--mid);padding:9px 12px;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.4px;position:sticky;top:0;text-align:left;border-bottom:1.5px solid var(--border);}
+tbody td{padding:9px 12px;border-bottom:1px solid var(--border);}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:var(--cream);}
+.tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:8px;}
+.tag-ok{background:var(--ok-bg);color:var(--ok);}
+.tag-warn{background:var(--warn-bg);color:var(--warn);}
+.tag-low{background:var(--err-bg);color:var(--err);}
+.tag-zero{background:var(--cream-dark);color:var(--mid);}
+.tag-high{background:var(--blue-bg);color:var(--blue);}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1.5px solid var(--border);max-height:420px;}
+
+/* INSIGHTS */
+.insights-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
+.insight{background:#fff;border-radius:14px;padding:18px;border:1.5px solid var(--border);border-left:4px solid var(--coral);}
+.insight.blue{border-left-color:var(--blue);}
+.insight.ok{border-left-color:var(--ok);}
+.insight.warn{border-left-color:#eab308;}
+.insight-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:6px;}
+.insight-body{font-size:13px;font-weight:500;line-height:1.55;color:var(--dark);}
+
+/* ACORDEÓN HOSTAL */
+.hostal-ac{background:#fff;border-radius:14px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:10px;}
+.hostal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;transition:.15s;}
+.hostal-head:hover{background:var(--cream);}
+.hostal-head.open{border-bottom:1.5px solid var(--border);}
+.hostal-badge{display:inline-block;color:#fff;font-size:11px;font-weight:800;padding:4px 12px;border-radius:6px;letter-spacing:.5px;margin-right:10px;}
+.hostal-nombre{font-size:14px;font-weight:700;color:var(--dark);}
+.hostal-meta{font-size:11px;color:var(--gris);display:flex;gap:16px;flex-wrap:wrap;}
+.hostal-meta span{white-space:nowrap;}
+.hostal-meta strong{color:var(--dark);}
+.hostal-arr{font-size:12px;color:var(--gris);transition:transform .25s;}
+.hostal-head.open .hostal-arr{transform:rotate(180deg);}
+.hostal-body{display:none;padding:20px;}
+.hostal-body.vis{display:block;}
+.alerta-row{background:#fffbea;border-left:3px solid #eab308;padding:10px 14px;border-radius:0 8px 8px 0;font-size:12px;color:#854d0e;margin-bottom:8px;line-height:1.5;}
+
+/* RESUMEN CONSOLIDADO */
+.sell-bar-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.sell-bar-lbl{font-size:12px;font-weight:700;width:140px;flex-shrink:0;}
+.sell-bar-track{flex:1;background:var(--cream-dark);border-radius:4px;height:24px;overflow:hidden;}
+.sell-bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:10px;font-size:11px;font-weight:700;color:#fff;transition:width .7s;}
+.sell-bar-pct{font-size:12px;font-weight:800;min-width:45px;text-align:right;}
+
+/* NOTA */
+.nota{font-size:11px;color:var(--gris);line-height:1.7;padding:14px 16px;background:var(--cream-mid);border-radius:10px;border:1px solid var(--border);margin-top:14px;}
+
+@media(max-width:640px){
+  header,.filtros{padding-left:16px;padding-right:16px;}
+  main{padding:16px 16px 48px;}
+  .two-col{grid-template-columns:1fr;}
+  .kpi-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-left">
+    <img class="h-logo" src="../02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero"
+      onerror="this.style.display='none';document.getElementById('logo-fb').style.display='block'"/>
+    <span id="logo-fb" class="h-logo-fb" style="display:none">VIAJERO</span>
+    <div class="h-sep"></div>
+    <div>
+      <div class="h-title">👕 Merch · Colección Velmost</div>
+      <div class="h-sub">Ventas, inventario y sell-through por punto de venta</div>
+    </div>
+  </div>
+  <div class="h-right">
+    <a href="../index.html" class="btn-hub">← Hub</a>
+    <span class="h-ts" id="h-ts">Cargando...</span>
+  </div>
+</header>
+
+<div class="filtros">
+  <div class="fg"><label>Hostal</label>
+    <select id="f-hostal" onchange="render()"><option value="">Todos los hostales</option></select>
+  </div>
+  <span class="f-corte" id="f-corte"></span>
+</div>
+
+<main>
+
+<!-- 1. KPIs -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Resumen general</h2><div class="linea"></div></div>
+  <div class="kpi-grid" id="kpi-row"></div>
+</div>
+
+<!-- 2. VENTAS POR CIUDAD Y PRODUCTO -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Distribución de ventas</h2><div class="linea"></div></div>
+  <div class="two-col" id="barras-row"></div>
+</div>
+
+<!-- 3. DETALLE POR PUNTO DE VENTA -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Detalle por punto de venta</h2><div class="linea"></div></div>
+  <div class="city-grid" id="city-grid"></div>
+</div>
+
+<!-- 4. HEATMAP INVENTARIO -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Inventario disponible por ciudad</h2><div class="linea"></div></div>
+  <div class="card">
+    <div class="card-title">Resumen de stock — colores indican urgencia de reabastecimiento</div>
+    <div id="heatmap"></div>
+  </div>
+</div>
+
+<!-- 5. PRECIO VS ROTACIÓN -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Análisis producto · Precio vs Rotación</h2><div class="linea"></div></div>
+  <div class="tbl-wrap"><table id="tabla-rot"></table></div>
+</div>
+
+<!-- 6. HALLAZGOS -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Hallazgos clave</h2><div class="linea"></div></div>
+  <div class="insights-grid" id="insights"></div>
+</div>
+
+<!-- 7. SELL-THROUGH POR HOSTAL -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Colección · Inventario enviado vs vendido</h2><div class="linea"></div></div>
+  <p style="font-size:12px;color:var(--gris);margin-bottom:16px;line-height:1.6;">
+    Detalle por punto de venta: unidades enviadas por producto y talla, vendidas al corte,
+    stock restante y tasa de conversión.
+  </p>
+  <div id="hostales-ac"></div>
+</div>
+
+<!-- 8. RESUMEN CONSOLIDADO -->
+<div class="sec">
+  <div class="sec-hdr"><h2>Resumen consolidado · Sell-Through por hostal</h2><div class="linea"></div></div>
+  <div class="card">
+    <div class="card-title">Vista comparativa de eficiencia de venta por punto de distribución</div>
+    <div id="sell-consolidado"></div>
+    <div class="tbl-wrap" style="margin-top:16px;"><table id="tabla-hostal"></table></div>
+    <div class="nota" id="nota-metodologica"></div>
+  </div>
+</div>
+
+</main>
+
+<script>
+const DATA_URL='../data/merch_data.json';
+let DATA=null;
+
+const fmtCOP=n=>{
+  if(!n&&n!==0)return'—';
+  if(n>=1000000)return'$'+(Math.round(n/100000)/10).toFixed(1)+'M';
+  if(n>=1000)return'$'+(Math.round(n/1000))+'K';
+  return'$'+n.toLocaleString('es-CO');
+};
+const fmtN=n=>Math.round(Number(n)||0).toLocaleString('es-CO');
+const fmtST=v=>v===null||v===undefined?'—':v.toFixed(1)+'%';
+const gf=id=>document.getElementById(id).value;
+
+const CITY_COLORS={
+  BOG:'#c99b1a',TAY:'#1a7fd4',MED:'#2d8a4e',
+  GTP:'#9b59b6',GTS:'#F04B24',CLO:'#e74c3c',
+};
+
+function tagST(v){
+  if(v===null||v===undefined)return`<span class="tag tag-zero">N/A</span>`;
+  if(v>=40)return`<span class="tag tag-ok">${v.toFixed(1)}%</span>`;
+  if(v>=15)return`<span class="tag tag-warn">${v.toFixed(1)}%</span>`;
+  if(v>0)return`<span class="tag tag-low">${v.toFixed(1)}%</span>`;
+  return`<span class="tag tag-zero">0%</span>`;
+}
+function tagRot(v,enviado){
+  if(!enviado||enviado===0)return`<span class="tag tag-zero">N/A</span>`;
+  if(v>=30)return`<span class="tag tag-ok">${v.toFixed(1)}%</span>`;
+  if(v>=15)return`<span class="tag tag-warn">${v.toFixed(1)}%</span>`;
+  if(v>0)return`<span class="tag tag-low">${v.toFixed(1)}%</span>`;
+  return`<span class="tag tag-zero">0%</span>`;
+}
+function estadoRot(v,stock){
+  if(v===0)return`<span class="tag tag-zero">Sin ventas</span>`;
+  if(v>=30)return`<span class="tag tag-ok">Buena rotación</span>`;
+  if(stock>40)return`<span class="tag tag-warn">Stock alto</span>`;
+  if(stock>20)return`<span class="tag tag-warn">Stock medio</span>`;
+  return`<span class="tag tag-low">Baja rotación</span>`;
+}
+function hmColor(n){
+  if(!n||n===0)return'hm-gray';
+  if(n>=10)return'hm-green';
+  if(n>=5)return'hm-warn';
+  return'hm-err';
+}
+
+function poblarFiltros(){
+  const s=document.getElementById('f-hostal');
+  while(s.options.length>1)s.remove(1);
+  (DATA.resumenHostal||[]).forEach(h=>{
+    const o=document.createElement('option');
+    o.value=h.key; o.text=h.nombre; s.appendChild(o);
+  });
+}
+
+function filtrarProductos(){
+  const fh=gf('f-hostal');
+  if(!fh)return DATA.productos||[];
+  return (DATA.productos||[]).map(p=>{
+    const ph=p.porHostal.find(h=>h.key===fh);
+    if(!ph||ph.enviado===0)return null;
+    return{
+      ...p,
+      totalEnviado:ph.enviado,
+      totalVendido:ph.vendido,
+      totalStock:ph.stock,
+      sellThrTotal:ph.sellThr,
+      ingresos:ph.vendido*p.pvp,
+      _filtrado:true,
+    };
+  }).filter(Boolean);
+}
+
+function filtrarHostales(){
+  const fh=gf('f-hostal');
+  if(!fh)return DATA.resumenHostal||[];
+  return (DATA.resumenHostal||[]).filter(h=>h.key===fh);
+}
+
+// ── KPIs ──────────────────────────────────────────────────
+function renderKPIs(prods,hostales){
+  const totalUds=prods.reduce((s,p)=>s+p.totalVendido,0);
+  const totalIng=prods.reduce((s,p)=>s+p.ingresos,0);
+  const totalEnv=prods.reduce((s,p)=>s+p.totalEnviado,0);
+  const stGlobal=totalEnv>0?totalUds/totalEnv*100:null;
+  const ciudadLider=hostales.sort((a,b)=>b.vendido-a.vendido)[0];
+  const prodEstrella=[...prods].filter(p=>p.totalVendido>0)
+    .sort((a,b)=>(b.sellThrTotal||0)-(a.sellThrTotal||0))[0];
+
+  const cards=[
+    {lbl:'Unidades Vendidas',val:fmtN(totalUds),sub:'Todas las ciudades',kc:CITY_COLORS.GTS,badge:null},
+    {lbl:'Ingresos Estimados',val:fmtCOP(totalIng),sub:'COP aprox. por mezcla',kc:'#0369a1',badge:null},
+    {lbl:'Ciudad Líder',val:ciudadLider?.key||'—',sub:`${ciudadLider?.nombre?.split(' ')[1]||'—'} — ${fmtN(ciudadLider?.vendido||0)} uds vendidas`,kc:CITY_COLORS[ciudadLider?.key]||'var(--coral)',badge:null},
+    {lbl:'Producto Estrella',val:prodEstrella?.producto?.split(' ').pop()||'—',sub:prodEstrella?`${prodEstrella.producto} — ${fmtN(prodEstrella.totalVendido)} uds vendidas`:'Sin ventas aún',kc:'var(--ok)',badge:stGlobal!==null?`Sell-through global: ${stGlobal.toFixed(1)}%`:null,bcls:stGlobal>=25?'b-ok':stGlobal>=15?'b-warn':'b-err'},
+  ];
+
+  document.getElementById('kpi-row').innerHTML=cards.map(c=>`
+    <div class="kpi" style="--kc:${c.kc}">
+      <div class="k-glow"></div>
+      <div class="k-top"><div class="k-lbl">${c.lbl}</div></div>
+      <div class="k-val">${c.val}</div>
+      <div class="k-sub">${c.sub}</div>
+      ${c.badge?`<span class="k-badge ${c.bcls||''}">${c.badge}</span>`:''}
+    </div>`).join('');
+}
+
+// ── BARRAS ────────────────────────────────────────────────
+function renderBarras(prods,hostales){
+  const maxH=Math.max(...hostales.map(h=>h.vendido),1);
+  const maxP=Math.max(...prods.map(p=>p.totalVendido),1);
+
+  const barCiudad=`<div class="card">
+    <div class="card-title">Ventas por ciudad (unidades)</div>
+    <div class="bar-list">
+      ${hostales.sort((a,b)=>b.vendido-a.vendido).map(h=>`
+        <div class="bar-row">
+          <span class="bar-lbl">${h.nombre.split(' ')[1]||h.nombre}</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:${Math.round(h.vendido/maxH*100)}%;background:${CITY_COLORS[h.key]||'var(--coral)'}">
+              ${h.vendido>0?h.vendido:''}
+            </div>
+          </div>
+          <span class="bar-n">${h.vendido}</span>
+        </div>`).join('')}
+    </div>
+  </div>`;
+
+  const barProd=`<div class="card">
+    <div class="card-title">Ventas por producto (unidades)</div>
+    <div class="bar-list">
+      ${prods.sort((a,b)=>b.totalVendido-a.totalVendido).map(p=>`
+        <div class="bar-row">
+          <span class="bar-lbl">${p.producto}</span>
+          <div class="bar-track">
+            <div class="bar-fill ${p.totalVendido===0?'':''}${prods.indexOf(p)%2===0?'':' blue'}"
+              style="width:${Math.round(p.totalVendido/maxP*100)}%;${p.totalVendido===0?'background:var(--cream-dark);':''}">
+              ${p.totalVendido>0?p.totalVendido:''}
+            </div>
+          </div>
+          <span class="bar-n">${p.totalVendido}</span>
+        </div>`).join('')}
+    </div>
+  </div>`;
+
+  document.getElementById('barras-row').innerHTML=barCiudad+barProd;
+}
+
+// ── CITY CARDS ────────────────────────────────────────────
+function renderCityCards(prods,hostales){
+  document.getElementById('city-grid').innerHTML=
+    hostales.sort((a,b)=>b.vendido-a.vendido).map(h=>{
+      const prodsPorHostal=prods.map(p=>{
+        const ph=p.porHostal?.find(x=>x.key===h.key);
+        return{nombre:p.producto,vendido:ph?.vendido||0};
+      }).filter(p=>p.vendido>0).sort((a,b)=>b.vendido-a.vendido);
+      const lider=prodsPorHostal[0];
+      const activos=prodsPorHostal.length;
+      return`<div class="city-card">
+        <div class="city-name">
+          <span class="city-dot" style="background:${CITY_COLORS[h.key]||'var(--coral)'}"></span>
+          ${h.nombre.split(' ')[1]||h.nombre}
+        </div>
+        <div class="city-stat">Ventas totales: <strong>${fmtN(h.vendido)} uds</strong></div>
+        <div class="city-stat">Ingresos est.: <strong>~${fmtCOP(h.ingresos)} COP</strong></div>
+        <div class="city-stat">Sell-through: <strong>${fmtST(h.sellThr)}</strong></div>
+        <div class="city-stat">Productos activos: <strong>${activos}</strong></div>
+        <div class="city-top">Líder: <strong>${lider?`${lider.nombre} ${lider.vendido} uds`:'Sin ventas'}</strong></div>
+      </div>`;
+    }).join('');
+}
+
+// ── HEATMAP ───────────────────────────────────────────────
+function renderHeatmap(prods,hostales){
+  const keys=hostales.map(h=>h.key);
+  let html=`<div class="hm-row">
+    <div class="hm-lbl"></div>
+    ${keys.map(k=>`<div class="hm-head">${k}</div>`).join('')}
+    <div class="hm-head" style="color:var(--dark)">Total</div>
+  </div>`;
+
+  prods.forEach(p=>{
+    html+=`<div class="hm-row">
+      <div class="hm-lbl">${p.producto}</div>
+      ${keys.map(k=>{
+        const ph=p.porHostal?.find(x=>x.key===k);
+        const n=ph?.stock??0;
+        return`<div class="hm-cell ${hmColor(n)}">${n}</div>`;
+      }).join('')}
+      <div class="hm-total">${fmtN(p.totalStock)}</div>
+    </div>`;
+  });
+
+  html+=`<div class="hm-legend">
+    <div class="hm-leg-item"><div class="hm-leg-dot hm-green"></div>Stock alto (10+)</div>
+    <div class="hm-leg-item"><div class="hm-leg-dot hm-warn"></div>Stock medio (5–9)</div>
+    <div class="hm-leg-item"><div class="hm-leg-dot hm-err"></div>Stock bajo (1–4)</div>
+    <div class="hm-leg-item"><div class="hm-leg-dot hm-gray"></div>Sin stock</div>
+  </div>`;
+
+  document.getElementById('heatmap').innerHTML=html;
+}
+
+// ── TABLA ROTACIÓN ────────────────────────────────────────
+function renderTablaRot(prods){
+  const sorted=[...prods].sort((a,b)=>b.totalVendido-a.totalVendido);
+  document.getElementById('tabla-rot').innerHTML=`
+    <thead><tr>
+      <th>Producto</th><th>PVP</th><th>Uds Vendidas</th>
+      <th>Ingresos Est.</th><th>Stock Total</th><th>Rot. %</th><th>Estado</th>
+    </tr></thead>
+    <tbody>${sorted.map(p=>{
+      const rot=p.totalEnviado>0?p.totalVendido/p.totalEnviado*100:0;
+      return`<tr>
+        <td><strong>${p.producto}</strong></td>
+        <td>$${(p.pvp||0).toLocaleString('es-CO')}</td>
+        <td>${fmtN(p.totalVendido)}</td>
+        <td>${fmtCOP(p.ingresos)}</td>
+        <td>${fmtN(p.totalStock)}</td>
+        <td>${tagRot(rot,p.totalEnviado)}</td>
+        <td>${estadoRot(rot,p.totalStock)}</td>
+      </tr>`;
+    }).join('')}
+    </tbody>`;
+}
+
+// ── HALLAZGOS ─────────────────────────────────────────────
+function renderHallazgos(prods,hostales){
+  const sorted=[...hostales].sort((a,b)=>b.vendido-a.vendido);
+  const lider=sorted[0];
+  const colaTail=sorted.slice(-2);
+  const topProd=[...prods].filter(p=>p.totalVendido>0).sort((a,b)=>(b.sellThrTotal||0)-(a.sellThrTotal||0))[0];
+  const sinVentas=prods.filter(p=>p.totalVendido===0);
+  const turismo=sorted.filter(h=>['TAY','GTP'].includes(h.key));
+  const turUds=turismo.reduce((s,h)=>s+h.vendido,0);
+  const totalUds=prods.reduce((s,p)=>s+p.totalVendido,0);
+  const topPrecio=[...prods].sort((a,b)=>b.pvp-a.pvp)[0];
+
+  const items=[
+    {cls:'',ico:'🏆',t:'Ciudad más activa',b:`${lider?.nombre?.split(' ')[1]||lider?.nombre} lidera con ${lider?.vendido} ventas, concentrando el ${totalUds>0?Math.round(lider?.vendido/totalUds*100):0}% de todas las unidades vendidas.`},
+    turUds>0?{cls:'blue',ico:'🌊',t:'Patrón turístico claro',b:`Tayrona y Guatapé juntos suman ${turUds} ventas (${totalUds>0?Math.round(turUds/totalUds*100):0}%). El inventario debe ser más pesado en estos puntos.`}:null,
+    topProd?{cls:'ok',ico:'👕',t:`${topProd.producto} — top producto`,b:`Con la mejor relación rotación/stock (${fmtST(topProd.sellThrTotal)}), es el producto más eficiente. Reforzar inventario en puntos donde está en 0.`}:null,
+    sinVentas.length?{cls:'warn',ico:'⚠️',t:`${sinVentas[0].producto} — alerta 0 ventas`,b:`${fmtN(sinVentas[0].totalStock)} unidades en inventario sin ninguna venta registrada. Evaluar precio ($${(sinVentas[0].pvp||0).toLocaleString('es-CO')}), posicionamiento o distribución por punto.`}:null,
+    topPrecio&&topPrecio.totalVendido<5?{cls:'blue',ico:'💰',t:`${topPrecio.producto} — oportunidad`,b:`Es el producto de mayor precio ($${(topPrecio.pvp||0).toLocaleString('es-CO')}) con solo ${topPrecio.totalVendido} ventas. Concentrar esfuerzo en puntos con perfil de comprador diferente.`}:null,
+    colaTail.length?{cls:'',ico:'🔄',t:`${colaTail.map(h=>h.nombre.split(' ')[1]).join(' y ')} — bajo rendimiento`,b:`Con apenas ${colaTail.map(h=>h.vendido+' venta(s)').join(' y ')} respectivamente. Revisar visibilidad, tráfico o surtido adecuado.`}:null,
+  ].filter(Boolean);
+
+  document.getElementById('insights').innerHTML=items.map(i=>`
+    <div class="insight ${i.cls}">
+      <div class="insight-title">${i.ico} ${i.t}</div>
+      <div class="insight-body">${i.b}</div>
+    </div>`).join('');
+}
+
+// ── ACORDEÓN HOSTALES ─────────────────────────────────────
+function renderHostales(prods,hostales){
+  const fh=gf('f-hostal');
+  const lista=fh?hostales.filter(h=>h.key===fh):hostales;
+
+  document.getElementById('hostales-ac').innerHTML=lista.map(h=>{
+    const color=CITY_COLORS[h.key]||'var(--coral)';
+    const nombre=h.nombre.split(' ').slice(1,3).join(' ');
+    const alerta=DATA.stockCritico?.find(a=>a.key===h.key&&a.sellThr>100);
+
+    const filas=prods.map(p=>{
+      const ph=p.porHostal?.find(x=>x.key===h.key);
+      if(!ph||ph.enviado===0)return`<tr>
+        <td>${p.producto}</td>
+        <td>—</td><td>—</td><td>—</td><td>0</td><td>0</td><td>0</td>
+        <td><span class="tag tag-zero">N/A</span></td>
+      </tr>`;
+      const stock=ph.stock;
+      const alertaST=ph.sellThr&&ph.sellThr>100;
+      const alertaTxt=alertaST?` ⚠️`:'';
+      return`<tr${alertaST?' style="background:#fffbea"':''}>
+        <td>${p.producto}${alertaTxt}</td>
+        <td>${ph.tallas?.S||'—'}</td>
+        <td>${ph.tallas?.M||'—'}</td>
+        <td>${ph.tallas?.L||'—'}</td>
+        <td>${fmtN(ph.enviado)}</td>
+        <td>${fmtN(ph.vendido)}</td>
+        <td style="${stock<0?'color:var(--err);font-weight:700':''}">${fmtN(stock)}</td>
+        <td>${tagST(ph.sellThr)}</td>
+      </tr>
+      ${alertaST?`<tr><td colspan="8" class="alerta-row">⚠️ <strong>Alerta:</strong> Se registran ${ph.vendido} ventas de ${p.producto} pero solo se enviaron ${ph.enviado} unidades (+${ph.vendido-ph.enviado} de diferencia). Verificar reposición no registrada, transferencia entre puntos o error de conteo.</td></tr>`:''}`;
+    }).join('');
+
+    const totalRow=`<tr style="background:var(--cream-mid);font-weight:700;">
+      <td>TOTAL</td><td></td><td></td><td></td>
+      <td>${fmtN(h.enviado)}</td>
+      <td>${fmtN(h.vendido)}</td>
+      <td>${fmtN(h.stock)}</td>
+      <td>${tagST(h.sellThr)}</td>
+    </tr>`;
+
+    return`<div class="hostal-ac">
+      <div class="hostal-head" onclick="toggleHostal(this)">
+        <div style="display:flex;align-items:center;gap:12px;flex:1;flex-wrap:wrap;">
+          <span class="hostal-badge" style="background:${color}">${h.key}</span>
+          <span class="hostal-nombre">${nombre}</span>
+          <div class="hostal-meta">
+            <span>Enviado: <strong>${fmtN(h.enviado)} uds</strong></span>
+            <span>Vendido: <strong>${fmtN(h.vendido)} uds</strong></span>
+            <span>Stock: <strong>${fmtN(h.stock)} uds</strong></span>
+            <span>Sell-through: <strong style="color:${h.sellThr>=40?'var(--ok)':h.sellThr>=15?'var(--warn)':'var(--err)'}">${fmtST(h.sellThr)}</strong></span>
+          </div>
+        </div>
+        <span class="hostal-arr">▼</span>
+      </div>
+      <div class="hostal-body">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>Producto</th><th>Env. S</th><th>Env. M</th><th>Env. L</th>
+              <th>Env. Total</th><th>Vend. Total</th><th>Stock Rest.</th><th>Sell-through</th>
+            </tr></thead>
+            <tbody>${filas}${totalRow}</tbody>
+          </table>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleHostal(h){
+  h.classList.toggle('open');
+  const b=h.nextElementSibling;
+  b.classList.toggle('vis');
+  h.querySelector('.hostal-arr').style.transform=b.classList.contains('vis')?'rotate(180deg)':'';
+}
+
+// ── CONSOLIDADO ───────────────────────────────────────────
+function renderConsolidado(hostales,prods){
+  const sorted=[...hostales].sort((a,b)=>(b.sellThr||0)-(a.sellThr||0));
+  const totalUds=hostales.reduce((s,h)=>s+h.vendido,0);
+  const totalEnv=hostales.reduce((s,h)=>s+h.enviado,0);
+  const totalStk=hostales.reduce((s,h)=>s+h.stock,0);
+  const totalIng=hostales.reduce((s,h)=>s+h.ingresos,0);
+  const stTotal=totalEnv>0?Math.round(totalUds/totalEnv*1000)/10:0;
+  const maxST=Math.max(...hostales.map(h=>h.sellThr||0),1);
+
+  // Barras sell-through
+  const barras=sorted.map(h=>{
+    const pct=Math.round((h.sellThr||0)/maxST*100);
+    const col=h.sellThr>=40?'var(--ok)':h.sellThr>=15?'#eab308':'var(--err)';
+    return`<div class="sell-bar-row">
+      <span class="sell-bar-lbl">${h.nombre.split(' ')[1]||h.nombre} (${h.key})</span>
+      <div class="sell-bar-track">
+        <div class="sell-bar-fill" style="width:${pct}%;background:${col}">
+          ${h.vendido} uds
+        </div>
+      </div>
+      <span class="sell-bar-pct" style="color:${col}">${fmtST(h.sellThr)}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('sell-consolidado').innerHTML=barras;
+
+  // Tabla
+  document.getElementById('tabla-hostal').innerHTML=`
+    <thead><tr>
+      <th>Hostal / Ciudad</th><th>Uds. Enviadas</th><th>Uds. Vendidas</th>
+      <th>Stock Restante</th><th>Sell-Through</th><th>Ingresos Est.</th><th>Desempeño</th>
+    </tr></thead>
+    <tbody>
+      ${sorted.map(h=>{
+        const des=h.sellThr>=40?`<span class="tag tag-ok">Alto</span>`:
+                  h.sellThr>=20?`<span class="tag tag-warn">Medio</span>`:
+                  h.sellThr>=5?`<span class="tag tag-low">Bajo</span>`:
+                  `<span class="tag tag-zero">Crítico</span>`;
+        return`<tr>
+          <td><strong>${h.nombre}</strong></td>
+          <td>${fmtN(h.enviado)}</td><td>${fmtN(h.vendido)}</td><td>${fmtN(h.stock)}</td>
+          <td>${tagST(h.sellThr)}</td><td>${fmtCOP(h.ingresos)}</td><td>${des}</td>
+        </tr>`;
+      }).join('')}
+      <tr style="background:var(--cream-mid);font-weight:700;">
+        <td>TOTAL COLECCIÓN</td>
+        <td>${fmtN(totalEnv)}</td><td>${fmtN(totalUds)}</td><td>${fmtN(totalStk)}</td>
+        <td>${tagST(stTotal)}</td><td>${fmtCOP(totalIng)}</td>
+        <td><span class="tag tag-warn">En desarrollo</span></td>
+      </tr>
+    </tbody>`;
+
+  document.getElementById('nota-metodologica').innerHTML=`
+    <strong>Nota metodológica:</strong> El sell-through se calcula como
+    (Unidades Vendidas / Unidades Enviadas) × 100. Stock restante = Enviado − Vendido.
+    <strong>La colección fue lanzada el 31 de marzo de 2025</strong>, por lo que este reporte
+    cubre menos de 4 semanas de operación activa — se recomienda evaluar tendencia semanal
+    antes de tomar decisiones de reposición o retiro.`;
+}
+
+// ── RENDER PRINCIPAL ──────────────────────────────────────
+function render(){
+  if(!DATA)return;
+  const prods=filtrarProductos();
+  const hostales=filtrarHostales();
+  renderKPIs(prods,hostales);
+  renderBarras(prods,hostales);
+  renderCityCards(prods,hostales);
+  renderHeatmap(prods,hostales);
+  renderTablaRot(prods);
+  renderHallazgos(prods,hostales);
+  renderHostales(prods,hostales);
+  renderConsolidado(hostales,prods);
+}
+
+// ── INIT ──────────────────────────────────────────────────
+(async()=>{
+  try{
+    const r=await fetch(DATA_URL+'?t='+Date.now());
+    DATA=await r.json();
+    if(DATA.actualizado){
+      const d=new Date(DATA.actualizado);
+      document.getElementById('h-ts').textContent=
+        'Act: '+d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});
+      document.getElementById('f-corte').textContent=
+        'Corte: '+d.toLocaleDateString('es-CO',{day:'2-digit',month:'long',year:'numeric'});
+    }
+    poblarFiltros();
+    render();
+  }catch(e){
+    document.getElementById('h-ts').textContent='❌ Error cargando datos';
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>
