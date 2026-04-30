@@ -195,8 +195,7 @@ const d=await r.json();
 if(d.actualizado){
 const dt=new Date(d.actualizado);
 document.getElementById('h-ts').textContent=
-dt.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+
-' · '+dt.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+'Corte: '+dt.toLocaleDateString('es-CO',{month:'short',year:'numeric'});
 }
 }catch(e){document.getElementById('h-ts').textContent='Sin datos aún';}
 })();
