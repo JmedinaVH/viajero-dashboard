@@ -1135,8 +1135,9 @@ function render(){
     DATA=await r.json();
     if(DATA.actualizado){
       const d=new Date(DATA.actualizado);
-      document.getElementById('h-ts').textContent=
-        'Act: '+d.toLocaleDateString('es-CR',{day:'2-digit',month:'short',year:'numeric'});
+      document.getElementById('h-ts').textContent =
+  dt.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+
+  ' · '+dt.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
     }
     poblarFiltros();
     render();
