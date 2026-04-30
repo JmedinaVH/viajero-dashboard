@@ -1,0 +1,860 @@
+{
+  "actualizado": "2026-04-30T05:13:17.655Z",
+  "kpis": {
+    "totalUnidades": 61,
+    "totalIngresos": 5814000,
+    "totalEnviado": 306,
+    "totalStock": 245,
+    "sellThrGlobal": 20,
+    "ciudadLider": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
+    "ciudadLiderKey": "GTS",
+    "ciudadLiderUds": 21,
+    "productoEstrella": "Camiseta Sisa",
+    "productoEstrellaSellThr": 83,
+    "productoEstrellaUds": 24
+  },
+  "productos": [
+    {
+      "producto": "Camiseta pesada",
+      "pvp": 101000,
+      "totalEnviado": 61,
+      "totalVendido": 11,
+      "totalStock": 50,
+      "sellThrTotal": 18,
+      "ingresos": 1111000,
+      "porHostal": [
+        {
+          "key": "BOG",
+          "nombre": "Viajero Bogotá Hostel & Spa",
+          "enviado": 13,
+          "vendido": 2,
+          "stock": 11,
+          "sellThr": 15,
+          "alerta": false,
+          "tallas": {
+            "S": 3,
+            "M": 7,
+            "L": 3
+          }
+        },
+        {
+          "key": "TAY",
+          "nombre": "Viajero Tayrona Hostel & Ecohabs",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        },
+        {
+          "key": "MED",
+          "nombre": "Viajero Medellín Hostel",
+          "enviado": 23,
+          "vendido": 6,
+          "stock": 17,
+          "sellThr": 26,
+          "alerta": false,
+          "tallas": {
+            "S": 3,
+            "M": 12,
+            "L": 8
+          }
+        },
+        {
+          "key": "GTP",
+          "nombre": "Viajero Guatapé Hostel & Lake Club",
+          "enviado": 15,
+          "vendido": 2,
+          "stock": 13,
+          "sellThr": 13,
+          "alerta": false,
+          "tallas": {
+            "S": 2,
+            "M": 10,
+            "L": 3
+          }
+        },
+        {
+          "key": "GTS",
+          "nombre": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        },
+        {
+          "key": "CLO",
+          "nombre": "Viajero Cali Hostel & Salsa School",
+          "enviado": 10,
+          "vendido": 1,
+          "stock": 9,
+          "sellThr": 10,
+          "alerta": false,
+          "tallas": {
+            "S": 2,
+            "M": 7,
+            "L": 1
+          }
+        }
+      ]
+    },
+    {
+      "producto": "Camiseta manga Larga",
+      "pvp": 114000,
+      "totalEnviado": 24,
+      "totalVendido": 5,
+      "totalStock": 19,
+      "sellThrTotal": 21,
+      "ingresos": 570000,
+      "porHostal": [
+        {
+          "key": "BOG",
+          "nombre": "Viajero Bogotá Hostel & Spa",
+          "enviado": 12,
+          "vendido": 1,
+          "stock": 11,
+          "sellThr": 8,
+          "alerta": false,
+          "tallas": {
+            "S": 3,
+            "M": 7,
+            "L": 2
+          }
+        },
+        {
+          "key": "TAY",
+          "nombre": "Viajero Tayrona Hostel & Ecohabs",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        },
+        {
+          "key": "MED",
+          "nombre": "Viajero Medellín Hostel",
+          "enviado": 4,
+          "vendido": 1,
+          "stock": 3,
+          "sellThr": 25,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 3,
+            "L": 1
+          }
+        },
+        {
+          "key": "GTP",
+          "nombre": "Viajero Guatapé Hostel & Lake Club",
+          "enviado": 8,
+          "vendido": 3,
+          "stock": 5,
+          "sellThr": 38,
+          "alerta": false,
+          "tallas": {
+            "S": 2,
+            "M": 3,
+            "L": 3
+          }
+        },
+        {
+          "key": "GTS",
+          "nombre": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        },
+        {
+          "key": "CLO",
+          "nombre": "Viajero Cali Hostel & Salsa School",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        }
+      ]
+    },
+    {
+      "producto": "Camiseta Sisa",
+      "pvp": 95000,
+      "totalEnviado": 29,
+      "totalVendido": 24,
+      "totalStock": 5,
+      "sellThrTotal": 83,
+      "ingresos": 2280000,
+      "porHostal": [
+        {
+          "key": "BOG",
+          "nombre": "Viajero Bogotá Hostel & Spa",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        },
+        {
+          "key": "TAY",
+          "nombre": "Viajero Tayrona Hostel & Ecohabs",
+          "enviado": 11,
+          "vendido": 6,
+          "stock": 5,
+          "sellThr": 55,
+          "alerta": false,
+          "tallas": {
+            "S": 3,
+            "M": 5,
+            "L": 3
+          }
+        },
+        {
+          "key": "MED",
+          "nombre": "Viajero Medellín Hostel",
+          "enviado": 6,
+          "vendido": 1,
+          "stock": 5,
+          "sellThr": 17,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 3,
+            "L": 3
+          }
+        },
+        {
+          "key": "GTP",
+          "nombre": "Viajero Guatapé Hostel & Lake Club",
+          "enviado": 0,
+          "vendido": 1,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        },
+        {
+          "key": "GTS",
+          "nombre": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
+          "enviado": 11,
+          "vendido": 16,
+          "stock": 0,
+          "sellThr": 145,
+          "alerta": true,
+          "tallas": {
+            "S": 3,
+            "M": 5,
+            "L": 3
+          }
+        },
+        {
+          "key": "CLO",
+          "nombre": "Viajero Cali Hostel & Salsa School",
+          "enviado": 1,
+          "vendido": 0,
+          "stock": 1,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 1,
+            "L": 0
+          }
+        }
+      ]
+    },
+    {
+      "producto": "Cachucha",
+      "pvp": 57000,
+      "totalEnviado": 60,
+      "totalVendido": 4,
+      "totalStock": 56,
+      "sellThrTotal": 7,
+      "ingresos": 228000,
+      "porHostal": [
+        {
+          "key": "BOG",
+          "nombre": "Viajero Bogotá Hostel & Spa",
+          "enviado": 10,
+          "vendido": 1,
+          "stock": 9,
+          "sellThr": 10,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 10,
+            "L": 0
+          }
+        },
+        {
+          "key": "TAY",
+          "nombre": "Viajero Tayrona Hostel & Ecohabs",
+          "enviado": 10,
+          "vendido": 0,
+          "stock": 10,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 10,
+            "L": 0
+          }
+        },
+        {
+          "key": "MED",
+          "nombre": "Viajero Medellín Hostel",
+          "enviado": 10,
+          "vendido": 0,
+          "stock": 10,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 10,
+            "L": 0
+          }
+        },
+        {
+          "key": "GTP",
+          "nombre": "Viajero Guatapé Hostel & Lake Club",
+          "enviado": 10,
+          "vendido": 2,
+          "stock": 8,
+          "sellThr": 20,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 10,
+            "L": 0
+          }
+        },
+        {
+          "key": "GTS",
+          "nombre": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
+          "enviado": 10,
+          "vendido": 1,
+          "stock": 9,
+          "sellThr": 10,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 10,
+            "L": 0
+          }
+        },
+        {
+          "key": "CLO",
+          "nombre": "Viajero Cali Hostel & Salsa School",
+          "enviado": 10,
+          "vendido": 0,
+          "stock": 10,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 10,
+            "L": 0
+          }
+        }
+      ]
+    },
+    {
+      "producto": "Buckethat",
+      "pvp": 53000,
+      "totalEnviado": 20,
+      "totalVendido": 0,
+      "totalStock": 20,
+      "sellThrTotal": 0,
+      "ingresos": 0,
+      "porHostal": [
+        {
+          "key": "BOG",
+          "nombre": "Viajero Bogotá Hostel & Spa",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        },
+        {
+          "key": "TAY",
+          "nombre": "Viajero Tayrona Hostel & Ecohabs",
+          "enviado": 5,
+          "vendido": 0,
+          "stock": 5,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 5,
+            "L": 0
+          }
+        },
+        {
+          "key": "MED",
+          "nombre": "Viajero Medellín Hostel",
+          "enviado": 5,
+          "vendido": 0,
+          "stock": 5,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 5,
+            "L": 0
+          }
+        },
+        {
+          "key": "GTP",
+          "nombre": "Viajero Guatapé Hostel & Lake Club",
+          "enviado": 2,
+          "vendido": 0,
+          "stock": 2,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 2,
+            "L": 0
+          }
+        },
+        {
+          "key": "GTS",
+          "nombre": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
+          "enviado": 5,
+          "vendido": 0,
+          "stock": 5,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 5,
+            "L": 0
+          }
+        },
+        {
+          "key": "CLO",
+          "nombre": "Viajero Cali Hostel & Salsa School",
+          "enviado": 3,
+          "vendido": 0,
+          "stock": 3,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 3,
+            "L": 0
+          }
+        }
+      ]
+    },
+    {
+      "producto": "Toalla",
+      "pvp": 67000,
+      "totalEnviado": 36,
+      "totalVendido": 7,
+      "totalStock": 29,
+      "sellThrTotal": 19,
+      "ingresos": 469000,
+      "porHostal": [
+        {
+          "key": "BOG",
+          "nombre": "Viajero Bogotá Hostel & Spa",
+          "enviado": 4,
+          "vendido": 0,
+          "stock": 4,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 4,
+            "L": 0
+          }
+        },
+        {
+          "key": "TAY",
+          "nombre": "Viajero Tayrona Hostel & Ecohabs",
+          "enviado": 9,
+          "vendido": 0,
+          "stock": 9,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 9,
+            "L": 0
+          }
+        },
+        {
+          "key": "MED",
+          "nombre": "Viajero Medellín Hostel",
+          "enviado": 5,
+          "vendido": 0,
+          "stock": 5,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 5,
+            "L": 0
+          }
+        },
+        {
+          "key": "GTP",
+          "nombre": "Viajero Guatapé Hostel & Lake Club",
+          "enviado": 5,
+          "vendido": 5,
+          "stock": 0,
+          "sellThr": 100,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 5,
+            "L": 0
+          }
+        },
+        {
+          "key": "GTS",
+          "nombre": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
+          "enviado": 9,
+          "vendido": 2,
+          "stock": 7,
+          "sellThr": 22,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 9,
+            "L": 0
+          }
+        },
+        {
+          "key": "CLO",
+          "nombre": "Viajero Cali Hostel & Salsa School",
+          "enviado": 4,
+          "vendido": 0,
+          "stock": 4,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 4,
+            "L": 0
+          }
+        }
+      ]
+    },
+    {
+      "producto": "Camiseta Delgada",
+      "pvp": 97000,
+      "totalEnviado": 54,
+      "totalVendido": 8,
+      "totalStock": 46,
+      "sellThrTotal": 15,
+      "ingresos": 776000,
+      "porHostal": [
+        {
+          "key": "BOG",
+          "nombre": "Viajero Bogotá Hostel & Spa",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        },
+        {
+          "key": "TAY",
+          "nombre": "Viajero Tayrona Hostel & Ecohabs",
+          "enviado": 23,
+          "vendido": 6,
+          "stock": 17,
+          "sellThr": 26,
+          "alerta": false,
+          "tallas": {
+            "S": 5,
+            "M": 13,
+            "L": 5
+          }
+        },
+        {
+          "key": "MED",
+          "nombre": "Viajero Medellín Hostel",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        },
+        {
+          "key": "GTP",
+          "nombre": "Viajero Guatapé Hostel & Lake Club",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        },
+        {
+          "key": "GTS",
+          "nombre": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
+          "enviado": 14,
+          "vendido": 2,
+          "stock": 12,
+          "sellThr": 14,
+          "alerta": false,
+          "tallas": {
+            "S": 3,
+            "M": 8,
+            "L": 3
+          }
+        },
+        {
+          "key": "CLO",
+          "nombre": "Viajero Cali Hostel & Salsa School",
+          "enviado": 17,
+          "vendido": 0,
+          "stock": 17,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 2,
+            "M": 11,
+            "L": 4
+          }
+        }
+      ]
+    },
+    {
+      "producto": "Hoodie",
+      "pvp": 190000,
+      "totalEnviado": 22,
+      "totalVendido": 2,
+      "totalStock": 20,
+      "sellThrTotal": 9,
+      "ingresos": 380000,
+      "porHostal": [
+        {
+          "key": "BOG",
+          "nombre": "Viajero Bogotá Hostel & Spa",
+          "enviado": 10,
+          "vendido": 0,
+          "stock": 10,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 2,
+            "M": 5,
+            "L": 3
+          }
+        },
+        {
+          "key": "TAY",
+          "nombre": "Viajero Tayrona Hostel & Ecohabs",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        },
+        {
+          "key": "MED",
+          "nombre": "Viajero Medellín Hostel",
+          "enviado": 7,
+          "vendido": 0,
+          "stock": 7,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 2,
+            "M": 3,
+            "L": 2
+          }
+        },
+        {
+          "key": "GTP",
+          "nombre": "Viajero Guatapé Hostel & Lake Club",
+          "enviado": 5,
+          "vendido": 2,
+          "stock": 3,
+          "sellThr": 40,
+          "alerta": false,
+          "tallas": {
+            "S": 1,
+            "M": 3,
+            "L": 1
+          }
+        },
+        {
+          "key": "GTS",
+          "nombre": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        },
+        {
+          "key": "CLO",
+          "nombre": "Viajero Cali Hostel & Salsa School",
+          "enviado": 0,
+          "vendido": 0,
+          "stock": 0,
+          "sellThr": 0,
+          "alerta": false,
+          "tallas": {
+            "S": 0,
+            "M": 0,
+            "L": 0
+          }
+        }
+      ]
+    }
+  ],
+  "resumenHostal": [
+    {
+      "key": "BOG",
+      "nombre": "Viajero Bogotá Hostel & Spa",
+      "enviado": 49,
+      "vendido": 4,
+      "stock": 45,
+      "ingresos": 373000,
+      "sellThr": 8
+    },
+    {
+      "key": "TAY",
+      "nombre": "Viajero Tayrona Hostel & Ecohabs",
+      "enviado": 58,
+      "vendido": 12,
+      "stock": 46,
+      "ingresos": 1152000,
+      "sellThr": 21
+    },
+    {
+      "key": "MED",
+      "nombre": "Viajero Medellín Hostel",
+      "enviado": 60,
+      "vendido": 8,
+      "stock": 52,
+      "ingresos": 815000,
+      "sellThr": 13
+    },
+    {
+      "key": "GTP",
+      "nombre": "Viajero Guatapé Hostel & Lake Club",
+      "enviado": 45,
+      "vendido": 15,
+      "stock": 31,
+      "ingresos": 1468000,
+      "sellThr": 33
+    },
+    {
+      "key": "GTS",
+      "nombre": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
+      "enviado": 49,
+      "vendido": 21,
+      "stock": 33,
+      "ingresos": 1905000,
+      "sellThr": 43
+    },
+    {
+      "key": "CLO",
+      "nombre": "Viajero Cali Hostel & Salsa School",
+      "enviado": 45,
+      "vendido": 1,
+      "stock": 44,
+      "ingresos": 101000,
+      "sellThr": 2
+    }
+  ],
+  "stockCritico": [
+    {
+      "producto": "Camiseta Sisa",
+      "hostal": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
+      "key": "GTS",
+      "stock": 0,
+      "sellThr": 145,
+      "tipo": "alerta"
+    },
+    {
+      "producto": "Camiseta Sisa",
+      "hostal": "Viajero Cali Hostel & Salsa School",
+      "key": "CLO",
+      "stock": 1,
+      "sellThr": 0,
+      "tipo": "bajo"
+    },
+    {
+      "producto": "Buckethat",
+      "hostal": "Viajero Guatapé Hostel & Lake Club",
+      "key": "GTP",
+      "stock": 2,
+      "sellThr": 0,
+      "tipo": "bajo"
+    }
+  ]
+}
