@@ -1,27 +1,27 @@
 {
-  "actualizado": "2026-04-30T05:13:17.655Z",
+  "actualizado": "2026-04-30T05:40:31.590Z",
   "kpis": {
-    "totalUnidades": 61,
-    "totalIngresos": 5814000,
+    "totalUnidades": 68,
+    "totalIngresos": 6497000,
     "totalEnviado": 306,
-    "totalStock": 245,
-    "sellThrGlobal": 20,
+    "totalStock": 238,
+    "sellThrGlobal": 22,
     "ciudadLider": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
     "ciudadLiderKey": "GTS",
-    "ciudadLiderUds": 21,
+    "ciudadLiderUds": 24,
     "productoEstrella": "Camiseta Sisa",
-    "productoEstrellaSellThr": 83,
-    "productoEstrellaUds": 24
+    "productoEstrellaSellThr": 90,
+    "productoEstrellaUds": 26
   },
   "productos": [
     {
       "producto": "Camiseta pesada",
       "pvp": 101000,
       "totalEnviado": 61,
-      "totalVendido": 11,
-      "totalStock": 50,
-      "sellThrTotal": 18,
-      "ingresos": 1111000,
+      "totalVendido": 13,
+      "totalStock": 48,
+      "sellThrTotal": 21,
+      "ingresos": 1313000,
       "porHostal": [
         {
           "key": "BOG",
@@ -97,9 +97,9 @@
           "key": "CLO",
           "nombre": "Viajero Cali Hostel & Salsa School",
           "enviado": 10,
-          "vendido": 1,
-          "stock": 9,
-          "sellThr": 10,
+          "vendido": 3,
+          "stock": 7,
+          "sellThr": 30,
           "alerta": false,
           "tallas": {
             "S": 2,
@@ -208,10 +208,10 @@
       "producto": "Camiseta Sisa",
       "pvp": 95000,
       "totalEnviado": 29,
-      "totalVendido": 24,
-      "totalStock": 5,
-      "sellThrTotal": 83,
-      "ingresos": 2280000,
+      "totalVendido": 26,
+      "totalStock": 3,
+      "sellThrTotal": 90,
+      "ingresos": 2470000,
       "porHostal": [
         {
           "key": "BOG",
@@ -231,9 +231,9 @@
           "key": "TAY",
           "nombre": "Viajero Tayrona Hostel & Ecohabs",
           "enviado": 11,
-          "vendido": 6,
-          "stock": 5,
-          "sellThr": 55,
+          "vendido": 7,
+          "stock": 4,
+          "sellThr": 64,
           "alerta": false,
           "tallas": {
             "S": 3,
@@ -273,9 +273,9 @@
           "key": "GTS",
           "nombre": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
           "enviado": 11,
-          "vendido": 16,
+          "vendido": 17,
           "stock": 0,
-          "sellThr": 145,
+          "sellThr": 155,
           "alerta": true,
           "tallas": {
             "S": 3,
@@ -588,10 +588,10 @@
       "producto": "Camiseta Delgada",
       "pvp": 97000,
       "totalEnviado": 54,
-      "totalVendido": 8,
-      "totalStock": 46,
-      "sellThrTotal": 15,
-      "ingresos": 776000,
+      "totalVendido": 11,
+      "totalStock": 43,
+      "sellThrTotal": 20,
+      "ingresos": 1067000,
       "porHostal": [
         {
           "key": "BOG",
@@ -611,9 +611,9 @@
           "key": "TAY",
           "nombre": "Viajero Tayrona Hostel & Ecohabs",
           "enviado": 23,
-          "vendido": 6,
-          "stock": 17,
-          "sellThr": 26,
+          "vendido": 7,
+          "stock": 16,
+          "sellThr": 30,
           "alerta": false,
           "tallas": {
             "S": 5,
@@ -653,9 +653,9 @@
           "key": "GTS",
           "nombre": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
           "enviado": 14,
-          "vendido": 2,
-          "stock": 12,
-          "sellThr": 14,
+          "vendido": 4,
+          "stock": 10,
+          "sellThr": 29,
           "alerta": false,
           "tallas": {
             "S": 3,
@@ -789,10 +789,10 @@
       "key": "TAY",
       "nombre": "Viajero Tayrona Hostel & Ecohabs",
       "enviado": 58,
-      "vendido": 12,
-      "stock": 46,
-      "ingresos": 1152000,
-      "sellThr": 21
+      "vendido": 14,
+      "stock": 44,
+      "ingresos": 1344000,
+      "sellThr": 24
     },
     {
       "key": "MED",
@@ -816,19 +816,19 @@
       "key": "GTS",
       "nombre": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
       "enviado": 49,
-      "vendido": 21,
-      "stock": 33,
-      "ingresos": 1905000,
-      "sellThr": 43
+      "vendido": 24,
+      "stock": 31,
+      "ingresos": 2194000,
+      "sellThr": 49
     },
     {
       "key": "CLO",
       "nombre": "Viajero Cali Hostel & Salsa School",
       "enviado": 45,
-      "vendido": 1,
-      "stock": 44,
-      "ingresos": 101000,
-      "sellThr": 2
+      "vendido": 3,
+      "stock": 42,
+      "ingresos": 303000,
+      "sellThr": 7
     }
   ],
   "stockCritico": [
@@ -837,7 +837,7 @@
       "hostal": "Viajero Cartagena - Getsemaní Hostel & Rooftop",
       "key": "GTS",
       "stock": 0,
-      "sellThr": 145,
+      "sellThr": 155,
       "tipo": "alerta"
     },
     {
