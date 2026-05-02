@@ -9,14 +9,14 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root{
-  --coral:#F04B24;--coral-dark:#d03d1a;--coral-soft:#FEF0EC;
-  --cream:#F4EFE9;--cream-mid:#EDE5DA;--cream-dark:#E0D5C8;
-  --dark:#1E100A;--mid:#6B3A28;--gris:#7A6E68;
-  --border:#DDD4CA;--white:#fff;
-  --ok:#15803d;--ok-bg:#dcfce7;
-  --warn:#854d0e;--warn-bg:#fef9c3;
-  --err:#dc2626;--err-bg:#fee2e2;
-  --orange:#c2410c;--orange-bg:#fff3f0;
+--coral:#F04B24;--coral-dark:#d03d1a;--coral-soft:#FEF0EC;
+--cream:#F4EFE9;--cream-mid:#EDE5DA;--cream-dark:#E0D5C8;
+--dark:#1E100A;--mid:#6B3A28;--gris:#7A6E68;
+--border:#DDD4CA;--white:#fff;
+--ok:#15803d;--ok-bg:#dcfce7;
+--warn:#854d0e;--warn-bg:#fef9c3;
+--err:#dc2626;--err-bg:#fee2e2;
+--orange:#c2410c;--orange-bg:#fff3f0;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);font-size:14px;line-height:1.5;}
@@ -40,7 +40,7 @@ header{background:var(--dark);padding:0 36px;display:flex;align-items:center;jus
 .btn-hub svg{width:14px;height:14px;flex-shrink:0;}
 
 /* FILTROS */
-.filtros{background:#F04B24;padding:10px 36px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:0;z-index:500;box-shadow:0 4px 12px rgba(30,16,10,.15);}
+.filtros{background:#F04B24;padding:10px 36px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:68px;z-index:99;box-shadow:0 4px 12px rgba(30,16,10,.15);}
 .fg label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.6);margin-bottom:3px;}
 .fg select{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:6px 26px 6px 10px;border:1.5px solid rgba(255,255,255,.2);border-radius:8px;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;appearance:none;min-width:130px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='rgba(255,255,255,.6)' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;transition:.2s;}
 .fg select option{background:var(--dark);}
@@ -56,7 +56,7 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .sec-hdr .linea{flex:1;height:1px;background:var(--border);}
 .sec-hdr .cnt{background:var(--coral);color:#fff;font-size:10px;padding:2px 9px;border-radius:10px;font-weight:700;}
 
-/* MODAL TOOLTIP */
+/* MODALS */
 #tip-overlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(30,16,10,.45);align-items:center;justify-content:center;padding:20px;}
 #tip-overlay.show{display:flex;}
 #tip-box{background:#fff;border-radius:16px;max-width:360px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(30,16,10,.25);position:relative;animation:popIn .2s ease;}
@@ -64,8 +64,6 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 #tip-box h4{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:8px;}
 #tip-box p{font-size:13px;color:var(--gris);line-height:1.6;}
 #tip-close{position:absolute;top:12px;right:14px;font-size:20px;cursor:pointer;color:var(--gris);background:none;border:none;font-family:'Outfit',sans-serif;line-height:1;}
-
-/* MODAL DRILL-DOWN */
 #drill-overlay{display:none;position:fixed;inset:0;z-index:9500;background:rgba(30,16,10,.55);align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;}
 #drill-overlay.show{display:flex;}
 #drill-box{background:#fff;border-radius:20px;width:100%;max-width:820px;padding:28px;box-shadow:0 24px 80px rgba(30,16,10,.3);position:relative;animation:popIn .2s ease;margin:auto;}
@@ -80,17 +78,31 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .info-btn{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:var(--coral-soft);color:var(--coral);font-size:10px;font-weight:800;cursor:pointer;border:1.5px solid var(--coral);flex-shrink:0;transition:.2s;font-style:normal;}
 .info-btn:hover{background:var(--coral);color:#fff;}
 
-/* KPI GRUPOS */
+/* FUNNEL */
+.funnel-outer{background:#fff;border-radius:16px;border:1.5px solid var(--border);padding:22px;overflow:hidden;}
+.funnel-title{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.7px;margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.funnel-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.funnel-steps{display:flex;align-items:stretch;gap:0;overflow-x:auto;}
+.fn-step{flex:1;min-width:110px;display:flex;flex-direction:column;align-items:center;padding:16px 10px;text-align:center;position:relative;}
+.fn-step:not(:last-child)::after{content:'›';position:absolute;right:-9px;top:40%;font-size:24px;color:var(--coral);font-weight:700;z-index:1;}
+.fn-ico{font-size:22px;margin-bottom:8px;}
+.fn-n{font-size:26px;font-weight:800;color:var(--dark);line-height:1;}
+.fn-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--gris);margin-top:5px;line-height:1.3;}
+.fn-conv{font-size:10px;font-weight:700;margin-top:6px;padding:3px 8px;border-radius:6px;line-height:1.2;}
+.fn-bar-wrap{width:80%;height:4px;background:var(--cream-dark);border-radius:2px;margin-top:8px;overflow:hidden;}
+.fn-bar-fill{height:100%;border-radius:2px;background:var(--coral);transition:width .7s;}
+.fn-step.fn-ok .fn-n{color:var(--ok);}
+.fn-step.fn-ok .fn-bar-fill{background:var(--ok);}
+
+/* KPI */
 .kpi-grupo{margin-bottom:20px;}
 .kpi-grupo-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gris);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
 .kpi-grupo-label::after{content:'';flex:1;height:1px;background:var(--border);}
 .kpi-toggle{font-size:11px;font-weight:700;color:var(--coral);background:none;border:none;cursor:pointer;font-family:'Outfit',sans-serif;padding:0;display:flex;align-items:center;gap:5px;transition:.15s;white-space:nowrap;}
 .kpi-toggle:hover{opacity:.75;}
 .kpi-secundario{overflow:hidden;max-height:0;transition:max-height .35s ease;}
-.kpi-secundario.abierto{max-height:900px;}
+.kpi-secundario.abierto{max-height:1200px;}
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:14px;}
-
-/* KPI CARDS */
 .kpi{background:#fff;border-radius:16px;padding:20px 18px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s;}
 .kpi:hover{box-shadow:0 8px 28px rgba(184,61,22,.1);transform:translateY(-3px);}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--kc,var(--coral));border-radius:16px 16px 0 0;}
@@ -109,14 +121,18 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .s-lbl{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-top:5px;display:flex;align-items:center;justify-content:center;gap:4px;}
 .s-tipo{font-size:10px;font-weight:600;padding:3px 9px;border-radius:8px;display:inline-block;margin-top:7px;}
 .s-pct{font-size:11px;font-weight:600;color:var(--gris);margin-top:3px;}
-.s-verde    .s-val{color:var(--ok);}
-.s-amarillo .s-val{color:var(--warn);}
-.s-rojo     .s-val{color:var(--err);}
-.s-gris     .s-val{color:var(--gris);}
-.s-verde    .s-tipo{background:var(--ok-bg);color:var(--ok);}
-.s-amarillo .s-tipo{background:var(--warn-bg);color:var(--warn);}
-.s-rojo     .s-tipo{background:var(--err-bg);color:var(--err);}
-.s-gris     .s-tipo{background:var(--cream-dark);color:var(--mid);}
+.s-verde .s-val{color:var(--ok);} .s-amarillo .s-val{color:var(--warn);} .s-rojo .s-val{color:var(--err);} .s-gris .s-val{color:var(--gris);}
+.s-verde .s-tipo{background:var(--ok-bg);color:var(--ok);} .s-amarillo .s-tipo{background:var(--warn-bg);color:var(--warn);} .s-rojo .s-tipo{background:var(--err-bg);color:var(--err);} .s-gris .s-tipo{background:var(--cream-dark);color:var(--mid);}
+
+/* RANKING */
+.rank-item{display:flex;align-items:center;gap:12px;background:#fff;border-radius:12px;padding:14px 16px;border:1.5px solid var(--border);margin-bottom:8px;transition:.2s;}
+.rank-item:hover{box-shadow:0 4px 14px rgba(30,16,10,.07);transform:translateX(3px);}
+.rank-pos{font-size:15px;font-weight:800;color:var(--coral);min-width:28px;text-align:center;}
+.rank-name{flex:1;font-size:13px;font-weight:700;color:var(--dark);}
+.rank-bar-wrap{flex:1.5;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden;}
+.rank-bar-fill{height:100%;border-radius:4px;transition:width .6s;}
+.rank-val{font-size:13px;font-weight:800;min-width:52px;text-align:right;}
+.rank-sub{font-size:10px;color:var(--gris);font-weight:500;margin-top:2px;}
 
 /* ACORDEÓN */
 .ac{background:#fff;border-radius:16px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:10px;transition:box-shadow .2s;}
@@ -130,11 +146,7 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .ac-sub{font-size:11px;color:var(--gris);margin-top:2px;}
 .ac-meta{display:flex;align-items:center;gap:8px;}
 .ac-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:10px;}
-.b-err   {background:var(--err-bg);color:var(--err);}
-.b-warn  {background:var(--warn-bg);color:var(--warn);}
-.b-ok    {background:var(--ok-bg);color:var(--ok);}
-.b-gray  {background:var(--cream-dark);color:var(--mid);}
-.b-coral {background:var(--coral);color:#fff;}
+.b-err{background:var(--err-bg);color:var(--err);} .b-warn{background:var(--warn-bg);color:var(--warn);} .b-ok{background:var(--ok-bg);color:var(--ok);} .b-gray{background:var(--cream-dark);color:var(--mid);} .b-coral{background:var(--coral);color:#fff;} .b-blue{background:#dbeafe;color:#1d4ed8;}
 .ac-arr{font-size:12px;color:var(--gris);transition:transform .25s;}
 .ac-head.open .ac-arr{transform:rotate(180deg);}
 .ac-body{display:none;padding:22px;}
@@ -147,12 +159,10 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .hall-card.clickable{cursor:pointer;}
 .hall-card.clickable:hover{transform:translateX(4px);box-shadow:0 3px 12px rgba(30,16,10,.08);}
 .hall-card.critica{background:var(--err-bg);border-color:#fca5a5;}
-.hall-card.alta   {background:var(--orange-bg);border-color:#fed7aa;}
-.hall-card.media  {background:var(--warn-bg);border-color:#fde68a;}
+.hall-card.alta{background:var(--orange-bg);border-color:#fed7aa;}
+.hall-card.media{background:var(--warn-bg);border-color:#fde68a;}
 .hall-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
-.hall-card.critica .hall-dot{background:var(--err);}
-.hall-card.alta    .hall-dot{background:#f97316;}
-.hall-card.media   .hall-dot{background:#eab308;}
+.hall-card.critica .hall-dot{background:var(--err);} .hall-card.alta .hall-dot{background:#f97316;} .hall-card.media .hall-dot{background:#eab308;}
 .hall-info{flex:1;min-width:0;}
 .hall-txt{font-size:13px;font-weight:600;margin-bottom:3px;color:var(--dark);}
 .hall-tip{font-size:11px;color:var(--gris);line-height:1.4;}
@@ -160,9 +170,7 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .hall-prop-row:last-child{border-bottom:none;}
 .hall-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
 .hall-n{font-size:26px;font-weight:800;}
-.hall-card.critica .hall-n{color:var(--err);}
-.hall-card.alta    .hall-n{color:#f97316;}
-.hall-card.media   .hall-n{color:#eab308;}
+.hall-card.critica .hall-n{color:var(--err);} .hall-card.alta .hall-n{color:#f97316;} .hall-card.media .hall-n{color:#eab308;}
 .hall-ver{font-size:10px;font-weight:700;color:var(--coral);white-space:nowrap;}
 .ver-mas-btn{margin-top:8px;font-size:11px;font-weight:700;color:var(--coral);background:none;border:none;cursor:pointer;padding:0;font-family:'Outfit',sans-serif;display:flex;align-items:center;gap:4px;}
 .ver-mas-btn:hover{text-decoration:underline;}
@@ -173,13 +181,24 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .sc-cat.t{background:#fff5f0;border:2px solid #fed7aa;}
 .sc-cat.b{background:var(--err-bg);border:2px solid #fca5a5;}
 .sc-n{font-size:34px;font-weight:800;line-height:1;}
-.sc-cat.t .sc-n{color:#c2410c;}
-.sc-cat.b .sc-n{color:var(--err);}
+.sc-cat.t .sc-n{color:#c2410c;} .sc-cat.b .sc-n{color:var(--err);}
 .sc-t{font-size:12px;font-weight:700;margin:5px 0 7px;}
 .sc-d{font-size:11px;color:var(--gris);line-height:1.5;}
 .sc-q{width:100%;padding:9px 13px;border:1.5px solid var(--border);border-radius:10px;font-family:'Outfit',sans-serif;font-size:13px;margin-bottom:10px;background:var(--cream);transition:.2s;}
 .sc-q:focus{outline:none;border-color:var(--coral);background:#fff;}
 .sc-wrap{overflow-x:auto;max-height:320px;border-radius:10px;border:1.5px solid var(--border);}
+
+/* CANALES */
+.canal-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);}
+.canal-item:last-child{border-bottom:none;}
+.canal-name{flex:1;font-size:13px;font-weight:700;color:var(--dark);}
+.canal-bar-wrap{flex:2;height:10px;background:var(--cream-dark);border-radius:5px;overflow:hidden;}
+.canal-bar-fill{height:100%;border-radius:5px;background:var(--coral);transition:width .6s;}
+.canal-total{font-size:12px;font-weight:700;min-width:45px;text-align:right;color:var(--dark);}
+.canal-pct-txt{font-size:11px;color:var(--gris);min-width:38px;text-align:right;}
+
+/* SIN MATCH */
+.match-banner{background:#fff3f0;border:1.5px solid #fed7aa;border-radius:12px;padding:14px 16px;margin-bottom:14px;font-size:12px;color:#9a3412;line-height:1.6;}
 
 /* TABLA */
 table{width:100%;border-collapse:collapse;font-size:12px;}
@@ -198,952 +217,7 @@ tbody tr:hover td{background:var(--cream);}
 .hist-pb{display:none;overflow-x:auto;}
 .hist-pb.op{display:block;}
 .hist-pb td:first-child{color:var(--gris);font-weight:600;white-space:nowrap;padding-left:20px;font-size:11px;}
-.pct-ok  {color:var(--ok);font-weight:700;}
-.pct-warn{color:var(--warn);font-weight:700;}
-.pct-err {color:var(--err);font-weight:700;}
+.pct-ok{color:var(--ok);font-weight:700;} .pct-warn{color:var(--warn);font-weight:700;} .pct-err{color:var(--err);font-weight:700;}
 
 /* TIERS */
-.tiers-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
-.tier-c{background:var(--cream);border-radius:14px;padding:18px;border:1.5px solid var(--border);transition:.2s;}
-.tier-c:hover{box-shadow:0 4px 16px rgba(184,61,22,.08);transform:translateY(-2px);}
-.t-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
-.t-nom{font-weight:800;font-size:15px;color:var(--dark);}
-.t-tot{font-size:11px;color:var(--gris);}
-.t-bens{font-size:11px;color:var(--gris);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);line-height:1.4;}
-.tier-bar{height:8px;border-radius:4px;background:var(--cream-dark);overflow:hidden;margin-bottom:6px;}
-.tier-fill{height:100%;border-radius:4px;transition:width .5s;}
-.tier-pct{font-size:12px;font-weight:800;margin-bottom:6px;}
-.tier-ns{display:flex;gap:10px;font-size:11px;font-weight:500;}
-
-/* CHARTS */
-.charts-r{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
-.ch-box{background:var(--cream);border-radius:14px;padding:18px;border:1.5px solid var(--border);}
-.ch-box h3{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;}
-.ch-wrap{position:relative;height:200px;}
-
-/* BARRA MINI BENEFICIO */
-.ben-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.ben-bar-lbl{font-size:12px;font-weight:600;color:var(--dark);min-width:100px;}
-.ben-bar-track{flex:1;background:var(--cream-dark);border-radius:99px;height:10px;overflow:hidden;}
-.ben-bar-fill{height:100%;border-radius:99px;transition:width .6s;}
-.ben-bar-n{font-size:11px;font-weight:700;color:var(--dark);min-width:40px;text-align:right;}
-
-/* BANNER CONTEXTO */
-.ctx-banner{font-size:11px;background:var(--cream-mid);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:12px;color:var(--mid);display:flex;align-items:flex-start;gap:8px;line-height:1.6;}
-
-.empty{text-align:center;padding:32px;color:var(--gris);font-size:13px;}
-
-@media(max-width:640px){
-  header,.filtros{padding-left:16px;padding-right:16px;}
-  main{padding:16px 16px 48px;}
-  .kpi-grid{grid-template-columns:1fr 1fr;}
-  .sc-cats{grid-template-columns:1fr;}
-}
-</style>
-</head>
-<body>
-
-<!-- TOOLTIP MODAL -->
-<div id="tip-overlay" onclick="closeTip(event)">
-  <div id="tip-box">
-    <button id="tip-close" onclick="closeTip()">×</button>
-    <h4 id="tip-title"></h4>
-    <p id="tip-body"></p>
-  </div>
-</div>
-
-<!-- DRILL-DOWN MODAL -->
-<div id="drill-overlay" onclick="closeDrill(event)">
-  <div id="drill-box">
-    <button id="drill-close" onclick="closeDrill()">×</button>
-    <h3 id="drill-title"></h3>
-    <div class="drill-sub" id="drill-sub"></div>
-    <div id="drill-content"></div>
-  </div>
-</div>
-
-<header>
-  <div class="h-left">
-    <img class="h-logo" src="../02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero"
-      onerror="this.style.display='none';document.getElementById('logo-fb').style.display='block'"/>
-    <span id="logo-fb" class="h-logo-fb">VIAJERO</span>
-    <div class="h-sep"></div>
-    <div>
-      <div class="h-title">Loyalty Program</div>
-      <div class="h-sub">Viajero Hostels · Viajero Go</div>
-    </div>
-  </div>
-  <div class="h-right">
-    <div class="h-ts-wrap">
-      <div class="h-ts-label">Última actualización</div>
-      <div class="h-ts-val" id="h-ts">—</div>
-    </div>
-    <div class="h-pill"><div class="dot"></div>Live</div>
-    <a href="../index.html" class="btn-hub">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M19 12H5M5 12l7-7M5 12l7 7"/>
-      </svg>
-      ← Hub
-    </a>
-  </div>
-</header>
-
-<!-- FILTROS -->
-<div class="filtros">
-  <div class="fg"><label>Período</label><select id="f-per" onchange="render()"><option value="">Todos</option></select></div>
-  <div class="fg"><label>Propiedad</label><select id="f-prop" onchange="render()"><option value="">Todas</option></select></div>
-  <div class="fg"><label>País</label><select id="f-pais" onchange="render()"><option value="">Todos</option></select></div>
-</div>
-
-<main>
-
-<!-- 1. RESUMEN DEL PERÍODO -->
-<div class="sec">
-  <div class="sec-hdr"><h2>Resumen del período</h2><div class="linea"></div></div>
-  <div id="kpi-row"></div>
-</div>
-
-<!-- 2. SEMÁFORO -->
-<div class="sec">
-  <div class="sec-hdr"><h2>Semáforo operativo</h2><div class="linea"></div></div>
-  <div id="sem-total" style="font-size:12px;color:var(--gris);margin-bottom:10px;"></div>
-  <div class="ctx-banner">
-    📍 <span><b>Fase: Adopción inicial</b> · El programa lleva ~3 meses activo. El objetivo operativo es reducir Sin Canje y alcanzar los primeros registros OK. Cuando se incorporen las 30 propiedades podrás comparar cuáles lideran en ejecución perfecta.</span>
-  </div>
-  <div class="semaforo" id="semaforo"></div>
-</div>
-
-<!-- 3. BENEFICIO MÁS REDIMIDO -->
-<div class="sec">
-  <div class="sec-hdr"><h2>Beneficio más redimido</h2><div class="linea"></div></div>
-  <div id="bene-container"></div>
-</div>
-
-<!-- 4. HALLAZGOS -->
-<div class="sec">
-  <div class="sec-hdr"><h2>Hallazgos</h2><span class="cnt" id="hall-cnt">0</span><div class="linea"></div></div>
-  <div id="hall-container"></div>
-</div>
-
-<!-- 5. SIN CANJE -->
-<div class="sec">
-  <div class="sec-hdr"><h2>Sin Canje</h2><div class="linea"></div></div>
-  <div id="sc-container"></div>
-</div>
-
-<!-- 6. HISTÓRICO -->
-<div class="sec">
-  <div class="sec-hdr"><h2>Histórico</h2><div class="linea"></div></div>
-  <div class="ac">
-    <div class="ac-head" onclick="toggleAc(this)">
-      <div class="ac-left"><span class="ac-ico">📅</span>
-        <div><div class="ac-tit">Evolución por temporada</div>
-        <div class="ac-sub">Penetración, afiliados y transacciones por propiedad</div></div>
-      </div><span class="ac-arr">▼</span>
-    </div>
-    <div class="ac-body">
-      <div class="hist-ctrl">
-        <span>Últimas</span>
-        <input type="range" id="hn" min="1" max="10" value="4" oninput="renderHistorico()"/>
-        <span id="hl">4 temporadas</span>
-      </div>
-      <div id="hist-body"></div>
-    </div>
-  </div>
-</div>
-
-<!-- 7. TIERS -->
-<div class="sec">
-  <div class="sec-hdr"><h2>Detalle por tier</h2><div class="linea"></div></div>
-  <div class="ac">
-    <div class="ac-head" onclick="toggleAc(this)">
-      <div class="ac-left"><span class="ac-ico">🏅</span>
-        <div><div class="ac-tit">Redención por tier</div>
-        <div class="ac-sub">Qué debía registrarse vs qué se registró</div></div>
-      </div><span class="ac-arr">▼</span>
-    </div>
-    <div class="ac-body"><div class="tiers-g" id="tiers-g"></div></div>
-  </div>
-</div>
-
-<!-- 8. GRÁFICAS -->
-<div class="sec">
-  <div class="sec-hdr"><h2>Gráficas</h2><div class="linea"></div></div>
-  <div class="ac">
-    <div class="ac-head" onclick="toggleAc(this)">
-      <div class="ac-left"><span class="ac-ico">📊</span>
-        <div><div class="ac-tit">Distribución de errores y tiers</div></div>
-      </div><span class="ac-arr">▼</span>
-    </div>
-    <div class="ac-body">
-      <div class="charts-r">
-        <div class="ch-box"><h3>Tipos de error</h3><div class="ch-wrap"><canvas id="ch-err"></canvas></div></div>
-        <div class="ch-box"><h3>Redención por tier</h3><div class="ch-wrap"><canvas id="ch-tier"></canvas></div></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-</main>
-
-<script>
-const DATA_URL='../data/loyalty_data.json';
-let DATA=null, chErr=null, chTier=null, SC_DATA=[], MB_DATA=[];
-
-// ── TOOLTIPS ──────────────────────────────────────────────────────
-const TIPS={
-  'Huéspedes del programa':{t:'¿Qué son los Huéspedes del programa?',b:'De todos los huéspedes que se hospedaron en el período, estos son los que tienen membresía Viajero Go activa registrada en CloudBeds. Es el universo real del programa: sin membresía en CB no aplican beneficios.'},
-  'Afiliados en check-ins':{t:'¿Qué mide Afiliados en check-ins?',b:'Del total de check-ins realizados en el período, cuántos correspondieron a miembros Viajero Go registrados en CloudBeds. Meta sugerida: >15%. Indica qué tan bien está adoptando el programa cada propiedad.'},
-  'Nuevos Afiliados':{t:'¿Qué son Nuevos Afiliados?',b:'Huéspedes que se inscribieron al programa Viajero Go por primera vez durante este período. El % de adquisición muestra qué tan bien está enrolando recepción en el check-in.'},
-  '% Miembros que Redimen':{t:'¿Qué es % Miembros que Redimen?',b:'De todos los afiliados CB del período, cuántos tuvieron al menos una transacción loyalty registrada de forma perfecta (Error_Type = OK). Mide si el programa se ejecuta correctamente. Al tener datos de 30 propiedades, permitirá identificar cuáles lideran en ejecución y cuáles necesitan refuerzo.'},
-  '% OK Transacciones':{t:'¿Qué es % OK Transacciones?',b:'Porcentaje de transacciones loyalty registradas sin ningún error: tarifa correcta al miembro correcto con el descuento que corresponde exactamente a su tier. Es la métrica de excelencia operativa — actualmente en fase inicial mientras el equipo aprende el proceso.'},
-  'Beneficio más redimido':{t:'¿Qué mide esta sección?',b:'Comparativo de qué beneficio loyalty se registra correctamente con más frecuencia: tarifa con descuento, botón toalla ($0) o botón desayuno. Solo se cuentan redenciones sin error. Si se muestran todas las propiedades, los datos son a nivel cadena.'},
-  'OK':{t:'Transacciones OK ✅',b:'Transacciones loyalty registradas perfectamente: tarifa correcta para el tier correcto, beneficios aplicados según las reglas del programa y el huésped es miembro activo. Es la meta de cada interacción loyalty. Actualmente en cero porque el programa está en fase inicial — al escalar a 30 propiedades esta métrica mostrará cuáles lo están haciendo bien.'},
-  'Sin Canje':{t:'Sin Canje ❌',b:'Miembros Viajero Go que se hospedaron pero no tuvieron ningún beneficio loyalty registrado en CB: ni tarifa, ni toalla, ni desayuno. Es una oportunidad perdida para el miembro y para el programa. El principal foco de mejora en esta etapa.'},
-  'Leakage':{t:'Leakage — Alerta 🔴',b:'Recepción aplicó un botón loyalty o tarifa con descuento a un huésped que NO es miembro del programa. No implica pérdida automática en todos los casos: si el huésped pagó el precio correcto aunque se usó el botón, el impacto financiero puede ser nulo. La pérdida real ocurre cuando el botón se registró a $0 o se dio descuento de alojamiento sin cobrar la diferencia. Requiere revisión caso por caso en el drill-down.'},
-  'Tier Incorrecto':{t:'Tier Incorrecto ⚠️',b:'El tier aplicado en CloudBeds no coincide con el tier real del miembro en Akin. Ejemplo: se aplicó tarifa Backpacker (15%) a un miembro Nomad que debería recibir 20%. Puede ser a favor o en contra del miembro — siempre debe corregirse.'},
-  'Misuse':{t:'Misuse 🚫',b:'Uso indebido del programa: aplicación de tarifa o beneficio loyalty fuera del flujo correcto definido. Puede haber un miembro, pero el proceso no se siguió o hay indicios de un uso no autorizado. Cada caso debe investigarse individualmente.'},
-  'Penetración Loyalty':{t:'¿Qué es Penetración Loyalty?',b:'De todos los check-ins del período, cuántos correspondieron a miembros activos de Viajero Go. El cruce es automático — si un miembro llega, aparece. Un % bajo indica que los miembros del programa no están eligiendo el hostel: es un indicador de fidelización y atracción de la base de miembros.'
-},
-};
-function openTip(k){
-  const t=TIPS[k];if(!t)return;
-  document.getElementById('tip-title').textContent=t.t;
-  document.getElementById('tip-body').textContent=t.b;
-  document.getElementById('tip-overlay').classList.add('show');
-}
-function closeTip(e){
-  if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;
-  document.getElementById('tip-overlay').classList.remove('show');
-}
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){
-    document.getElementById('tip-overlay').classList.remove('show');
-    document.getElementById('drill-overlay').classList.remove('show');
-  }
-});
-const infoBtn=k=>`<i class="info-btn" onclick="event.stopPropagation();openTip('${k}')">i</i>`;
-
-// ── DRILL-DOWN ────────────────────────────────────────────────────
-function openDrill(titulo,subtitulo,rows,cols){
-  document.getElementById('drill-title').textContent=titulo;
-  document.getElementById('drill-sub').textContent=subtitulo;
-  const cont=document.getElementById('drill-content');
-  if(!rows||!rows.length){
-    cont.innerHTML='<div class="drill-empty">Sin registros para mostrar. Verifica que el JSON incluya los campos requeridos en tiersDetalle.</div>';
-    document.getElementById('drill-overlay').classList.add('show');
-    return;
-  }
-  cont.innerHTML=`<div class="drill-wrap"><table>
-    <thead><tr>${cols.map(c=>`<th>${c.label}</th>`).join('')}</tr></thead>
-    <tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${r[c.key]||'—'}</td>`).join('')}</tr>`).join('')}</tbody>
-  </table></div>`;
-  document.getElementById('drill-overlay').classList.add('show');
-}
-function closeDrill(e){
-  if(e&&e.target!==document.getElementById('drill-overlay')&&e.target!==document.getElementById('drill-close'))return;
-  document.getElementById('drill-overlay').classList.remove('show');
-}
-function drillTipoError(tipo,titulo){
-  const fp=gf('f-prop'),ft=gf('f-per');
-  const rows=(DATA.tiersDetalle||[]).filter(r=>
-    (r.Error_Type||'')=== tipo &&
-    (!fp||(r.Propiedad||'')=== fp) &&
-    (!ft||(r.Periodo||r.Período||'')=== ft)
-  );
-  const cols=[
-    {key:'Nombre',    label:'Nombre huésped'},
-    {key:'Reserva',   label:'Reserva'},
-    {key:'FechaIN',   label:'Fecha llegada'},
-    {key:'Noches',    label:'Noches'},
-    {key:'Propiedad', label:'Propiedad'},
-    {key:'Periodo',   label:'Período'},
-    {key:'Tier_AKIN', label:'Tier real (Akin)'},
-  ];
-  openDrill(titulo,`${rows.length} registro(s) con este tipo de error`,rows,cols);
-}
-
-// ── FORMATO ───────────────────────────────────────────────────────
-const fmtN=n=>Math.round(Number(n)||0).toLocaleString('es-CR');
-const fmtP=(a,b)=>b>0?(Math.round(a/b*1000)/10).toFixed(1)+'%':'—';
-const clsP=v=>{const n=parseFloat(v);return isNaN(n)||v===''?'':n>=80?'pct-ok':n>=50?'pct-warn':'pct-err';};
-const corP=v=>{let n=parseFloat(v);if(isNaN(n)||v===''||v===null)return null;if(n>0&&n<1.5)n=Math.round(n*1000)/10;else n=Math.round(n*10)/10;return n;};
-
-// ── FILTROS ───────────────────────────────────────────────────────
-const gf=id=>document.getElementById(id).value;
-function filtrar(arr,kP='Período',kPr='Propiedad',kPa='País'){
-  const p=gf('f-per'),pr=gf('f-prop'),pa=gf('f-pais');
-  return arr.filter(r=>
-    (!p||(r[kP]||r['Periodo']||'')=== p)&&
-    (!pr||(r[kPr]||'')=== pr)&&
-    (!pa||(r[kPa]||r['Pais']||'')=== pa)
-  );
-}
-function poblarFiltros(){
-  const afs=DATA.afiliados||[];
-  const fill=(id,vals)=>{
-    const s=document.getElementById(id),cur=s.value;
-    while(s.options.length>1)s.remove(1);
-    vals.forEach(v=>{const o=document.createElement('option');o.value=o.text=v;s.appendChild(o);});
-    if(cur)s.value=cur;
-  };
-  const uniq=(arr,k)=>[...new Set(arr.map(a=>a[k]).filter(Boolean))].sort();
-  fill('f-per',uniq(afs,'Período'));
-  fill('f-prop',uniq(afs,'Propiedad'));
-  fill('f-pais',[...new Set(afs.map(a=>a.Pais||a.País).filter(Boolean))].sort());
-}
-
-// ── ACORDEÓN ──────────────────────────────────────────────────────
-function toggleAc(h){
-  h.classList.toggle('open');
-  const b=h.nextElementSibling;
-  b.classList.toggle('vis');
-  h.querySelector('.ac-arr').style.transform=b.classList.contains('vis')?'rotate(180deg)':'';
-}
-
-// ── KPIs ──────────────────────────────────────────────────────────
-function renderKPIs(afs,bens,mb){
-  const s=(arr,k)=>arr.reduce((t,r)=>t+(parseFloat(r[k])||0),0);
-  const hu=s(afs,'_huespedes');
-  const ci=s(afs,'_check_ins');
-  const cb=s(afs,'_afiliados_cb');
-  const nv=s(afs,'_nuevos');
-  const tOK=s(bens,'_tarifa_ok'),toOK=s(bens,'_toallas_ok'),dOK=s(bens,'_desayunos_ok');
-  const bOK=tOK+toOK+dOK;
-  const bER=s(bens,'_tarifa_err')+s(bens,'_toallas_err')+s(bens,'_desayunos_err');
-  const tB=bOK+bER, tt=s(bens,'_total_trans');
-  const lk=mb.filter(r=>r.Error_Type==='LEAKAGE').length;
-  const tiI=mb.filter(r=>r.Error_Type==='TIER_INCORRECTO').length;
-  const sc=(DATA.sinCanje||[]).filter(r=>{
-    const p=gf('f-per'),pr=gf('f-prop');
-    return(!p||(r.Período||'')=== p)&&(!pr||(r.Propiedad||'')=== pr);
-  }).length;
-
-  const pOK=tB>0?bOK/tB*100:null;
-  const pLoy=ci>0?cb/ci*100:0;
-  const pHue=hu>0?cb/hu*100:0;
-  const colOK=pOK===null?'var(--gris)':pOK>=80?'var(--ok)':pOK>=50?'#eab308':'var(--err)';
-  const colLoy=pLoy>=15?'var(--ok)':pLoy>=8?'#eab308':'var(--err)';
-  const colHue=pHue>=10?'var(--ok)':pHue>=5?'#eab308':'var(--err)';
-
-  const reservasOK=new Set(
-    mb.filter(r=>r.Error_Type==='OK'&&(r.Reserva||r['# Reserva']))
-      .map(r=>r.Reserva||r['# Reserva'])
-  );
-  const mbOK=reservasOK.size>0?reservasOK.size:mb.filter(r=>r.Error_Type==='OK').length;
-  const pRed=cb>0?mbOK/cb*100:0;
-  const colRed=pRed>=60?'var(--ok)':pRed>=30?'#eab308':'var(--err)';
-
-  const fp=gf('f-prop');
-  const nivelLabel=fp?fp:'Cadena completa';
-  const benPorProp=fp?null:calcBenPorProp(bens);
-
-  const kpiCard=(k)=>{
-    const drillClick=k.drill&&tiI>0?`onclick="drillTipoError('TIER_INCORRECTO','Tier Incorrecto — detalle')" style="cursor:pointer"`:'';
-    return`<div class="kpi" style="--kc:${k.col}" ${drillClick}>
-      <div class="k-glow"></div>
-      <div class="k-top"><div class="k-lbl">${k.key}</div>${infoBtn(k.key)}</div>
-      <div class="k-val">${k.val}</div>
-      <div class="k-sub">${k.sub||''}</div>
-      ${k.badge?`<span class="k-badge ${k.bcls||''}">${k.badge}</span>`:''}
-    </div>`;
-  };
-
-  const principales=[
-    {
-      key:'Huéspedes del programa',
-      val:fmtN(cb),
-      col:colHue,
-      sub:`de ${fmtN(hu)} huéspedes · ${fmtP(cb,hu)} son miembros`,
-      badge:pHue>=10?'✅ Buena cobertura':pHue>=5?'⚠️ En proceso':'🔴 Baja cobertura',
-      bcls:pHue>=10?'b-ok':pHue>=5?'b-warn':'b-err',
-    },
-    {
-      key:'Afiliados en check-ins',
-      val:(Math.round(pLoy*10)/10).toFixed(1)+'%',
-      col:colLoy,
-      sub:`${fmtN(cb)} de ${fmtN(ci)} check-ins son afiliados`,
-      badge:pLoy>=15?'✅ Meta':pLoy>=8?'⚠️ En proceso':'🔴 Bajo meta',
-      bcls:pLoy>=15?'b-ok':pLoy>=8?'b-warn':'b-err',
-    },
-    {
-      key:'Nuevos Afiliados',
-      val:fmtN(nv),
-      col:'#0369a1',
-      sub:`${fmtP(nv,hu)} de adquisición sobre ${fmtN(hu)} huéspedes`,
-    },
-    {
-  key:'Penetración Loyalty',
-  val:(Math.round(pLoy*10)/10).toFixed(1)+'%',
-  col:colLoy,
-  sub:`${fmtN(cb)} miembros llegaron de ${fmtN(ci)} check-ins`,
-  badge:pLoy>=15?'✅ Buena penetración':pLoy>=8?'⚠️ En proceso':'🔴 Baja penetración',
-  bcls:pLoy>=15?'b-ok':pLoy>=8?'b-warn':'b-err',
-  },
-  ];
-
-  const hayErrores=sc>0||lk>0||tiI>0;
-  const puntito=hayErrores?`<span style="width:7px;height:7px;border-radius:50%;background:var(--err);display:inline-block;flex-shrink:0;"></span>`:'';
-
-  const kpiCalidad=[
-    {
-      key:'% Miembros que Redimen',
-      val:cb>0?(Math.round(pRed*10)/10).toFixed(1)+'%':'—',
-      col:pRed>0?colRed:'var(--gris)',
-      sub:mbOK>0?`${fmtN(mbOK)} de ${fmtN(cb)} con registro OK`:`Meta a alcanzar · 0 registros OK aún`,
-      badge:mbOK>0?(pRed>=60?'✅ Buen uso':pRed>=30?'⚠️ Moderado':'🔴 Bajo'):'⏳ Fase inicial',
-      bcls:mbOK>0?(pRed>=60?'b-ok':pRed>=30?'b-warn':'b-err'):'b-gray',
-    },
-    {
-      key:'% OK Transacciones',
-      val:pOK!==null&&pOK>0?(Math.round(pOK*10)/10).toFixed(1)+'%':'0%',
-      col:pOK>0?colOK:'var(--gris)',
-      sub:bOK>0?`${fmtN(bOK)} correctas de ${fmtN(tt||tB)} totales`:`Meta a alcanzar · en fase de adopción`,
-      badge:pOK>0?(pOK>=80?'✅ Excelente':pOK>=50?'⚠️ Regular':'🔴 Bajo'):'⏳ Fase inicial',
-      bcls:pOK>0?(pOK>=80?'b-ok':pOK>=50?'b-warn':'b-err'):'b-gray',
-    },
-  ];
-
-  const kpiErrores=[
-    {key:'Sin Canje',val:fmtN(sc),col:'var(--err)',sub:'Sin tarifa ni beneficios',badge:'Revisar',bcls:'b-err'},
-    {key:'Leakage',val:fmtN(lk),col:lk>0?'var(--err)':'var(--ok)',sub:'Alerta — revisar caso por caso',
-      badge:lk===0?'✅ Sin alertas':'🔴 Requiere revisión',bcls:lk===0?'b-ok':'b-err'},
-    {key:'Tier Incorrecto',val:fmtN(tiI),col:tiI>0?'#7c3aed':'var(--ok)',sub:`de ${fmtN(cb)} afiliados CB`,
-      badge:tiI>0?'Ver quiénes →':null,bcls:'b-err',drill:true},
-  ];
-
-  const totalBen=tOK+toOK+dOK||1;
-  const benItems=[
-    {ico:'🏷️',lbl:'Tarifa',n:tOK,col:'#B83D16'},
-    {ico:'🛁',lbl:'Toalla',n:toOK,col:'#0369a1'},
-    {ico:'🍳',lbl:'Desayuno',n:dOK,col:'#065f46'},
-  ];
-  const benBarHtml=`
-    <div style="background:#fff;border-radius:16px;padding:20px 18px;border:1.5px solid var(--border);
-                position:relative;overflow:hidden;">
-      <div class="k-glow" style="background:#B83D16"></div>
-      <div class="k-top">
-        <div class="k-lbl">Beneficio más redimido</div>${infoBtn('Beneficio más redimido')}
-      </div>
-      <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:12px;">${nivelLabel}</div>
-      ${benItems.map(b=>{
-        const pct=Math.round(b.n/totalBen*100);
-        const isTop=b.n===Math.max(tOK,toOK,dOK)&&b.n>0;
-        return`<div class="ben-bar-row">
-          <span class="ben-bar-lbl">${b.ico} ${b.lbl}${isTop?` <span style="font-size:9px;background:var(--coral);color:#fff;padding:1px 6px;border-radius:4px;font-weight:700;">Top</span>`:''}
-          </span>
-          <div class="ben-bar-track">
-            <div class="ben-bar-fill" style="width:${pct}%;background:${b.col}"></div>
-          </div>
-          <span class="ben-bar-n">${fmtN(b.n)}</span>
-        </div>`;
-      }).join('')}
-      ${benPorProp&&benPorProp.length?`
-        <div style="margin-top:12px;font-size:10px;font-weight:700;color:var(--gris);
-                    text-transform:uppercase;letter-spacing:.5px;padding-top:10px;
-                    border-top:1px solid var(--cream-dark);">Por propiedad</div>
-        ${benPorProp.map(p=>`<div style="display:flex;justify-content:space-between;font-size:11px;
-                                         padding:3px 0;border-bottom:1px solid var(--cream-dark);">
-          <span style="color:var(--dark)">${p.prop}</span>
-          <span style="font-weight:700;color:var(--coral)">${p.top} (${fmtN(p.n)})</span>
-        </div>`).join('')}`:''}
-    </div>`;
-
-  document.getElementById('kpi-row').innerHTML=`
-    <div class="kpi-grupo">
-      <div class="kpi-grupo-label">Adopción y crecimiento</div>
-      <div class="kpi-grid">${principales.map(k=>kpiCard(k)).join('')}</div>
-    </div>
-    <div class="kpi-grupo" style="margin-bottom:0">
-      <div class="kpi-grupo-label">
-        Detalle operativo y calidad
-        <button class="kpi-toggle" onclick="toggleKpiSec(this)">
-          ${puntito} Ver métricas y errores <span id="kpi-arr">▼</span>
-        </button>
-      </div>
-      <div class="kpi-secundario" id="kpi-sec">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
-                    color:var(--gris);margin:0 0 8px;">Calidad del programa</div>
-        <div class="kpi-grid" style="padding-bottom:14px;">${kpiCalidad.map(k=>kpiCard(k)).join('')}${benBarHtml}</div>
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
-                    color:var(--gris);margin:14px 0 8px;padding-top:14px;border-top:1px solid var(--border);">Errores operativos</div>
-        <div class="kpi-grid">${kpiErrores.map(k=>kpiCard(k)).join('')}</div>
-      </div>
-    </div>`;
-
-  renderBeneficios(tOK,toOK,dOK,tt,bens);
-}
-
-function calcBenPorProp(bens){
-  const map={};
-  bens.forEach(r=>{
-    const p=r.Propiedad||'';
-    if(!map[p])map[p]={tOK:0,toOK:0,dOK:0};
-    map[p].tOK+=(parseFloat(r._tarifa_ok)||0);
-    map[p].toOK+=(parseFloat(r._toallas_ok)||0);
-    map[p].dOK+=(parseFloat(r._desayunos_ok)||0);
-  });
-  return Object.entries(map).map(([prop,v])=>{
-    let top='Tarifa',n=v.tOK;
-    if(v.toOK>n){top='Toalla';n=v.toOK;}
-    if(v.dOK>n){top='Desayuno';n=v.dOK;}
-    return{prop,top,n};
-  }).sort((a,b)=>b.n-a.n);
-}
-
-function toggleKpiSec(btn){
-  const sec=document.getElementById('kpi-sec');
-  const arr=document.getElementById('kpi-arr');
-  const abierto=sec.classList.toggle('abierto');
-  arr.textContent=abierto?'▲':'▼';
-}
-
-// ── BENEFICIOS ────────────────────────────────────────────────────
-function renderBeneficios(tOK,toOK,dOK,tt,bens){
-  const cont=document.getElementById('bene-container');
-  if(!cont)return;
-  const total=tOK+toOK+dOK||1;
-  const items=[
-    {ico:'🏷️',lbl:'Tarifa loyalty',desc:'Descuento aplicado en tarifa de habitación según tier',n:tOK,col:'#B83D16'},
-    {ico:'🛁',lbl:'Toalla',        desc:'Botón toalla registrado a $0 en CB (Backpacker+)',    n:toOK,col:'#0369a1'},
-    {ico:'🍳',lbl:'Desayuno',      desc:'Botón desayuno para Nomad/Viajero con 3+ noches',     n:dOK, col:'#065f46'},
-  ];
-  const top=items.reduce((a,b)=>a.n>=b.n?a:b);
-  const interpretacion=[
-    tOK>=toOK&&tOK>=dOK?'<b>Tarifa</b> lidera: el programa se reconoce como descuento económico. Buena base, pero hay oportunidad de aumentar toalla y desayuno.':null,
-    toOK>=tOK&&toOK>=dOK?'<b>Toalla</b> lidera: recepción está siguiendo el flujo completo para Backpacker+. Buen indicador de ejecución operativa.':null,
-    dOK>=tOK&&dOK>=toOK?'<b>Desayuno</b> lidera: excelente adopción del beneficio premium (Nomad/Viajero 3+ noches).':null,
-  ].filter(Boolean)[0]||'Sin redenciones OK registradas aún — el programa está en fase inicial de adopción.';
-  const lowBenes=items.filter(i=>i.n===0).map(i=>i.lbl);
-  const alerta=lowBenes.length?`⚠️ <b>${lowBenes.join(' y ')}</b> en 0 — verificar si el tier corresponde o si falta capacitación en recepción.`:'';
-
-  cont.innerHTML=`<div class="ac">
-    <div class="ac-head open" onclick="toggleAc(this)">
-      <div class="ac-left"><span class="ac-ico">⭐</span>
-        <div>
-          <div class="ac-tit">Beneficio más redimido ${infoBtn('Beneficio más redimido')}</div>
-          <div class="ac-sub">Solo redenciones correctas · ${fmtN(tOK+toOK+dOK)} registros OK de ${fmtN(tt)} totales</div>
-        </div>
-      </div>
-      <div class="ac-meta"><span class="ac-badge b-coral">${top.n>0?top.ico+' '+top.lbl+' lidera':'⏳ Sin OK aún'}</span></div>
-      <span class="ac-arr" style="transform:rotate(180deg)">▼</span>
-    </div>
-    <div class="ac-body vis">
-      <div style="display:flex;flex-direction:column;gap:16px;max-width:620px;margin-bottom:20px;">
-        ${items.map(it=>{
-          const pct=Math.round(it.n/total*1000)/10;
-          const isTop=it.lbl===top.lbl&&top.n>0;
-          return`<div style="display:flex;align-items:center;gap:14px;">
-            <div style="font-size:22px;width:34px;text-align:center;flex-shrink:0">${it.ico}</div>
-            <div style="flex:1;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                <span style="font-size:13px;font-weight:700;color:var(--dark);">${it.lbl}
-                  ${isTop?'<span style="font-size:10px;background:var(--coral);color:#fff;padding:2px 8px;border-radius:6px;margin-left:6px;font-weight:700;vertical-align:middle;">Top</span>':''}
-                </span>
-                <span style="font-size:14px;font-weight:800;color:${it.col};">${fmtN(it.n)}
-                  <span style="font-size:11px;color:var(--gris);font-weight:500">(${pct.toFixed(1)}%)</span>
-                </span>
-              </div>
-              <div style="height:10px;background:var(--cream-dark);border-radius:5px;overflow:hidden;">
-                <div style="height:100%;width:${pct}%;background:${it.col};border-radius:5px;transition:width .7s;"></div>
-              </div>
-              <div style="font-size:11px;color:var(--gris);margin-top:5px;">${it.desc}</div>
-            </div>
-          </div>`;
-        }).join('')}
-      </div>
-      <div style="padding:16px 18px;background:var(--cream);border-radius:12px;border:1.5px solid var(--border);display:flex;flex-direction:column;gap:8px;">
-        <div style="font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.7px;">¿Qué nos dice?</div>
-        <div style="font-size:12px;color:var(--mid);line-height:1.65;">${interpretacion}</div>
-        ${alerta?`<div style="font-size:12px;color:var(--warn);line-height:1.65;">${alerta}</div>`:''}
-      </div>
-    </div>
-  </div>`;
-}
-
-// ── SEMÁFORO ──────────────────────────────────────────────────────
-function renderSemaforo(mb,afs){
-  const todos=mb;
-  const tipos={SIN_CANJE:0,LEAKAGE:0,MISUSE:0,OK:0,TIER_INCORRECTO:0,NO_LOYALTY:0};
-  todos.forEach(r=>{const t=r.Error_Type||'NO_LOYALTY';if(t in tipos)tipos[t]++;});
-  const totalLoy=tipos.SIN_CANJE+tipos.LEAKAGE+tipos.MISUSE+tipos.OK+tipos.TIER_INCORRECTO||1;
-
-  document.getElementById('sem-total').innerHTML=
-    `<b>${fmtN(totalLoy)}</b> transacciones loyalty en el período · ` +
-    `${fmtN(tipos.NO_LOYALTY)} check-ins sin membresía (no aplica programa)`;
-
-  const items=[
-    {
-      key:'OK',
-      val:fmtN(tipos.OK),
-      pct:fmtP(tipos.OK,totalLoy),
-      tipo:tipos.OK>0?'registros perfectos':'meta · fase inicial',
-      cls:tipos.OK>0?'s-verde':'s-gris',
-      drill:false,
-    },
-    {
-      key:'Sin Canje',
-      val:fmtN(tipos.SIN_CANJE),
-      pct:fmtP(tipos.SIN_CANJE,totalLoy),
-      tipo:'sin registro',
-      cls:tipos.SIN_CANJE===0?'s-verde':tipos.SIN_CANJE<20?'s-amarillo':'s-rojo',
-      drill:true,drillKey:'SIN_CANJE',
-    },
-    {
-      key:'Leakage',
-      val:fmtN(tipos.LEAKAGE),
-      pct:fmtP(tipos.LEAKAGE,totalLoy),
-      tipo:'alerta · revisar caso a caso',
-      cls:tipos.LEAKAGE===0?'s-verde':tipos.LEAKAGE<10?'s-amarillo':'s-rojo',
-      drill:true,drillKey:'LEAKAGE',
-    },
-    {
-      key:'Tier Incorrecto',
-      val:fmtN(tipos.TIER_INCORRECTO),
-      pct:fmtP(tipos.TIER_INCORRECTO,totalLoy),
-      tipo:'tier equivocado',
-      cls:tipos.TIER_INCORRECTO===0?'s-verde':tipos.TIER_INCORRECTO<5?'s-amarillo':'s-rojo',
-      drill:true,drillKey:'TIER_INCORRECTO',
-    },
-    {
-      key:'Misuse',
-      val:fmtN(tipos.MISUSE),
-      pct:fmtP(tipos.MISUSE,totalLoy),
-      tipo:'uso indebido',
-      cls:tipos.MISUSE===0?'s-verde':'s-rojo',
-      drill:true,drillKey:'MISUSE',
-    },
-  ];
-
-  document.getElementById('semaforo').innerHTML=items.map(i=>`
-    <div class="s-item ${i.cls}"
-      ${i.drill&&tipos[i.drillKey]>0?`onclick="drillTipoError('${i.drillKey}','${i.key} — detalle de casos')" style="cursor:pointer"`:'style="cursor:default"'}>
-      <div class="s-val">${i.val}</div>
-      <div class="s-pct">${i.pct} del total</div>
-      <div class="s-lbl">${i.key} ${infoBtn(i.key)}</div>
-      <div class="s-tipo">${i.drill&&tipos[i.drillKey||'']>0?'Click para ver detalle →':i.tipo}</div>
-    </div>`).join('');
-}
-
-// ── HALLAZGOS ─────────────────────────────────────────────────────
-function renderHallazgos(hall){
-  const cont=document.getElementById('hall-container');
-  if(!hall.length){
-    cont.innerHTML='<div class="empty">✅ Sin hallazgos para este filtro</div>';
-    document.getElementById('hall-cnt').textContent='0';
-    return;
-  }
-  const byTipo={};
-  hall.forEach(h=>{
-    const tipo=(h['Categoría']||'')+'|'+(h['Severidad']||'')+'|'+(h['Error_Type']||'');
-    if(!byTipo[tipo])byTipo[tipo]={
-      cat:h['Categoría']||'General',sev:h['Severidad']||'Media',
-      accion:h['Acción sugerida']||'',errorType:h['Error_Type']||'',
-      total:0,porPropiedad:{}
-    };
-    const m=(h.Hallazgo||'').match(/^(\d+)/);
-    const n=m?parseInt(m[1]):1;
-    byTipo[tipo].total+=n;
-    const prop=h.Propiedad||'Sin especificar';
-    if(!byTipo[tipo].porPropiedad[prop])byTipo[tipo].porPropiedad[prop]=0;
-    byTipo[tipo].porPropiedad[prop]+=n;
-  });
-
-  const porCat={};
-  Object.values(byTipo).forEach(g=>{
-    if(!porCat[g.cat])porCat[g.cat]=[];
-    const a=g.accion.toLowerCase();
-    let txt='',drillType=null;
-    if(a.includes('tourist'))                                            txt=`${g.total} huéspedes Tourist sin tarifa loyalty`;
-    else if(a.includes('toalla'))                                        txt=`${g.total} huéspedes Backpacker+ sin tarifa ni beneficios`;
-    else if(a.includes('botones'))                                       {txt=`${g.total} alertas de leakage`;drillType='LEAKAGE';}
-    else if(a.includes('tier')||g.cat.toLowerCase().includes('tier'))   {txt=`${g.total} huéspedes con tier incorrecto`;drillType='TIER_INCORRECTO';}
-    else if(a.includes('misuse')||g.cat.toLowerCase().includes('misuse')){txt=`${g.total} caso(s) de uso indebido`;drillType='MISUSE';}
-    else if(a.includes('enrolamiento'))                                  txt=`${Object.keys(g.porPropiedad).length} propiedad(es) con baja penetración`;
-    else if(a.includes('capacitación'))                                  txt=`% redención bajo en ${Object.keys(g.porPropiedad).length} propiedad(es)`;
-    else                                                                 txt=`${g.total} casos`;
-    porCat[g.cat].push({...g,txt,drillType});
-  });
-
-  document.getElementById('hall-cnt').textContent=Object.values(byTipo).length;
-  const ORD=['Sin canje','Leakage','Tier incorrecto','Misuse','Operación','Adopción'];
-  const clsM={Crítica:'critica',Alta:'alta',Media:'media'};
-  let uid=0,html='';
-
-  [...ORD,...Object.keys(porCat).filter(c=>!ORD.includes(c))].filter(c=>porCat[c]).forEach(cat=>{
-    html+=`<div class="hall-grp"><div class="hall-grp-t">${cat}</div>`;
-    porCat[cat].sort((a,b)=>({Crítica:0,Alta:1,Media:2}[a.sev]??3)-({Crítica:0,Alta:1,Media:2}[b.sev]??3)).forEach(g=>{
-      const props=Object.entries(g.porPropiedad).sort((a,b)=>b[1]-a[1]);
-      const multiProp=props.length>1;
-      const hasDrill=g.drillType&&(DATA.tiersDetalle||[]).filter(r=>r.Error_Type===g.drillType).length>0;
-      const id=`hvm-${uid++}`;
-      const propResumen=props.length===1?`<b>${props[0][0]}</b>`:`<b>${props[0][0]}</b> y ${props.length-1} más`;
-
-      html+=`<div class="hall-card ${clsM[g.sev]||'media'} ${hasDrill?'clickable':''}"
-        ${hasDrill?`onclick="drillTipoError('${g.drillType}','${g.txt} — detalle')"`:''}>
-        <div class="hall-dot"></div>
-        <div class="hall-info">
-          <div class="hall-txt">${g.txt}</div>
-          <div class="hall-tip">💡 ${g.accion} · ${propResumen}</div>
-          ${multiProp?`<div id="${id}" style="display:none;margin-top:10px;">
-            ${props.map(([p,n])=>`<div class="hall-prop-row">
-              <span style="color:var(--dark);font-weight:600;">${p}</span>
-              <span style="font-weight:800;color:var(--mid);">${fmtN(n)}</span>
-            </div>`).join('')}
-          </div>
-          <button class="ver-mas-btn" onclick="event.stopPropagation();toggleVerMas('${id}',this)">
-            Ver por propiedad ▼
-          </button>`:''}
-        </div>
-        <div class="hall-right">
-          <div class="hall-n">${g.total}</div>
-          ${hasDrill?`<span class="hall-ver">Ver quiénes →</span>`:''}
-        </div>
-      </div>`;
-    });
-    html+='</div>';
-  });
-
-  cont.innerHTML=`<div class="ac">
-    <div class="ac-head open" onclick="toggleAc(this)">
-      <div class="ac-left"><span class="ac-ico">🔍</span>
-        <div>
-          <div class="ac-tit">Hallazgos consolidados</div>
-          <div class="ac-sub">${Object.values(byTipo).length} tipos de problema · click para ver detalle</div>
-        </div>
-      </div>
-      <span class="ac-arr" style="transform:rotate(180deg)">▼</span>
-    </div>
-    <div class="ac-body vis">${html}</div>
-  </div>`;
-}
-
-function toggleVerMas(id,btn){
-  const el=document.getElementById(id);
-  if(!el)return;
-  const vis=el.style.display==='block';
-  el.style.display=vis?'none':'block';
-  btn.textContent=vis?'Ver por propiedad ▼':'Ocultar ▲';
-}
-
-// ── SIN CANJE ─────────────────────────────────────────────────────
-function renderSinCanje(sc){
-  SC_DATA=sc;
-  const t=sc.filter(r=>(r.Tier||'').trim().toLowerCase()==='tourist').length;
-  const b=sc.length-t;
-  document.getElementById('sc-container').innerHTML=`
-    <div class="ac">
-      <div class="ac-head" onclick="toggleAc(this)">
-        <div class="ac-left"><span class="ac-ico">❌</span>
-          <div>
-            <div class="ac-tit">Sin Canje — ${sc.length} afiliados</div>
-            <div class="ac-sub">Sin tarifa ni beneficios loyalty registrados en CB</div>
-          </div>
-        </div>
-        <div class="ac-meta">
-          <span class="ac-badge b-err">${t} Tourist</span>
-          <span class="ac-badge b-warn">${b} Backpacker+</span>
-        </div>
-        <span class="ac-arr">▼</span>
-      </div>
-      <div class="ac-body">
-        <div class="sc-cats">
-          <div class="sc-cat t">
-            <div class="sc-n">${t}</div>
-            <div class="sc-t">Tourist — Sin tarifa loyalty</div>
-            <div class="sc-d">Recepción debe seleccionar la tarifa loyalty manualmente en CB al check-in, consultando la nota de reserva o Akin. No es tarifa pública.</div>
-          </div>
-          <div class="sc-cat b">
-            <div class="sc-n">${b}</div>
-            <div class="sc-t">Backpacker+ — Sin nada registrado</div>
-            <div class="sc-d">Debían recibir tarifa loyalty + botón toalla. Si es Viajero con 3+ noches, también botón desayuno.</div>
-          </div>
-        </div>
-        <p style="font-size:12px;color:var(--gris);margin-bottom:8px;">Afiliados Backpacker+ sin canje — busca por nombre, propiedad, período o tier:</p>
-        <input class="sc-q" id="sc-q" type="text" placeholder="Buscar..." oninput="filtrarSC()"/>
-        <div class="sc-wrap" id="sc-tabla"></div>
-      </div>
-    </div>`;
-  filtrarSC();
-}
-
-function filtrarSC(){
-  const q=(document.getElementById('sc-q')?.value||'').toLowerCase();
-  const rows=SC_DATA.filter(r=>{
-    if((r.Tier||'').trim().toLowerCase()==='tourist')return false;
-    if(!q)return true;
-    return Object.values(r).some(v=>v&&v.toString().toLowerCase().includes(q));
-  });
-  const wrap=document.getElementById('sc-tabla');
-  if(!rows.length){wrap.innerHTML='<div class="empty">Sin registros Backpacker+ para este filtro</div>';return;}
-  wrap.innerHTML=`<table>
-    <thead><tr><th>Nombre</th><th>Reserva</th><th>Fecha llegada</th><th>Período</th><th>Propiedad</th><th>Tier</th><th>Noches</th><th>¿Qué registrar?</th></tr></thead>
-    <tbody>${rows.map(r=>`<tr>
-      <td><b>${r.Nombre||'—'}</b></td>
-      <td>${r.Reserva||r['# Reserva']||'—'}</td>
-      <td>${r.FechaIN||r['Fecha llegada']||'—'}</td>
-      <td>${r.Período||'—'}</td>
-      <td>${r.Propiedad||'—'}</td>
-      <td>${r.Tier||'—'}</td>
-      <td>${r.Noches||'—'}</td>
-      <td>${r['Qué debía registrarse']||'—'}</td>
-    </tr>`).join('')}</tbody>
-  </table>`;
-}
-
-// ── HISTÓRICO ─────────────────────────────────────────────────────
-function renderHistorico(){
-  const hist=filtrar(DATA.historico||[],'Período','Propiedad','País');
-  const n=parseInt(document.getElementById('hn').value);
-  document.getElementById('hl').textContent=n+(n===1?' temporada':' temporadas');
-  const allP=[...new Set(hist.map(r=>r.Período).filter(Boolean))].sort().slice(-n);
-  const byP={};hist.forEach(r=>{if(!byP[r.Propiedad])byP[r.Propiedad]=[];byP[r.Propiedad].push(r);});
-  const METS=[
-    {k:'Afiliados_CB',        l:'Afiliados CB'},
-    {k:'Pct_Penetracion_Real',l:'% Penetración',p:1},
-    {k:'Nuevos_Afiliados',    l:'Nuevos'},
-    {k:'Total_Trans',         l:'Transacciones'},
-    {k:'Pct_OK',              l:'% OK',p:1},
-  ];
-  const body=document.getElementById('hist-body');
-  if(!allP.length){body.innerHTML='<div class="empty">Sin datos históricos</div>';return;}
-  body.innerHTML=Object.keys(byP).sort().map(prop=>`
-    <div class="hist-prop">
-      <div class="hist-ph" onclick="tH(this)"><span>🏨 ${prop}</span><span>▲</span></div>
-      <div class="hist-pb op">
-        <table>
-          <thead><tr><th>Métrica</th>${allP.map(p=>`<th>${p}</th>`).join('')}</tr></thead>
-          <tbody>${METS.map(m=>`<tr>
-            <td>${m.l}</td>
-            ${allP.map(per=>{
-              const r=byP[prop].find(x=>x.Período===per);
-              if(!r)return'<td style="color:#ccc">—</td>';
-              const v=r[m.k];
-              if(v===''||v===null||v===undefined)return'<td>—</td>';
-              if(m.p){const num=corP(v);if(num===null)return'<td>—</td>';return`<td class="${clsP(num)}">${num.toFixed(1)}%</td>`;}
-              return`<td>${fmtN(v)}</td>`;
-            }).join('')}
-          </tr>`).join('')}</tbody>
-        </table>
-      </div>
-    </div>`).join('');
-}
-function tH(h){
-  const b=h.nextElementSibling;
-  b.classList.toggle('op');
-  h.querySelector('span:last-child').textContent=b.classList.contains('op')?'▲':'▼';
-}
-
-// ── TIERS ─────────────────────────────────────────────────────────
-function renderTiers(rd){
-  if(!rd.length){document.getElementById('tiers-g').innerHTML='<div class="empty">Sin datos</div>';return;}
-  const BENS={
-    Tourist:'Tarifa 15%',
-    Backpacker:'Tarifa 15% + Toalla',
-    Explorer:'Tarifa 20% + Toalla',
-    Nomad:'Tarifa 20% + Toalla',
-    Viajero:'Tarifa 25% + Toalla + Desayuno (3+ noches)',
-  };
-  const ORDEN=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
-  const map={};
-  rd.forEach(r=>{
-    const t=r.Tier||'Sin tier';
-    if(!map[t])map[t]={ok:0,err:0,sin:0};
-    map[t].ok+=(parseInt(r.OK)||0);
-    map[t].err+=(parseInt(r.Con_Error)||0);
-    map[t].sin+=(parseInt(r.Sin_Registro)||0);
-  });
-  document.getElementById('tiers-g').innerHTML=ORDEN.filter(t=>map[t]).map(t=>{
-    const g=map[t],tot=g.ok+g.err+g.sin,pOK=tot>0?Math.round(g.ok/tot*1000)/10:0;
-    const col=pOK>=80?'var(--ok)':pOK>=50?'#eab308':'var(--err)';
-    return`<div class="tier-c">
-      <div class="t-top"><span class="t-nom">${t}</span><span class="t-tot">${fmtN(tot)} hués.</span></div>
-      <div class="t-bens">${BENS[t]||''}</div>
-      <div class="tier-bar"><div class="tier-fill" style="width:${pOK}%;background:${col}"></div></div>
-      <div class="tier-pct" style="color:${col}">${pOK.toFixed(1)}% redención OK</div>
-      <div class="tier-ns">
-        <span>✅ ${fmtN(g.ok)}</span>
-        <span>⚠️ ${fmtN(g.err)}</span>
-        <span>❌ ${fmtN(g.sin)}</span>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-// ── CHARTS ────────────────────────────────────────────────────────
-function renderCharts(mb){
-  const tipos={};
-  mb.forEach(r=>{const t=r.Error_Type||'NO_LOYALTY';tipos[t]=(tipos[t]||0)+1;});
-  if(chErr)chErr.destroy();
-  chErr=new Chart(document.getElementById('ch-err'),{
-    type:'doughnut',
-    data:{labels:Object.keys(tipos),datasets:[{data:Object.values(tipos),
-      backgroundColor:['#dc2626','#f97316','#eab308','#7c3aed','#B83D16','#15803d','#64748b'],
-      borderWidth:2,borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11}}}}}
-  });
-  const ORDEN=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
-  const tm={};
-  mb.forEach(r=>{
-    const t=r.Tier_AKIN||r.Tier||'Sin tier';
-    if(!tm[t])tm[t]={ok:0,err:0,sin:0};
-    const et=r.Error_Type||'';
-    if(et==='OK')tm[t].ok++;
-    else if(et===''||et==='NO_LOYALTY'||et==='SIN_CANJE')tm[t].sin++;
-    else tm[t].err++;
-  });
-  const tL=ORDEN.filter(t=>tm[t]);
-  if(chTier)chTier.destroy();
-  chTier=new Chart(document.getElementById('ch-tier'),{
-    type:'bar',
-    data:{labels:tL,datasets:[
-      {label:'✅ OK',       data:tL.map(t=>tm[t].ok), backgroundColor:'#86efac'},
-      {label:'⚠️ Error',    data:tL.map(t=>tm[t].err),backgroundColor:'#fde68a'},
-      {label:'❌ Sin reg.', data:tL.map(t=>tm[t].sin),backgroundColor:'#fca5a5'},
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      scales:{x:{stacked:true},y:{stacked:true,ticks:{font:{size:11}}}},
-      plugins:{legend:{labels:{font:{size:11}}}}}
-  });
-}
-
-// ── RENDER ────────────────────────────────────────────────────────
-function render(){
-  if(!DATA)return;
-  const afs =filtrar(DATA.afiliados||[],'Período','Propiedad','Pais');
-  const bens=filtrar(DATA.beneficios||[],'Período','Propiedad','Pais');
-  const mb  =filtrar(DATA.tiersDetalle||[],'Período','Propiedad','País');
-  const hall=filtrar(DATA.hallazgos||[],'Período','Propiedad','País');
-  const sc  =filtrar(DATA.sinCanje||[],'Período','Propiedad','País');
-  const rd  =filtrar(DATA.redencionPorTier||[],'Período','Propiedad','País');
-  MB_DATA=mb;
-  renderKPIs(afs,bens,mb);
-  renderSemaforo(mb,afs);
-  renderHallazgos(hall);
-  renderSinCanje(sc);
-  renderHistorico();
-  renderTiers(rd);
-  renderCharts(mb);
-}
-
-// ── INIT ──────────────────────────────────────────────────────────
-(async()=>{
-  try{
-    const r=await fetch(DATA_URL+'?t='+Date.now());
-    DATA=await r.json();
-   if(DATA.actualizado){
-const d=new Date(DATA.actualizado);
-document.getElementById('h-ts').textContent=
-d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+
-' · '+d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
-}
-    poblarFiltros();
-    render();
-  }catch(e){
-    document.getElementById('h-ts').textContent='❌ Error cargando datos';
-    console.error(e);
-  }
-})();
-</script>
-</body>
-</html>
+.tiers-g
