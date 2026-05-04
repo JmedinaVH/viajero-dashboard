@@ -47,21 +47,24 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .empty{text-align:center;padding:32px;color:var(--gris);font-size:13px;}
 #tip-overlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(30,16,10,.45);align-items:center;justify-content:center;padding:20px;}
 #tip-overlay.show{display:flex;}
-#tip-box{background:#fff;border-radius:16px;max-width:380px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(30,16,10,.25);position:relative;animation:popIn .2s;}
+#tip-box{background:#fff;border-radius:16px;max-width:400px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(30,16,10,.25);position:relative;animation:popIn .2s;}
 @keyframes popIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
 #tip-box h4{font-size:15px;font-weight:700;margin-bottom:8px;}
 #tip-box p{font-size:13px;color:var(--gris);line-height:1.6;white-space:pre-line;}
 #tip-close{position:absolute;top:12px;right:14px;font-size:20px;cursor:pointer;color:var(--gris);background:none;border:none;font-family:'Outfit',sans-serif;}
 #drill-overlay{display:none;position:fixed;inset:0;z-index:9500;background:rgba(30,16,10,.55);align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;}
 #drill-overlay.show{display:flex;}
-#drill-box{background:#fff;border-radius:20px;width:100%;max-width:820px;padding:28px;box-shadow:0 24px 80px rgba(30,16,10,.3);position:relative;animation:popIn .2s;margin:auto;}
+#drill-box{background:#fff;border-radius:20px;width:100%;max-width:880px;padding:28px;box-shadow:0 24px 80px rgba(30,16,10,.3);position:relative;animation:popIn .2s;margin:auto;}
 #drill-box h3{font-size:17px;font-weight:800;margin-bottom:4px;}
-#drill-box .drill-sub{font-size:12px;color:var(--gris);margin-bottom:20px;}
+#drill-sub{font-size:12px;color:var(--gris);margin-bottom:14px;}
 #drill-close{position:absolute;top:16px;right:18px;font-size:22px;cursor:pointer;color:var(--gris);background:none;border:none;font-family:'Outfit',sans-serif;}
-.drill-wrap{overflow-x:auto;border-radius:10px;border:1.5px solid var(--border);max-height:400px;}
+.drill-wrap{overflow-x:auto;border-radius:10px;border:1.5px solid var(--border);max-height:420px;overflow-y:auto;}
+.drill-filter{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;padding:12px 14px;background:var(--cream);border-radius:10px;border:1.5px solid var(--border);}
+.drill-filter label{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;}
+.drill-filter select{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:6px 28px 6px 10px;border:1.5px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%237A6E68' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;}
+.drill-count{font-size:12px;color:var(--gris);margin-left:auto;}
 .info-btn{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:var(--coral-soft);color:var(--coral);font-size:10px;font-weight:800;cursor:pointer;border:1.5px solid var(--coral);transition:.2s;font-style:normal;flex-shrink:0;}
 .info-btn:hover{background:var(--coral);color:#fff;}
-/* FUNNEL */
 .funnel-outer{background:#fff;border-radius:16px;border:1.5px solid var(--border);padding:24px 28px;}
 .fn-row{display:flex;align-items:center;gap:16px;padding:11px 0;}
 .fn-row+.fn-row{border-top:1px solid var(--cream-dark);}
@@ -74,7 +77,6 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .fn-bar-fill{height:100%;border-radius:99px;transition:width .9s ease;}
 .fn-right{min-width:70px;display:flex;justify-content:flex-end;}
 .fn-n{font-size:22px;font-weight:800;line-height:1;}
-/* KPI */
 .kpi-grupo{margin-bottom:20px;}
 .kpi-grupo-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gris);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
 .kpi-grupo-label::after{content:'';flex:1;height:1px;background:var(--border);}
@@ -91,12 +93,8 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .k-val{font-size:28px;font-weight:800;line-height:1;color:var(--kc,var(--dark));margin-bottom:5px;}
 .k-sub{font-size:11px;color:var(--gris);line-height:1.4;}
 .k-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:8px;margin-top:8px;}
-.b-ok{background:var(--ok-bg);color:var(--ok);}
-.b-warn{background:var(--warn-bg);color:var(--warn);}
-.b-err{background:var(--err-bg);color:var(--err);}
-.b-gray{background:var(--cream-dark);color:var(--mid);}
-.b-coral{background:var(--coral);color:#fff;}
-/* SEMÁFORO */
+.k-divider{margin:10px 0 6px;border-top:1px solid var(--cream-dark);padding-top:10px;display:flex;justify-content:space-between;align-items:center;}
+.b-ok{background:var(--ok-bg);color:var(--ok);}.b-warn{background:var(--warn-bg);color:var(--warn);}.b-err{background:var(--err-bg);color:var(--err);}.b-gray{background:var(--cream-dark);color:var(--mid);}.b-coral{background:var(--coral);color:#fff;}
 .semaforo{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px;}
 .s-item{background:#fff;border-radius:14px;padding:16px 14px;border:1.5px solid var(--border);text-align:center;transition:transform .2s,box-shadow .2s;}
 .s-item:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(30,16,10,.08);}
@@ -106,7 +104,6 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .s-tipo{font-size:10px;font-weight:600;padding:3px 9px;border-radius:8px;display:inline-block;margin-top:7px;}
 .s-verde .s-val{color:var(--ok);}.s-amarillo .s-val{color:var(--warn);}.s-rojo .s-val{color:var(--err);}.s-gris .s-val{color:var(--gris);}
 .s-verde .s-tipo{background:var(--ok-bg);color:var(--ok);}.s-amarillo .s-tipo{background:var(--warn-bg);color:var(--warn);}.s-rojo .s-tipo{background:var(--err-bg);color:var(--err);}.s-gris .s-tipo{background:var(--cream-dark);color:var(--mid);}
-/* RANKING */
 .rank-item{display:flex;align-items:center;gap:12px;background:#fff;border-radius:12px;padding:14px 16px;border:1.5px solid var(--border);margin-bottom:8px;transition:.2s;}
 .rank-item:hover{box-shadow:0 4px 14px rgba(30,16,10,.07);transform:translateX(3px);}
 .rank-pos{font-size:15px;font-weight:800;color:var(--coral);min-width:28px;text-align:center;}
@@ -116,7 +113,6 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .rank-bar-wrap{flex:1.5;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden;}
 .rank-bar-fill{height:100%;border-radius:4px;transition:width .6s;}
 .rank-val{font-size:13px;font-weight:800;min-width:52px;text-align:right;}
-/* ACORDEÓN */
 .ac{background:#fff;border-radius:16px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:10px;}
 .ac-head{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;cursor:pointer;user-select:none;transition:background .15s;}
 .ac-head:hover{background:var(--cream);}
@@ -131,27 +127,29 @@ main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
 .ac-head.open .ac-arr{transform:rotate(180deg);}
 .ac-body{display:none;padding:22px;}
 .ac-body.vis{display:block;}
-/* HALLAZGOS — tabla */
-.hall-table-wrap{background:#fff;border-radius:14px;border:1.5px solid var(--border);overflow:hidden;}
+.hall-table-wrap{background:#fff;border-radius:0;border:none;overflow:hidden;}
 .hall-table{width:100%;border-collapse:collapse;font-size:13px;}
 .hall-table thead th{background:var(--cream-mid);color:var(--mid);padding:10px 14px;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;text-align:left;border-bottom:1.5px solid var(--border);}
 .hall-table thead th.tc{text-align:center;}
 .hall-table tbody td{padding:13px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
 .hall-table tbody tr:last-child td{border-bottom:none;}
-.hall-table tbody tr:hover td{background:var(--cream);}
+.hall-table tbody tr.hall-sub-row td{background:var(--cream);padding:0;}
+.hall-table tbody tr:hover:not(.hall-sub-row) td{background:var(--cream);}
 .hall-sev{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;white-space:nowrap;}
 .hall-sev.critica{background:var(--err-bg);color:var(--err);}
 .hall-sev.alta{background:var(--orange-bg);color:#c2410c;}
 .hall-sev.media{background:var(--warn-bg);color:var(--warn);}
 .hall-tipo{font-weight:600;color:var(--dark);}
 .hall-num{font-size:22px;font-weight:800;text-align:center;}
-.hall-num.critica{color:var(--err);}
-.hall-num.alta{color:#f97316;}
-.hall-num.media{color:#eab308;}
+.hall-num.critica{color:var(--err);}.hall-num.alta{color:#f97316;}.hall-num.media{color:#eab308;}
 .hall-props-cell{text-align:center;font-size:11px;color:var(--gris);}
+.hall-props-link{cursor:pointer;color:var(--coral);font-weight:700;display:inline-block;}
+.hall-props-link:hover{text-decoration:underline;}
+.hall-sub-detail{padding:10px 16px 14px 32px;}
+.hall-sub-row-item{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--cream-dark);font-size:12px;}
+.hall-sub-row-item:last-child{border-bottom:none;}
 .hall-btn{font-size:11px;font-weight:700;color:#fff;background:var(--coral);border:none;border-radius:8px;padding:5px 12px;cursor:pointer;font-family:'Outfit',sans-serif;white-space:nowrap;}
 .hall-btn:hover{background:var(--dark);}
-/* SIN CANJE */
 .sc-cats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
 .sc-cat{padding:18px;border-radius:14px;}
 .sc-cat.t{background:#fff5f0;border:2px solid #fed7aa;}
@@ -169,7 +167,6 @@ thead th{background:var(--cream-mid);color:var(--mid);padding:9px 12px;font-weig
 tbody td{padding:9px 12px;border-bottom:1px solid var(--border);}
 tbody tr:last-child td{border-bottom:none;}
 tbody tr:hover td{background:var(--cream);}
-/* HISTÓRICO */
 .hist-ctrl{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
 .hist-ctrl input[type=range]{flex:1;accent-color:var(--coral);}
 .hist-ctrl span{font-size:12px;color:var(--gris);}
@@ -180,7 +177,6 @@ tbody tr:hover td{background:var(--cream);}
 .hist-pb.op{display:block;}
 .hist-pb td:first-child{color:var(--gris);font-weight:600;white-space:nowrap;padding-left:20px;font-size:11px;}
 .pct-ok{color:var(--ok);font-weight:700;}.pct-warn{color:var(--warn);font-weight:700;}.pct-err{color:var(--err);font-weight:700;}
-/* TIERS */
 .tiers-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;}
 .tier-c{background:var(--cream);border-radius:14px;padding:18px;border:1.5px solid var(--border);transition:.2s;}
 .tier-c:hover{box-shadow:0 4px 16px rgba(184,61,22,.08);transform:translateY(-2px);}
@@ -197,19 +193,27 @@ tbody tr:hover td{background:var(--cream);}
 .tier-ley-ico{font-size:18px;flex-shrink:0;}
 .tier-ley-label{font-size:12px;font-weight:700;}
 .tier-ley-desc{font-size:10px;color:var(--gris);margin-top:1px;line-height:1.3;}
-/* CHARTS */
 .charts-r{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
 .ch-box{background:var(--cream);border-radius:14px;padding:18px;border:1.5px solid var(--border);}
 .ch-box h3{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;}
 .ch-wrap{position:relative;height:200px;}
 .ch-wrap-lg{position:relative;height:240px;}
-/* BENEFICIOS */
 .ben-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 .ben-bar-lbl{font-size:12px;font-weight:600;min-width:100px;}
 .ben-bar-track{flex:1;background:var(--cream-dark);border-radius:99px;height:10px;overflow:hidden;}
 .ben-bar-fill{height:100%;border-radius:99px;transition:width .6s;}
 .ben-bar-n{font-size:11px;font-weight:700;min-width:36px;text-align:right;}
 .ctx-banner{font-size:11px;background:var(--cream-mid);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:12px;color:var(--mid);line-height:1.6;}
+/* DISTRIBUCIÓN TIERS */
+.td-wrap{background:#fff;border-radius:14px;border:1.5px solid var(--border);overflow:hidden;}
+.td-table{width:100%;border-collapse:collapse;font-size:13px;}
+.td-table thead th{background:var(--cream-mid);color:var(--mid);padding:10px 14px;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;text-align:left;border-bottom:1.5px solid var(--border);}
+.td-table tbody td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.td-table tbody tr:last-child td{border-bottom:none;}
+.td-table tbody tr:hover td{background:var(--cream);}
+.td-table tbody tr.td-total td{background:var(--cream-mid);font-weight:700;border-top:2px solid var(--border);}
+.td-bar{height:10px;border-radius:4px;background:var(--cream-dark);overflow:hidden;width:140px;display:inline-block;vertical-align:middle;}
+.td-bar-fill{height:100%;border-radius:4px;transition:width .6s;}
 @media(max-width:640px){
 header,.filtros{padding-left:16px;padding-right:16px;}
 main{padding:16px 16px 48px;}
@@ -218,6 +222,7 @@ main{padding:16px 16px 48px;}
 .fn-left{width:150px;}
 .tier-leyenda{grid-template-columns:1fr;}
 .hall-table{font-size:11px;}
+.td-bar{width:80px;}
 }
 </style>
 </head>
@@ -235,7 +240,7 @@ main{padding:16px 16px 48px;}
 <div id="drill-box">
 <button id="drill-close" onclick="closeDrill()">×</button>
 <h3 id="drill-title"></h3>
-<div class="drill-sub" id="drill-sub"></div>
+<p id="drill-sub"></p>
 <div id="drill-content"></div>
 </div>
 </div>
@@ -244,10 +249,7 @@ main{padding:16px 16px 48px;}
 <div class="h-left">
 <img class="h-logo" src="../02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero" onerror="this.style.display='none'"/>
 <div class="h-sep"></div>
-<div>
-<div class="h-title">Loyalty Program</div>
-<div class="h-sub">Viajero Hostels · Viajero Go</div>
-</div>
+<div><div class="h-title">Loyalty Program</div><div class="h-sub">Viajero Hostels · Viajero Go</div></div>
 </div>
 <div class="h-right">
 <div class="h-ts-wrap">
@@ -268,54 +270,82 @@ main{padding:16px 16px 48px;}
 </div>
 
 <main>
+<!-- 1. ADOPCIÓN Y CRECIMIENTO -->
 <div class="sec">
-<div class="sec-hdr"><h2>Embudo del programa</h2><div class="linea"></div></div>
-<div id="funnel-wrap"></div>
-</div>
-<div class="sec">
-<div class="sec-hdr"><h2>Resumen del período</h2><div class="linea"></div></div>
+<div class="sec-hdr"><h2>Adopción y crecimiento</h2><div class="linea"></div></div>
 <div id="kpi-row"></div>
 </div>
+<!-- 2. EMBUDO — acordeón -->
 <div class="sec">
-<div class="sec-hdr"><h2>Semáforo operativo</h2><div class="linea"></div></div>
+<div class="ac">
+<div class="ac-head" onclick="toggleAc(this)">
+<div class="ac-left"><span class="ac-ico">🔽</span>
+<div><div class="ac-tit">Embudo del programa</div><div class="ac-sub" id="funnel-ac-sub">Huéspedes → check-ins → miembros → nuevos</div></div>
+</div><span class="ac-arr">▼</span>
+</div>
+<div class="ac-body"><div id="funnel-wrap"></div></div>
+</div>
+</div>
+<!-- 3. DETALLE OPERATIVO -->
+<div class="sec">
+<div class="sec-hdr"><h2>Detalle operativo</h2><div class="linea"></div></div>
 <div id="sem-total" style="font-size:12px;color:var(--gris);margin-bottom:10px;"></div>
 <div class="ctx-banner">📍 <b>Fase: Adopción inicial</b> · El programa lleva ~3 meses activo. El objetivo es reducir Sin Canje y alcanzar los primeros registros OK.</div>
-<div class="semaforo" id="semaforo"></div>
+<div class="semaforo" id="semaforo" style="margin-bottom:20px;"></div>
+<div class="ac">
+<div class="ac-head open" onclick="toggleAc(this)">
+<div class="ac-left"><span class="ac-ico">⚠️</span>
+<div><div class="ac-tit">Hallazgos</div><div class="ac-sub" id="hall-sub">Tipos de error detectados</div></div>
 </div>
-<div class="sec">
-<div class="sec-hdr"><h2>Hallazgos</h2><span class="cnt" id="hall-cnt">0</span><div class="linea"></div></div>
+<div class="ac-meta"><span class="ac-badge b-err" id="hall-cnt-badge">0 críticos</span></div>
+<span class="ac-arr" style="transform:rotate(180deg)">▼</span>
+</div>
+<div class="ac-body vis" style="padding:0">
 <div id="hall-wrap"></div>
 </div>
+</div>
+</div>
+<!-- 4. AFILIADOS POR TIER -->
+<div class="sec">
+<div class="sec-hdr"><h2>Afiliados por tier</h2><div class="linea"></div></div>
+<div id="tier-dist-wrap"></div>
+</div>
+<!-- 5. RANKING -->
 <div class="sec">
 <div class="sec-hdr"><h2>Ranking propiedades</h2><div class="linea"></div></div>
 <div id="ranking-wrap"></div>
 </div>
+<!-- 6. BENEFICIOS -->
 <div class="sec">
-<div class="sec-hdr"><h2>Beneficio más redimido</h2><div class="linea"></div></div>
+<div class="sec-hdr"><h2>Beneficios redimidos</h2><div class="linea"></div></div>
 <div id="bene-wrap"></div>
 </div>
+<!-- 7. SIN CANJE -->
 <div class="sec">
 <div class="sec-hdr"><h2>Sin Canje</h2><div class="linea"></div></div>
 <div id="sc-wrap"></div>
 </div>
+<!-- 8. INCIDENCIAS -->
 <div class="sec">
 <div class="sec-hdr"><h2>Incidencias de enrolamiento</h2><span class="cnt" id="match-cnt">0</span><div class="linea"></div></div>
 <div id="sinmatch-wrap"></div>
 </div>
+<!-- 9. HISTÓRICO -->
 <div class="sec">
 <div class="sec-hdr"><h2>Histórico</h2><div class="linea"></div></div>
 <div class="ac">
 <div class="ac-head" onclick="toggleAc(this)">
 <div class="ac-left"><span class="ac-ico">📅</span>
-<div><div class="ac-tit">Evolución por temporada</div><div class="ac-sub">Penetración, afiliados y % OK por propiedad</div></div>
+<div><div class="ac-tit">Evolución por temporada</div><div class="ac-sub">Penetración, afiliados y % OK acumulados</div></div>
 </div><span class="ac-arr">▼</span>
 </div>
 <div class="ac-body">
-<div class="hist-ctrl"><span>Últimas</span><input type="range" id="hn" min="1" max="10" value="4" oninput="renderHistorico()"/><span id="hl">4 temporadas</span></div>
+<div class="hist-ctrl"><span>Últimas</span><input type="range" id="hn" min="1" max="20" value="6" oninput="renderHistorico()"/><span id="hl">6 temporadas</span></div>
 <div id="hist-body"></div>
 </div>
 </div>
 </div>
+<!-- 10. TIERS -->
 <div class="sec">
 <div class="sec-hdr"><h2>Detalle por tier</h2><div class="linea"></div></div>
 <div class="ac">
@@ -335,6 +365,7 @@ main{padding:16px 16px 48px;}
 </div>
 </div>
 </div>
+<!-- 11. GRÁFICAS -->
 <div class="sec">
 <div class="sec-hdr"><h2>Gráficas</h2><div class="linea"></div></div>
 <div class="ac">
@@ -359,60 +390,70 @@ const DATA_URL='../data/loyalty_data.json';
 let DATA=null,SC_DATA=[],chRed=null,chTier=null,chDest=null;
 
 const TIPS={
-'Miembros hospedados':{t:'Miembros hospedados',b:'Porcentaje de huéspedes que son afiliados Viajero Go activos, según CloudBeds.'},
+'Miembros hospedados':{t:'Miembros hospedados',b:'Porcentaje de huéspedes que hacen check-in y son parte del programa Viajero Go en el período seleccionado.'},
 'Penetración Loyalty':{t:'Penetración Loyalty',b:'De todos los check-ins del período, qué porcentaje corresponde a miembros activos. Meta: >15%.'},
-'Nuevos Afiliados':{t:'Nuevos Afiliados',b:'Huéspedes que se inscribieron a Viajero Go por primera vez en este período.'},
-'% Adquisición':{t:'% Adquisición',b:'De todos los huéspedes del período, qué % se convirtió en miembro nuevo. Mide efectividad del enrolamiento en recepción. Meta: >5%.'},
+'Nuevos Afiliados':{t:'Nuevos Afiliados · % Adquisición',b:'Cantidad de huéspedes que se inscribieron por primera vez a Viajero Go.\n\n% Adquisición: de todos los huéspedes, qué % se convirtió en miembro nuevo. Meta: >5%.'},
 '% Miembros que Redimen':{t:'% Miembros que Redimen',b:'De los afiliados hospedados, cuántos tuvieron al menos una transacción OK registrada correctamente.'},
 '% OK Transacciones':{t:'% OK Transacciones',b:'Porcentaje de transacciones loyalty sin ningún error — tarifa y beneficios correctos para el tier correcto.'},
-'Sin Canje':{t:'Sin Canje',b:'Miembros que se hospedaron pero no recibieron ningún beneficio loyalty. Muestra miembros únicos — una persona con 2 estadías cuenta una sola vez.'},
-'Leakage':{t:'Leakage',b:'Se aplicó descuento o beneficio loyalty a un huésped que NO es miembro. Implica pérdida de ingreso y debe revisarse caso por caso.'},
-'Tier Incorrecto':{t:'Tier Incorrecto',b:'El tier aplicado en CB no coincide con el tier real en Akin. Ej: se cobró tarifa Tourist cuando el huésped es Backpacker. Siempre verificar en Akin antes del check-in.'},
-'Misuse':{t:'Misuse — ¿Qué significa?',b:'Tarifa o beneficio loyalty aplicado fuera del flujo correcto. En este programa: tarifa loyalty a un huésped sin membresía válida, más allá de un error accidental. Requiere revisión individual.'},
+'Sin Canje':{t:'Sin Canje',b:'Miembros que se hospedaron pero no recibieron ningún beneficio loyalty. Muestra miembros únicos.'},
+'Leakage':{t:'Leakage',b:'Se aplicó descuento o beneficio loyalty a un huésped que NO es miembro. Implica pérdida de ingreso.'},
+'Tier Incorrecto':{t:'Tier Incorrecto',b:'El tier aplicado en CB no coincide con el tier real en Akin. Verificar siempre en Akin antes del check-in.'},
+'Misuse':{t:'Misuse — ¿Qué significa?',b:'Tarifa o beneficio loyalty aplicado fuera del flujo correcto. Tarifa loyalty a un huésped sin membresía válida. Requiere revisión individual.'},
 'Beneficio más redimido':{t:'Beneficio más redimido',b:'Solo cuenta redenciones correctas (OK): tarifa loyalty, botón toalla y botón desayuno aplicados al tier correcto.'},
-'Incidencias de enrolamiento':{t:'Incidencias de enrolamiento',b:'Reservas que aparecen como membresía en Akin pero CloudBeds no las reconoce. Causa más probable: número de reserva o correo diferente entre sistemas.'},
+'Incidencias de enrolamiento':{t:'Incidencias de enrolamiento',b:'Reservas que aparecen como membresía en Akin pero CB no las reconoce. Causa: número de reserva o correo diferente entre sistemas.'},
+'Afiliados por tier':{t:'Afiliados por tier',b:'Distribución de todos los afiliados Viajero Go activos según su tier en Akin. Fuente: hoja Akin_Tiers. No está ligado al período — refleja el estado actual del programa.'},
 };
-function openTip(k){
-const t=TIPS[k];if(!t)return;
-document.getElementById('tip-title').textContent=t.t;
-document.getElementById('tip-body').textContent=t.b;
-document.getElementById('tip-overlay').classList.add('show');
-}
-function showDesc(titulo,cuerpo){
-document.getElementById('tip-title').textContent=titulo;
-document.getElementById('tip-body').textContent=cuerpo;
-document.getElementById('tip-overlay').classList.add('show');
-}
-function closeTip(e){
-if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;
-document.getElementById('tip-overlay').classList.remove('show');
-}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){
-document.getElementById('tip-overlay').classList.remove('show');
-document.getElementById('drill-overlay').classList.remove('show');
-}});
+
+function openTip(k){const t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
+function showDesc(titulo,cuerpo){document.getElementById('tip-title').textContent=titulo;document.getElementById('tip-body').textContent=cuerpo.replace(/\\n/g,'\n');document.getElementById('tip-overlay').classList.add('show');}
+function closeTip(e){if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;document.getElementById('tip-overlay').classList.remove('show');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('tip-overlay').classList.remove('show');document.getElementById('drill-overlay').classList.remove('show');}});
 const ib=k=>`<i class="info-btn" onclick="event.stopPropagation();openTip('${k}')">i</i>`;
 
-function fmtFecha(v){
-if(!v)return'—';
-try{return new Date(v).toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});}
-catch{return String(v);}
-}
+function fmtFecha(v){if(!v)return'—';try{return new Date(v).toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});}catch{return String(v);}}
+
+// ── DRILL CON FILTRO DE PROPIEDAD
+let _drillTipo='';
 function drillTipoError(tipo,titulo){
-const fp=gf('f-prop'),ft=gf('f-per');
-const rows=(DATA.tiersDetalle||[]).filter(r=>r.Error_Type===tipo&&(!fp||r.Propiedad===fp)&&(!ft||(r.Periodo||r.Período)===ft));
-const cols=[{k:'Nombre',l:'Nombre'},{k:'Reserva',l:'Reserva'},{k:'FechaIN',l:'Fecha llegada'},{k:'Noches',l:'Noches'},{k:'Propiedad',l:'Propiedad'},{k:'Periodo',l:'Período'},{k:'Tier_AKIN',l:'Tier'}];
+_drillTipo=tipo;
+const ft=gf('f-per');
+const allRows=(DATA.tiersDetalle||[]).filter(r=>r.Error_Type===tipo&&(!ft||(r.Periodo||r.Período)===ft));
+const propsDrill=[...new Set(allRows.map(r=>r.Propiedad).filter(Boolean))].sort();
 document.getElementById('drill-title').textContent=titulo;
-document.getElementById('drill-sub').textContent=rows.length+' registro(s)';
 const c=document.getElementById('drill-content');
-if(!rows.length){c.innerHTML='<div style="text-align:center;padding:24px;color:var(--gris)">Sin registros</div>';}
-else{c.innerHTML=`<div class="drill-wrap"><table><thead><tr>${cols.map(c=>`<th>${c.l}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${c.k==='FechaIN'?fmtFecha(r[c.k]):r[c.k]||'—'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
+const selectorHtml=propsDrill.length>1?
+`<div class="drill-filter">
+<label>Propiedad</label>
+<select id="drill-prop-sel" onchange="renderDrillTable()">
+<option value="">Todas (${allRows.length})</option>
+${propsDrill.map(p=>{const n=allRows.filter(r=>r.Propiedad===p).length;return`<option value="${p}">${p} (${n})</option>`;}).join('')}
+</select>
+<span class="drill-count" id="drill-count">${allRows.length} registros</span>
+</div>`
+:`<div style="font-size:12px;color:var(--gris);margin-bottom:14px;">📍 ${propsDrill[0]||''} · ${allRows.length} registros</div>`;
+c.innerHTML=selectorHtml+`<div id="drill-table-wrap"></div>`;
+document.getElementById('drill-sub').textContent='';
+renderDrillTable();
 document.getElementById('drill-overlay').classList.add('show');
 }
-function closeDrill(e){
-if(e&&e.target!==document.getElementById('drill-overlay')&&e.target!==document.getElementById('drill-close'))return;
-document.getElementById('drill-overlay').classList.remove('show');
+
+function renderDrillTable(){
+const tipo=_drillTipo;
+const ft=gf('f-per');
+const allRows=(DATA.tiersDetalle||[]).filter(r=>r.Error_Type===tipo&&(!ft||(r.Periodo||r.Período)===ft));
+const sel=document.getElementById('drill-prop-sel');
+const propFiltro=sel?sel.value:'';
+const rows=allRows.filter(r=>!propFiltro||r.Propiedad===propFiltro);
+const cntEl=document.getElementById('drill-count');
+if(cntEl)cntEl.textContent=rows.length+' registros';
+const wrap=document.getElementById('drill-table-wrap');
+if(!wrap)return;
+const cols=[{k:'Nombre',l:'Nombre'},{k:'Reserva',l:'Reserva'},{k:'FechaIN',l:'Fecha llegada'},{k:'Noches',l:'Noches'},{k:'Propiedad',l:'Propiedad'},{k:'Periodo',l:'Período'},{k:'Tier_AKIN',l:'Tier'}];
+if(!rows.length){wrap.innerHTML='<div style="text-align:center;padding:24px;color:var(--gris)">Sin registros para esta propiedad</div>';return;}
+wrap.innerHTML=`<div class="drill-wrap"><table><thead><tr>${cols.map(c=>`<th>${c.l}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${c.k==='FechaIN'?fmtFecha(r[c.k]):r[c.k]||'—'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
+
+function closeDrill(e){if(e&&e.target!==document.getElementById('drill-overlay')&&e.target!==document.getElementById('drill-close'))return;document.getElementById('drill-overlay').classList.remove('show');}
 
 const fmtN=n=>Math.round(Number(n)||0).toLocaleString('es-CR');
 const fmtP=(a,b)=>b>0?(Math.round(a/b*1000)/10).toFixed(1)+'%':'—';
@@ -426,46 +467,33 @@ function filtrar(arr,kP='Período',kPr='Propiedad',kPa='País'){
 const p=gf('f-per'),pr=gf('f-prop'),pa=gf('f-pais');
 return arr.filter(r=>(!p||(r[kP]||r.Periodo||'')===p)&&(!pr||(r[kPr]||'')===pr)&&(!pa||(r[kPa]||r.Pais||'')===pa));
 }
+
 function poblarFiltros(){
 const afs=DATA.afiliados||[];
-const fill=(id,vals)=>{
-const s=document.getElementById(id),cur=s.value;
-while(s.options.length>1)s.remove(1);
-vals.forEach(v=>{const o=document.createElement('option');o.value=o.text=v;s.appendChild(o);});
-if(cur)s.value=cur;
-};
+const fill=(id,vals)=>{const s=document.getElementById(id),cur=s.value;while(s.options.length>1)s.remove(1);vals.forEach(v=>{const o=document.createElement('option');o.value=o.text=v;s.appendChild(o);});if(cur)s.value=cur;};
 fill('f-per',[...new Set(afs.map(a=>a['Período']).filter(Boolean))].sort());
 fill('f-prop',[...new Set(afs.map(a=>a.Propiedad).filter(Boolean))].sort());
 fill('f-pais',[...new Set(afs.map(a=>a.Pais||a.País).filter(Boolean))].sort());
 }
 
-// ── FUNNEL ────────────────────────────────────────────────────────
+// ── FUNNEL
 function renderFunnel(afs,bens,mb){
 const hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
 const sinMatch=(DATA.sinMatchAkin||[]).length;
 const pLoy=ci>0?cb/ci*100:0;
 const colCB=pLoy>=15?'var(--ok)':pLoy>=8?'#ca8a04':'var(--err)';
 const steps=[
-{ico:'🏨',lbl:'Huéspedes totales',   sub:'período seleccionado',   n:hu,color:'var(--dark)',nota:null},
-{ico:'✅',lbl:'Check-ins realizados', sub:'registrados en CB',       n:ci,color:'#0369a1',   nota:null},
-{ico:'💳',lbl:'Miembros hospedados',  sub:'afiliados Viajero Go',    n:cb,color:colCB,       nota:sinMatch>0?`⚠️ ${sinMatch} sin match en Akin`:null},
-{ico:'🆕',lbl:'Nuevos afiliados',     sub:'enrolados en el período', n:nv,color:'#6d28d9',   nota:null},
+{ico:'🏨',lbl:'Huéspedes totales',sub:'período seleccionado',n:hu,color:'var(--dark)',nota:null},
+{ico:'✅',lbl:'Check-ins realizados',sub:'registrados en CB',n:ci,color:'#0369a1',nota:null},
+{ico:'💳',lbl:'Miembros hospedados',sub:'con check-in Viajero Go',n:cb,color:colCB,nota:sinMatch>0?`⚠️ ${sinMatch} sin match en Akin`:null},
+{ico:'🆕',lbl:'Nuevos afiliados',sub:'enrolados en el período',n:nv,color:'#6d28d9',nota:null},
 ];
 const mx=hu||1;
-document.getElementById('funnel-wrap').innerHTML=`<div class="funnel-outer">${steps.map(s=>{
-const pct=Math.round(s.n/mx*100);
-return`<div class="fn-row">
-<div class="fn-left"><span class="fn-ico">${s.ico}</span>
-<div><div class="fn-lbl">${s.lbl}</div><div class="fn-sub">${s.sub}</div>
-${s.nota?`<div class="fn-nota">${s.nota}</div>`:''}</div>
-</div>
-<div class="fn-bar-track"><div class="fn-bar-fill" style="width:${pct}%;background:${s.color};opacity:.8"></div></div>
-<div class="fn-right"><div class="fn-n" style="color:${s.color}">${fmtN(s.n)}</div></div>
-</div>`;
-}).join('')}</div>`;
+document.getElementById('funnel-wrap').innerHTML=`<div class="funnel-outer">${steps.map(s=>{const pct=Math.round(s.n/mx*100);return`<div class="fn-row"><div class="fn-left"><span class="fn-ico">${s.ico}</span><div><div class="fn-lbl">${s.lbl}</div><div class="fn-sub">${s.sub}</div>${s.nota?`<div class="fn-nota">${s.nota}</div>`:''}</div></div><div class="fn-bar-track"><div class="fn-bar-fill" style="width:${pct}%;background:${s.color};opacity:.8"></div></div><div class="fn-right"><div class="fn-n" style="color:${s.color}">${fmtN(s.n)}</div></div></div>`;}).join('')}</div>`;
+document.getElementById('funnel-ac-sub').textContent=`${fmtN(hu)} huéspedes → ${fmtN(ci)} check-ins → ${fmtN(cb)} miembros → ${fmtN(nv)} nuevos`;
 }
 
-// ── KPIs ──────────────────────────────────────────────────────────
+// ── KPIs
 function renderKPIs(afs,bens,mb){
 const hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
 const tOK=sum(bens,'_tarifa_ok'),toOK=sum(bens,'_toallas_ok'),dOK=sum(bens,'_desayunos_ok');
@@ -486,67 +514,33 @@ const colOK=pOK>=80?'var(--ok)':pOK>=50?'#ca8a04':'var(--err)';
 const colRed=pRed>=60?'var(--ok)':pRed>=30?'#ca8a04':'var(--err)';
 const colHue=pHue>=10?'var(--ok)':pHue>=5?'#ca8a04':'var(--err)';
 
-const card=(k,val,col,sub,badge,bcls,drill)=>(
-`<div class="kpi" style="--kc:${col}" ${drill?`onclick="${drill}" style="--kc:${col};cursor:pointer"`:''}>`+
-`<div class="k-glow"></div>`+
-`<div class="k-top"><div class="k-lbl">${k}</div>${ib(k)}</div>`+
-`<div class="k-val">${val}</div>`+
-`<div class="k-sub">${sub}</div>`+
-`${badge?`<span class="k-badge ${bcls}">${badge}</span>`:''}`+
-`</div>`
-);
+const cardNuevos=`<div class="kpi" style="--kc:#0369a1"><div class="k-glow"></div><div class="k-top"><div class="k-lbl">Nuevos Afiliados</div>${ib('Nuevos Afiliados')}</div><div class="k-val">${fmtN(nv)}</div><div class="k-sub">de ${fmtN(hu)} huéspedes en el período</div><div class="k-divider"><span style="font-size:11px;color:var(--gris)">% Adquisición</span><span style="font-size:18px;font-weight:800;color:${colAdq}">${(Math.round(pAdq*10)/10).toFixed(1)}%</span></div><span class="k-badge ${pAdq>=5?'b-ok':pAdq>=2?'b-warn':'b-err'}">${pAdq>=5?'✅ Buena captación':pAdq>=2?'⚠️ En proceso':'🔴 Bajo'}</span></div>`;
 
 const principales=[
-card('Miembros hospedados',
-  hu>0?(Math.round(pHue*10)/10).toFixed(1)+'%':'—',
-  colHue,
-  `${fmtN(cb)} afiliados de ${fmtN(hu)} huéspedes`,
-  pHue>=10?'✅ Buena cobertura':pHue>=5?'⚠️ En proceso':'🔴 Baja cobertura',
-  pHue>=10?'b-ok':pHue>=5?'b-warn':'b-err'),
-card('Penetración Loyalty',(Math.round(pLoy*10)/10).toFixed(1)+'%',colLoy,
-  `${fmtN(cb)} miembros de ${fmtN(ci)} check-ins`,
-  pLoy>=15?'✅ Meta alcanzada':pLoy>=8?'⚠️ En proceso':'🔴 Bajo meta',
-  pLoy>=15?'b-ok':pLoy>=8?'b-warn':'b-err'),
-card('Nuevos Afiliados',fmtN(nv),'#0369a1',`de ${fmtN(hu)} huéspedes en el período`,'',''),
-card('% Adquisición',(Math.round(pAdq*10)/10).toFixed(1)+'%',colAdq,
-  `${fmtN(nv)} nuevos sobre ${fmtN(hu)} huéspedes`,
-  pAdq>=5?'✅ Buena captación':pAdq>=2?'⚠️ En proceso':'🔴 Bajo',
-  pAdq>=5?'b-ok':pAdq>=2?'b-warn':'b-err'),
+`<div class="kpi" style="--kc:${colHue}"><div class="k-glow"></div><div class="k-top"><div class="k-lbl">Miembros hospedados</div>${ib('Miembros hospedados')}</div><div class="k-val">${hu>0?(Math.round(pHue*10)/10).toFixed(1)+'%':'—'}</div><div class="k-sub">${fmtN(cb)} afiliados de ${fmtN(hu)} huéspedes</div><span class="k-badge ${pHue>=10?'b-ok':pHue>=5?'b-warn':'b-err'}">${pHue>=10?'✅ Buena cobertura':pHue>=5?'⚠️ En proceso':'🔴 Baja cobertura'}</span></div>`,
+`<div class="kpi" style="--kc:${colLoy}"><div class="k-glow"></div><div class="k-top"><div class="k-lbl">Penetración Loyalty</div>${ib('Penetración Loyalty')}</div><div class="k-val">${(Math.round(pLoy*10)/10).toFixed(1)}%</div><div class="k-sub">${fmtN(cb)} miembros de ${fmtN(ci)} check-ins</div><span class="k-badge ${pLoy>=15?'b-ok':pLoy>=8?'b-warn':'b-err'}">${pLoy>=15?'✅ Meta alcanzada':pLoy>=8?'⚠️ En proceso':'🔴 Bajo meta'}</span></div>`,
+cardNuevos,
 ].join('');
 
 const calidad=[
-card('% Miembros que Redimen',cb>0?(Math.round(pRed*10)/10).toFixed(1)+'%':'—',pRed>0?colRed:'var(--gris)',
-  pRed>0?`${okN} con registro OK`:'Meta a alcanzar',
-  pRed>0?(pRed>=60?'✅ Buen uso':pRed>=30?'⚠️ Moderado':'🔴 Bajo'):'⏳ Fase inicial',
-  pRed>0?(pRed>=60?'b-ok':pRed>=30?'b-warn':'b-err'):'b-gray'),
-card('% OK Transacciones',pOK>0?(Math.round(pOK*10)/10).toFixed(1)+'%':'0%',pOK>0?colOK:'var(--gris)',
-  bOK>0?`${fmtN(bOK)} correctas de ${fmtN(tt||tB)}`:'En fase de adopción',
-  pOK>0?(pOK>=80?'✅ Excelente':pOK>=50?'⚠️ Regular':'🔴 Bajo'):'⏳ Fase inicial',
-  pOK>0?(pOK>=80?'b-ok':pOK>=50?'b-warn':'b-err'):'b-gray'),
+`<div class="kpi" style="--kc:${pRed>0?colRed:'var(--gris)'}"><div class="k-glow"></div><div class="k-top"><div class="k-lbl">% Miembros que Redimen</div>${ib('% Miembros que Redimen')}</div><div class="k-val">${cb>0?(Math.round(pRed*10)/10).toFixed(1)+'%':'—'}</div><div class="k-sub">${pRed>0?`${okN} con registro OK`:'Meta a alcanzar'}</div><span class="k-badge ${pRed>0?(pRed>=60?'b-ok':pRed>=30?'b-warn':'b-err'):'b-gray'}">${pRed>0?(pRed>=60?'✅ Buen uso':pRed>=30?'⚠️ Moderado':'🔴 Bajo'):'⏳ Fase inicial'}</span></div>`,
+`<div class="kpi" style="--kc:${pOK>0?colOK:'var(--gris)'}"><div class="k-glow"></div><div class="k-top"><div class="k-lbl">% OK Transacciones</div>${ib('% OK Transacciones')}</div><div class="k-val">${pOK>0?(Math.round(pOK*10)/10).toFixed(1)+'%':'0%'}</div><div class="k-sub">${bOK>0?`${fmtN(bOK)} correctas de ${fmtN(tt||tB)}`:'En fase de adopción'}</div><span class="k-badge ${pOK>0?(pOK>=80?'b-ok':pOK>=50?'b-warn':'b-err'):'b-gray'}">${pOK>0?(pOK>=80?'✅ Excelente':pOK>=50?'⚠️ Regular':'🔴 Bajo'):'⏳ Fase inicial'}</span></div>`,
 ].join('');
 
 const errores=[
-card('Sin Canje',fmtN(scUnicos),'var(--err)',`${fmtN(scData.length)} reservas · ${fmtN(scUnicos)} miembros únicos`,'Revisar','b-err'),
-card('Leakage',fmtN(lk),lk>0?'var(--err)':'var(--ok)','Beneficio aplicado a no-miembro',
-  lk===0?'✅ Sin alertas':'🔴 Requiere revisión',lk===0?'b-ok':'b-err'),
-card('Tier Incorrecto',fmtN(tiI),tiI>0?'#7c3aed':'var(--ok)','Tier en CB no coincide con Akin',
-  tiI>0?'Ver quiénes →':null,'b-err',
-  tiI>0?`drillTipoError('TIER_INCORRECTO','Tier Incorrecto — detalle')`:null),
+`<div class="kpi" style="--kc:var(--err)"><div class="k-glow"></div><div class="k-top"><div class="k-lbl">Sin Canje</div>${ib('Sin Canje')}</div><div class="k-val">${fmtN(scUnicos)}</div><div class="k-sub">${fmtN(scData.length)} reservas · ${fmtN(scUnicos)} miembros únicos</div><span class="k-badge b-err">Revisar</span></div>`,
+`<div class="kpi" style="--kc:${lk>0?'var(--err)':'var(--ok)'}"><div class="k-glow"></div><div class="k-top"><div class="k-lbl">Leakage</div>${ib('Leakage')}</div><div class="k-val">${fmtN(lk)}</div><div class="k-sub">Beneficio aplicado a no-miembro</div><span class="k-badge ${lk===0?'b-ok':'b-err'}">${lk===0?'✅ Sin alertas':'🔴 Requiere revisión'}</span></div>`,
+`<div class="kpi" style="--kc:${tiI>0?'#7c3aed':'var(--ok)'}" ${tiI>0?`onclick="drillTipoError('TIER_INCORRECTO','Tier Incorrecto — detalle')" style="--kc:#7c3aed;cursor:pointer"`:''}>` +
+`<div class="k-glow"></div><div class="k-top"><div class="k-lbl">Tier Incorrecto</div>${ib('Tier Incorrecto')}</div><div class="k-val">${fmtN(tiI)}</div><div class="k-sub">Tier en CB no coincide con Akin</div>${tiI>0?`<span class="k-badge b-err">Ver quiénes →</span>`:'<span class="k-badge b-ok">✅ Sin incidencias</span>'}</div>`,
 ].join('');
 
 const benItems=[{ico:'🏷️',lbl:'Tarifa',n:tOK,col:'#B83D16'},{ico:'🛁',lbl:'Toalla',n:toOK,col:'#0369a1'},{ico:'🍳',lbl:'Desayuno',n:dOK,col:'#065f46'}];
 const benTotal=tOK+toOK+dOK||1;
-const benHtml=`<div class="kpi" style="--kc:var(--coral)"><div class="k-glow"></div>`+
-`<div class="k-top"><div class="k-lbl">Beneficio más redimido</div>${ib('Beneficio más redimido')}</div>`+
-`<div style="font-size:11px;color:var(--mid);font-weight:700;margin-bottom:10px;">${gf('f-prop')||'Cadena'}</div>`+
-benItems.map(b=>{const p=Math.round(b.n/benTotal*100);return(
-`<div class="ben-bar-row"><span class="ben-bar-lbl">${b.ico} ${b.lbl}</span>`+
-`<div class="ben-bar-track"><div class="ben-bar-fill" style="width:${p}%;background:${b.col}"></div></div>`+
-`<span class="ben-bar-n">${fmtN(b.n)}</span></div>`);}).join('')+`</div>`;
+const benHtml=`<div class="kpi" style="--kc:var(--coral)"><div class="k-glow"></div><div class="k-top"><div class="k-lbl">Beneficio más redimido</div>${ib('Beneficio más redimido')}</div><div style="font-size:11px;color:var(--mid);font-weight:700;margin-bottom:10px;">${gf('f-prop')||'Cadena'}</div>`+benItems.map(b=>{const p=Math.round(b.n/benTotal*100);return`<div class="ben-bar-row"><span class="ben-bar-lbl">${b.ico} ${b.lbl}</span><div class="ben-bar-track"><div class="ben-bar-fill" style="width:${p}%;background:${b.col}"></div></div><span class="ben-bar-n">${fmtN(b.n)}</span></div>`;}).join('')+`</div>`;
 
 document.getElementById('kpi-row').innerHTML=
-`<div class="kpi-grupo"><div class="kpi-grupo-label">Adopción y crecimiento</div><div class="kpi-grid">${principales}</div></div>`+
-`<div class="kpi-grupo"><div class="kpi-grupo-label">Detalle operativo <button class="kpi-toggle" onclick="toggleKpiSec(this)">Ver más <span>▼</span></button></div>`+
+`<div class="kpi-grupo"><div class="kpi-grupo-label">Penetración del programa</div><div class="kpi-grid">${principales}</div></div>`+
+`<div class="kpi-grupo"><div class="kpi-grupo-label">Calidad y errores <button class="kpi-toggle" onclick="toggleKpiSec(this)">Ver más <span>▼</span></button></div>`+
 `<div class="kpi-sec" id="kpi-sec">`+
 `<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:8px;">Calidad</div>`+
 `<div class="kpi-grid" style="margin-bottom:14px;">${calidad}${benHtml}</div>`+
@@ -554,13 +548,9 @@ document.getElementById('kpi-row').innerHTML=
 `<div class="kpi-grid">${errores}</div>`+
 `</div></div>`;
 }
-function toggleKpiSec(btn){
-const sec=document.getElementById('kpi-sec');
-const ab=sec.classList.toggle('abierto');
-btn.querySelector('span').textContent=ab?'▲':'▼';
-}
+function toggleKpiSec(btn){const sec=document.getElementById('kpi-sec');const ab=sec.classList.toggle('abierto');btn.querySelector('span').textContent=ab?'▲':'▼';}
 
-// ── SEMÁFORO ──────────────────────────────────────────────────────
+// ── SEMÁFORO
 function renderSemaforo(mb){
 const t={'SIN CANJE':0,'LEAKAGE':0,'MISUSE':0,'OK':0,'TIER_INCORRECTO':0,'MAL COBRADO':0,'NO LOYALTY':0};
 mb.forEach(r=>{const k=r.Error_Type||'NO LOYALTY';if(k in t)t[k]++;});
@@ -568,395 +558,181 @@ const tot=t['SIN CANJE']+t['LEAKAGE']+t['MISUSE']+t['OK']+t['TIER_INCORRECTO']+t
 const scUnicosS=new Set(mb.filter(r=>r.Error_Type==='SIN CANJE').map(r=>r.Nombre).filter(Boolean)).size||t['SIN CANJE'];
 document.getElementById('sem-total').innerHTML=`<b>${fmtN(tot)}</b> interacciones con el programa · <b>${fmtN(t['NO LOYALTY'])}</b> check-ins sin membresía`;
 const items=[
-{k:'OK',             v:t['OK'],            disp:t['OK'],        cls:t['OK']>0?'s-verde':'s-gris',                                               tipo:'registros perfectos',         drill:false},
-{k:'Sin Canje',      v:t['SIN CANJE'],      disp:scUnicosS,      cls:t['SIN CANJE']===0?'s-verde':t['SIN CANJE']<20?'s-amarillo':'s-rojo',       tipo:'miembros sin beneficio',      drill:'SIN CANJE'},
-{k:'Leakage',        v:t['LEAKAGE'],        disp:t['LEAKAGE'],   cls:t['LEAKAGE']===0?'s-verde':t['LEAKAGE']<10?'s-amarillo':'s-rojo',           tipo:'beneficio a no-miembro',      drill:'LEAKAGE'},
-{k:'Tier Incorrecto',v:t['TIER_INCORRECTO'],disp:t['TIER_INCORRECTO'],cls:t['TIER_INCORRECTO']===0?'s-verde':t['TIER_INCORRECTO']<5?'s-amarillo':'s-rojo',tipo:'tier no coincide',    drill:'TIER_INCORRECTO'},
-{k:'Misuse',         v:t['MISUSE'],         disp:t['MISUSE'],    cls:t['MISUSE']===0?'s-verde':'s-rojo',                                         tipo:'fuera de flujo · revisar',    drill:'MISUSE'},
+{k:'OK',v:t['OK'],disp:t['OK'],cls:t['OK']>0?'s-verde':'s-gris',tipo:'registros perfectos',drill:false},
+{k:'Sin Canje',v:t['SIN CANJE'],disp:scUnicosS,cls:t['SIN CANJE']===0?'s-verde':t['SIN CANJE']<20?'s-amarillo':'s-rojo',tipo:'miembros sin beneficio',drill:'SIN CANJE'},
+{k:'Leakage',v:t['LEAKAGE'],disp:t['LEAKAGE'],cls:t['LEAKAGE']===0?'s-verde':t['LEAKAGE']<10?'s-amarillo':'s-rojo',tipo:'beneficio a no-miembro',drill:'LEAKAGE'},
+{k:'Tier Incorrecto',v:t['TIER_INCORRECTO'],disp:t['TIER_INCORRECTO'],cls:t['TIER_INCORRECTO']===0?'s-verde':t['TIER_INCORRECTO']<5?'s-amarillo':'s-rojo',tipo:'tier no coincide',drill:'TIER_INCORRECTO'},
+{k:'Misuse',v:t['MISUSE'],disp:t['MISUSE'],cls:t['MISUSE']===0?'s-verde':'s-rojo',tipo:'fuera de flujo · revisar',drill:'MISUSE'},
 ];
 if(t['MAL COBRADO']>0)items.push({k:'Mal Cobrado',v:t['MAL COBRADO'],disp:t['MAL COBRADO'],cls:t['MAL COBRADO']<3?'s-amarillo':'s-rojo',tipo:'monto incorrecto',drill:'MAL COBRADO'});
-document.getElementById('semaforo').innerHTML=items.map(i=>(
-`<div class="s-item ${i.cls}" ${i.drill&&t[i.drill]>0?`onclick="drillTipoError('${i.drill}','${i.k} — detalle')" style="cursor:pointer"`:''}>`+
-`<div class="s-val">${fmtN(i.disp)}</div>`+
-`<div class="s-pct">${fmtP(i.v,tot)} del total</div>`+
-`<div class="s-lbl">${i.k} ${ib(i.k)}</div>`+
-`<div class="s-tipo">${i.drill&&t[i.drill]>0?'Ver detalle →':i.tipo}</div>`+
-`</div>`
-)).join('');
+document.getElementById('semaforo').innerHTML=items.map(i=>`<div class="s-item ${i.cls}" ${i.drill&&t[i.drill]>0?`onclick="drillTipoError('${i.drill}','${i.k} — detalle')" style="cursor:pointer"`:''}>` +
+`<div class="s-val">${fmtN(i.disp)}</div><div class="s-pct">${fmtP(i.v,tot)} del total</div><div class="s-lbl">${i.k} ${ib(i.k)}</div><div class="s-tipo">${i.drill&&t[i.drill]>0?'Ver detalle →':i.tipo}</div></div>`).join('');
 }
 
-// ── HALLAZGOS — tabla compacta ────────────────────────────────────
+// ── HALLAZGOS
 function renderHallazgos(hall){
 const cont=document.getElementById('hall-wrap');
-if(!hall.length){
-cont.innerHTML='<div class="empty">✅ Sin hallazgos para este filtro</div>';
-document.getElementById('hall-cnt').textContent='0';
-return;
-}
+if(!hall.length){cont.innerHTML='<div class="empty" style="padding:20px">✅ Sin hallazgos para este filtro</div>';document.getElementById('hall-cnt-badge').textContent='0 críticos';document.getElementById('hall-sub').textContent='Sin hallazgos';return;}
 const byT={};
-hall.forEach(h=>{
-const k=(h['Categoría']||'')+'|'+(h['Severidad']||'')+'|'+(h['Error_Type']||'');
-if(!byT[k])byT[k]={cat:h['Categoría']||'General',sev:h['Severidad']||'Media',accion:h['Acción sugerida']||'',et:h['Error_Type']||'',total:0,props:new Set()};
-const m=(h.Hallazgo||'').match(/^(\d+)/);
-byT[k].total+=m?parseInt(m[1]):1;
-if(h.Propiedad)byT[k].props.add(h.Propiedad);
-});
-
-const rows=Object.values(byT).map(g=>{
-let txt='',drill=null,tipBody='';
-if(g.et==='SIN CANJE'){
-const a=g.accion.toLowerCase();
-if(a.includes('tourist')){txt='Tourist sin tarifa loyalty';drill='SIN CANJE';tipBody='Tier Tourist: debían recibir tarifa loyalty 15% en CB al check-in.\n\n💡 '+g.accion;}
-else{txt='Backpacker+ sin tarifa ni beneficios';drill='SIN CANJE';tipBody='Tiers Backpacker, Explorer, Nomad o Viajero: debían recibir tarifa loyalty + botón toalla (y desayuno si aplica).\n\n💡 '+g.accion;}
-}
-else if(g.et==='LEAKAGE'){txt='Leakage';drill='LEAKAGE';tipBody='Beneficio o tarifa a un NO-miembro. Pérdida de ingreso para el hostal.\n\n💡 '+g.accion;}
-else if(g.et==='TIER_INCORRECTO'){txt='Tier incorrecto en CB';drill='TIER_INCORRECTO';tipBody='Tier en CB no coincide con el real en Akin.\n\n💡 '+g.accion;}
-else if(g.et==='MISUSE'){txt='Misuse del programa';drill='MISUSE';tipBody='Tarifa o beneficio aplicado fuera del flujo correcto — puede ser intencional.\n\n💡 '+g.accion;}
-else if(g.et==='MAL COBRADO'){txt='Monto incorrecto';drill='MAL COBRADO';tipBody='Beneficio registrado con monto incorrecto para el tier.\n\n💡 '+g.accion;}
-else if(g.cat==='Adopción'){txt='Penetración <15%';tipBody='Menos del 15% de check-ins son miembros. Mejorar enrolamiento activo en recepción.\n\n💡 '+g.accion;}
-else if(g.cat==='Operación'){txt='Sin redención OK';tipBody='Miembros hospedados sin ninguna transacción loyalty correcta en CB.\n\n💡 '+g.accion;}
-else txt='Casos detectados';
-const numDisplay=drill?g.total:g.props.size;
-const nProps=g.props.size;
-const propsLabel=nProps===0?'—':nProps===1?'1 hostal':`${nProps} hostales`;
-return{...g,txt,drill,tipBody,numDisplay,propsLabel};
-});
-
+hall.forEach(h=>{const k=(h['Categoría']||'')+'|'+(h['Severidad']||'')+'|'+(h['Error_Type']||'');if(!byT[k])byT[k]={cat:h['Categoría']||'General',sev:h['Severidad']||'Media',accion:h['Acción sugerida']||'',et:h['Error_Type']||'',total:0,props:{}};const m=(h.Hallazgo||'').match(/^(\d+)/);byT[k].total+=m?parseInt(m[1]):1;const p=h.Propiedad||'Sin especificar';byT[k].props[p]=(byT[k].props[p]||0)+(m?parseInt(m[1]):1);});
+const rows=Object.values(byT).map(g=>{let txt='',drill=null,tipBody='';if(g.et==='SIN CANJE'){const a=g.accion.toLowerCase();if(a.includes('tourist')){txt='Tourist sin tarifa loyalty';drill='SIN CANJE';tipBody='Tier Tourist: debían recibir tarifa loyalty 15% en CB.\n\n💡 '+g.accion;}else{txt='Backpacker+ sin tarifa ni beneficios';drill='SIN CANJE';tipBody='Tiers Backpacker+: tarifa loyalty + botón toalla (y desayuno si aplica).\n\n💡 '+g.accion;}}else if(g.et==='LEAKAGE'){txt='Leakage';drill='LEAKAGE';tipBody='Beneficio a un NO-miembro.\n\n💡 '+g.accion;}else if(g.et==='TIER_INCORRECTO'){txt='Tier incorrecto en CB';drill='TIER_INCORRECTO';tipBody='Tier en CB ≠ real en Akin.\n\n💡 '+g.accion;}else if(g.et==='MISUSE'){txt='Misuse del programa';drill='MISUSE';tipBody='Fuera del flujo correcto.\n\n💡 '+g.accion;}else if(g.et==='MAL COBRADO'){txt='Monto incorrecto';drill='MAL COBRADO';tipBody='Beneficio con monto incorrecto.\n\n💡 '+g.accion;}else if(g.cat==='Adopción'){txt='Penetración <15%';tipBody='Menos del 15% de check-ins son miembros.\n\n💡 '+g.accion;}else if(g.cat==='Operación'){txt='Sin redención OK';tipBody='Miembros sin ninguna transacción correcta.\n\n💡 '+g.accion;}else txt='Casos detectados';const numDisplay=drill?g.total:Object.keys(g.props).length;const propEntries=Object.entries(g.props).sort((a,b)=>b[1]-a[1]);return{...g,txt,drill,tipBody,numDisplay,propEntries,nProps:propEntries.length};});
 const sevOrd={Crítica:0,Alta:1,Media:2};
 rows.sort((a,b)=>(sevOrd[a.sev]??3)-(sevOrd[b.sev]??3)||(b.total-a.total));
-document.getElementById('hall-cnt').textContent=rows.length;
+const nCrit=rows.filter(r=>r.sev==='Crítica').length;
+document.getElementById('hall-cnt-badge').textContent=`${nCrit} crítico${nCrit!==1?'s':''}`;
+document.getElementById('hall-sub').textContent=`${rows.length} tipos de error detectados`;
 const CM={Crítica:'critica',Alta:'alta',Media:'media'};
 const SEV_LABEL={Crítica:'🔴 Crítica',Alta:'🟠 Alta',Media:'🟡 Media'};
+const tableRows=rows.map((g,idx)=>{const cls=CM[g.sev]||'media';const hasDrill=g.drill&&(DATA.tiersDetalle||[]).some(r=>r.Error_Type===g.drill);const ibHall=g.tipBody?`<i class="info-btn" style="margin-left:6px;vertical-align:middle" onclick="showDesc('${g.txt}','${g.tipBody.replace(/'/g,'&#39;').replace(/\n/g,'\\n')}');">i</i>`:'';const subId=`hs-${idx}`;let propCell='';if(g.nProps===0){propCell=`<div class="hall-props-cell">—</div>`;}else if(g.nProps===1){propCell=`<div class="hall-props-cell">1 hostal<div style="font-size:10px;color:var(--gris);margin-top:2px">${g.propEntries[0][0]}</div></div>`;}else{propCell=`<div class="hall-props-cell"><span class="hall-props-link" onclick="toggleHallSub('${subId}',this)">${g.nProps} hostales ▼</span></div>`;}
+const subRow=g.nProps>1?`<tr id="${subId}" class="hall-sub-row" style="display:none"><td colspan="2"></td><td colspan="3"><div class="hall-sub-detail"><div style="font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Desglose por hostal</div>${g.propEntries.map(([p,n])=>`<div class="hall-sub-row-item"><span style="color:var(--mid)">📍 ${p}</span><span style="font-weight:700">${fmtN(n)}</span></div>`).join('')}</div></td></tr>`:'';
+return`<tr><td><span class="hall-sev ${cls}">${SEV_LABEL[g.sev]||g.sev}</span></td><td><span class="hall-tipo">${g.txt}</span>${ibHall}</td><td><div class="hall-num ${cls}">${fmtN(g.numDisplay)}</div></td><td>${propCell}</td><td>${hasDrill?`<button class="hall-btn" onclick="drillTipoError('${g.drill}','${g.txt}')">Ver detalle →</button>`:`<span style="color:var(--gris);font-size:12px">—</span>`}</td></tr>${subRow}`;}).join('');
+cont.innerHTML=`<div class="hall-table-wrap"><table class="hall-table"><thead><tr><th>Severidad</th><th>Hallazgo</th><th class="tc">Total</th><th class="tc">Propiedades</th><th></th></tr></thead><tbody>${tableRows}</tbody></table></div>`;
+}
+function toggleHallSub(id,btn){const row=document.getElementById(id);if(!row)return;const open=row.style.display==='table-row';row.style.display=open?'none':'table-row';btn.textContent=btn.textContent.replace(open?'▲':'▼',open?'▼':'▲');}
 
-cont.innerHTML=`<div class="hall-table-wrap">
-<table class="hall-table">
-<thead><tr>
-<th>Severidad</th>
-<th>Hallazgo</th>
-<th class="tc">Total</th>
-<th class="tc">Propiedades</th>
-<th></th>
-</tr></thead>
-<tbody>
-${rows.map(g=>{
-const cls=CM[g.sev]||'media';
-const hasDrill=g.drill&&(DATA.tiersDetalle||[]).some(r=>r.Error_Type===g.drill);
-const ibHall=g.tipBody?`<i class="info-btn" style="margin-left:6px;vertical-align:middle" onclick="showDesc('${g.txt}','${g.tipBody.replace(/'/g,'&#39;').replace(/\n/g,'\\n')}')">i</i>`:'';
-return`<tr>
-<td><span class="hall-sev ${cls}">${SEV_LABEL[g.sev]||g.sev}</span></td>
-<td><span class="hall-tipo">${g.txt}</span>${ibHall}</td>
-<td><div class="hall-num ${cls}">${fmtN(g.numDisplay)}</div></td>
-<td><div class="hall-props-cell">${g.propsLabel}</div></td>
-<td>${hasDrill?`<button class="hall-btn" onclick="drillTipoError('${g.drill}','${g.txt}')">Ver detalle →</button>`:`<span style="color:var(--gris);font-size:12px">—</span>`}</td>
-</tr>`;
-}).join('')}
-</tbody>
-</table>
-</div>`;
+// ── DISTRIBUCIÓN TIERS
+function renderDistribucionTiers(){
+const cont=document.getElementById('tier-dist-wrap');
+const dist=DATA.distribucionTiers;
+if(!dist||!dist.global||!dist.global.length){
+cont.innerHTML='<div class="empty">Sin datos de distribución de tiers. Verifica que Akin_Tiers esté cargada en el JSON.</div>';
+return;
+}
+const fp=gf('f-prop');
+let filas=dist.global,total=dist.totalAfiliados||0;
+if(fp&&dist.porPropiedad){const pd=dist.porPropiedad.find(p=>p.Propiedad===fp);if(pd){filas=pd.tiers;total=pd.Total;}}
+if(!filas.length){cont.innerHTML='<div class="empty">Sin datos para este filtro.</div>';return;}
+const TIER_CFG={Viajero:{ico:'🏆',col:'#7c3aed'},Nomad:{ico:'🌍',col:'#0369a1'},Explorer:{ico:'🧭',col:'#0891b2'},Backpacker:{ico:'🎒',col:'var(--coral)'},Tourist:{ico:'🗺️',col:'#ca8a04'}};
+const D={ico:'•',col:'var(--gris)'};
+const maxN=Math.max(...filas.map(f=>f.count));
+cont.innerHTML=`<div class="td-wrap"><table class="td-table"><thead><tr><th>Tier</th><th style="text-align:center">Afiliados</th><th style="text-align:center">% del total</th><th>Distribución</th></tr></thead><tbody>`+
+filas.map(f=>{const c=TIER_CFG[f.tier]||D;const barW=maxN>0?Math.round(f.count/maxN*100):0;return`<tr><td><span style="font-size:16px">${c.ico}</span> <b style="color:${c.col}">${f.tier}</b></td><td style="text-align:center;font-size:20px;font-weight:800;color:${c.col}">${fmtN(f.count)}</td><td style="text-align:center;font-size:13px;font-weight:700;color:var(--gris)">${f.pct}%</td><td><div class="td-bar"><div class="td-bar-fill" style="width:${barW}%;background:${c.col}"></div></div></td></tr>`;}).join('')+
+`<tr class="td-total"><td><b>Total</b></td><td style="text-align:center;font-size:18px">${fmtN(total)}</td><td style="text-align:center">100%</td><td></td></tr>`+
+`</tbody></table></div>`+
+`<div style="font-size:11px;color:var(--gris);margin-top:8px;padding:8px 12px;background:var(--cream);border-radius:8px;">ℹ️ Refleja el estado actual de Akin_Tiers — no cambia con el filtro de período.</div>`;
 }
 
-// ── RANKING — cerrado por defecto ─────────────────────────────────
+// ── RANKING
 function renderRanking(afs,mb){
 const fp=gf('f-prop');
 const cont=document.getElementById('ranking-wrap');
 if(fp){cont.innerHTML='<div class="empty">Vista ranking disponible sin filtro de propiedad.</div>';return;}
 const map={};
-afs.forEach(r=>{
-const p=r.Propiedad||'';if(!p)return;
-if(!map[p])map[p]={p,ci:0,cb:0,hu:0,nv:0,ok:0,err:0,sc:0};
-map[p].ci+=r._check_ins||0;map[p].cb+=r._afiliados_cb||0;
-map[p].hu+=r._huespedes||0;map[p].nv+=r._nuevos||0;
-});
-mb.forEach(r=>{
-const p=r.Propiedad||'';if(!map[p])map[p]={p,ci:0,cb:0,hu:0,nv:0,ok:0,err:0,sc:0};
-const et=r.Error_Type||'';
-if(et==='SIN CANJE')map[p].sc++;
-else if(et==='OK')map[p].ok++;
-else if(et&&et!=='NO LOYALTY')map[p].err++;
-});
+afs.forEach(r=>{const p=r.Propiedad||'';if(!p)return;if(!map[p])map[p]={p,ci:0,cb:0,hu:0,nv:0,ok:0,err:0,sc:0};map[p].ci+=r._check_ins||0;map[p].cb+=r._afiliados_cb||0;map[p].hu+=r._huespedes||0;map[p].nv+=r._nuevos||0;});
+mb.forEach(r=>{const p=r.Propiedad||'';if(!map[p])map[p]={p,ci:0,cb:0,hu:0,nv:0,ok:0,err:0,sc:0};const et=r.Error_Type||'';if(et==='SIN CANJE')map[p].sc++;else if(et==='OK')map[p].ok++;else if(et&&et!=='NO LOYALTY')map[p].err++;});
 const props=Object.values(map).filter(p=>p.ci>0||p.cb>0);
 if(!props.length){cont.innerHTML='<div class="empty">Sin datos.</div>';return;}
-props.forEach(p=>{
-p.pct=p.ci>0?Math.round(p.cb/p.ci*1000)/10:0;
-p.pctAdq=p.hu>0?Math.round(p.nv/p.hu*1000)/10:0;
-p.pctOK=(p.ok+p.sc+p.err)>0?Math.round(p.ok/(p.ok+p.sc+p.err)*1000)/10:0;
-});
+props.forEach(p=>{p.pct=p.ci>0?Math.round(p.cb/p.ci*1000)/10:0;p.pctAdq=p.hu>0?Math.round(p.nv/p.hu*1000)/10:0;p.pctOK=(p.ok+p.sc+p.err)>0?Math.round(p.ok/(p.ok+p.sc+p.err)*1000)/10:0;});
 const maxPct=Math.max(...props.map(p=>p.pct))||1;
 const maxNv=Math.max(...props.map(p=>p.nv))||1;
 const maxOK=Math.max(...props.map(p=>p.pctOK))||1;
 window._RD={props,maxPct,maxNv,maxOK};
-cont.innerHTML=`<div class="ac">
-<div class="ac-head" onclick="toggleAc(this)">
-<div class="ac-left"><span class="ac-ico">🏆</span>
-<div><div class="ac-tit">Ranking de propiedades</div><div class="ac-sub">${props.length} propiedades · click para ver</div></div>
-</div>
-<div class="ac-meta">
-<select onclick="event.stopPropagation()" onchange="switchRank(this.value)"
-style="font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;padding:4px 10px;border:1.5px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;">
-<option value="pen">% Penetración</option>
-<option value="adq">Nuevos afiliados</option>
-<option value="ok">% Redención OK</option>
-</select>
-</div>
-<span class="ac-arr">▼</span>
-</div>
-<div class="ac-body"><div id="rank-body">${buildRankRows([...props].sort((a,b)=>b.pct-a.pct),'pen',maxPct,maxNv,maxOK)}</div></div>
-</div>`;
+cont.innerHTML=`<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">🏆</span><div><div class="ac-tit">Ranking de propiedades</div><div class="ac-sub">${props.length} propiedades</div></div></div><div class="ac-meta"><select onclick="event.stopPropagation()" onchange="switchRank(this.value)" style="font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;padding:4px 10px;border:1.5px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;"><option value="pen">% Penetración</option><option value="adq">Nuevos afiliados</option><option value="ok">% Redención OK</option></select></div><span class="ac-arr">▼</span></div><div class="ac-body"><div id="rank-body">${buildRankRows([...props].sort((a,b)=>b.pct-a.pct),'pen',maxPct,maxNv,maxOK)}</div></div></div>`;
 }
-window.switchRank=function(tipo){
-const {props,maxPct,maxNv,maxOK}=window._RD||{};if(!props)return;
-let s;
-if(tipo==='pen')s=[...props].sort((a,b)=>b.pct-a.pct);
-else if(tipo==='adq')s=[...props].sort((a,b)=>b.nv-a.nv);
-else s=[...props].sort((a,b)=>b.pctOK-a.pctOK);
-const el=document.getElementById('rank-body');
-if(el)el.innerHTML=buildRankRows(s,tipo,maxPct,maxNv,maxOK);
-};
-function buildRankRows(sorted,tipo,maxPct,maxNv,maxOK){
-return sorted.map((p,i)=>{
-let bpct,val,sub,col;
-if(tipo==='pen'){bpct=maxPct>0?Math.round(p.pct/maxPct*100):0;val=p.pct.toFixed(1)+'%';sub=`${fmtN(p.cb)} miembros de ${fmtN(p.ci)} check-ins`;col=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';}
-else if(tipo==='adq'){bpct=maxNv>0?Math.round(p.nv/maxNv*100):0;val=fmtN(p.nv);sub=`${p.pctAdq.toFixed(1)}% adquisición`;col='var(--coral)';}
-else{bpct=maxOK>0?Math.round(p.pctOK/maxOK*100):0;val=p.pctOK.toFixed(1)+'%';sub='redención OK';col=p.pctOK>=50?'var(--ok)':p.pctOK>0?'#ca8a04':'var(--gris)';}
-const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
-return`<div class="rank-item"><div class="rank-pos">${medal}</div>`+
-`<div class="rank-name"><b>${p.p}</b><span>${sub}</span></div>`+
-`<div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:${bpct}%;background:${col}"></div></div>`+
-`<div class="rank-val" style="color:${col}">${val}</div></div>`;
-}).join('');
-}
+window.switchRank=function(tipo){const {props,maxPct,maxNv,maxOK}=window._RD||{};if(!props)return;let s;if(tipo==='pen')s=[...props].sort((a,b)=>b.pct-a.pct);else if(tipo==='adq')s=[...props].sort((a,b)=>b.nv-a.nv);else s=[...props].sort((a,b)=>b.pctOK-a.pctOK);const el=document.getElementById('rank-body');if(el)el.innerHTML=buildRankRows(s,tipo,maxPct,maxNv,maxOK);};
+function buildRankRows(sorted,tipo,maxPct,maxNv,maxOK){return sorted.map((p,i)=>{let bpct,val,sub,col;if(tipo==='pen'){bpct=maxPct>0?Math.round(p.pct/maxPct*100):0;val=p.pct.toFixed(1)+'%';sub=`${fmtN(p.cb)} miembros de ${fmtN(p.ci)} check-ins`;col=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';}else if(tipo==='adq'){bpct=maxNv>0?Math.round(p.nv/maxNv*100):0;val=fmtN(p.nv);sub=`${p.pctAdq.toFixed(1)}% adquisición`;col='var(--coral)';}else{bpct=maxOK>0?Math.round(p.pctOK/maxOK*100):0;val=p.pctOK.toFixed(1)+'%';sub='redención OK';col=p.pctOK>=50?'var(--ok)':p.pctOK>0?'#ca8a04':'var(--gris)';}const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;return`<div class="rank-item"><div class="rank-pos">${medal}</div><div class="rank-name"><b>${p.p}</b><span>${sub}</span></div><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:${bpct}%;background:${col}"></div></div><div class="rank-val" style="color:${col}">${val}</div></div>`;}).join('');}
 
-// ── BENEFICIOS — cerrado por defecto ─────────────────────────────
+// ── BENEFICIOS
 function renderBeneficios(bens){
 const tOK=sum(bens,'_tarifa_ok'),toOK=sum(bens,'_toallas_ok'),dOK=sum(bens,'_desayunos_ok');
 const tt=sum(bens,'_total_trans');
-const items=[
-{ico:'🏷️',lbl:'Tarifa loyalty',desc:'Descuento en tarifa según tier',n:tOK,col:'#B83D16'},
-{ico:'🛁',lbl:'Toalla',        desc:'Botón toalla $0 (Backpacker+)',  n:toOK,col:'#0369a1'},
-{ico:'🍳',lbl:'Desayuno',      desc:'Botón desayuno (Nomad/Viajero 3+ noches)',n:dOK,col:'#065f46'},
-];
+const items=[{ico:'🏷️',lbl:'Tarifa loyalty',desc:'Descuento en tarifa según tier',n:tOK,col:'#B83D16'},{ico:'🛁',lbl:'Toalla',desc:'Botón toalla $0 (Backpacker+)',n:toOK,col:'#0369a1'},{ico:'🍳',lbl:'Desayuno',desc:'Botón desayuno (Nomad/Viajero 3+ noches)',n:dOK,col:'#065f46'}];
 const tot=tOK+toOK+dOK||1;
 const top=items.reduce((a,b)=>a.n>=b.n?a:b);
 const lowB=items.filter(i=>i.n===0).map(i=>i.lbl);
 document.getElementById('bene-wrap').innerHTML=
-`<div class="ac"><div class="ac-head" onclick="toggleAc(this)">`+
-`<div class="ac-left"><span class="ac-ico">⭐</span>`+
-`<div><div class="ac-tit">Beneficio más redimido ${ib('Beneficio más redimido')}</div>`+
-`<div class="ac-sub">Solo redenciones OK · ${fmtN(tOK+toOK+dOK)} de ${fmtN(tt)} totales</div></div>`+
-`</div><div class="ac-meta"><span class="ac-badge b-coral">${top.n>0?top.ico+' '+top.lbl+' lidera':'⏳ Sin OK aún'}</span></div>`+
-`<span class="ac-arr">▼</span></div>`+
+`<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">⭐</span><div><div class="ac-tit">Beneficio más redimido ${ib('Beneficio más redimido')}</div><div class="ac-sub">Solo redenciones OK · ${fmtN(tOK+toOK+dOK)} de ${fmtN(tt)} totales</div></div></div><div class="ac-meta"><span class="ac-badge b-coral">${top.n>0?top.ico+' '+top.lbl+' lidera':'⏳ Sin OK aún'}</span></div><span class="ac-arr">▼</span></div>`+
 `<div class="ac-body"><div style="max-width:560px;margin-bottom:18px;">`+
-items.map(it=>{const p=Math.round(it.n/tot*1000)/10;const isTop=it.n===top.n&&top.n>0;return(
-`<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">`+
-`<div style="font-size:22px;width:32px;text-align:center">${it.ico}</div>`+
-`<div style="flex:1">`+
-`<div style="display:flex;justify-content:space-between;margin-bottom:5px;">`+
-`<span style="font-size:13px;font-weight:700">${it.lbl}${isTop?` <span style="font-size:9px;background:var(--coral);color:#fff;padding:1px 6px;border-radius:4px">Top</span>`:''}</span>`+
-`<span style="font-size:13px;font-weight:800;color:${it.col}">${fmtN(it.n)} <span style="font-size:11px;color:var(--gris);font-weight:500">(${p.toFixed(1)}%)</span></span>`+
-`</div>`+
-`<div style="height:9px;background:var(--cream-dark);border-radius:5px;overflow:hidden">`+
-`<div style="height:100%;width:${p}%;background:${it.col};border-radius:5px;transition:width .7s"></div></div>`+
-`<div style="font-size:11px;color:var(--gris);margin-top:4px">${it.desc}</div></div></div>`
-);}).join('')+`</div>`+
-(lowB.length?`<div style="padding:12px 14px;background:var(--warn-bg);border-radius:10px;font-size:12px;color:var(--warn)">⚠️ <b>${lowB.join(' y ')}</b> en 0 — verificar tier o capacitación en recepción.</div>`:'')
-+`</div></div>`;
+items.map(it=>{const p=Math.round(it.n/tot*1000)/10;const isTop=it.n===top.n&&top.n>0;return`<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;"><div style="font-size:22px;width:32px;text-align:center">${it.ico}</div><div style="flex:1"><div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-size:13px;font-weight:700">${it.lbl}${isTop?` <span style="font-size:9px;background:var(--coral);color:#fff;padding:1px 6px;border-radius:4px">Top</span>`:''}</span><span style="font-size:13px;font-weight:800;color:${it.col}">${fmtN(it.n)} <span style="font-size:11px;color:var(--gris);font-weight:500">(${p.toFixed(1)}%)</span></span></div><div style="height:9px;background:var(--cream-dark);border-radius:5px;overflow:hidden"><div style="height:100%;width:${p}%;background:${it.col};border-radius:5px;transition:width .7s"></div></div><div style="font-size:11px;color:var(--gris);margin-top:4px">${it.desc}</div></div></div>`;}).join('')+`</div>`+
+(lowB.length?`<div style="padding:12px 14px;background:var(--warn-bg);border-radius:10px;font-size:12px;color:var(--warn)">⚠️ <b>${lowB.join(' y ')}</b> en 0 — verificar tier o capacitación en recepción.</div>`:'')+
+`</div></div>`;
 }
 
-// ── SIN CANJE ─────────────────────────────────────────────────────
+// ── SIN CANJE
 function renderSinCanje(sc){
 SC_DATA=sc;
 const t=sc.filter(r=>(r.Tier||'').toLowerCase()==='tourist').length;
 const b=sc.length-t;
 const unicos=new Set(sc.map(r=>r.Nombre).filter(Boolean)).size||sc.length;
 document.getElementById('sc-wrap').innerHTML=
-`<div class="ac"><div class="ac-head" onclick="toggleAc(this)">`+
-`<div class="ac-left"><span class="ac-ico">❌</span>`+
-`<div><div class="ac-tit">Sin Canje — ${fmtN(unicos)} miembros</div>`+
-`<div class="ac-sub">${sc.length} reservas sin tarifa ni beneficios loyalty</div></div>`+
-`</div><div class="ac-meta"><span class="ac-badge b-warn">${t} Tourist</span><span class="ac-badge b-err">${b} Backpacker+</span></div>`+
-`<span class="ac-arr">▼</span></div>`+
-`<div class="ac-body">`+
-`<div class="sc-cats">`+
-`<div class="sc-cat t"><div class="sc-n">${t}</div><div class="sc-t">Tourist — Sin tarifa loyalty</div><div class="sc-d">Seleccionar tarifa loyalty en CB al check-in, según nota de reserva o Akin.</div></div>`+
-`<div class="sc-cat b"><div class="sc-n">${b}</div><div class="sc-t">Backpacker+ — Sin nada registrado</div><div class="sc-d">Tarifa loyalty + botón toalla. Si Viajero con 3+ noches, también desayuno.</div></div>`+
-`</div>`+
-`<div style="font-size:11px;color:var(--mid);background:var(--cream);border-radius:8px;padding:8px 12px;margin-bottom:10px;">ℹ️ Muestra Backpacker+. Un miembro con dos estadías aparece dos veces en el conteo de reservas.</div>`+
-`<input class="sc-q" id="sc-q" type="text" placeholder="Buscar nombre, propiedad, reserva..." oninput="filtrarSC()"/>`+
-`<div class="sc-wrap" id="sc-tabla"></div></div></div>`;
+`<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">❌</span><div><div class="ac-tit">Sin Canje — ${fmtN(unicos)} miembros</div><div class="ac-sub">${sc.length} reservas sin tarifa ni beneficios loyalty</div></div></div><div class="ac-meta"><span class="ac-badge b-warn">${t} Tourist</span><span class="ac-badge b-err">${b} Backpacker+</span></div><span class="ac-arr">▼</span></div>`+
+`<div class="ac-body"><div class="sc-cats"><div class="sc-cat t"><div class="sc-n">${t}</div><div class="sc-t">Tourist — Sin tarifa loyalty</div><div class="sc-d">Seleccionar tarifa loyalty en CB al check-in, según nota de reserva o Akin.</div></div><div class="sc-cat b"><div class="sc-n">${b}</div><div class="sc-t">Backpacker+ — Sin nada registrado</div><div class="sc-d">Tarifa loyalty + botón toalla. Si Viajero con 3+ noches, también desayuno.</div></div></div>`+
+`<div style="font-size:11px;color:var(--mid);background:var(--cream);border-radius:8px;padding:8px 12px;margin-bottom:10px;">ℹ️ Un miembro con dos estadías aparece dos veces en el conteo de reservas.</div>`+
+`<input class="sc-q" id="sc-q" type="text" placeholder="Buscar nombre, propiedad, reserva..." oninput="filtrarSC()"/><div class="sc-wrap" id="sc-tabla"></div></div></div>`;
 filtrarSC();
 }
-function filtrarSC(){
-const q=(document.getElementById('sc-q')?.value||'').toLowerCase();
-const rows=SC_DATA.filter(r=>{
-if((r.Tier||'').toLowerCase()==='tourist')return false;
-return !q||Object.values(r).some(v=>v&&v.toString().toLowerCase().includes(q));
-});
-const wrap=document.getElementById('sc-tabla');if(!wrap)return;
-if(!rows.length){wrap.innerHTML='<div class="empty">Sin registros para este filtro</div>';return;}
-wrap.innerHTML=`<table><thead><tr><th>Nombre</th><th>Reserva</th><th>Fecha llegada</th><th>Período</th><th>Propiedad</th><th>Tier</th><th>Noches</th></tr></thead><tbody>`+
-rows.map(r=>`<tr><td><b>${r.Nombre||'—'}</b></td><td>${r.Reserva||'—'}</td><td>${fmtFecha(r.FechaIN)}</td><td>${r.Período||'—'}</td><td>${r.Propiedad||'—'}</td><td>${r.Tier||'—'}</td><td>${r.Noches||'—'}</td></tr>`).join('')+
-`</tbody></table>`;
-}
+function filtrarSC(){const q=(document.getElementById('sc-q')?.value||'').toLowerCase();const rows=SC_DATA.filter(r=>{if((r.Tier||'').toLowerCase()==='tourist')return false;return !q||Object.values(r).some(v=>v&&v.toString().toLowerCase().includes(q));});const wrap=document.getElementById('sc-tabla');if(!wrap)return;if(!rows.length){wrap.innerHTML='<div class="empty">Sin registros</div>';return;}wrap.innerHTML=`<table><thead><tr><th>Nombre</th><th>Reserva</th><th>Fecha llegada</th><th>Período</th><th>Propiedad</th><th>Tier</th><th>Noches</th></tr></thead><tbody>`+rows.map(r=>`<tr><td><b>${r.Nombre||'—'}</b></td><td>${r.Reserva||'—'}</td><td>${fmtFecha(r.FechaIN)}</td><td>${r.Período||'—'}</td><td>${r.Propiedad||'—'}</td><td>${r.Tier||'—'}</td><td>${r.Noches||'—'}</td></tr>`).join('')+`</tbody></table>`;}
 
-// ── SIN MATCH — cerrado por defecto ──────────────────────────────
-function renderSinMatchAkin(){
-const cont=document.getElementById('sinmatch-wrap');
-const raw=DATA.sinMatchAkin||[];
-const fp=gf('f-prop'),ft=gf('f-per');
-const data=raw.filter(r=>(!fp||r.Propiedad===fp)&&(!ft||(r.Periodo||r.Período)===ft));
-document.getElementById('match-cnt').textContent=data.length;
-if(!data.length){
-cont.innerHTML=`<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">🔗</span><div><div class="ac-tit">Incidencias de enrolamiento ${ib('Incidencias de enrolamiento')}</div><div class="ac-sub">Reservas Akin sin match en CloudBeds</div></div></div><span class="ac-arr">▼</span></div><div class="ac-body"><div class="empty">✅ Sin incidencias para este filtro.</div></div></div>`;
-return;
-}
-cont.innerHTML=
-`<div class="ac"><div class="ac-head" onclick="toggleAc(this)">`+
-`<div class="ac-left"><span class="ac-ico">🔗</span>`+
-`<div><div class="ac-tit">Incidencias de enrolamiento ${ib('Incidencias de enrolamiento')}</div>`+
-`<div class="ac-sub">${data.length} reservas Akin sin match en CB · click para ver</div></div>`+
-`</div><div class="ac-meta"><span class="ac-badge b-warn">Escalar a Akin</span></div>`+
-`<span class="ac-arr">▼</span></div>`+
-`<div class="ac-body">`+
-`<div class="match-banner">⚠️ <b>¿Qué significa esto?</b> Estos huéspedes llegaron como miembros según Akin, pero CloudBeds no los reconoció. Causa más probable: <b>número de reserva o correo diferente entre sistemas</b>.<br><br><b>Acción:</b> Verificar en CB por nombre. Si el perfil existe con datos distintos, corregirlo recupera el beneficio. Si persiste, escalar a Akin.</div>`+
-`<div class="sc-wrap"><table><thead><tr><th>Nombre</th><th># Reserva Akin</th><th>Fecha llegada</th><th>Propiedad</th><th>Período</th><th>Tier Akin</th></tr></thead>`+
-`<tbody>${data.map(r=>`<tr><td><b>${r.Nombre||'—'}</b></td><td>${r.Reserva||'—'}</td><td>${fmtFecha(r.FechaIN)}</td><td>${r.Propiedad||'—'}</td><td>${r.Periodo||r.Período||'—'}</td><td>${r.Tier_AKIN||'—'}</td></tr>`).join('')}</tbody></table></div>`+
-`</div></div>`;
-}
+// ── SIN MATCH
+function renderSinMatchAkin(){const cont=document.getElementById('sinmatch-wrap');const raw=DATA.sinMatchAkin||[];const fp=gf('f-prop'),ft=gf('f-per');const data=raw.filter(r=>(!fp||r.Propiedad===fp)&&(!ft||(r.Periodo||r.Período)===ft));document.getElementById('match-cnt').textContent=data.length;if(!data.length){cont.innerHTML=`<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">🔗</span><div><div class="ac-tit">Incidencias de enrolamiento ${ib('Incidencias de enrolamiento')}</div><div class="ac-sub">Reservas Akin sin match en CloudBeds</div></div></div><span class="ac-arr">▼</span></div><div class="ac-body"><div class="empty">✅ Sin incidencias para este filtro.</div></div></div>`;return;}cont.innerHTML=`<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">🔗</span><div><div class="ac-tit">Incidencias de enrolamiento ${ib('Incidencias de enrolamiento')}</div><div class="ac-sub">${data.length} reservas Akin sin match en CB</div></div></div><div class="ac-meta"><span class="ac-badge b-warn">Escalar a Akin</span></div><span class="ac-arr">▼</span></div><div class="ac-body"><div class="match-banner">⚠️ <b>¿Qué significa esto?</b> Huéspedes reconocidos como miembros en Akin pero no en CB. Causa: número de reserva o correo diferente.<br><br><b>Acción:</b> Verificar en CB por nombre. Si persiste, escalar a Akin.</div><div class="sc-wrap"><table><thead><tr><th>Nombre</th><th># Reserva Akin</th><th>Fecha llegada</th><th>Propiedad</th><th>Período</th><th>Tier Akin</th></tr></thead><tbody>${data.map(r=>`<tr><td><b>${r.Nombre||'—'}</b></td><td>${r.Reserva||'—'}</td><td>${fmtFecha(r.FechaIN)}</td><td>${r.Propiedad||'—'}</td><td>${r.Periodo||r.Período||'—'}</td><td>${r.Tier_AKIN||'—'}</td></tr>`).join('')}</tbody></table></div></div></div>`;}
 
-// ── HISTÓRICO ─────────────────────────────────────────────────────
+// ── HISTÓRICO — lee historico_acumulado (todos los meses)
 function renderHistorico(){
-const hist=filtrar(DATA.historico||[],'Período','Propiedad','Pais');
+// Prioriza historico_acumulado (persiste entre meses) sobre historico (solo mes actual)
+const hist=DATA.historico_acumulado||DATA.historico||[];
+const fp=gf('f-prop'),pa=gf('f-pais');
+const filtH=hist.filter(r=>(!fp||r.Propiedad===fp)&&(!pa||(r.Pais||r.País||'')===pa));
 const n=parseInt(document.getElementById('hn').value);
 document.getElementById('hl').textContent=n+(n===1?' temporada':' temporadas');
-const allP=[...new Set(hist.map(r=>r.Período).filter(Boolean))].sort().slice(-n);
-const byP={};hist.forEach(r=>{if(!byP[r.Propiedad])byP[r.Propiedad]=[];byP[r.Propiedad].push(r);});
+const allPers=[...new Set(filtH.map(r=>r.Período||r.Periodo).filter(Boolean))].sort().slice(-n);
+const byP={};
+filtH.forEach(r=>{const prop=r.Propiedad||'';if(!byP[prop])byP[prop]=[];byP[prop].push(r);});
 const METS=[
-{k:'Afiliados_CB',        l:'Afiliados CB'},
+{k:'Afiliados_CB',l:'Afiliados CB'},
+{k:'CheckIns',l:'Check-ins'},
+{k:'Huespedes',l:'Huéspedes'},
+{k:'Nuevos_Afiliados',l:'Nuevos'},
 {k:'Pct_Penetracion_Real',l:'% Penetración',p:true},
-{k:'Nuevos_Afiliados',    l:'Nuevos'},
-{k:'Total_Trans',         l:'Transacciones'},
-{k:'Pct_OK',              l:'% OK',p:true},
+{k:'Total_Trans',l:'Transacciones'},
+{k:'Pct_OK',l:'% OK',p:true},
+{k:'Sin_Canje',l:'Sin Canje'},
 ];
 const body=document.getElementById('hist-body');
-if(!allP.length){body.innerHTML='<div class="empty">Sin datos históricos</div>';return;}
-body.innerHTML=Object.keys(byP).sort().map(prop=>
-`<div class="hist-prop"><div class="hist-ph" onclick="tH(this)"><span>🏨 ${prop}</span><span>▲</span></div>`+
-`<div class="hist-pb op"><table><thead><tr><th>Métrica</th>${allP.map(p=>`<th>${p}</th>`).join('')}</tr></thead>`+
-`<tbody>${METS.map(m=>`<tr><td>${m.l}</td>${allP.map(per=>{
-const r=byP[prop].find(x=>x.Período===per);
-if(!r)return`<td style="color:#ccc">—</td>`;
-const v=r[m.k];
-if(v===''||v===null||v===undefined)return`<td>—</td>`;
-if(m.p){const num=corP(v);if(num===null)return`<td>—</td>`;return`<td class="${clsP(num)}">${num.toFixed(1)}%</td>`;}
-return`<td>${fmtN(v)}</td>`;
-}).join('')}</tr>`).join('')}</tbody>`+
-`</table></div></div>`
-).join('');
+if(!allPers.length){body.innerHTML='<div class="empty">Sin datos históricos acumulados. Corre <b>Guardar Histórico</b> desde el menú del AppScript antes de borrar datos.</div>';return;}
+body.innerHTML=Object.keys(byP).sort().map(prop=>`<div class="hist-prop"><div class="hist-ph" onclick="tH(this)"><span>🏨 ${prop}</span><span>▲</span></div><div class="hist-pb op"><table><thead><tr><th>Métrica</th>${allPers.map(p=>`<th>${p}</th>`).join('')}</tr></thead><tbody>${METS.map(m=>`<tr><td>${m.l}</td>${allPers.map(per=>{const r=byP[prop].find(x=>(x.Período||x.Periodo)===per);if(!r)return`<td style="color:#ccc">—</td>`;const v=r[m.k];if(v===''||v===null||v===undefined)return`<td>—</td>`;if(m.p){const num=corP(v);if(num===null)return`<td>—</td>`;return`<td class="${clsP(num)}">${num.toFixed(1)}%</td>`;}return`<td>${fmtN(v)}</td>`;}).join('')}</tr>`).join('')}</tbody></table></div></div>`).join('');
 }
 function tH(h){const b=h.nextElementSibling;b.classList.toggle('op');h.querySelector('span:last-child').textContent=b.classList.contains('op')?'▲':'▼';}
 
-// ── TIERS ─────────────────────────────────────────────────────────
-function renderTiers(rd){
-const BENS={Tourist:'Tarifa 15%',Backpacker:'Tarifa 15% + Toalla',Explorer:'Tarifa 20% + Toalla',Nomad:'Tarifa 20% + Toalla',Viajero:'Tarifa 25% + Toalla + Desayuno (3+ noches)'};
-const ORDEN=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
-const map={};
-rd.forEach(r=>{
-const t=r.Tier||'Sin tier';
-if(!map[t])map[t]={ok:0,err:0,sc:0,sm:0};
-map[t].ok+=parseInt(r.OK)||0;map[t].err+=parseInt(r.Con_Error)||0;
-map[t].sc+=parseInt(r.Sin_Canje)||0;map[t].sm+=parseInt(r.Sin_Membresia)||0;
-if(!r.Sin_Canje)map[t].sc+=parseInt(r.Sin_Registro)||0;
-});
-if(!Object.keys(map).length){document.getElementById('tiers-g').innerHTML='<div class="empty">Sin datos</div>';return;}
-document.getElementById('tiers-g').innerHTML=ORDEN.filter(t=>map[t]).map(t=>{
-const g=map[t];const tot=g.ok+g.err+g.sc+(g.sm||0)||1;
-const pOK=Math.round(g.ok/tot*1000)/10;
-const col=pOK>=80?'var(--ok)':pOK>=50?'#ca8a04':'var(--err)';
-return(
-`<div class="tier-c"><div class="t-top"><span class="t-nom">${t}</span><span class="t-tot">${fmtN(tot)} hués.</span></div>`+
-`<div class="t-bens">${BENS[t]||''}</div>`+
-`<div class="tier-bar"><div class="tier-fill" style="width:${pOK}%;background:${col}"></div></div>`+
-`<div class="tier-pct" style="color:${col}">${pOK.toFixed(1)}% OK</div>`+
-`<div class="tier-ns">`+
-`<span>✅ ${fmtN(g.ok)}</span>`+
-`<span>⚠️ ${fmtN(g.err)}</span>`+
-`<span>❌ ${fmtN(g.sc)}</span>`+
-`${g.sm>0?`<span>⬜ ${fmtN(g.sm)}</span>`:''}`+
-`</div></div>`
-);
-}).join('');
-}
+// ── TIERS
+function renderTiers(rd){const BENS={Tourist:'Tarifa 15%',Backpacker:'Tarifa 15% + Toalla',Explorer:'Tarifa 20% + Toalla',Nomad:'Tarifa 20% + Toalla',Viajero:'Tarifa 25% + Toalla + Desayuno (3+ noches)'};const ORDEN=['Tourist','Backpacker','Explorer','Nomad','Viajero'];const map={};rd.forEach(r=>{const t=r.Tier||'Sin tier';if(!map[t])map[t]={ok:0,err:0,sc:0,sm:0};map[t].ok+=parseInt(r.OK)||0;map[t].err+=parseInt(r.Con_Error)||0;map[t].sc+=parseInt(r.Sin_Canje)||0;map[t].sm+=parseInt(r.Sin_Membresia)||0;if(!r.Sin_Canje)map[t].sc+=parseInt(r.Sin_Registro)||0;});if(!Object.keys(map).length){document.getElementById('tiers-g').innerHTML='<div class="empty">Sin datos</div>';return;}document.getElementById('tiers-g').innerHTML=ORDEN.filter(t=>map[t]).map(t=>{const g=map[t];const tot=g.ok+g.err+g.sc+(g.sm||0)||1;const pOK=Math.round(g.ok/tot*1000)/10;const col=pOK>=80?'var(--ok)':pOK>=50?'#ca8a04':'var(--err)';return`<div class="tier-c"><div class="t-top"><span class="t-nom">${t}</span><span class="t-tot">${fmtN(tot)} hués.</span></div><div class="t-bens">${BENS[t]||''}</div><div class="tier-bar"><div class="tier-fill" style="width:${pOK}%;background:${col}"></div></div><div class="tier-pct" style="color:${col}">${pOK.toFixed(1)}% OK</div><div class="tier-ns"><span>✅ ${fmtN(g.ok)}</span><span>⚠️ ${fmtN(g.err)}</span><span>❌ ${fmtN(g.sc)}</span>${g.sm>0?`<span>⬜ ${fmtN(g.sm)}</span>`:''}</div></div>`;}).join('');}
 
-// ── CHARTS ────────────────────────────────────────────────────────
-function shortProp(p){
-return p.replace('Viajero ','').replace(' Hostel & Spa','').replace(' Hostel & Ecohabs','').replace(' Hostel & Lake Club','').replace(' Hostel & Rooftop','').replace(' Hostel & Salsa School','').replace(' Hostel','').replace(' - Getsemaní','').replace(' - Centro','');
-}
+// ── CHARTS
+function shortProp(p){return p.replace('Viajero ','').replace(/ Hostel.*/,'').replace(' - Getsemaní','').replace(' - Centro','');}
 function renderCharts(mb){
 const propMap={};
-mb.forEach(r=>{
-const p=r.Propiedad||'Sin especificar';
-if(!propMap[p])propMap[p]={ok:0,total:0};
-propMap[p].total++;
-if(r.Error_Type==='OK')propMap[p].ok++;
-});
+mb.forEach(r=>{const p=r.Propiedad||'Sin especificar';if(!propMap[p])propMap[p]={ok:0,total:0};propMap[p].total++;if(r.Error_Type==='OK')propMap[p].ok++;});
 const propLabels=Object.keys(propMap);
 const shortLabels=propLabels.map(shortProp);
 const propPct=propLabels.map(p=>propMap[p].total>0?Math.round(propMap[p].ok/propMap[p].total*1000)/10:0);
 if(chRed)chRed.destroy();
-chRed=new Chart(document.getElementById('ch-red'),{
-type:'bar',
-data:{labels:shortLabels,datasets:[{label:'% que redimen OK',data:propPct,backgroundColor:propPct.map(p=>p>=50?'#86efac':p>=20?'#fde68a':'#fca5a5'),borderRadius:6,borderWidth:0}]},
-options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:11}}},x:{ticks:{font:{size:10}}}},plugins:{legend:{display:false}}}
-});
+chRed=new Chart(document.getElementById('ch-red'),{type:'bar',data:{labels:shortLabels,datasets:[{label:'% que redimen OK',data:propPct,backgroundColor:propPct.map(p=>p>=50?'#86efac':p>=20?'#fde68a':'#fca5a5'),borderRadius:6,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:11}}},x:{ticks:{font:{size:10}}}},plugins:{legend:{display:false}}}});
 const ORD=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
 const tm={};
-mb.forEach(r=>{
-const t=r.Tier_AKIN||r.Tier||'Sin tier';
-if(!tm[t])tm[t]={ok:0,err:0,sin:0};
-const et=r.Error_Type||'';
-if(et==='OK')tm[t].ok++;
-else if(et===''||et==='NO LOYALTY'||et==='SIN CANJE')tm[t].sin++;
-else tm[t].err++;
-});
+mb.forEach(r=>{const t=r.Tier_AKIN||r.Tier||'Sin tier';if(!tm[t])tm[t]={ok:0,err:0,sin:0};const et=r.Error_Type||'';if(et==='OK')tm[t].ok++;else if(et===''||et==='NO LOYALTY'||et==='SIN CANJE')tm[t].sin++;else tm[t].err++;});
 const tL=ORD.filter(t=>tm[t]);
 if(chTier)chTier.destroy();
-chTier=new Chart(document.getElementById('ch-tier'),{
-type:'bar',
-data:{labels:tL,datasets:[
-{label:'✅ OK',data:tL.map(t=>tm[t].ok),backgroundColor:'#86efac'},
-{label:'⚠️ Error',data:tL.map(t=>tm[t].err),backgroundColor:'#fde68a'},
-{label:'❌ Sin reg.',data:tL.map(t=>tm[t].sin),backgroundColor:'#fca5a5'},
-]},
-options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true,ticks:{font:{size:11}}},y:{stacked:true,ticks:{font:{size:11}}}},plugins:{legend:{labels:{font:{size:11}}}}}
-});
-const destOK=propLabels.map(p=>{let n=0;mb.filter(r=>r.Propiedad===p&&r.Error_Type==='OK').forEach(()=>n++);return n;});
-const destErr=propLabels.map(p=>{let n=0;mb.filter(r=>r.Propiedad===p&&r.Error_Type&&r.Error_Type!=='OK'&&r.Error_Type!=='NO LOYALTY'&&r.Error_Type!=='SIN CANJE').forEach(()=>n++);return n;});
-const destSin=propLabels.map(p=>{let n=0;mb.filter(r=>r.Propiedad===p&&(r.Error_Type==='SIN CANJE'||r.Error_Type===''||r.Error_Type==='NO LOYALTY')).forEach(()=>n++);return n;});
+chTier=new Chart(document.getElementById('ch-tier'),{type:'bar',data:{labels:tL,datasets:[{label:'✅ OK',data:tL.map(t=>tm[t].ok),backgroundColor:'#86efac'},{label:'⚠️ Error',data:tL.map(t=>tm[t].err),backgroundColor:'#fde68a'},{label:'❌ Sin reg.',data:tL.map(t=>tm[t].sin),backgroundColor:'#fca5a5'}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true,ticks:{font:{size:11}}},y:{stacked:true,ticks:{font:{size:11}}}},plugins:{legend:{labels:{font:{size:11}}}}}});
+const destOK=propLabels.map(p=>mb.filter(r=>r.Propiedad===p&&r.Error_Type==='OK').length);
+const destErr=propLabels.map(p=>mb.filter(r=>r.Propiedad===p&&r.Error_Type&&r.Error_Type!=='OK'&&r.Error_Type!=='NO LOYALTY'&&r.Error_Type!=='SIN CANJE').length);
+const destSin=propLabels.map(p=>mb.filter(r=>r.Propiedad===p&&(r.Error_Type==='SIN CANJE'||r.Error_Type===''||r.Error_Type==='NO LOYALTY')).length);
 if(chDest)chDest.destroy();
-chDest=new Chart(document.getElementById('ch-dest'),{
-type:'bar',
-data:{labels:shortLabels,datasets:[
-{label:'✅ OK',data:destOK,backgroundColor:'#86efac'},
-{label:'⚠️ Error',data:destErr,backgroundColor:'#fde68a'},
-{label:'❌ Sin reg.',data:destSin,backgroundColor:'#fca5a5'},
-]},
-options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true,ticks:{font:{size:10}}},y:{stacked:true,ticks:{font:{size:11}}}},plugins:{legend:{labels:{font:{size:11}}}}}
-});
+chDest=new Chart(document.getElementById('ch-dest'),{type:'bar',data:{labels:shortLabels,datasets:[{label:'✅ OK',data:destOK,backgroundColor:'#86efac'},{label:'⚠️ Error',data:destErr,backgroundColor:'#fde68a'},{label:'❌ Sin reg.',data:destSin,backgroundColor:'#fca5a5'}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true,ticks:{font:{size:10}}},y:{stacked:true,ticks:{font:{size:11}}}},plugins:{legend:{labels:{font:{size:11}}}}}});
 }
 
-// ── RENDER ────────────────────────────────────────────────────────
+// ── RENDER
 function render(){
 if(!DATA)return;
-const afs =filtrar(DATA.afiliados||[]);
+const afs=filtrar(DATA.afiliados||[]);
 const bens=filtrar(DATA.beneficios||[]);
-const mb  =filtrar(DATA.tiersDetalle||[],'Período','Propiedad','País');
+const mb=filtrar(DATA.tiersDetalle||[],'Período','Propiedad','País');
 const hall=filtrar(DATA.hallazgos||[],'Período','Propiedad','País');
-const sc  =filtrar(DATA.sinCanje||[],'Período','Propiedad','País');
-const rd  =filtrar(DATA.redencionPorTier||[],'Período','Propiedad','País');
-renderFunnel(afs,bens,mb);
+const sc=filtrar(DATA.sinCanje||[],'Período','Propiedad','País');
+const rd=filtrar(DATA.redencionPorTier||[],'Período','Propiedad','País');
 renderKPIs(afs,bens,mb);
+renderFunnel(afs,bens,mb);
 renderSemaforo(mb);
 renderHallazgos(hall);
+renderDistribucionTiers();
 renderRanking(afs,mb);
 renderBeneficios(bens);
 renderSinCanje(sc);
@@ -966,24 +742,18 @@ renderTiers(rd);
 renderCharts(mb);
 }
 
-// ── INIT ──────────────────────────────────────────────────────────
+// ── INIT
 (async()=>{
 try{
 const r=await fetch(DATA_URL+'?t='+Date.now());
 if(!r.ok)throw new Error('HTTP '+r.status);
 DATA=await r.json();
-if(DATA.actualizado){
-const d=new Date(DATA.actualizado);
-document.getElementById('h-ts').textContent=
-d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+
-' · '+d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
-}
+if(DATA.actualizado){const d=new Date(DATA.actualizado);document.getElementById('h-ts').textContent=d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+' · '+d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});}
 poblarFiltros();render();
 }catch(e){
 document.getElementById('h-ts').textContent='❌ Error cargando datos';
 console.error(e);
-document.getElementById('funnel-wrap').innerHTML=
-`<div style="background:#fff;border-radius:12px;padding:24px;border:1.5px solid var(--border);text-align:center;color:var(--err)">❌ No se pudo cargar <code>../data/loyalty_data.json</code><br><span style="font-size:12px;color:var(--gris)">Verifica que el archivo existe en la carpeta <code>data/</code>.</span></div>`;
+document.getElementById('kpi-row').innerHTML=`<div style="background:#fff;border-radius:12px;padding:24px;border:1.5px solid var(--border);text-align:center;color:var(--err)">❌ No se pudo cargar <code>../data/loyalty_data.json</code><br><span style="font-size:12px;color:var(--gris)">Verifica que el archivo existe en <code>data/</code>.</span></div>`;
 }
 })();
 </script>
