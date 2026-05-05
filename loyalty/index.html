@@ -591,6 +591,39 @@ cont.innerHTML=`<div class="hall-table-wrap"><table class="hall-table"><thead><t
 function toggleHallSub(id,btn){const row=document.getElementById(id);if(!row)return;const open=row.style.display==='table-row';row.style.display=open?'none':'table-row';btn.textContent=btn.textContent.replace(open?'▲':'▼',open?'▼':'▲');}
 
 // ── DISTRIBUCIÓN TIERS
+function drillAkinTier(tier){
+const fp=gf('f-prop');
+const tierFiltro=tier||'';
+const allBase=(DATA.akinTiers||[]).filter(r=>(!fp||r.Propiedad===fp));
+const all=tierFiltro?allBase.filter(r=>r.Viajero===tierFiltro):allBase;
+const props=[...new Set(all.map(r=>r.Propiedad).filter(Boolean))].sort();
+document.getElementById('drill-title').textContent=`Miembros tier ${tier}`;
+const c=document.getElementById('drill-content');
+const allTiers=[...new Set(allBase.map(r=>r.Viajero).filter(Boolean))].sort();
+const TIER_ORD=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
+const tiersOrdenados=TIER_ORD.filter(t=>allTiers.includes(t)).concat(allTiers.filter(t=>!TIER_ORD.includes(t)));
+const tierSel=tiersOrdenados.length>1?`<div style="display:flex;align-items:center;gap:8px;"><label style="font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px">Tier</label><select id="drill-tier-sel" onchange="renderDrillAkinTier('${tier}')"><option value="">${tierFiltro?'Todos':'Todos ('+allBase.length+')'}</option>${tiersOrdenados.map(t=>{const n=allBase.filter(r=>r.Viajero===t).length;return`<option value="${t}" ${t===tierFiltro?'selected':''}>${t} (${n})</option>`;}).join('')}</select></div>`:'';const selectorHtml=`<div class="drill-filter">${tierSel}${props.length>1?`<label style="font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px">Propiedad</label><select id="drill-tier-prop" onchange="renderDrillAkinTier('${tier}')"><option value="">Todas</option>${props.map(p=>{const n=all.filter(r=>r.Propiedad===p).length;return`<option value="${p}">${p} (${n})</option>`;}).join('')}</select>`:''}<span class="drill-count" id="drill-count">${all.length} miembros</span></div>`;
+c.innerHTML=selectorHtml+`<div id="drill-table-wrap"></div>`;
+document.getElementById('drill-sub').textContent='';
+renderDrillAkinTier(tier);
+document.getElementById('drill-overlay').classList.add('show');
+}
+function renderDrillAkinTier(tier){
+const fp=gf('f-prop');
+const tierSelEl=document.getElementById('drill-tier-sel');
+const propSelEl=document.getElementById('drill-tier-prop');
+const tierFiltro=tierSelEl?tierSelEl.value:(tier||'');
+const propFiltro=propSelEl?propSelEl.value:'';
+const base=(DATA.akinTiers||[]).filter(r=>(!fp||r.Propiedad===fp));
+const rows=base.filter(r=>(!tierFiltro||r.Viajero===tierFiltro)&&(!propFiltro||r.Propiedad===propFiltro));
+const cntEl=document.getElementById('drill-count');
+if(cntEl)cntEl.textContent=rows.length+' miembros';
+const wrap=document.getElementById('drill-table-wrap');
+if(!wrap)return;
+if(!rows.length){wrap.innerHTML='<div style="text-align:center;padding:24px;color:var(--gris)">Sin miembros para este filtro</div>';return;}
+const cols=[{k:'Name',l:'Nombre'},{k:'Email',l:'Correo'},{k:'Propiedad',l:'Propiedad'},{k:'Viajero',l:'Tier'},{k:'Joined date',l:'Fecha de ingreso'}];
+wrap.innerHTML=`<div class="drill-wrap"><table><thead><tr>${cols.map(col=>`<th>${col.l}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(col=>`<td>${col.k==='Joined date'?fmtFecha(r[col.k]):r[col.k]||'—'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
 function renderDistribucionTiers(){
 const cont=document.getElementById('tier-dist-wrap');
 const dist=DATA.distribucionTiers;
@@ -605,9 +638,41 @@ if(!filas.length){cont.innerHTML='<div class="empty">Sin datos para este filtro.
 const TIER_CFG={Viajero:{ico:'🏆',col:'#7c3aed'},Nomad:{ico:'🌍',col:'#0369a1'},Explorer:{ico:'🧭',col:'#0891b2'},Backpacker:{ico:'🎒',col:'var(--coral)'},Tourist:{ico:'🗺️',col:'#ca8a04'}};
 const D={ico:'•',col:'var(--gris)'};
 const maxN=Math.max(...filas.map(f=>f.count));
-cont.innerHTML=`<div class="td-wrap"><table class="td-table"><thead><tr><th>Tier</th><th style="text-align:center">Afiliados</th><th style="text-align:center">% del total</th><th>Distribución</th></tr></thead><tbody>`+
-filas.map(f=>{const c=TIER_CFG[f.tier]||D;const barW=maxN>0?Math.round(f.count/maxN*100):0;return`<tr><td><span style="font-size:16px">${c.ico}</span> <b style="color:${c.col}">${f.tier}</b></td><td style="text-align:center;font-size:20px;font-weight:800;color:${c.col}">${fmtN(f.count)}</td><td style="text-align:center;font-size:13px;font-weight:700;color:var(--gris)">${f.pct}%</td><td><div class="td-bar"><div class="td-bar-fill" style="width:${barW}%;background:${c.col}"></div></div></td></tr>`;}).join('')+
-`<tr class="td-total"><td><b>Total</b></td><td style="text-align:center;font-size:18px">${fmtN(total)}</td><td style="text-align:center">100%</td><td></td></tr>`+
+const tieneDetalle=(DATA.akinTiers||[]).length>0;
+// Gráfica de picos de enrolamiento
+const akinTiers=DATA.akinTiers||[];
+if(akinTiers.length){
+const fp2=gf('f-prop');
+const base=fp2?akinTiers.filter(r=>r.Propiedad===fp2):akinTiers;
+const byMes={};
+base.forEach(r=>{
+if(!r['Joined date'])return;
+let d;
+try{d=new Date(r['Joined date']);}catch{return;}
+if(isNaN(d))return;
+const mes=d.getFullYear()+'-'+(String(d.getMonth()+1).padStart(2,'0'));
+byMes[mes]=(byMes[mes]||0)+1;
+});
+const meses=Object.keys(byMes).sort();
+if(meses.length>1){
+const canvasId='ch-enrol-'+Date.now();
+cont.insertAdjacentHTML('beforeend',
+`<div style="margin-top:18px;background:var(--cream);border-radius:14px;padding:18px;border:1.5px solid var(--border)">`+
+`<div style="font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">📈 Picos de enrolamiento · Fecha de ingreso al programa</div>`+
+`<div style="font-size:11px;color:var(--gris);margin-bottom:12px">Nuevos miembros por mes${fp2?' · '+fp2:' · toda la cadena'}</div>`+
+`<div style="position:relative;height:180px"><canvas id="${canvasId}"></canvas></div></div>`);
+const maxVal=Math.max(...meses.map(m=>byMes[m]));
+const pico=meses.find(m=>byMes[m]===maxVal);
+new Chart(document.getElementById(canvasId),{
+type:'bar',
+data:{labels:meses,datasets:[{label:'Nuevos miembros',data:meses.map(m=>byMes[m]),backgroundColor:meses.map(m=>m===pico?'#F04B24':'#E0D5C8'),borderRadius:6,borderWidth:0}]},
+options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:11}}},x:{ticks:{font:{size:11}}}},plugins:{legend:{display:false},tooltip:{callbacks:{title:v=>{const [y,m]=v[0].label.split('-');const d=new Date(y,m-1,1);return d.toLocaleDateString('es-CO',{month:'long',year:'numeric'});},label:v=>`${v.raw} nuevos miembros`}}}}
+});
+}
+}
+cont.innerHTML=`<div class="td-wrap"><table class="td-table"><thead><tr><th>Tier</th><th style="text-align:center">Afiliados</th><th style="text-align:center">% del total</th><th>Distribución</th>${tieneDetalle?'<th></th>':''}</tr></thead><tbody>`+
+filas.map(f=>{const c=TIER_CFG[f.tier]||D;const barW=maxN>0?Math.round(f.count/maxN*100):0;return`<tr><td><span style="font-size:16px">${c.ico}</span> <b style="color:${c.col}">${f.tier}</b></td><td style="text-align:center;font-size:20px;font-weight:800;color:${c.col}">${fmtN(f.count)}</td><td style="text-align:center;font-size:13px;font-weight:700;color:var(--gris)">${f.pct}%</td><td><div class="td-bar"><div class="td-bar-fill" style="width:${barW}%;background:${c.col}"></div></div></td>${tieneDetalle?`<td><button class="hall-btn" onclick="drillAkinTier('${f.tier}')">Ver miembros →</button></td>`:''}</tr>`;}).join('')+
+`<tr class="td-total"><td><b>Total</b></td><td style="text-align:center;font-size:18px">${fmtN(total)}</td><td style="text-align:center">100%</td><td></td>${tieneDetalle?'<td></td>':''}</tr>`+
 `</tbody></table></div>`+
 `<div style="font-size:11px;color:var(--gris);margin-top:8px;padding:8px 12px;background:var(--cream);border-radius:8px;">ℹ️ Refleja el estado actual de Akin_Tiers — no cambia con el filtro de período.</div>`;
 }
