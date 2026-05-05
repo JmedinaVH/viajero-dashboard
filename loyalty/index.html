@@ -365,39 +365,22 @@ main{padding:16px 16px 48px;}
 </div>
 </div>
 </div>
-<!-- 11. GRÁFICAS -->
-<div class="sec">
-<div class="sec-hdr"><h2>Gráficas</h2><div class="linea"></div></div>
-<div class="ac">
-<div class="ac-head" onclick="toggleAc(this)">
-<div class="ac-left"><span class="ac-ico">📊</span>
-<div><div class="ac-tit">Redención y adopción</div><div class="ac-sub">Por destino y por tier</div></div>
-</div><span class="ac-arr">▼</span>
-</div>
-<div class="ac-body">
-<div class="charts-r" style="margin-bottom:14px;">
-<div class="ch-box"><h3>% de miembros que redimen · por destino</h3><div class="ch-wrap"><canvas id="ch-red"></canvas></div></div>
-<div class="ch-box"><h3>Redenciones por tier</h3><div class="ch-wrap"><canvas id="ch-tier"></canvas></div></div>
-</div>
-<div class="ch-box"><h3>Redenciones por destino · OK vs errores vs sin registro</h3><div class="ch-wrap-lg"><canvas id="ch-dest"></canvas></div></div>
-</div>
-</div>
-</div>
+
 </main>
 
 <script>
 const DATA_URL='../data/loyalty_data.json';
-let DATA=null,SC_DATA=[],chRed=null,chTier=null,chDest=null;
+let DATA=null,SC_DATA=[];
 
 const TIPS={
 'Miembros hospedados':{t:'Miembros hospedados',b:'Porcentaje de huéspedes que hacen check-in y son parte del programa Viajero Go en el período seleccionado.'},
-'Penetración Loyalty':{t:'Penetración Loyalty',b:'De todos los check-ins del período, qué porcentaje corresponde a miembros activos. Meta: >15%.'},
+'Penetración Loyalty':{t:'Penetración Loyalty',b:'De cada 100 huéspedes que hacen check-in en CloudBeds, cuántos son miembros activos de Viajero Go. Meta: superar el 15% de los check-ins.'},
 'Nuevos Afiliados':{t:'Nuevos Afiliados · % Adquisición',b:'Cantidad de huéspedes que se inscribieron por primera vez a Viajero Go.\n\n% Adquisición: de todos los huéspedes, qué % se convirtió en miembro nuevo. Meta: >5%.'},
 '% Miembros que Redimen':{t:'% Miembros que Redimen',b:'De los afiliados hospedados, cuántos tuvieron al menos una transacción OK registrada correctamente.'},
 '% OK Transacciones':{t:'% OK Transacciones',b:'Porcentaje de transacciones loyalty sin ningún error — tarifa y beneficios correctos para el tier correcto.'},
 'Sin Canje':{t:'Sin Canje',b:'Miembros que se hospedaron pero no recibieron ningún beneficio loyalty. Muestra miembros únicos.'},
 'Leakage':{t:'Leakage',b:'Se aplicó descuento o beneficio loyalty a un huésped que NO es miembro. Implica pérdida de ingreso.'},
-'Tier Incorrecto':{t:'Tier Incorrecto',b:'El tier aplicado en CB no coincide con el tier real en Akin. Verificar siempre en Akin antes del check-in.'},
+'Tier Incorrecto':{t:'Tier Incorrecto',b:'Se aplicó un beneficio que no corresponde al tier real del miembro. Ej: es Tourist en Akin pero en CB se le aplicó tarifa de Backpacker. Verificar siempre el tier en Akin antes de aplicar cualquier beneficio.'},
 'Misuse':{t:'Misuse — ¿Qué significa?',b:'Tarifa o beneficio loyalty aplicado fuera del flujo correcto. Tarifa loyalty a un huésped sin membresía válida. Requiere revisión individual.'},
 'Beneficio más redimido':{t:'Beneficio más redimido',b:'Solo cuenta redenciones correctas (OK): tarifa loyalty, botón toalla y botón desayuno aplicados al tier correcto.'},
 'Incidencias de enrolamiento':{t:'Incidencias de enrolamiento',b:'Reservas que aparecen como membresía en Akin pero CB no las reconoce. Causa: número de reserva o correo diferente entre sistemas.'},
@@ -416,9 +399,10 @@ function fmtFecha(v){if(!v)return'—';try{return new Date(v).toLocaleDateString
 let _drillTipo='';
 function drillTipoError(tipo,titulo){
 _drillTipo=tipo;
-const ft=gf('f-per');
+const ft=gf('f-per'),fp=gf('f-prop'),fa=gf('f-pais');
 const allRows=(DATA.tiersDetalle||[]).filter(r=>r.Error_Type===tipo&&(!ft||(r.Periodo||r.Período)===ft));
 const propsDrill=[...new Set(allRows.map(r=>r.Propiedad).filter(Boolean))].sort();
+const paisesDrill=[...new Set(allRows.map(r=>r.País||r.Pais).filter(Boolean))].sort();
 document.getElementById('drill-title').textContent=titulo;
 const c=document.getElementById('drill-content');
 const selectorHtml=propsDrill.length>1?
@@ -431,7 +415,7 @@ ${propsDrill.map(p=>{const n=allRows.filter(r=>r.Propiedad===p).length;return`<o
 <span class="drill-count" id="drill-count">${allRows.length} registros</span>
 </div>`
 :`<div style="font-size:12px;color:var(--gris);margin-bottom:14px;">📍 ${propsDrill[0]||''} · ${allRows.length} registros</div>`;
-c.innerHTML=selectorHtml+`<div id="drill-table-wrap"></div>`;
+c.innerHTML=`<div class="drill-filter">`+(paisesDrill.length>1?`<label style="font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px">País</label><select id="drill-pais-sel" onchange="renderDrillTable()"><option value="">Todos</option>${paisesDrill.map(p=>`<option value="${p}" ${p===fa?'selected':''}>${p}</option>`).join('')}</select> `:``)+( propsDrill.length>1?`<label style="font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px">Propiedad</label><select id="drill-prop-sel" onchange="renderDrillTable()"><option value="">Todas</option>${propsDrill.map(p=>`<option value="${p}" ${p===fp?'selected':''}>${p}</option>`).join('')}</select> `:``)+`<span class="drill-count" id="drill-count">${allRows.length} registros</span></div><div id="drill-table-wrap"></div>`;
 document.getElementById('drill-sub').textContent='';
 renderDrillTable();
 document.getElementById('drill-overlay').classList.add('show');
@@ -441,15 +425,17 @@ function renderDrillTable(){
 const tipo=_drillTipo;
 const ft=gf('f-per');
 const allRows=(DATA.tiersDetalle||[]).filter(r=>r.Error_Type===tipo&&(!ft||(r.Periodo||r.Período)===ft));
-const sel=document.getElementById('drill-prop-sel');
-const propFiltro=sel?sel.value:'';
-const rows=allRows.filter(r=>!propFiltro||r.Propiedad===propFiltro);
+const selProp=document.getElementById('drill-prop-sel');
+const selPais=document.getElementById('drill-pais-sel');
+const propFiltro=selProp?selProp.value:'';
+const paisFiltro=selPais?selPais.value:'';
+const rows=allRows.filter(r=>(!propFiltro||r.Propiedad===propFiltro)&&(!paisFiltro||(r.País||r.Pais||'')===paisFiltro));
 const cntEl=document.getElementById('drill-count');
 if(cntEl)cntEl.textContent=rows.length+' registros';
 const wrap=document.getElementById('drill-table-wrap');
 if(!wrap)return;
 const cols=[{k:'Nombre',l:'Nombre'},{k:'Reserva',l:'Reserva'},{k:'FechaIN',l:'Fecha llegada'},{k:'Noches',l:'Noches'},{k:'Propiedad',l:'Propiedad'},{k:'Periodo',l:'Período'},{k:'Tier_AKIN',l:'Tier'}];
-if(!rows.length){wrap.innerHTML='<div style="text-align:center;padding:24px;color:var(--gris)">Sin registros para esta propiedad</div>';return;}
+if(!rows.length){wrap.innerHTML='<div style="text-align:center;padding:24px;color:var(--gris)">Sin registros para este filtro</div>';return;}
 wrap.innerHTML=`<div class="drill-wrap"><table><thead><tr>${cols.map(c=>`<th>${c.l}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${c.k==='FechaIN'?fmtFecha(r[c.k]):r[c.k]||'—'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 
@@ -534,16 +520,14 @@ const errores=[
 `<div class="k-glow"></div><div class="k-top"><div class="k-lbl">Tier Incorrecto</div>${ib('Tier Incorrecto')}</div><div class="k-val">${fmtN(tiI)}</div><div class="k-sub">Tier en CB no coincide con Akin</div>${tiI>0?`<span class="k-badge b-err">Ver quiénes →</span>`:'<span class="k-badge b-ok">✅ Sin incidencias</span>'}</div>`,
 ].join('');
 
-const benItems=[{ico:'🏷️',lbl:'Tarifa',n:tOK,col:'#B83D16'},{ico:'🛁',lbl:'Toalla',n:toOK,col:'#0369a1'},{ico:'🍳',lbl:'Desayuno',n:dOK,col:'#065f46'}];
-const benTotal=tOK+toOK+dOK||1;
-const benHtml=`<div class="kpi" style="--kc:var(--coral)"><div class="k-glow"></div><div class="k-top"><div class="k-lbl">Beneficio más redimido</div>${ib('Beneficio más redimido')}</div><div style="font-size:11px;color:var(--mid);font-weight:700;margin-bottom:10px;">${gf('f-prop')||'Cadena'}</div>`+benItems.map(b=>{const p=Math.round(b.n/benTotal*100);return`<div class="ben-bar-row"><span class="ben-bar-lbl">${b.ico} ${b.lbl}</span><div class="ben-bar-track"><div class="ben-bar-fill" style="width:${p}%;background:${b.col}"></div></div><span class="ben-bar-n">${fmtN(b.n)}</span></div>`;}).join('')+`</div>`;
+
 
 document.getElementById('kpi-row').innerHTML=
 `<div class="kpi-grupo"><div class="kpi-grupo-label">Penetración del programa</div><div class="kpi-grid">${principales}</div></div>`+
 `<div class="kpi-grupo"><div class="kpi-grupo-label">Calidad y errores <button class="kpi-toggle" onclick="toggleKpiSec(this)">Ver más <span>▼</span></button></div>`+
 `<div class="kpi-sec" id="kpi-sec">`+
 `<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:8px;">Calidad</div>`+
-`<div class="kpi-grid" style="margin-bottom:14px;">${calidad}${benHtml}</div>`+
+`<div class="kpi-grid" style="margin-bottom:14px;">${calidad}</div>`+
 `<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:8px;margin-top:10px;">Errores</div>`+
 `<div class="kpi-grid">${errores}</div>`+
 `</div></div>`;
@@ -556,7 +540,7 @@ const t={'SIN CANJE':0,'LEAKAGE':0,'MISUSE':0,'OK':0,'TIER_INCORRECTO':0,'MAL CO
 mb.forEach(r=>{const k=r.Error_Type||'NO LOYALTY';if(k in t)t[k]++;});
 const tot=t['SIN CANJE']+t['LEAKAGE']+t['MISUSE']+t['OK']+t['TIER_INCORRECTO']+t['MAL COBRADO']||1;
 const scUnicosS=new Set(mb.filter(r=>r.Error_Type==='SIN CANJE').map(r=>r.Nombre).filter(Boolean)).size||t['SIN CANJE'];
-document.getElementById('sem-total').innerHTML=`<b>${fmtN(tot)}</b> interacciones con el programa · <b>${fmtN(t['NO LOYALTY'])}</b> check-ins sin membresía`;
+document.getElementById('sem-total').innerHTML=`<b>${fmtN(tot)}</b> transacciones loyalty registradas en el período`;
 const items=[
 {k:'OK',v:t['OK'],disp:t['OK'],cls:t['OK']>0?'s-verde':'s-gris',tipo:'registros perfectos',drill:false},
 {k:'Sin Canje',v:t['SIN CANJE'],disp:scUnicosS,cls:t['SIN CANJE']===0?'s-verde':t['SIN CANJE']<20?'s-amarillo':'s-rojo',tipo:'miembros sin beneficio',drill:'SIN CANJE'},
@@ -575,7 +559,7 @@ const cont=document.getElementById('hall-wrap');
 if(!hall.length){cont.innerHTML='<div class="empty" style="padding:20px">✅ Sin hallazgos para este filtro</div>';document.getElementById('hall-cnt-badge').textContent='0 críticos';document.getElementById('hall-sub').textContent='Sin hallazgos';return;}
 const byT={};
 hall.forEach(h=>{const k=(h['Categoría']||'')+'|'+(h['Severidad']||'')+'|'+(h['Error_Type']||'');if(!byT[k])byT[k]={cat:h['Categoría']||'General',sev:h['Severidad']||'Media',accion:h['Acción sugerida']||'',et:h['Error_Type']||'',total:0,props:{}};const m=(h.Hallazgo||'').match(/^(\d+)/);byT[k].total+=m?parseInt(m[1]):1;const p=h.Propiedad||'Sin especificar';byT[k].props[p]=(byT[k].props[p]||0)+(m?parseInt(m[1]):1);});
-const rows=Object.values(byT).map(g=>{let txt='',drill=null,tipBody='';if(g.et==='SIN CANJE'){const a=g.accion.toLowerCase();if(a.includes('tourist')){txt='Tourist sin tarifa loyalty';drill='SIN CANJE';tipBody='Tier Tourist: debían recibir tarifa loyalty 15% en CB.\n\n💡 '+g.accion;}else{txt='Backpacker+ sin tarifa ni beneficios';drill='SIN CANJE';tipBody='Tiers Backpacker+: tarifa loyalty + botón toalla (y desayuno si aplica).\n\n💡 '+g.accion;}}else if(g.et==='LEAKAGE'){txt='Leakage';drill='LEAKAGE';tipBody='Beneficio a un NO-miembro.\n\n💡 '+g.accion;}else if(g.et==='TIER_INCORRECTO'){txt='Tier incorrecto en CB';drill='TIER_INCORRECTO';tipBody='Tier en CB ≠ real en Akin.\n\n💡 '+g.accion;}else if(g.et==='MISUSE'){txt='Misuse del programa';drill='MISUSE';tipBody='Fuera del flujo correcto.\n\n💡 '+g.accion;}else if(g.et==='MAL COBRADO'){txt='Monto incorrecto';drill='MAL COBRADO';tipBody='Beneficio con monto incorrecto.\n\n💡 '+g.accion;}else if(g.cat==='Adopción'){txt='Penetración <15%';tipBody='Menos del 15% de check-ins son miembros.\n\n💡 '+g.accion;}else if(g.cat==='Operación'){txt='Sin redención OK';tipBody='Miembros sin ninguna transacción correcta.\n\n💡 '+g.accion;}else txt='Casos detectados';const numDisplay=drill?g.total:Object.keys(g.props).length;const propEntries=Object.entries(g.props).sort((a,b)=>b[1]-a[1]);return{...g,txt,drill,tipBody,numDisplay,propEntries,nProps:propEntries.length};});
+const rows=Object.values(byT).map(g=>{let txt='',drill=null,tipBody='';if(g.et==='SIN CANJE'){const a=g.accion.toLowerCase();if(a.includes('tourist')){txt='Tourist sin tarifa loyalty';drill='SIN CANJE';tipBody='Tier Tourist: debían recibir tarifa loyalty 15% en CB.\n\n💡 '+g.accion;}else{txt='Backpacker+ sin tarifa ni beneficios';drill='SIN CANJE';tipBody='Tiers Backpacker+: tarifa loyalty + botón toalla (y desayuno si aplica).\n\n💡 '+g.accion;}}else if(g.et==='LEAKAGE'){txt='Leakage';drill='LEAKAGE';tipBody='Beneficio a un NO-miembro.\n\n💡 '+g.accion;}else if(g.et==='TIER_INCORRECTO'){txt='Tier incorrecto en CB';drill='TIER_INCORRECTO';tipBody='Tier en CB ≠ real en Akin.\n\n💡 '+g.accion;}else if(g.et==='MISUSE'){txt='Misuse del programa';drill='MISUSE';tipBody='Fuera del flujo correcto.\n\n💡 '+g.accion;}else if(g.et==='MAL COBRADO'){txt='Monto incorrecto';drill='MAL COBRADO';tipBody='Beneficio con monto incorrecto.\n\n💡 '+g.accion;}else if(g.cat==='Adopción'){txt='Penetración <15%';tipBody='Menos del 15% de check-ins son miembros.\n\n💡 '+g.accion;}else if(g.cat==='Operación'){txt='Sin redención OK';tipBody='Miembros sin ninguna transacción correcta.\n\n💡 '+g.accion;}else txt='Casos detectados';const numDisplay=g.total;return{...g,txt,drill,tipBody,numDisplay};});
 const sevOrd={Crítica:0,Alta:1,Media:2};
 rows.sort((a,b)=>(sevOrd[a.sev]??3)-(sevOrd[b.sev]??3)||(b.total-a.total));
 const nCrit=rows.filter(r=>r.sev==='Crítica').length;
@@ -583,12 +567,10 @@ document.getElementById('hall-cnt-badge').textContent=`${nCrit} crítico${nCrit!
 document.getElementById('hall-sub').textContent=`${rows.length} tipos de error detectados`;
 const CM={Crítica:'critica',Alta:'alta',Media:'media'};
 const SEV_LABEL={Crítica:'🔴 Crítica',Alta:'🟠 Alta',Media:'🟡 Media'};
-const tableRows=rows.map((g,idx)=>{const cls=CM[g.sev]||'media';const hasDrill=g.drill&&(DATA.tiersDetalle||[]).some(r=>r.Error_Type===g.drill);const ibHall=g.tipBody?`<i class="info-btn" style="margin-left:6px;vertical-align:middle" onclick="showDesc('${g.txt}','${g.tipBody.replace(/'/g,'&#39;').replace(/\n/g,'\\n')}');">i</i>`:'';const subId=`hs-${idx}`;let propCell='';if(g.nProps===0){propCell=`<div class="hall-props-cell">—</div>`;}else if(g.nProps===1){propCell=`<div class="hall-props-cell">1 hostal<div style="font-size:10px;color:var(--gris);margin-top:2px">${g.propEntries[0][0]}</div></div>`;}else{propCell=`<div class="hall-props-cell"><span class="hall-props-link" onclick="toggleHallSub('${subId}',this)">${g.nProps} hostales ▼</span></div>`;}
-const subRow=g.nProps>1?`<tr id="${subId}" class="hall-sub-row" style="display:none"><td colspan="2"></td><td colspan="3"><div class="hall-sub-detail"><div style="font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Desglose por hostal</div>${g.propEntries.map(([p,n])=>`<div class="hall-sub-row-item"><span style="color:var(--mid)">📍 ${p}</span><span style="font-weight:700">${fmtN(n)}</span></div>`).join('')}</div></td></tr>`:'';
-return`<tr><td><span class="hall-sev ${cls}">${SEV_LABEL[g.sev]||g.sev}</span></td><td><span class="hall-tipo">${g.txt}</span>${ibHall}</td><td><div class="hall-num ${cls}">${fmtN(g.numDisplay)}</div></td><td>${propCell}</td><td>${hasDrill?`<button class="hall-btn" onclick="drillTipoError('${g.drill}','${g.txt}')">Ver detalle →</button>`:`<span style="color:var(--gris);font-size:12px">—</span>`}</td></tr>${subRow}`;}).join('');
-cont.innerHTML=`<div class="hall-table-wrap"><table class="hall-table"><thead><tr><th>Severidad</th><th>Hallazgo</th><th class="tc">Total</th><th class="tc">Propiedades</th><th></th></tr></thead><tbody>${tableRows}</tbody></table></div>`;
+const tableRows=rows.map((g)=>{const cls=CM[g.sev]||'media';const hasDrill=g.drill&&(DATA.tiersDetalle||[]).some(r=>r.Error_Type===g.drill);const ibHall=g.tipBody?`<i class="info-btn" style="margin-left:6px;vertical-align:middle" onclick="showDesc('${g.txt}','${g.tipBody.replace(/'/g,'&#39;').replace(/\n/g,'\\n')}');">i</i>`:'';return`<tr><td><span class="hall-sev ${cls}">${SEV_LABEL[g.sev]||g.sev}</span></td><td><span class="hall-tipo">${g.txt}</span>${ibHall}</td><td><div class="hall-num ${cls}">${fmtN(g.numDisplay)}</div></td><td>${hasDrill?`<button class="hall-btn" onclick="drillTipoError('${g.drill}','${g.txt}')">Ver detalle →</button>`:`<span style="color:var(--gris);font-size:12px">—</span>`}</td></tr>`;}).join('');
+cont.innerHTML=`<div class="hall-table-wrap"><table class="hall-table"><thead><tr><th>Severidad</th><th>Hallazgo</th><th class="tc">Casos</th><th></th></tr></thead><tbody>${tableRows}</tbody></table></div>`;
 }
-function toggleHallSub(id,btn){const row=document.getElementById(id);if(!row)return;const open=row.style.display==='table-row';row.style.display=open?'none':'table-row';btn.textContent=btn.textContent.replace(open?'▲':'▼',open?'▼':'▲');}
+
 
 // ── DISTRIBUCIÓN TIERS
 function drillAkinTier(tier){
@@ -597,12 +579,14 @@ const tierFiltro=tier||'';
 const allBase=(DATA.akinTiers||[]).filter(r=>(!fp||r.Propiedad===fp));
 const all=tierFiltro?allBase.filter(r=>r.Viajero===tierFiltro):allBase;
 const props=[...new Set(all.map(r=>r.Propiedad).filter(Boolean))].sort();
-document.getElementById('drill-title').textContent=`Miembros tier ${tier}`;
+const meses=[...new Set(allBase.map(r=>{if(!r['Joined date'])return null;try{const d=new Date(r['Joined date']);if(isNaN(d))return null;return d.getFullYear()+'-'+(String(d.getMonth()+1).padStart(2,'0'));}catch{return null;}}).filter(Boolean))].sort();
+document.getElementById('drill-title').textContent=`Miembros Viajero Go`;
 const c=document.getElementById('drill-content');
 const allTiers=[...new Set(allBase.map(r=>r.Viajero).filter(Boolean))].sort();
 const TIER_ORD=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
 const tiersOrdenados=TIER_ORD.filter(t=>allTiers.includes(t)).concat(allTiers.filter(t=>!TIER_ORD.includes(t)));
-const tierSel=tiersOrdenados.length>1?`<div style="display:flex;align-items:center;gap:8px;"><label style="font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px">Tier</label><select id="drill-tier-sel" onchange="renderDrillAkinTier('${tier}')"><option value="">${tierFiltro?'Todos':'Todos ('+allBase.length+')'}</option>${tiersOrdenados.map(t=>{const n=allBase.filter(r=>r.Viajero===t).length;return`<option value="${t}" ${t===tierFiltro?'selected':''}>${t} (${n})</option>`;}).join('')}</select></div>`:'';const selectorHtml=`<div class="drill-filter">${tierSel}${props.length>1?`<label style="font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px">Propiedad</label><select id="drill-tier-prop" onchange="renderDrillAkinTier('${tier}')"><option value="">Todas</option>${props.map(p=>{const n=all.filter(r=>r.Propiedad===p).length;return`<option value="${p}">${p} (${n})</option>`;}).join('')}</select>`:''}<span class="drill-count" id="drill-count">${all.length} miembros</span></div>`;
+const tierSel=tiersOrdenados.length>1?`<div style="display:flex;align-items:center;gap:8px;"><label style="font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px">Tier</label><select id="drill-tier-sel" onchange="renderDrillAkinTier('${tier}')"><option value="">${tierFiltro?'Todos':'Todos ('+allBase.length+')'}</option>${tiersOrdenados.map(t=>{const n=allBase.filter(r=>r.Viajero===t).length;return`<option value="${t}" ${t===tierFiltro?'selected':''}>${t} (${n})</option>`;}).join('')}</select></div>`:'';const mesSel=meses.length>1?`<label style="font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px">Mes ingreso</label><select id="drill-mes-sel" onchange="renderDrillAkinTier('${tier}')"><option value="">Todos</option>${meses.map(m=>`<option value="${m}">${m}</option>`).join('')}</select> `:``;
+const selectorHtml=`<div class="drill-filter">${tierSel}${mesSel}${props.length>1?`<label style="font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px">Propiedad</label><select id="drill-tier-prop" onchange="renderDrillAkinTier('${tier}')"><option value="">Todas</option>${props.map(p=>{const n=all.filter(r=>r.Propiedad===p).length;return`<option value="${p}">${p} (${n})</option>`;}).join('')}</select>`:''}<span class="drill-count" id="drill-count">${all.length} miembros</span></div>`;
 c.innerHTML=selectorHtml+`<div id="drill-table-wrap"></div>`;
 document.getElementById('drill-sub').textContent='';
 renderDrillAkinTier(tier);
@@ -612,10 +596,12 @@ function renderDrillAkinTier(tier){
 const fp=gf('f-prop');
 const tierSelEl=document.getElementById('drill-tier-sel');
 const propSelEl=document.getElementById('drill-tier-prop');
+const mesSelEl=document.getElementById('drill-mes-sel');
 const tierFiltro=tierSelEl?tierSelEl.value:(tier||'');
 const propFiltro=propSelEl?propSelEl.value:'';
+const mesFiltro=mesSelEl?mesSelEl.value:'';
 const base=(DATA.akinTiers||[]).filter(r=>(!fp||r.Propiedad===fp));
-const rows=base.filter(r=>(!tierFiltro||r.Viajero===tierFiltro)&&(!propFiltro||r.Propiedad===propFiltro));
+const rows=base.filter(r=>{if(tierFiltro&&r.Viajero!==tierFiltro)return false;if(propFiltro&&r.Propiedad!==propFiltro)return false;if(mesFiltro){try{const d=new Date(r['Joined date']);if(isNaN(d))return false;const m=d.getFullYear()+'-'+(String(d.getMonth()+1).padStart(2,'0'));if(m!==mesFiltro)return false;}catch{return false;}}return true;});
 const cntEl=document.getElementById('drill-count');
 if(cntEl)cntEl.textContent=rows.length+' miembros';
 const wrap=document.getElementById('drill-table-wrap');
@@ -639,37 +625,6 @@ const TIER_CFG={Viajero:{ico:'🏆',col:'#7c3aed'},Nomad:{ico:'🌍',col:'#0369a
 const D={ico:'•',col:'var(--gris)'};
 const maxN=Math.max(...filas.map(f=>f.count));
 const tieneDetalle=(DATA.akinTiers||[]).length>0;
-// Gráfica de picos de enrolamiento
-const akinTiers=DATA.akinTiers||[];
-if(akinTiers.length){
-const fp2=gf('f-prop');
-const base=fp2?akinTiers.filter(r=>r.Propiedad===fp2):akinTiers;
-const byMes={};
-base.forEach(r=>{
-if(!r['Joined date'])return;
-let d;
-try{d=new Date(r['Joined date']);}catch{return;}
-if(isNaN(d))return;
-const mes=d.getFullYear()+'-'+(String(d.getMonth()+1).padStart(2,'0'));
-byMes[mes]=(byMes[mes]||0)+1;
-});
-const meses=Object.keys(byMes).sort();
-if(meses.length>1){
-const canvasId='ch-enrol-'+Date.now();
-cont.insertAdjacentHTML('beforeend',
-`<div style="margin-top:18px;background:var(--cream);border-radius:14px;padding:18px;border:1.5px solid var(--border)">`+
-`<div style="font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">📈 Picos de enrolamiento · Fecha de ingreso al programa</div>`+
-`<div style="font-size:11px;color:var(--gris);margin-bottom:12px">Nuevos miembros por mes${fp2?' · '+fp2:' · toda la cadena'}</div>`+
-`<div style="position:relative;height:180px"><canvas id="${canvasId}"></canvas></div></div>`);
-const maxVal=Math.max(...meses.map(m=>byMes[m]));
-const pico=meses.find(m=>byMes[m]===maxVal);
-new Chart(document.getElementById(canvasId),{
-type:'bar',
-data:{labels:meses,datasets:[{label:'Nuevos miembros',data:meses.map(m=>byMes[m]),backgroundColor:meses.map(m=>m===pico?'#F04B24':'#E0D5C8'),borderRadius:6,borderWidth:0}]},
-options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:11}}},x:{ticks:{font:{size:11}}}},plugins:{legend:{display:false},tooltip:{callbacks:{title:v=>{const [y,m]=v[0].label.split('-');const d=new Date(y,m-1,1);return d.toLocaleDateString('es-CO',{month:'long',year:'numeric'});},label:v=>`${v.raw} nuevos miembros`}}}}
-});
-}
-}
 cont.innerHTML=`<div class="td-wrap"><table class="td-table"><thead><tr><th>Tier</th><th style="text-align:center">Afiliados</th><th style="text-align:center">% del total</th><th>Distribución</th>${tieneDetalle?'<th></th>':''}</tr></thead><tbody>`+
 filas.map(f=>{const c=TIER_CFG[f.tier]||D;const barW=maxN>0?Math.round(f.count/maxN*100):0;return`<tr><td><span style="font-size:16px">${c.ico}</span> <b style="color:${c.col}">${f.tier}</b></td><td style="text-align:center;font-size:20px;font-weight:800;color:${c.col}">${fmtN(f.count)}</td><td style="text-align:center;font-size:13px;font-weight:700;color:var(--gris)">${f.pct}%</td><td><div class="td-bar"><div class="td-bar-fill" style="width:${barW}%;background:${c.col}"></div></div></td>${tieneDetalle?`<td><button class="hall-btn" onclick="drillAkinTier('${f.tier}')">Ver miembros →</button></td>`:''}</tr>`;}).join('')+
 `<tr class="td-total"><td><b>Total</b></td><td style="text-align:center;font-size:18px">${fmtN(total)}</td><td style="text-align:center">100%</td><td></td>${tieneDetalle?'<td></td>':''}</tr>`+
@@ -761,28 +716,7 @@ function tH(h){const b=h.nextElementSibling;b.classList.toggle('op');h.querySele
 // ── TIERS
 function renderTiers(rd){const BENS={Tourist:'Tarifa 15%',Backpacker:'Tarifa 15% + Toalla',Explorer:'Tarifa 20% + Toalla',Nomad:'Tarifa 20% + Toalla',Viajero:'Tarifa 25% + Toalla + Desayuno (3+ noches)'};const ORDEN=['Tourist','Backpacker','Explorer','Nomad','Viajero'];const map={};rd.forEach(r=>{const t=r.Tier||'Sin tier';if(!map[t])map[t]={ok:0,err:0,sc:0,sm:0};map[t].ok+=parseInt(r.OK)||0;map[t].err+=parseInt(r.Con_Error)||0;map[t].sc+=parseInt(r.Sin_Canje)||0;map[t].sm+=parseInt(r.Sin_Membresia)||0;if(!r.Sin_Canje)map[t].sc+=parseInt(r.Sin_Registro)||0;});if(!Object.keys(map).length){document.getElementById('tiers-g').innerHTML='<div class="empty">Sin datos</div>';return;}document.getElementById('tiers-g').innerHTML=ORDEN.filter(t=>map[t]).map(t=>{const g=map[t];const tot=g.ok+g.err+g.sc+(g.sm||0)||1;const pOK=Math.round(g.ok/tot*1000)/10;const col=pOK>=80?'var(--ok)':pOK>=50?'#ca8a04':'var(--err)';return`<div class="tier-c"><div class="t-top"><span class="t-nom">${t}</span><span class="t-tot">${fmtN(tot)} hués.</span></div><div class="t-bens">${BENS[t]||''}</div><div class="tier-bar"><div class="tier-fill" style="width:${pOK}%;background:${col}"></div></div><div class="tier-pct" style="color:${col}">${pOK.toFixed(1)}% OK</div><div class="tier-ns"><span>✅ ${fmtN(g.ok)}</span><span>⚠️ ${fmtN(g.err)}</span><span>❌ ${fmtN(g.sc)}</span>${g.sm>0?`<span>⬜ ${fmtN(g.sm)}</span>`:''}</div></div>`;}).join('');}
 
-// ── CHARTS
-function shortProp(p){return p.replace('Viajero ','').replace(/ Hostel.*/,'').replace(' - Getsemaní','').replace(' - Centro','');}
-function renderCharts(mb){
-const propMap={};
-mb.forEach(r=>{const p=r.Propiedad||'Sin especificar';if(!propMap[p])propMap[p]={ok:0,total:0};propMap[p].total++;if(r.Error_Type==='OK')propMap[p].ok++;});
-const propLabels=Object.keys(propMap);
-const shortLabels=propLabels.map(shortProp);
-const propPct=propLabels.map(p=>propMap[p].total>0?Math.round(propMap[p].ok/propMap[p].total*1000)/10:0);
-if(chRed)chRed.destroy();
-chRed=new Chart(document.getElementById('ch-red'),{type:'bar',data:{labels:shortLabels,datasets:[{label:'% que redimen OK',data:propPct,backgroundColor:propPct.map(p=>p>=50?'#86efac':p>=20?'#fde68a':'#fca5a5'),borderRadius:6,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:11}}},x:{ticks:{font:{size:10}}}},plugins:{legend:{display:false}}}});
-const ORD=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
-const tm={};
-mb.forEach(r=>{const t=r.Tier_AKIN||r.Tier||'Sin tier';if(!tm[t])tm[t]={ok:0,err:0,sin:0};const et=r.Error_Type||'';if(et==='OK')tm[t].ok++;else if(et===''||et==='NO LOYALTY'||et==='SIN CANJE')tm[t].sin++;else tm[t].err++;});
-const tL=ORD.filter(t=>tm[t]);
-if(chTier)chTier.destroy();
-chTier=new Chart(document.getElementById('ch-tier'),{type:'bar',data:{labels:tL,datasets:[{label:'✅ OK',data:tL.map(t=>tm[t].ok),backgroundColor:'#86efac'},{label:'⚠️ Error',data:tL.map(t=>tm[t].err),backgroundColor:'#fde68a'},{label:'❌ Sin reg.',data:tL.map(t=>tm[t].sin),backgroundColor:'#fca5a5'}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true,ticks:{font:{size:11}}},y:{stacked:true,ticks:{font:{size:11}}}},plugins:{legend:{labels:{font:{size:11}}}}}});
-const destOK=propLabels.map(p=>mb.filter(r=>r.Propiedad===p&&r.Error_Type==='OK').length);
-const destErr=propLabels.map(p=>mb.filter(r=>r.Propiedad===p&&r.Error_Type&&r.Error_Type!=='OK'&&r.Error_Type!=='NO LOYALTY'&&r.Error_Type!=='SIN CANJE').length);
-const destSin=propLabels.map(p=>mb.filter(r=>r.Propiedad===p&&(r.Error_Type==='SIN CANJE'||r.Error_Type===''||r.Error_Type==='NO LOYALTY')).length);
-if(chDest)chDest.destroy();
-chDest=new Chart(document.getElementById('ch-dest'),{type:'bar',data:{labels:shortLabels,datasets:[{label:'✅ OK',data:destOK,backgroundColor:'#86efac'},{label:'⚠️ Error',data:destErr,backgroundColor:'#fde68a'},{label:'❌ Sin reg.',data:destSin,backgroundColor:'#fca5a5'}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true,ticks:{font:{size:10}}},y:{stacked:true,ticks:{font:{size:11}}}},plugins:{legend:{labels:{font:{size:11}}}}}});
-}
+
 
 // ── RENDER
 function render(){
@@ -804,7 +738,6 @@ renderSinCanje(sc);
 renderSinMatchAkin();
 renderHistorico();
 renderTiers(rd);
-renderCharts(mb);
 }
 
 // ── INIT
