@@ -629,9 +629,7 @@ cont.innerHTML=`<div class="td-wrap"><table class="td-table"><thead><tr><th>Tier
 filas.map(f=>{const c=TIER_CFG[f.tier]||D;const barW=maxN>0?Math.round(f.count/maxN*100):0;return`<tr><td><span style="font-size:16px">${c.ico}</span> <b style="color:${c.col}">${f.tier}</b></td><td style="text-align:center;font-size:20px;font-weight:800;color:${c.col}">${fmtN(f.count)}</td><td style="text-align:center;font-size:13px;font-weight:700;color:var(--gris)">${f.pct}%</td><td><div class="td-bar"><div class="td-bar-fill" style="width:${barW}%;background:${c.col}"></div></div></td>${tieneDetalle?`<td><button class="hall-btn" onclick="drillAkinTier('${f.tier}')">Ver miembros →</button></td>`:''}</tr>`;}).join('')+
 `<tr class="td-total"><td><b>Total</b></td><td style="text-align:center;font-size:18px">${fmtN(total)}</td><td style="text-align:center">100%</td><td></td>${tieneDetalle?'<td></td>':''}</tr>`+
 `</tbody></table></div>`+
-`<div style="font-size:11px;color:var(--gris);margin-top:8px;padding:8px 12px;background:var(--cream);border-radius:8px;">ℹ️ Refleja el estado actual de Akin_Tiers — no cambia con el filtro de período.</div>`;<br>// ── GRÁFICA PICOS DE ENROLAMIENTO (después de la tabla)<br>const _at=DATA.akinTiers||[];<br>if(_at.length){<br>const _fp=gf('f-prop');<br>const _base=_fp?_at.filter(r=>r.Propiedad===_fp):_at;<br>const _byM={};<br>_base.forEach(r=>{if(!r['Joined date'])return;let d;try{d=new Date(r['Joined date']);}catch{return;}if(isNaN(d))return;const m=d.getFullYear()+'-'+(String(d.getMonth()+1).padStart(2,'0'));_byM[m]=(_byM[m]||0)+1;});<br>const _meses=Object.keys(_byM).sort();<br>if(_meses.length>1){<br>const _cid='ch-enrol-'+Date.now();<br>cont.insertAdjacentHTML('beforeend',`<div style="margin-top:18px;background:var(--cream);border-radius:14px;padding:18px;border:1.5px solid var(--border)"><div style="font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">📈 Picos de enrolamiento · Joined date</div><div style="font-size:11px;color:var(--gris);margin-bottom:12px">Nuevos miembros por mes${_fp?' · '+_fp:' · toda la cadena'}</div><div style="position:relative;height:180px"><canvas id="${_cid}"></canvas></div></div>`);<br>const _max=Math.max(..._meses.map(m=>_byM[m]));<br>const _pico=_meses.find(m=>_byM[m]===_max);<br>new Chart(document.getElementById(_cid),{type:'bar',data:{labels:_meses,datasets:[{label:'Nuevos',data:_meses.map(m=>_byM[m]),backgroundColor:_meses.map(m=>m===_pico?'#F04B24':'#E0D5C8'),borderRadius:6,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:11}}},x:{ticks:{font:{size:11}}}},plugins:{legend:{display:false},tooltip:{callbacks:{title:v=>{const[y,mo]=v[0].label.split('-');const d=new Date(y,mo-1,1);return d.toLocaleDateString('es-CO',{month:'long',year:'numeric'});},label:v=>`${v.raw} nuevos miembros`}}}}});
-}
-}
+`<div style="font-size:11px;color:var(--gris);margin-top:8px;padding:8px 12px;background:var(--cream);border-radius:8px;">ℹ️ Refleja el estado actual de Akin_Tiers — no cambia con el filtro de período.</div>`;
 }
 
 // ── RANKING
@@ -693,7 +691,7 @@ function renderHistorico(){
 // Prioriza historico_acumulado (persiste entre meses) sobre historico (solo mes actual)
 const hist=DATA.historico_acumulado||DATA.historico||[];
 const fp=gf('f-prop'),pa=gf('f-pais');
-const filtH=hist.filter(r=>(!fp||(r.Propiedad||'')===fp)&&(!pa||(r.Pais||r.País||'')===pa));
+const filtH=hist.filter(r=>(!fp||r.Propiedad===fp)&&(!pa||(r.Pais||r.País||'')===pa));
 const n=parseInt(document.getElementById('hn').value);
 document.getElementById('hl').textContent=n+(n===1?' temporada':' temporadas');
 const allPers=[...new Set(filtH.map(r=>r.Período||r.Periodo).filter(Boolean))].sort().slice(-n);
