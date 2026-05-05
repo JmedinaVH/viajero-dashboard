@@ -693,13 +693,12 @@ function renderHistorico(){
 // Prioriza historico_acumulado (persiste entre meses) sobre historico (solo mes actual)
 const hist=DATA.historico_acumulado||DATA.historico||[];
 const fp=gf('f-prop'),pa=gf('f-pais');
-// En el JSON, r.Propiedad contiene el período y r.Período contiene la propiedad (columnas invertidas)
-const filtH=hist.filter(r=>(!fp||(r.Período||r.Periodo||'')===fp)&&(!pa||(r.Pais||r.País||'')===pa));
+const filtH=hist.filter(r=>(!fp||(r.Propiedad||'')===fp)&&(!pa||(r.Pais||r.País||'')===pa));
 const n=parseInt(document.getElementById('hn').value);
 document.getElementById('hl').textContent=n+(n===1?' temporada':' temporadas');
-const allPers=[...new Set(filtH.map(r=>r.Propiedad).filter(Boolean))].sort().slice(-n);
+const allPers=[...new Set(filtH.map(r=>r.Período||r.Periodo).filter(Boolean))].sort().slice(-n);
 const byP={};
-filtH.forEach(r=>{const prop=(r.Período||r.Periodo)||'';if(!byP[prop])byP[prop]=[];byP[prop].push(r);});
+filtH.forEach(r=>{const prop=r.Propiedad||'';if(!byP[prop])byP[prop]=[];byP[prop].push(r);});
 const METS=[
 {k:'Afiliados_CB',l:'Afiliados CB'},
 {k:'CheckIns',l:'Check-ins'},
@@ -712,7 +711,7 @@ const METS=[
 ];
 const body=document.getElementById('hist-body');
 if(!allPers.length){body.innerHTML='<div class="empty">Sin datos históricos acumulados. Corre <b>Guardar Histórico</b> desde el menú del AppScript antes de borrar datos.</div>';return;}
-body.innerHTML=Object.keys(byP).sort().map(prop=>`<div class="hist-prop"><div class="hist-ph" onclick="tH(this)"><span>🏨 ${prop}</span><span>▲</span></div><div class="hist-pb op"><table><thead><tr><th>Métrica</th>${allPers.map(p=>`<th>${p}</th>`).join('')}</tr></thead><tbody>${METS.map(m=>`<tr><td>${m.l}</td>${allPers.map(per=>{const r=byP[prop].find(x=>x.Propiedad===per);if(!r)return`<td style="color:#ccc">—</td>`;const v=r[m.k];if(v===''||v===null||v===undefined)return`<td>—</td>`;if(m.p){const num=corP(v);if(num===null)return`<td>—</td>`;return`<td class="${clsP(num)}">${num.toFixed(1)}%</td>`;}return`<td>${fmtN(v)}</td>`;}).join('')}</tr>`).join('')}</tbody></table></div></div>`).join('');
+body.innerHTML=Object.keys(byP).sort().map(prop=>`<div class="hist-prop"><div class="hist-ph" onclick="tH(this)"><span>🏨 ${prop}</span><span>▲</span></div><div class="hist-pb op"><table><thead><tr><th>Métrica</th>${allPers.map(p=>`<th>${p}</th>`).join('')}</tr></thead><tbody>${METS.map(m=>`<tr><td>${m.l}</td>${allPers.map(per=>{const r=byP[prop].find(x=>(x.Período||x.Periodo)===per);if(!r)return`<td style="color:#ccc">—</td>`;const v=r[m.k];if(v===''||v===null||v===undefined)return`<td>—</td>`;if(m.p){const num=corP(v);if(num===null)return`<td>—</td>`;return`<td class="${clsP(num)}">${num.toFixed(1)}%</td>`;}return`<td>${fmtN(v)}</td>`;}).join('')}</tr>`).join('')}</tbody></table></div></div>`).join('');
 }
 function tH(h){const b=h.nextElementSibling;b.classList.toggle('op');h.querySelector('span:last-child').textContent=b.classList.contains('op')?'▲':'▼';}
 
