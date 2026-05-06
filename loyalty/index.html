@@ -496,7 +496,8 @@ const TIPS={
 };
 
 function openTip(k){const t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
-function showDesc(titulo,cuerpo){document.getElementById('tip-title').textContent=titulo;document.getElementById('tip-body').textContent=cuerpo.replace(/\\n/g,'\n');document.getElementById('tip-overlay').classList.add('show');}
+function showDesc(titulo,cuerpo){document.getElementById('tip-title').textContent=titulo;document.getElementById('tip-body').textContent=(cuerpo||'').replace(/\\n/g,'\n');document.getElementById('tip-overlay').classList.add('show');}
+function showTipIdx(i){const t=(window._HTIPS||[])[i];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=(t.b||'').replace(/\\n/g,'\n');document.getElementById('tip-overlay').classList.add('show');}
 function closeTip(e){if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;document.getElementById('tip-overlay').classList.remove('show');}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('tip-overlay').classList.remove('show');document.getElementById('drill-overlay').classList.remove('show');}});
 const ib=k=>`<i class="info-btn" onclick="event.stopPropagation();openTip('${k}')">i</i>`;
@@ -780,7 +781,8 @@ rows.sort((a,b)=>(sevOrd[a.sev]??3)-(sevOrd[b.sev]??3)||(b.total-a.total));
 const nCrit=rows.filter(r=>r.sev==='Crítica').length;
 const CM={Crítica:'critica',Alta:'alta',Media:'media'};
 const SEV_LABEL={Crítica:'🔴 Crítica',Alta:'🟠 Alta',Media:'🟡 Media'};
-const tableRows=rows.map(g=>{const cls=CM[g.sev]||'media';const hasDrill=g.drill&&(DATA.tiersDetalle||[]).some(r=>r.Error_Type===g.drill);const ibHall=g.tipBody?`<i class="info-btn" style="margin-left:6px;vertical-align:middle" onclick="showDesc('${g.txt}','${g.tipBody.replace(/'/g,"&#39;").replace(/\n/g,'\\n')}');">i</i>`:'';return`<tr><td><span class="hall-sev ${cls}">${SEV_LABEL[g.sev]||g.sev}</span></td><td><span class="hall-tipo">${g.txt}</span>${ibHall}</td><td><div class="hall-num ${cls}">${fmtN(g.numDisplay)}</div></td><td>${hasDrill?`<button class="hall-btn" onclick="drillTipoError('${g.drill}','${g.txt}')">Ver detalle →</button>`:`<span style="color:var(--gris);font-size:12px">—</span>`}</td></tr>`;}).join('');
+window._HTIPS=rows.map(r=>({t:r.txt,b:r.tipBody||''}));
+const tableRows=rows.map((g,idx)=>{const cls=CM[g.sev]||'media';const hasDrill=g.drill&&(DATA.tiersDetalle||[]).some(r=>r.Error_Type===g.drill);const ibHall=g.tipBody?`<i class="info-btn" style="margin-left:6px;vertical-align:middle" onclick="event.stopPropagation();showTipIdx(${idx})">i</i>`:'';return`<tr><td><span class="hall-sev ${cls}">${SEV_LABEL[g.sev]||g.sev}</span></td><td><span class="hall-tipo">${g.txt}</span>${ibHall}</td><td><div class="hall-num ${cls}">${fmtN(g.numDisplay)}</div></td><td>${hasDrill?`<button class="hall-btn" onclick="drillTipoError('${g.drill}','Detalle')">Ver detalle →</button>`:`<span style="color:var(--gris);font-size:12px">—</span>`}</td></tr>`;}).join('');
 cont.innerHTML=`<div class="ac"><div class="ac-head open" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">⚠️</span><div><div class="ac-tit">Hallazgos</div><div class="ac-sub">${rows.length} tipos · ${nCrit} crítico${nCrit!==1?'s':''}</div></div></div><div class="ac-meta"><span class="ac-badge b-err">${nCrit} crítico${nCrit!==1?'s':''}</span></div><span class="ac-arr" style="transform:rotate(180deg)">▼</span></div><div class="ac-body vis" style="padding:0"><div style="overflow-x:auto"><table class="hall-table"><thead><tr><th>Severidad</th><th>Hallazgo</th><th class="tc">Casos</th><th></th></tr></thead><tbody>${tableRows}</tbody></table></div></div></div>`;
 }
 
