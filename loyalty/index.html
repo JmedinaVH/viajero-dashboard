@@ -5,407 +5,497 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Viajero · Loyalty Dashboard</title>
 <link rel="icon" type="image/png" href="../favicon-32x32.png"/>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root{
---coral:#F04B24;--coral-soft:#FEF0EC;
---cream:#F4EFE9;--cream-mid:#EDE5DA;--cream-dark:#E0D5C8;
---dark:#1E100A;--mid:#6B3A28;--gris:#7A6E68;--border:#DDD4CA;
---ok:#15803d;--ok-bg:#dcfce7;
---warn:#854d0e;--warn-bg:#fef9c3;
---err:#dc2626;--err-bg:#fee2e2;
---orange-bg:#fff3f0;
+  --coral:#F04B24;--coral-d:#C93A18;--coral-soft:#FEF0EC;--coral-mid:#fdddd6;
+  --cream:#F5F0EA;--cm:#EDE5DA;--cd:#D9CFBF;
+  --dark:#18100A;--dark2:#231408;--mid:#6B3A28;--gris:#8A7E78;--border:#DDD4CA;
+  --ok:#15803d;--ok-bg:#dcfce7;
+  --warn:#854d0e;--warn-bg:#fef9c3;
+  --err:#dc2626;--err-bg:#fee2e2;
+  --purple:#7c3aed;--purple-bg:#ede9fe;
+  --orange:#c2410c;--orange-bg:#ffedd5;
+  --blue:#0369a1;--blue-bg:#e0f2fe;
+  --surface:#fff;
+  --r:12px;--rl:18px;--rs:7px;
+  --sh:0 1px 3px rgba(24,16,10,.05),0 4px 16px rgba(24,16,10,.07);
+  --shm:0 4px 24px rgba(24,16,10,.12);
+  --shl:0 16px 56px rgba(24,16,10,.18);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);font-size:14px;}
-header{background:var(--dark);padding:0 36px;display:flex;align-items:center;justify-content:space-between;height:68px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3);}
-.h-left{display:flex;align-items:center;gap:14px;}
-.h-logo{height:38px;object-fit:contain;}
-.h-sep{width:1px;height:32px;background:rgba(255,255,255,.2);}
-.h-title{color:#fff;font-size:17px;font-weight:700;}
-.h-sub{color:rgba(255,255,255,.5);font-size:11px;margin-top:1px;}
-.h-right{display:flex;align-items:center;gap:16px;}
-.h-ts-wrap{text-align:right;}
-.h-ts-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.4);}
-.h-ts-val{font-size:12px;font-weight:600;color:rgba(255,255,255,.75);margin-top:1px;}
-.h-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);border-radius:10px;padding:6px 14px;font-size:11px;font-weight:700;color:#fff;}
-.h-pill .dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80;}
-.btn-hub{display:flex;align-items:center;gap:6px;color:#fff;font-size:12px;font-weight:600;text-decoration:none;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);border-radius:10px;padding:6px 14px;transition:.2s;}
-.btn-hub:hover{background:rgba(255,255,255,.18);}
-.btn-hub svg{width:14px;height:14px;}
-.filtros{background:var(--coral);padding:10px 36px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:68px;z-index:99;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-thumb{background:var(--cd);border-radius:9px;}
+
+/* HEADER */
+header{background:var(--dark2);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:200;box-shadow:0 1px 0 rgba(255,255,255,.06);}
+.h-brand{display:flex;align-items:center;gap:13px;}
+.h-logo{height:30px;object-fit:contain;}
+.h-sep{width:1px;height:24px;background:rgba(255,255,255,.13);}
+.h-title{font-family:'Syne',sans-serif;color:#fff;font-size:14px;font-weight:700;letter-spacing:-.1px;}
+.h-sub{color:rgba(255,255,255,.35);font-size:9.5px;letter-spacing:.5px;text-transform:uppercase;margin-top:1px;}
+.h-right{display:flex;align-items:center;gap:9px;}
+.h-ts{text-align:right;}
+.h-ts-label{font-size:8.5px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.28);}
+.h-ts-val{font-size:10.5px;color:rgba(255,255,255,.55);margin-top:1px;}
+.h-live{display:flex;align-items:center;gap:5px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);border-radius:99px;padding:4px 10px;font-size:8.5px;font-weight:700;color:#4ade80;letter-spacing:.6px;text-transform:uppercase;}
+.h-live .dot{width:5px;height:5px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.5);}50%{box-shadow:0 0 0 4px rgba(74,222,128,0);}}
+.btn-hub{display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.55);font-size:10.5px;font-weight:600;text-decoration:none;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:5px 10px;transition:.18s;}
+.btn-hub:hover{background:rgba(255,255,255,.1);color:#fff;}
+
+/* FILTROS */
+.filtros{background:var(--coral);padding:8px 40px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:60px;z-index:199;border-bottom:2px solid var(--coral-d);}
 .fg{position:relative;}
-.fg label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.6);margin-bottom:3px;}
-.ms-btn{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:6px 28px 6px 10px;border:1.5px solid rgba(255,255,255,.2);border-radius:8px;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;min-width:140px;text-align:left;position:relative;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.ms-btn::after{content:'▾';position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:10px;color:rgba(255,255,255,.6);}
-.ms-dd{display:none;position:absolute;top:calc(100% + 4px);left:0;background:var(--dark);border-radius:10px;padding:8px;min-width:210px;z-index:999;max-height:250px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.45);}
+.fg label{display:block;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.55);margin-bottom:3px;}
+.ms-btn{font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:600;padding:5px 24px 5px 9px;border:1.5px solid rgba(255,255,255,.22);border-radius:7px;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;min-width:130px;text-align:left;position:relative;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:.15s;}
+.ms-btn::after{content:'▾';position:absolute;right:7px;top:50%;transform:translateY(-50%);font-size:9px;color:rgba(255,255,255,.5);}
+.ms-btn:hover{background:rgba(255,255,255,.18);}
+.ms-dd{display:none;position:absolute;top:calc(100% + 5px);left:0;background:var(--dark);border-radius:10px;padding:7px;min-width:215px;z-index:999;max-height:255px;overflow-y:auto;box-shadow:0 8px 30px rgba(0,0,0,.55);}
 .ms-dd.open{display:block;}
-.ms-dd-header{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35);padding:4px 6px 8px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:4px;display:flex;justify-content:space-between;}
-.ms-dd-header span{cursor:pointer;color:rgba(255,255,255,.6);font-weight:600;}
-.ms-dd-header span:hover{color:#fff;}
-.ms-dd label{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.85);padding:6px 8px;font-size:12px;cursor:pointer;border-radius:6px;font-weight:500;user-select:none;}
-.ms-dd label:hover{background:rgba(255,255,255,.1);}
-.ms-dd input[type=checkbox]{accent-color:var(--coral);width:14px;height:14px;flex-shrink:0;}
-.tabs-bar{background:#fff;border-bottom:2px solid var(--border);padding:0 36px;position:sticky;top:120px;z-index:98;display:flex;gap:0;}
-.tab-btn{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--gris);background:none;border:none;border-bottom:3px solid transparent;padding:14px 24px;cursor:pointer;transition:.2s;margin-bottom:-2px;white-space:nowrap;}
+.ms-dd-hdr{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.28);padding:3px 6px 7px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:5px;display:flex;justify-content:space-between;}
+.ms-dd-hdr span{cursor:pointer;color:rgba(255,255,255,.5);font-weight:600;}
+.ms-dd-hdr span:hover{color:#fff;}
+.ms-dd label{display:flex;align-items:center;gap:7px;color:rgba(255,255,255,.8);padding:5px 7px;font-size:11.5px;cursor:pointer;border-radius:5px;font-weight:500;user-select:none;}
+.ms-dd label:hover{background:rgba(255,255,255,.07);}
+.ms-dd input[type=checkbox]{accent-color:var(--coral);width:13px;height:13px;flex-shrink:0;}
+.filtros-reset{margin-left:auto;font-family:'DM Sans',sans-serif;font-size:10.5px;font-weight:600;color:rgba(255,255,255,.55);background:none;border:1px solid rgba(255,255,255,.18);border-radius:7px;padding:4px 10px;cursor:pointer;transition:.15s;}
+.filtros-reset:hover{background:rgba(255,255,255,.12);color:#fff;}
+
+/* TABS */
+.tabs-bar{background:var(--surface);border-bottom:1.5px solid var(--border);padding:0 40px;position:sticky;top:108px;z-index:198;display:flex;gap:0;overflow-x:auto;}
+.tab-btn{font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;color:var(--gris);background:none;border:none;border-bottom:2.5px solid transparent;padding:12px 20px;cursor:pointer;transition:.16s;margin-bottom:-1.5px;white-space:nowrap;}
 .tab-btn:hover{color:var(--dark);}
-.tab-btn.active{color:var(--coral);border-bottom-color:var(--coral);}
+.tab-btn.active{color:var(--coral);border-bottom-color:var(--coral);font-weight:700;}
 .tab-content{display:none;}
 .tab-content.active{display:block;}
-main{max-width:1200px;margin:0 auto;padding:28px 36px 60px;}
-.sec{margin-bottom:28px;}
-.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
-.sec-hdr h2{font-size:12px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}
+
+/* MAIN */
+main{max-width:1240px;margin:0 auto;padding:26px 40px 80px;}
+
+/* SYNTHESIS */
+.synthesis{background:var(--dark2);border-radius:var(--rl);padding:20px 26px;margin-bottom:22px;position:relative;overflow:hidden;}
+.synthesis::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:var(--coral);opacity:.06;pointer-events:none;}
+.syn-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.3);margin-bottom:7px;}
+.syn-headline{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:#fff;line-height:1.25;margin-bottom:12px;}
+.syn-items{display:flex;flex-wrap:wrap;gap:7px;}
+.syn-item{display:flex;align-items:flex-start;gap:7px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:7px 11px;font-size:11.5px;color:rgba(255,255,255,.65);line-height:1.45;flex:1;min-width:200px;}
+.syn-item b{color:#fff;font-weight:700;}
+.syn-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.syn-dot.ok{background:#4ade80;}
+.syn-dot.warn{background:#fbbf24;}
+.syn-dot.err{background:#f87171;}
+
+/* HERO GRID */
+.hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:20px;}
+.hero-kpi{background:var(--surface);border-radius:var(--rl);padding:18px 16px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .18s,transform .18s;}
+.hero-kpi:hover{box-shadow:var(--shm);transform:translateY(-2px);}
+.hero-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--hc,var(--coral));border-radius:var(--rl) var(--rl) 0 0;}
+.hero-glow{position:absolute;bottom:-18px;right:-18px;width:70px;height:70px;border-radius:50%;background:var(--hc,var(--coral));opacity:.06;}
+.hero-label{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.7px;margin-bottom:7px;display:flex;align-items:center;gap:5px;}
+.hero-val{font-family:'Syne',sans-serif;font-size:31px;font-weight:800;line-height:1;color:var(--hc,var(--dark));margin-bottom:5px;}
+.hero-sub{font-size:10.5px;color:var(--gris);line-height:1.4;}
+.hero-badge{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;margin-top:7px;}
+.hero-meta{margin-top:9px;padding-top:8px;border-top:1px solid var(--cd);display:flex;justify-content:space-between;align-items:center;font-size:10.5px;color:var(--gris);}
+.hero-meta b{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;}
+
+/* SECTIONS */
+.sec{margin-bottom:24px;}
+.sec-hdr{display:flex;align-items:center;gap:9px;margin-bottom:13px;}
+.sec-hdr h2{font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1.2px;white-space:nowrap;}
 .sec-hdr .linea{flex:1;height:1px;background:var(--border);}
-.sec-hdr .cnt{background:var(--coral);color:#fff;font-size:10px;padding:2px 9px;border-radius:10px;font-weight:700;}
-.hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
-.hero-kpi{background:#fff;border-radius:16px;padding:22px 20px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .2s;}
-.hero-kpi:hover{box-shadow:0 6px 20px rgba(184,61,22,.1);}
-.hero-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--hc,var(--coral));border-radius:16px 16px 0 0;}
-.hero-glow{position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:var(--hc,var(--coral));opacity:.05;}
-.hero-label{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;display:flex;align-items:center;gap:5px;}
-.hero-val{font-size:34px;font-weight:800;line-height:1;color:var(--hc,var(--dark));margin-bottom:6px;}
-.hero-sub{font-size:11px;color:var(--gris);line-height:1.4;}
-.hero-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:8px;margin-top:8px;}
-.sp-wrap{background:#fff;border-radius:16px;border:1.5px solid var(--border);overflow:hidden;}
-.sp-table{width:100%;border-collapse:collapse;font-size:13px;}
-.sp-table thead th{background:var(--cream-mid);color:var(--mid);padding:10px 14px;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1.5px solid var(--border);text-align:left;}
-.sp-table thead th.tc{text-align:center;}
-.sp-table tbody td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
-.sp-table tbody tr:last-child td{border-bottom:none;}
-.sp-table tbody tr:hover td{background:var(--cream);}
-.sp-table tbody tr.sp-bench td{background:#f0fdf4;}
-.sp-sem{display:inline-flex;align-items:center;justify-content:center;gap:6px;}
-.sp-legend{display:flex;gap:20px;margin-top:10px;font-size:11px;color:var(--gris);flex-wrap:wrap;padding:0 4px;}
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;}
-.kpi{background:#fff;border-radius:16px;padding:20px 18px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s;}
-.kpi:hover{box-shadow:0 8px 28px rgba(184,61,22,.1);transform:translateY(-3px);}
-.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--kc,var(--coral));border-radius:16px 16px 0 0;}
-.k-glow{position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:var(--kc,var(--coral));opacity:.05;}
-.k-top{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
-.k-lbl{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;flex:1;}
-.k-val{font-size:28px;font-weight:800;line-height:1;color:var(--kc,var(--dark));margin-bottom:5px;}
-.k-sub{font-size:11px;color:var(--gris);line-height:1.4;}
-.k-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:8px;margin-top:8px;}
-.k-divider{margin:10px 0 6px;border-top:1px solid var(--cream-dark);padding-top:10px;display:flex;justify-content:space-between;align-items:center;}
+.sec-hdr .cnt{background:var(--coral);color:#fff;font-size:8.5px;padding:2px 7px;border-radius:99px;font-weight:700;}
+
+/* BADGES */
 .b-ok{background:var(--ok-bg);color:var(--ok);}
 .b-warn{background:var(--warn-bg);color:var(--warn);}
 .b-err{background:var(--err-bg);color:var(--err);}
-.b-gray{background:var(--cream-dark);color:var(--mid);}
+.b-gray{background:var(--cd);color:var(--mid);}
 .b-coral{background:var(--coral);color:#fff;}
-.b-purple{background:#ede9fe;color:#7c3aed;}
-.ac{background:#fff;border-radius:16px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:12px;}
-.ac-head{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;cursor:pointer;user-select:none;transition:background .15s;}
+.b-purple{background:var(--purple-bg);color:var(--purple);}
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;}
+
+/* INFO BTN */
+.ib{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:var(--cm);color:var(--gris);font-size:8px;font-weight:800;cursor:pointer;border:1px solid var(--border);transition:.14s;font-style:normal;flex-shrink:0;vertical-align:middle;margin-left:3px;}
+.ib:hover{background:var(--coral);color:#fff;border-color:var(--coral);}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:11px;}
+.kpi{background:var(--surface);border-radius:var(--rl);padding:16px 15px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .18s,transform .18s;}
+.kpi:hover{box-shadow:var(--shm);transform:translateY(-2px);}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--kc,var(--coral));border-radius:var(--rl) var(--rl) 0 0;}
+.k-glow{position:absolute;bottom:-14px;right:-14px;width:58px;height:58px;border-radius:50%;background:var(--kc,var(--coral));opacity:.06;}
+.k-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
+.k-lbl{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;line-height:1.3;}
+.k-val{font-family:'Syne',sans-serif;font-size:27px;font-weight:800;line-height:1;color:var(--kc,var(--dark));margin-bottom:4px;}
+.k-sub{font-size:10px;color:var(--gris);line-height:1.4;}
+.k-badge{display:inline-flex;align-items:center;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;margin-top:6px;}
+.k-divider{margin:7px 0 5px;border-top:1px solid var(--cd);padding-top:7px;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--gris);}
+.k-divider b{font-size:12px;font-weight:700;}
+
+/* SEMAFORO STATE TABLE */
+.sp-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
+.sp-table{width:100%;border-collapse:collapse;font-size:12px;}
+.sp-table thead th{background:var(--cm);color:var(--mid);padding:9px 12px;font-weight:700;font-size:8.5px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;white-space:nowrap;}
+.sp-table thead th.tc{text-align:center;}
+.sp-table tbody td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.sp-table tbody tr:last-child td{border-bottom:none;}
+.sp-table tbody tr:hover td{background:var(--cream);}
+.sp-table tbody tr.sp-bench td{background:#f0fdf4;}
+.sp-legend{display:flex;gap:14px;margin-top:9px;font-size:9.5px;color:var(--gris);flex-wrap:wrap;padding:0 2px;}
+
+/* SEMAFORO ITEMS */
+.semaforo{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:16px;}
+.s-item{background:var(--surface);border-radius:var(--rl);padding:13px 11px;border:1.5px solid var(--border);text-align:center;transition:.16s;position:relative;overflow:hidden;}
+.s-item.clickable{cursor:pointer;}
+.s-item:hover{box-shadow:var(--shm);transform:translateY(-2px);}
+.s-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--rl) var(--rl) 0 0;}
+.s-verde::before{background:var(--ok);}
+.s-amarillo::before{background:#eab308;}
+.s-rojo::before{background:var(--err);}
+.s-gris::before{background:var(--gris);}
+.s-val{font-family:'Syne',sans-serif;font-size:25px;font-weight:800;line-height:1;}
+.s-verde .s-val{color:var(--ok);}
+.s-amarillo .s-val{color:#854d0e;}
+.s-rojo .s-val{color:var(--err);}
+.s-gris .s-val{color:var(--gris);}
+.s-pct{font-size:9px;color:var(--gris);margin-top:2px;}
+.s-sub{font-size:9px;color:var(--gris);margin-top:1px;}
+.s-lbl{font-size:9px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.4px;margin-top:5px;display:flex;align-items:center;justify-content:center;gap:3px;}
+.s-tipo{font-size:9px;font-weight:600;padding:2px 7px;border-radius:99px;display:inline-block;margin-top:5px;}
+.s-verde .s-tipo{background:var(--ok-bg);color:var(--ok);}
+.s-amarillo .s-tipo{background:var(--warn-bg);color:var(--warn);}
+.s-rojo .s-tipo{background:var(--err-bg);color:var(--err);}
+.s-gris .s-tipo{background:var(--cm);color:var(--mid);}
+
+/* ACCORDION */
+.ac{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;margin-bottom:10px;}
+.ac-head{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;cursor:pointer;user-select:none;transition:.13s;}
 .ac-head:hover{background:var(--cream);}
 .ac-head.open{border-bottom:1.5px solid var(--border);}
-.ac-left{display:flex;align-items:center;gap:12px;}
-.ac-ico{font-size:20px;}
-.ac-tit{font-weight:700;font-size:14px;}
-.ac-sub{font-size:11px;color:var(--gris);margin-top:2px;}
-.ac-preview{font-size:11px;color:var(--gris);padding:10px 22px 14px 22px;font-style:italic;border-top:1px solid var(--cream-dark);}
-.ac-meta{display:flex;align-items:center;gap:8px;}
-.ac-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:10px;}
-.ac-arr{font-size:12px;color:var(--gris);transition:transform .25s;}
+.ac-left{display:flex;align-items:center;gap:10px;}
+.ac-ico{font-size:16px;flex-shrink:0;}
+.ac-tit{font-weight:700;font-size:13px;line-height:1.3;}
+.ac-sub{font-size:10px;color:var(--gris);margin-top:2px;}
+.ac-preview{font-size:10.5px;color:var(--gris);padding:8px 18px 11px;font-style:italic;border-top:1px solid var(--cd);}
+.ac-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.ac-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap;}
+.ac-arr{font-size:9px;color:var(--gris);transition:transform .2s;flex-shrink:0;}
 .ac-head.open .ac-arr{transform:rotate(180deg);}
-.ac-body{display:none;padding:22px;}
+.ac-body{display:none;padding:18px;}
 .ac-body.vis{display:block;}
-.semaforo{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px;}
-.s-item{background:#fff;border-radius:14px;padding:16px 14px;border:1.5px solid var(--border);text-align:center;transition:transform .2s,box-shadow .2s;}
-.s-item:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(30,16,10,.08);}
-.s-val{font-size:26px;font-weight:800;line-height:1;}
-.s-pct{font-size:11px;color:var(--gris);margin-top:3px;}
-.s-lbl{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-top:5px;display:flex;align-items:center;justify-content:center;gap:4px;}
-.s-tipo{font-size:10px;font-weight:600;padding:3px 9px;border-radius:8px;display:inline-block;margin-top:7px;}
-.s-verde .s-val{color:var(--ok);}.s-amarillo .s-val{color:var(--warn);}.s-rojo .s-val{color:var(--err);}.s-gris .s-val{color:var(--gris);}
-.s-verde .s-tipo{background:var(--ok-bg);color:var(--ok);}.s-amarillo .s-tipo{background:var(--warn-bg);color:var(--warn);}.s-rojo .s-tipo{background:var(--err-bg);color:var(--err);}.s-gris .s-tipo{background:var(--cream-dark);color:var(--mid);}
-.rank-item{display:flex;align-items:center;gap:12px;background:#fff;border-radius:12px;padding:14px 16px;border:1.5px solid var(--border);margin-bottom:8px;transition:.2s;}
-.rank-item:hover{box-shadow:0 4px 14px rgba(30,16,10,.07);transform:translateX(3px);}
-.rank-pos{font-size:15px;font-weight:800;color:var(--coral);min-width:28px;text-align:center;}
+
+/* RANK */
+.rank-item{display:flex;align-items:center;gap:10px;background:var(--surface);border-radius:10px;padding:11px 13px;border:1.5px solid var(--border);margin-bottom:6px;transition:.16s;}
+.rank-item:hover{box-shadow:var(--sh);transform:translateX(3px);border-color:var(--coral-mid);}
+.rank-pos{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--coral);min-width:24px;text-align:center;}
 .rank-name{flex:1;}
-.rank-name b{font-size:13px;font-weight:700;display:block;}
-.rank-name span{font-size:10px;color:var(--gris);}
-.rank-bar-wrap{flex:1.5;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden;}
-.rank-bar-fill{height:100%;border-radius:4px;transition:width .6s;}
-.rank-val{font-size:13px;font-weight:800;min-width:52px;text-align:right;}
-.hall-table{width:100%;border-collapse:collapse;font-size:13px;}
-.hall-table thead th{background:var(--cream-mid);color:var(--mid);padding:10px 14px;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;text-align:left;border-bottom:1.5px solid var(--border);}
+.rank-name b{font-size:12px;font-weight:700;display:block;line-height:1.3;}
+.rank-name span{font-size:9.5px;color:var(--gris);}
+.rank-bar-wrap{flex:1.5;height:6px;background:var(--cd);border-radius:99px;overflow:hidden;position:relative;}
+.rank-bar-fill{height:100%;border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+.rank-target{position:absolute;top:0;bottom:0;width:1.5px;background:rgba(24,16,10,.25);}
+.rank-val{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;min-width:48px;text-align:right;}
+.rank-tabs{display:flex;gap:3px;margin-bottom:11px;}
+.rank-tab{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;color:var(--gris);background:var(--cm);border:1.5px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer;transition:.13s;}
+.rank-tab.active{background:var(--coral);color:#fff;border-color:var(--coral);}
+.rank-tab:hover:not(.active){background:var(--cd);}
+
+/* HALLAZGOS */
+.hall-table{width:100%;border-collapse:collapse;font-size:12px;}
+.hall-table thead th{background:var(--cm);color:var(--mid);padding:8px 12px;font-weight:700;font-size:8.5px;text-transform:uppercase;letter-spacing:.6px;text-align:left;border-bottom:1.5px solid var(--border);}
 .hall-table thead th.tc{text-align:center;}
-.hall-table tbody td{padding:13px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.hall-table tbody td{padding:11px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
 .hall-table tbody tr:last-child td{border-bottom:none;}
 .hall-table tbody tr:hover td{background:var(--cream);}
-.hall-sev{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;white-space:nowrap;}
+.hall-sev{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;}
 .hall-sev.critica{background:var(--err-bg);color:var(--err);}
-.hall-sev.alta{background:var(--orange-bg);color:#c2410c;}
+.hall-sev.alta{background:var(--orange-bg);color:var(--orange);}
 .hall-sev.media{background:var(--warn-bg);color:var(--warn);}
-.hall-tipo{font-weight:600;color:var(--dark);}
-.hall-num{font-size:22px;font-weight:800;text-align:center;}
-.hall-num.critica{color:var(--err);}.hall-num.alta{color:#f97316;}.hall-num.media{color:#eab308;}
-.hall-btn{font-size:11px;font-weight:700;color:#fff;background:var(--coral);border:none;border-radius:8px;padding:5px 12px;cursor:pointer;font-family:'Outfit',sans-serif;white-space:nowrap;}
+.hall-tipo{font-weight:600;color:var(--dark);display:block;font-size:12px;}
+.hall-accion{font-size:10px;color:var(--gris);margin-top:2px;line-height:1.4;}
+.hall-num{font-family:'Syne',sans-serif;font-size:21px;font-weight:800;text-align:center;}
+.hall-num.critica{color:var(--err);}
+.hall-num.alta{color:#f97316;}
+.hall-num.media{color:#eab308;}
+.hall-btn{font-size:10px;font-weight:700;color:#fff;background:var(--coral);border:none;border-radius:7px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:.14s;}
 .hall-btn:hover{background:var(--dark);}
+
+/* TABLES */
 table{width:100%;border-collapse:collapse;font-size:12px;}
-thead th{background:var(--cream-mid);color:var(--mid);padding:9px 12px;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.4px;position:sticky;top:0;text-align:left;border-bottom:1.5px solid var(--border);}
-tbody td{padding:9px 12px;border-bottom:1px solid var(--border);}
+thead th{background:var(--cm);color:var(--mid);padding:8px 10px;font-weight:700;font-size:8.5px;text-transform:uppercase;letter-spacing:.5px;position:sticky;top:0;text-align:left;border-bottom:1.5px solid var(--border);z-index:1;}
+tbody td{padding:8px 10px;border-bottom:1px solid var(--border);}
 tbody tr:last-child td{border-bottom:none;}
 tbody tr:hover td{background:var(--cream);}
-.tc{text-align:center;}
-.sc-q{width:100%;padding:9px 13px;border:1.5px solid var(--border);border-radius:10px;font-family:'Outfit',sans-serif;font-size:13px;margin-bottom:10px;background:var(--cream);}
-.sc-q:focus{outline:none;border-color:var(--coral);background:#fff;}
-.sc-wrap{overflow-x:auto;max-height:340px;border-radius:10px;border:1.5px solid var(--border);}
-.sc-cats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
-.sc-cat{padding:18px;border-radius:14px;}
-.sc-cat.t{background:#fff5f0;border:2px solid #fed7aa;}
-.sc-cat.b{background:var(--err-bg);border:2px solid #fca5a5;}
-.sc-n{font-size:32px;font-weight:800;line-height:1;}
-.sc-cat.t .sc-n{color:#c2410c;}.sc-cat.b .sc-n{color:var(--err);}
-.sc-t{font-size:12px;font-weight:700;margin:5px 0 6px;}
-.sc-d{font-size:11px;color:var(--gris);line-height:1.5;}
-.td-wrap{background:#fff;border-radius:14px;border:1.5px solid var(--border);overflow:hidden;}
+
+/* SIN CANJE */
+.sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:13px;}
+.sc-cat{padding:14px;border-radius:10px;border:2px solid;}
+.sc-cat.tourist{background:#fff8f5;border-color:#fed7aa;}
+.sc-cat.backpacker{background:var(--err-bg);border-color:#fca5a5;}
+.sc-cat.otros{background:var(--purple-bg);border-color:#c4b5fd;}
+.sc-n{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;line-height:1;}
+.sc-cat.tourist .sc-n{color:var(--orange);}
+.sc-cat.backpacker .sc-n{color:var(--err);}
+.sc-cat.otros .sc-n{color:var(--purple);}
+.sc-t{font-size:11px;font-weight:700;margin:4px 0 3px;}
+.sc-d{font-size:10px;color:var(--gris);line-height:1.5;}
+.sc-search{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12.5px;margin-bottom:8px;background:var(--cream);transition:.14s;}
+.sc-search:focus{outline:none;border-color:var(--coral);background:#fff;}
+.sc-wrap{overflow-x:auto;max-height:330px;border-radius:8px;border:1.5px solid var(--border);}
+
+/* TIERS */
+.tiers-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px;}
+.tier-c{background:var(--cream);border-radius:10px;padding:14px;border:1.5px solid var(--border);transition:.16s;}
+.tier-c:hover{box-shadow:var(--sh);border-color:var(--cd);}
+.t-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.t-nom{font-family:'Syne',sans-serif;font-weight:800;font-size:13px;}
+.t-tot{font-size:9.5px;color:var(--gris);}
+.t-bens{font-size:9.5px;color:var(--gris);margin-bottom:9px;padding-bottom:9px;border-bottom:1px solid var(--border);line-height:1.4;}
+.tier-bar{height:6px;border-radius:99px;background:var(--cd);overflow:hidden;margin-bottom:5px;}
+.tier-fill{height:100%;border-radius:99px;transition:width .5s;}
+.tier-pct{font-family:'Syne',sans-serif;font-size:12px;font-weight:800;margin-bottom:5px;}
+.tier-ns{display:flex;gap:7px;font-size:10px;flex-wrap:wrap;color:var(--gris);}
+
+/* TIER DIST */
+.td-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
 .td-table{width:100%;border-collapse:collapse;font-size:13px;}
-.td-table thead th{background:var(--cream-mid);color:var(--mid);padding:10px 14px;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;text-align:left;border-bottom:1.5px solid var(--border);}
-.td-table tbody td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.td-table thead th{background:var(--cm);color:var(--mid);padding:8px 12px;font-weight:700;font-size:8.5px;text-transform:uppercase;letter-spacing:.6px;text-align:left;border-bottom:1.5px solid var(--border);}
+.td-table tbody td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
 .td-table tbody tr:last-child td{border-bottom:none;}
 .td-table tbody tr:hover td{background:var(--cream);}
-.td-table tbody tr.td-total td{background:var(--cream-mid);font-weight:700;border-top:2px solid var(--border);}
-.td-bar{height:10px;border-radius:4px;background:var(--cream-dark);overflow:hidden;width:140px;display:inline-block;vertical-align:middle;}
-.td-bar-fill{height:100%;border-radius:4px;transition:width .6s;}
-.tiers-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;}
-.tier-c{background:var(--cream);border-radius:14px;padding:18px;border:1.5px solid var(--border);transition:.2s;}
-.tier-c:hover{box-shadow:0 4px 16px rgba(184,61,22,.08);transform:translateY(-2px);}
-.t-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
-.t-nom{font-weight:800;font-size:15px;}
-.t-tot{font-size:11px;color:var(--gris);}
-.t-bens{font-size:11px;color:var(--gris);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);line-height:1.4;}
-.tier-bar{height:8px;border-radius:4px;background:var(--cream-dark);overflow:hidden;margin-bottom:6px;}
-.tier-fill{height:100%;border-radius:4px;transition:width .5s;}
-.tier-pct{font-size:12px;font-weight:800;margin-bottom:6px;}
-.tier-ns{display:flex;gap:10px;font-size:11px;flex-wrap:wrap;}
-.tier-leyenda{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;}
-.tier-ley-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border-radius:10px;border:1.5px solid var(--border);}
-.tier-ley-ico{font-size:18px;flex-shrink:0;}
-.tier-ley-label{font-size:12px;font-weight:700;}
-.tier-ley-desc{font-size:10px;color:var(--gris);margin-top:1px;line-height:1.3;}
-.benchmark{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac;border-radius:16px;padding:20px 22px;margin-bottom:16px;}
-.benchmark-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
-.benchmark-ico{font-size:26px;}
-.benchmark-title{font-size:15px;font-weight:800;color:var(--ok);}
-.benchmark-sub{font-size:11px;color:#166534;margin-top:3px;line-height:1.5;}
-.benchmark-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.benchmark-stat{text-align:center;padding:10px;background:rgba(255,255,255,.7);border-radius:10px;}
-.benchmark-n{font-size:20px;font-weight:800;color:var(--ok);}
-.benchmark-l{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-top:3px;}
-.alert-prop{display:flex;align-items:flex-start;gap:14px;background:#fff;border-radius:12px;padding:14px 16px;border:1.5px solid var(--border);margin-bottom:8px;}
-.alert-prop.rojo{border-left:4px solid var(--err);}
-.alert-prop.amarillo{border-left:4px solid #eab308;}
-.alert-prop-pct{font-size:22px;font-weight:800;min-width:56px;padding-top:2px;}
+.td-table tbody tr.td-total td{background:var(--cm);font-weight:700;border-top:2px solid var(--border);}
+.td-bar{height:7px;border-radius:99px;background:var(--cd);overflow:hidden;width:110px;display:inline-block;vertical-align:middle;}
+.td-bar-fill{height:100%;border-radius:99px;transition:width .5s;}
+
+/* FUNNEL */
+.funnel-outer{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:18px 20px;}
+.fn-row{display:flex;align-items:center;gap:13px;padding:8px 0;}
+.fn-row+.fn-row{border-top:1px solid var(--cream);}
+.fn-left{display:flex;align-items:center;gap:8px;width:185px;flex-shrink:0;}
+.fn-ico{font-size:16px;flex-shrink:0;}
+.fn-lbl{font-size:11px;font-weight:700;color:var(--dark);line-height:1.3;}
+.fn-sub{font-size:9.5px;color:var(--gris);}
+.fn-nota{font-size:9px;color:#9a3412;background:#fff3f0;border-radius:4px;padding:2px 5px;font-weight:600;margin-top:2px;display:inline-block;}
+.fn-bar-track{flex:1;height:8px;background:var(--cd);border-radius:99px;overflow:hidden;}
+.fn-bar-fill{height:100%;border-radius:99px;transition:width .9s cubic-bezier(.4,0,.2,1);}
+.fn-conv{font-size:9.5px;color:var(--gris);min-width:56px;text-align:center;}
+.fn-right{min-width:62px;text-align:right;}
+.fn-n{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;line-height:1;}
+
+/* BENCHMARK */
+.benchmark{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac;border-radius:var(--rl);padding:17px 20px;margin-bottom:13px;}
+.bench-hdr{display:flex;align-items:flex-start;gap:10px;margin-bottom:11px;}
+.bench-ico{font-size:22px;}
+.bench-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--ok);}
+.bench-sub{font-size:10.5px;color:#166534;margin-top:2px;line-height:1.5;}
+.bench-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:8px;}
+.bench-stat{text-align:center;padding:9px;background:rgba(255,255,255,.7);border-radius:8px;}
+.bench-n{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:var(--ok);}
+.bench-l{font-size:8.5px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}
+
+/* ALERT PROPS */
+.alert-prop{display:flex;align-items:flex-start;gap:11px;background:var(--surface);border-radius:9px;padding:12px 13px;border:1.5px solid var(--border);margin-bottom:6px;}
+.alert-prop.rojo{border-left:3px solid var(--err);}
+.alert-prop.amarillo{border-left:3px solid #eab308;}
+.alert-prop-pct{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;min-width:48px;padding-top:2px;}
 .alert-prop-info{flex:1;}
-.alert-prop-info b{font-size:13px;font-weight:700;display:block;margin-bottom:2px;}
-.alert-prop-info span{font-size:11px;color:var(--gris);}
-.alert-prop-action{font-size:10px;font-weight:700;margin-top:5px;display:block;}
-.funnel-outer{background:#fff;border-radius:16px;border:1.5px solid var(--border);padding:24px 28px;}
-.fn-row{display:flex;align-items:center;gap:16px;padding:11px 0;}
-.fn-row+.fn-row{border-top:1px solid var(--cream-dark);}
-.fn-left{display:flex;align-items:center;gap:10px;width:195px;flex-shrink:0;}
-.fn-ico{font-size:20px;flex-shrink:0;}
-.fn-lbl{font-size:12px;font-weight:700;color:var(--dark);line-height:1.3;}
-.fn-sub{font-size:10px;color:var(--gris);margin-top:1px;}
-.fn-nota{font-size:10px;color:#9a3412;background:#fff3f0;border-radius:5px;padding:2px 7px;font-weight:600;margin-top:3px;display:inline-block;}
-.fn-bar-track{flex:1;height:14px;background:var(--cream-dark);border-radius:99px;overflow:hidden;}
-.fn-bar-fill{height:100%;border-radius:99px;transition:width .9s ease;}
-.fn-right{min-width:70px;display:flex;justify-content:flex-end;}
-.fn-n{font-size:22px;font-weight:800;line-height:1;}
-.match-banner{background:#fff3f0;border:1.5px solid #fed7aa;border-radius:12px;padding:14px 16px;margin-bottom:14px;font-size:12px;color:#9a3412;line-height:1.7;}
-.ctx-banner{font-size:11px;background:var(--cream-mid);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:12px;color:var(--mid);line-height:1.6;}
-.empty{text-align:center;padding:32px;color:var(--gris);font-size:13px;}
-.info-btn{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:var(--coral-soft);color:var(--coral);font-size:10px;font-weight:800;cursor:pointer;border:1.5px solid var(--coral);transition:.2s;font-style:normal;flex-shrink:0;}
-.info-btn:hover{background:var(--coral);color:#fff;}
-.pct-ok{color:var(--ok);font-weight:700;}.pct-warn{color:var(--warn);font-weight:700;}.pct-err{color:var(--err);font-weight:700;}
-#tip-overlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(30,16,10,.45);align-items:center;justify-content:center;padding:20px;}
+.alert-prop-info b{font-size:12px;font-weight:700;display:block;margin-bottom:2px;}
+.alert-prop-info span{font-size:10px;color:var(--gris);display:block;}
+.alert-prop-action{font-size:10px;font-weight:700;margin-top:3px;display:block;}
+
+/* BANNERS */
+.ctx-banner{font-size:10.5px;background:rgba(240,75,36,.05);border:1.5px solid rgba(240,75,36,.12);border-radius:8px;padding:9px 12px;margin-bottom:11px;color:var(--mid);line-height:1.6;}
+.match-banner{background:#fffbeb;border:1.5px solid #fde68a;border-radius:8px;padding:10px 13px;margin-bottom:11px;font-size:11.5px;color:#92400e;line-height:1.7;}
+
+/* HISTORICAL */
+.pct-ok{color:var(--ok);font-weight:700;}
+.pct-warn{color:var(--warn);font-weight:700;}
+.pct-err{color:var(--err);font-weight:700;}
+
+/* OVERLAYS */
+#tip-overlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(15,8,4,.55);align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px);}
 #tip-overlay.show{display:flex;}
-#tip-box{background:#fff;border-radius:16px;max-width:400px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(30,16,10,.25);position:relative;animation:popIn .2s;}
-@keyframes popIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
-#tip-box h4{font-size:15px;font-weight:700;margin-bottom:8px;}
-#tip-box p{font-size:13px;color:var(--gris);line-height:1.6;white-space:pre-line;}
-#tip-close{position:absolute;top:12px;right:14px;font-size:20px;cursor:pointer;color:var(--gris);background:none;border:none;font-family:'Outfit',sans-serif;}
-#drill-overlay{display:none;position:fixed;inset:0;z-index:9500;background:rgba(30,16,10,.55);align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;}
+#tip-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:22px;box-shadow:var(--shl);position:relative;animation:popIn .17s;}
+@keyframes popIn{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+#tip-box h4{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;margin-bottom:7px;}
+#tip-box p{font-size:12px;color:var(--gris);line-height:1.75;white-space:pre-line;}
+#tip-close{position:absolute;top:12px;right:13px;font-size:17px;cursor:pointer;color:var(--gris);background:none;border:none;line-height:1;}
+#drill-overlay{display:none;position:fixed;inset:0;z-index:9500;background:rgba(15,8,4,.6);align-items:flex-start;justify-content:center;padding:34px 20px;overflow-y:auto;backdrop-filter:blur(5px);}
 #drill-overlay.show{display:flex;}
-#drill-box{background:#fff;border-radius:20px;width:100%;max-width:880px;padding:28px;box-shadow:0 24px 80px rgba(30,16,10,.3);position:relative;animation:popIn .2s;margin:auto;}
-#drill-box h3{font-size:17px;font-weight:800;margin-bottom:4px;}
-#drill-sub{font-size:12px;color:var(--gris);margin-bottom:14px;}
-#drill-close{position:absolute;top:16px;right:18px;font-size:22px;cursor:pointer;color:var(--gris);background:none;border:none;font-family:'Outfit',sans-serif;}
-.drill-wrap{overflow-x:auto;border-radius:10px;border:1.5px solid var(--border);max-height:420px;overflow-y:auto;}
-.drill-filter{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;padding:12px 14px;background:var(--cream);border-radius:10px;border:1.5px solid var(--border);}
-.drill-filter label{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;}
-.drill-filter select{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:6px 28px 6px 10px;border:1.5px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%237A6E68' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;}
-.drill-count{font-size:12px;color:var(--gris);margin-left:auto;}
+#drill-box{background:#fff;border-radius:16px;width:100%;max-width:920px;padding:24px;box-shadow:var(--shl);position:relative;animation:popIn .17s;margin:auto;}
+#drill-box h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin-bottom:4px;}
+#drill-sub{font-size:10.5px;color:var(--gris);margin-bottom:13px;}
+#drill-close{position:absolute;top:13px;right:15px;font-size:19px;cursor:pointer;color:var(--gris);background:none;border:none;}
+.drill-filter{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;padding:9px 12px;background:var(--cream);border-radius:8px;border:1.5px solid var(--border);}
+.drill-filter label{font-size:8.5px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;}
+.drill-filter select{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;padding:4px 20px 4px 8px;border:1.5px solid var(--border);border-radius:6px;background:#fff;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%237A6E68' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;}
+.drill-count{font-size:10.5px;color:var(--gris);margin-left:auto;}
+.drill-wrap{overflow-x:auto;max-height:440px;border-radius:8px;border:1.5px solid var(--border);}
+.empty{text-align:center;padding:26px;color:var(--gris);font-size:12px;}
+.sem-lbl{font-size:11px;color:var(--gris);margin-bottom:8px;}
+
+/* RESPONSIVE */
 @media(max-width:900px){.hero-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:640px){
-header,.filtros,.tabs-bar{padding-left:16px;padding-right:16px;}
-main{padding:16px 16px 48px;}
-.hero-grid{grid-template-columns:1fr 1fr;}
-.tab-btn{font-size:11px;padding:12px 12px;}
-.sc-cats{grid-template-columns:1fr;}
-.tier-leyenda{grid-template-columns:1fr;}
-.benchmark-grid{grid-template-columns:1fr 1fr 1fr;}
+  header,.filtros,.tabs-bar{padding-left:14px;padding-right:14px;}
+  main{padding:14px 14px 60px;}
+  .hero-grid{grid-template-columns:1fr 1fr;}
+  .sc-grid{grid-template-columns:1fr;}
+  .fn-left{width:130px;}
+  .td-bar{width:70px;}
+  .rank-bar-wrap{display:none;}
+  .tab-btn{font-size:11px;padding:10px 11px;}
+  .syn-item{min-width:160px;}
 }
-@media(max-width:420px){.hero-grid{grid-template-columns:1fr;}}
+@media(max-width:400px){.hero-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
 <div id="tip-overlay" onclick="closeTip(event)">
-<div id="tip-box">
-<button id="tip-close" onclick="closeTip()">&#215;</button>
-<h4 id="tip-title"></h4>
-<p id="tip-body"></p>
+  <div id="tip-box">
+    <button id="tip-close" onclick="closeTip()">×</button>
+    <h4 id="tip-title"></h4>
+    <p id="tip-body"></p>
+  </div>
 </div>
-</div>
-
 <div id="drill-overlay" onclick="closeDrill(event)">
-<div id="drill-box">
-<button id="drill-close" onclick="closeDrill()">&#215;</button>
-<h3 id="drill-title"></h3>
-<p id="drill-sub"></p>
-<div id="drill-content"></div>
-</div>
+  <div id="drill-box">
+    <button id="drill-close" onclick="closeDrill()">×</button>
+    <h3 id="drill-title"></h3>
+    <p id="drill-sub"></p>
+    <div id="drill-content"></div>
+  </div>
 </div>
 
 <header>
-<div class="h-left">
-<img class="h-logo" src="../02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero" onerror="this.style.display='none'"/>
-<div class="h-sep"></div>
-<div><div class="h-title">Loyalty Program</div><div class="h-sub">Viajero Hostels &middot; Viajero Go</div></div>
-</div>
-<div class="h-right">
-<div class="h-ts-wrap">
-<div class="h-ts-label">&#218;ltima actualizaci&#243;n</div>
-<div class="h-ts-val" id="h-ts">&#8212;</div>
-</div>
-<div class="h-pill"><div class="dot"></div>Live</div>
-<a href="../index.html" class="btn-hub">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>&#8592; Hub
-</a>
-</div>
+  <div class="h-brand">
+    <img class="h-logo" src="../02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero" onerror="this.style.display='none'"/>
+    <div class="h-sep"></div>
+    <div><div class="h-title">Loyalty Program</div><div class="h-sub">Viajero Hostels · Viajero Go</div></div>
+  </div>
+  <div class="h-right">
+    <div class="h-ts"><div class="h-ts-label">Actualizado</div><div class="h-ts-val" id="h-ts">—</div></div>
+    <div class="h-live"><div class="dot"></div>Live</div>
+    <a href="../index.html" class="btn-hub">← Hub</a>
+  </div>
 </header>
 
 <div class="filtros">
-<div class="fg">
-<label>Per&#237;odo</label>
-<div class="ms-wrap" id="ms-per">
-<button class="ms-btn" onclick="toggleMs('per')" id="ms-per-btn">Todos</button>
-<div class="ms-dd" id="ms-per-dd">
-<div class="ms-dd-header">Per&#237;odos <span onclick="clearMs('per')">Limpiar</span></div>
-</div>
-</div>
-</div>
-<div class="fg">
-<label>Propiedad</label>
-<div class="ms-wrap" id="ms-prop">
-<button class="ms-btn" onclick="toggleMs('prop')" id="ms-prop-btn">Todas</button>
-<div class="ms-dd" id="ms-prop-dd">
-<div class="ms-dd-header">Propiedades <span onclick="clearMs('prop')">Limpiar</span></div>
-</div>
-</div>
-</div>
-<div class="fg">
-<label>Pa&#237;s</label>
-<div class="ms-wrap" id="ms-pais">
-<button class="ms-btn" onclick="toggleMs('pais')" id="ms-pais-btn">Todos</button>
-<div class="ms-dd" id="ms-pais-dd">
-<div class="ms-dd-header">Pa&#237;ses <span onclick="clearMs('pais')">Limpiar</span></div>
-</div>
-</div>
-</div>
+  <div class="fg">
+    <label>Período</label>
+    <div class="ms-wrap"><button class="ms-btn" onclick="toggleMs('per')" id="ms-per-btn">Todos</button>
+    <div class="ms-dd" id="ms-per-dd"><div class="ms-dd-hdr">Períodos <span onclick="clearMs('per')">Limpiar</span></div></div></div>
+  </div>
+  <div class="fg">
+    <label>Propiedad</label>
+    <div class="ms-wrap"><button class="ms-btn" onclick="toggleMs('prop')" id="ms-prop-btn">Todas</button>
+    <div class="ms-dd" id="ms-prop-dd"><div class="ms-dd-hdr">Propiedades <span onclick="clearMs('prop')">Limpiar</span></div></div></div>
+  </div>
+  <div class="fg">
+    <label>País</label>
+    <div class="ms-wrap"><button class="ms-btn" onclick="toggleMs('pais')" id="ms-pais-btn">Todos</button>
+    <div class="ms-dd" id="ms-pais-dd"><div class="ms-dd-hdr">Países <span onclick="clearMs('pais')">Limpiar</span></div></div></div>
+  </div>
+  <button class="filtros-reset" onclick="resetFiltros()">× Limpiar todo</button>
 </div>
 
 <div class="tabs-bar">
-<button class="tab-btn active" onclick="switchTab('como',this)">&#191;C&#243;mo vamos?</button>
-<button class="tab-btn" onclick="switchTab('donde',this)">&#191;D&#243;nde est&#225; el problema?</button>
-<button class="tab-btn" onclick="switchTab('que',this)">&#191;Qu&#233; hago hoy?</button>
+  <button class="tab-btn active" onclick="switchTab('como',this)">¿Cómo vamos?</button>
+  <button class="tab-btn" onclick="switchTab('donde',this)">¿Dónde está el problema?</button>
+  <button class="tab-btn" onclick="switchTab('que',this)">¿Qué hago hoy?</button>
 </div>
 
 <main>
 
+<!-- ══ TAB 1: CÓMO VAMOS ══ -->
 <div id="tab-como" class="tab-content active">
-<div class="sec"><div id="hero-kpis"></div></div>
-<div class="sec">
-<div class="sec-hdr"><h2>Estado por propiedad</h2><div class="linea"></div></div>
-<div id="semaforo-props"></div>
-</div>
-<div class="sec">
-<div class="sec-hdr"><h2>Afiliados en el programa</h2><div class="linea"></div></div>
-<div id="tier-dist-wrap"></div>
-</div>
-<div class="sec">
-<div class="sec-hdr"><h2>Beneficio m&#225;s canjeado</h2><div class="linea"></div></div>
-<div id="bene-wrap"></div>
-</div>
+  <div class="sec" id="synthesis-sec"></div>
+  <div class="sec"><div id="hero-kpis"></div></div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Estado por propiedad <i class="ib" onclick="openTip('Estado por propiedad')">i</i></h2><div class="linea"></div></div>
+    <div id="semaforo-props"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Beneficio más canjeado <i class="ib" onclick="openTip('Beneficio más redimido')">i</i></h2><div class="linea"></div></div>
+    <div id="bene-wrap"></div>
+  </div>
 </div>
 
+<!-- ══ TAB 2: DÓNDE ESTÁ EL PROBLEMA ══ -->
 <div id="tab-donde" class="tab-content">
-<div class="sec">
-<div class="sec-hdr"><h2>Resumen de errores</h2><div class="linea"></div></div>
-<div id="sem-total" style="font-size:12px;color:var(--gris);margin-bottom:10px;"></div>
-<div class="semaforo" id="semaforo" style="margin-bottom:20px;"></div>
-<div id="hall-wrap-outer"></div>
-</div>
-<div class="sec">
-<div class="sec-hdr"><h2>Ranking de propiedades</h2><div class="linea"></div></div>
-<div id="ranking-wrap"></div>
-</div>
-<div class="sec">
-<div class="sec-hdr"><h2>Detalle por tier</h2><div class="linea"></div></div>
-<div class="ac">
-<div class="ac-head" onclick="toggleAc(this)">
-<div class="ac-left"><span class="ac-ico">&#127941;</span>
-<div><div class="ac-tit">Redenci&#243;n por tier</div><div class="ac-sub">Qu&#233; deb&#237;a registrarse vs qu&#233; se registr&#243;</div></div>
-</div><span class="ac-arr">&#9660;</span>
-</div>
-<div class="ac-body">
-<div class="tiers-g" id="tiers-g"></div>
-<div class="tier-leyenda">
-<div class="tier-ley-item"><span class="tier-ley-ico">&#9989;</span><div><div class="tier-ley-label" style="color:var(--ok)">OK</div><div class="tier-ley-desc">Tarifa y beneficios correctos para el tier</div></div></div>
-<div class="tier-ley-item"><span class="tier-ley-ico">&#9888;&#65039;</span><div><div class="tier-ley-label" style="color:var(--warn)">Con error</div><div class="tier-ley-desc">Se registr&#243; algo pero de forma incorrecta</div></div></div>
-<div class="tier-ley-item"><span class="tier-ley-ico">&#10060;</span><div><div class="tier-ley-label" style="color:var(--err)">Sin registro</div><div class="tier-ley-desc">Afiliado hospedado sin ning&#250;n beneficio</div></div></div>
-<div class="tier-ley-item"><span class="tier-ley-ico">&#11036;</span><div><div class="tier-ley-label" style="color:var(--gris)">Sin membres&#237;a</div><div class="tier-ley-desc">Hu&#233;sped sin Viajero Go activo</div></div></div>
-</div>
-</div>
-</div>
-</div>
-<div class="sec"><div id="sc-wrap"></div></div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Semáforo de errores <i class="ib" onclick="openTip('Semáforo de errores')">i</i></h2><div class="linea"></div></div>
+    <div id="sem-total" class="sem-lbl"></div>
+    <div class="semaforo" id="semaforo"></div>
+    <div id="hall-wrap-outer"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Ranking de propiedades <i class="ib" onclick="openTip('Ranking propiedades')">i</i></h2><div class="linea"></div></div>
+    <div id="ranking-wrap"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Afiliados en el programa <i class="ib" onclick="openTip('Afiliados por tier')">i</i></h2><div class="linea"></div></div>
+    <div id="tier-dist-wrap"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Redención por tier <i class="ib" onclick="openTip('Redención por tier')">i</i></h2><div class="linea"></div></div>
+    <div class="ac">
+      <div class="ac-head" onclick="toggleAc(this)">
+        <div class="ac-left"><span class="ac-ico">🏅</span>
+          <div><div class="ac-tit">Desglose OK · Error · Sin registro · Sin membresía</div><div class="ac-sub">Por tier: qué debía registrarse vs qué se registró</div></div>
+        </div><span class="ac-arr">▼</span>
+      </div>
+      <div class="ac-body">
+        <div class="tiers-g" id="tiers-g"></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:7px;margin-top:13px;">
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 11px;background:var(--surface);border-radius:8px;border:1.5px solid var(--border);"><span style="font-size:14px">✅</span><div><div style="font-size:11px;font-weight:700;color:var(--ok)">OK</div><div style="font-size:9.5px;color:var(--gris)">Tarifa y beneficios correctos</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 11px;background:var(--surface);border-radius:8px;border:1.5px solid var(--border);"><span style="font-size:14px">⚠️</span><div><div style="font-size:11px;font-weight:700;color:var(--warn)">Con error</div><div style="font-size:9.5px;color:var(--gris)">Registrado incorrectamente</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 11px;background:var(--surface);border-radius:8px;border:1.5px solid var(--border);"><span style="font-size:14px">❌</span><div><div style="font-size:11px;font-weight:700;color:var(--err)">Sin registro</div><div style="font-size:9.5px;color:var(--gris)">Afiliado sin ningún beneficio</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 11px;background:var(--surface);border-radius:8px;border:1.5px solid var(--border);"><span style="font-size:14px">⬜</span><div><div style="font-size:11px;font-weight:700;color:var(--gris)">Sin membresía</div><div style="font-size:9.5px;color:var(--gris)">Huésped sin Viajero Go</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sec" id="sc-wrap"></div>
 </div>
 
+<!-- ══ TAB 3: QUÉ HAGO HOY ══ -->
 <div id="tab-que" class="tab-content">
-<div class="sec">
-<div class="sec-hdr"><h2>Propiedades que necesitan atenci&#243;n</h2><div class="linea"></div></div>
-<div id="bajo-meta-wrap"></div>
-</div>
-<div class="sec"><div id="benchmark-wrap"></div></div>
-<div class="sec">
-<div class="ac">
-<div class="ac-head" onclick="toggleAc(this)">
-<div class="ac-left"><span class="ac-ico">&#128197;</span>
-<div><div class="ac-tit">Hist&#243;rico por propiedad</div><div class="ac-sub">% Penetraci&#243;n &middot; propiedades como filas, per&#237;odos como columnas</div></div>
-</div><span class="ac-arr">&#9660;</span>
-</div>
-<div class="ac-preview" id="hist-preview"></div>
-<div class="ac-body"><div id="hist-body"></div></div>
-</div>
-</div>
-<div class="sec">
-<div class="ac">
-<div class="ac-head" onclick="toggleAc(this)">
-<div class="ac-left"><span class="ac-ico">&#128317;</span>
-<div><div class="ac-tit">Embudo del programa</div><div class="ac-sub" id="funnel-ac-sub">Hu&#233;spedes &#8594; check-ins &#8594; miembros &#8594; nuevos</div></div>
-</div><span class="ac-arr">&#9660;</span>
-</div>
-<div class="ac-body"><div id="funnel-wrap"></div></div>
-</div>
-</div>
-<div class="sec">
-<div class="sec-hdr"><h2>Incidencias t&#233;cnicas <span class="cnt" id="match-cnt">0</span></h2><div class="linea"></div></div>
-<div id="sinmatch-wrap"></div>
-</div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Propiedades que necesitan atención <i class="ib" onclick="openTip('Propiedades bajo meta')">i</i></h2><div class="linea"></div></div>
+    <div id="bajo-meta-wrap"></div>
+  </div>
+  <div class="sec" id="benchmark-wrap"></div>
+  <div class="sec">
+    <div class="ac">
+      <div class="ac-head" onclick="toggleAc(this)">
+        <div class="ac-left"><span class="ac-ico">📅</span>
+          <div><div class="ac-tit">Histórico por propiedad <i class="ib" onclick="event.stopPropagation();openTip('Histórico')">i</i></div><div class="ac-sub">% Penetración · propiedades como filas, períodos como columnas</div></div>
+        </div><span class="ac-arr">▼</span>
+      </div>
+      <div class="ac-preview" id="hist-preview"></div>
+      <div class="ac-body"><div id="hist-body"></div></div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="ac">
+      <div class="ac-head" onclick="toggleAc(this)">
+        <div class="ac-left"><span class="ac-ico">🔽</span>
+          <div><div class="ac-tit">Embudo del programa <i class="ib" onclick="event.stopPropagation();openTip('Embudo')">i</i></div><div class="ac-sub" id="funnel-ac-sub">Huéspedes → check-ins → miembros → nuevos</div></div>
+        </div><span class="ac-arr">▼</span>
+      </div>
+      <div class="ac-body"><div id="funnel-wrap"></div></div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Incidencias técnicas <i class="ib" onclick="openTip('Incidencias técnicas')">i</i></h2><span class="cnt" id="match-cnt" style="background:var(--coral);color:#fff;font-size:8.5px;padding:2px 7px;border-radius:99px;font-weight:700;">0</span><div class="linea"></div></div>
+    <div id="sinmatch-wrap"></div>
+  </div>
 </div>
 
 </main>
@@ -414,18 +504,27 @@ main{padding:16px 16px 48px;}
 var DATA_URL='../data/loyalty_data.json';
 var DATA=null,SC_DATA=[];
 
+// ─── TIPS ─────────────────────────────────────────────────────────────────
 var TIPS={
-'Total en el programa':{t:'Total en el programa',b:'N\u00famero total de afiliados activos en Viajero Go seg\u00fan Akin_Tiers. No cambia con filtro de per\u00edodo.'},
-'% Loyalty sobre hu\u00e9spedes':{t:'% Loyalty sobre hu\u00e9spedes',b:'De cada 100 hu\u00e9spedes que hicieron check-in, cu\u00e1ntos son miembros de Viajero Go.'},
-'Nuevos afiliados':{t:'Nuevos afiliados',b:'Hu\u00e9spedes que se registraron a Viajero Go por primera vez en el per\u00edodo seleccionado.'},
-'% Miembros que canjean':{t:'% Miembros que canjean',b:'De los miembros hospedados, cu\u00e1ntos tuvieron al menos un beneficio registrado correctamente (OK).'},
-'Sin Canje':{t:'Sin Canje',b:'Miembros hospedados que no recibieron ning\u00fan beneficio. Muestra miembros \u00fanicos.'},
-'Leakage':{t:'Leakage',b:'Se aplic\u00f3 descuento o beneficio loyalty a un hu\u00e9sped que NO es miembro. Implica p\u00e9rdida de ingreso.'},
-'Tier Incorrecto':{t:'Tier Incorrecto',b:'Se aplic\u00f3 un beneficio que no corresponde al tier real del miembro en Akin. Verificar siempre el tier antes de aplicar beneficios.'},
-'Misuse':{t:'Misuse',b:'Tarifa o beneficio loyalty aplicado fuera del flujo correcto. Requiere revisi\u00f3n individual.'},
-'Afiliados por tier':{t:'Afiliados por tier',b:'Distribuci\u00f3n de todos los afiliados Viajero Go activos seg\u00fan su tier en Akin. Refleja el estado actual \u2014 no cambia con el filtro de per\u00edodo.'},
-'Beneficio m\u00e1s redimido':{t:'Beneficio m\u00e1s redimido',b:'Solo cuenta redenciones correctas (OK): tarifa loyalty, bot\u00f3n toalla y bot\u00f3n desayuno aplicados al tier correcto.'},
-'Incidencias t\u00e9cnicas':{t:'Incidencias t\u00e9cnicas \u2014 Sin match Akin/CB',b:'Reservas reconocidas en Akin como miembro pero CB no las identifica.\n\nCausa: diferencia en n\u00famero de reserva o correo entre sistemas. No es un error operativo del equipo.\n\nAcci\u00f3n: buscar por nombre en CB. Si persiste, escalar a Akin.'},
+'Estado por propiedad':{t:'Estado por propiedad',b:'Semáforo con tres dimensiones por propiedad:\n\n• Adopción: % de check-ins que son miembros (meta ≥15%)\n• Redención: ¿tiene al menos un registro OK?\n• Calidad: % de transacciones sin error\n\n🟢 Meta · 🟡 En proceso · 🔴 Requiere atención\n\n★ Propiedades con al menos un OK están marcadas como referencia.'},
+'Penetración Loyalty':{t:'Penetración Loyalty',b:'De cada 100 huéspedes con check-in en CloudBeds, cuántos son miembros activos de Viajero Go.\n\nFórmula: Afiliados CB ÷ Check-ins × 100\nMeta: ≥15%\n\nEsta es la métrica principal de adopción del programa.'},
+'Nuevos afiliados':{t:'Nuevos afiliados',b:'Huéspedes que se registraron a Viajero Go por primera vez en el período seleccionado.\n\n% Adquisición = Nuevos ÷ Huéspedes totales × 100'},
+'% Miembros que canjean':{t:'% Miembros que canjean',b:'De los miembros con check-in, cuántos tuvieron al menos una transacción correctamente registrada (OK).\n\nActualmente en fase inicial. La meta es superar 30% primero.\n\nSi este % es 0 pero hay muchos Sin Canje → el problema es operativo, no de demanda.'},
+'% OK Transacciones':{t:'% OK Transacciones',b:'% de transacciones loyalty sin errores — tarifa y beneficios correctos para el tier correcto.\n\nActualmente muy bajo porque el programa está en fase inicial. Meta a mediano plazo: ≥80%.'},
+'Sin Canje':{t:'Sin Canje — ¿Por qué dos números?',b:'Ves dos números porque miden cosas distintas:\n\n• Miembros únicos: cuántas personas distintas no fueron atendidas\n• Reservas totales: cuántas veces en total no se aplicó el beneficio\n\nUn miembro que se hospeda 11 noches consecutivas genera 11 reservas individuales en CB (una por noche), pero es 1 persona única.\n\nAmbas métricas son correctas y útiles para distintos propósitos.'},
+'Leakage':{t:'Leakage',b:'Se aplicó descuento o beneficio loyalty a un huésped que NO es miembro activo.\n\nImplica pérdida de ingreso. Cada caso debe revisarse individualmente.\n\nCausa común: staff aplica descuento sin verificar membresía en Akin antes del check-in.'},
+'Tier Incorrecto':{t:'Tier Incorrecto',b:'Se aplicó un beneficio que no corresponde al tier real del miembro en Akin.\n\nEj: es Tourist en Akin pero en CB se le aplicó tarifa de Backpacker.\n\n→ SIEMPRE verificar el tier en Akin antes de aplicar cualquier beneficio.'},
+'Misuse':{t:'Misuse',b:'Tarifa o beneficio loyalty aplicado fuera del flujo correcto.\n\nPuede ser: tarifa loyalty a huésped sin membresía válida, beneficio en canal incorrecto, o uso de tarifa loyalty en contexto no autorizado.\n\nRequiere revisión individual de cada caso.'},
+'Beneficio más redimido':{t:'Beneficio más redimido',b:'Solo cuenta redenciones correctas (OK): tarifa loyalty, botón toalla y botón desayuno aplicados al tier correcto.\n\nActualmente casi todos en 0 porque el problema no es que no se canjee — es que aún no se registra correctamente en CB.'},
+'Semáforo de errores':{t:'Semáforo de errores',b:'Resumen del estado de transacciones loyalty en el período.\n\nCada celda es clicable para ver el detalle completo.\n\n• OK = correcto ✅\n• Sin Canje = miembro sin beneficio ❌\n• Leakage = beneficio a no-miembro 💸\n• Tier Incorrecto = tier CB ≠ Akin ⚠️\n• Misuse = fuera del flujo 🔄\n\nEl número del semáforo "Sin Canje" son miembros únicos. La tabla muestra todas las reservas.'},
+'Ranking propiedades':{t:'Ranking propiedades',b:'Tres vistas:\n\n• % Penetración: miembros ÷ check-ins (meta ≥15%). La línea vertical es la meta.\n• Nuevos afiliados: enrolados en el período\n• % Redención OK: transacciones correctas ÷ total transacciones\n\nSolo disponible sin filtro de propiedad individual.'},
+'Afiliados por tier':{t:'Afiliados por tier',b:'Distribución de todos los afiliados Viajero Go según su tier en Akin.\n\n⚠️ No cambia con el filtro de período — refleja el estado ACTUAL del programa, no el período seleccionado.\n\nFuente: hoja Akin_Tiers.'},
+'Redención por tier':{t:'Redención por tier',b:'Para cada tier: cuántos huéspedes tuvieron OK, con error, sin registro o sin membresía.\n\nPermite identificar qué tier está más desatendido operativamente.'},
+'Propiedades bajo meta':{t:'Propiedades que necesitan atención',b:'Propiedades con penetración <15% ordenadas de menor a mayor.\n\n🔴 Crítico (<5%): intervención directa y diagnóstico urgente con el gerente\n🟡 Bajo meta (5-15%): refuerzo del proceso de enrolamiento\n\nSi una propiedad tiene 0 nuevos → verificar si está activa en el programa.'},
+'Histórico':{t:'Histórico por propiedad',b:'Tabla transpuesta: propiedades como filas, períodos como columnas.\n\nMétrica: % Penetración (miembros ÷ check-ins)\n\n🟢 ≥15% · 🟡 8-15% · 🔴 <8%\n\nCon solo 2 períodos activos la tendencia aún no es significativa. Será útil a partir del 4to período.'},
+'Embudo':{t:'Embudo del programa',b:'Flujo desde huéspedes totales hasta nuevos afiliados.\n\nCada barra es proporcional a los huéspedes totales (100%).\n\nLa conversión entre cada paso revela dónde se pierden oportunidades de enrolamiento.'},
+'Incidencias técnicas':{t:'Incidencias técnicas — Sin match Akin/CB',b:'Reservas reconocidas como membresía en Akin pero CB no las encuentra.\n\nCausa: número de reserva o correo diferente entre sistemas.\n\n→ NO es un error operativo del equipo.\n→ Buscar por nombre en CB. Si persiste → escalar a Akin.'},
+'Total en el programa':{t:'Total en el programa',b:'Número total de afiliados activos en Viajero Go según Akin_Tiers.\n\n⚠️ No cambia con el filtro de período — refleja el estado actual del programa.'},
 };
 
 function openTip(k){var t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
@@ -433,449 +532,644 @@ function showDesc(titulo,cuerpo){document.getElementById('tip-title').textConten
 function showTipIdx(i){var t=(window._HTIPS||[])[i];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=(t.b||'').replace(/\\n/g,'\n');document.getElementById('tip-overlay').classList.add('show');}
 function closeTip(e){if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;document.getElementById('tip-overlay').classList.remove('show');}
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('tip-overlay').classList.remove('show');document.getElementById('drill-overlay').classList.remove('show');}});
-function ib(k){return '<i class="info-btn" onclick="event.stopPropagation();openTip(\''+k+'\')">i</i>';}
+function ib(k){return '<i class="ib" onclick="event.stopPropagation();openTip(\''+k+'\')">i</i>';}
 
+// ─── TABS ─────────────────────────────────────────────────────────────────
 function switchTab(id,btn){
-document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
-document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
-document.getElementById('tab-'+id).classList.add('active');
-btn.classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
 }
 
+// ─── MULTI-SELECT ─────────────────────────────────────────────────────────
 function toggleMs(id){
-var dd=document.getElementById('ms-'+id+'-dd');
-document.querySelectorAll('.ms-dd').forEach(function(d){if(d!==dd)d.classList.remove('open');});
-dd.classList.toggle('open');
+  var dd=document.getElementById('ms-'+id+'-dd');
+  document.querySelectorAll('.ms-dd').forEach(function(d){if(d!==dd)d.classList.remove('open');});
+  dd.classList.toggle('open');
 }
-document.addEventListener('click',function(e){
-if(!e.target.closest('.ms-wrap'))document.querySelectorAll('.ms-dd').forEach(function(d){d.classList.remove('open');});
-});
-function getMsValues(id){
-return Array.from(document.querySelectorAll('#ms-'+id+'-dd input[type=checkbox]:checked')||[]).map(function(c){return c.value;});
-}
-function clearMs(id){
-document.querySelectorAll('#ms-'+id+'-dd input[type=checkbox]').forEach(function(c){c.checked=false;});
-updateMsBtn(id);render();
-}
+document.addEventListener('click',function(e){if(!e.target.closest('.ms-wrap'))document.querySelectorAll('.ms-dd').forEach(function(d){d.classList.remove('open');});});
+function getMsValues(id){return Array.from(document.querySelectorAll('#ms-'+id+'-dd input[type=checkbox]:checked')||[]).map(function(c){return c.value;});}
+function clearMs(id){document.querySelectorAll('#ms-'+id+'-dd input[type=checkbox]').forEach(function(c){c.checked=false;});updateMsBtn(id);render();}
+function resetFiltros(){['per','prop','pais'].forEach(clearMs);}
 function updateMsBtn(id){
-var vals=getMsValues(id);
-var btn=document.getElementById('ms-'+id+'-btn');
-var labels={per:'Todos',prop:'Todas',pais:'Todos'};
-btn.textContent=vals.length===0?labels[id]:vals.length===1?vals[0]:vals.length+' seleccionados';
+  var vals=getMsValues(id),btn=document.getElementById('ms-'+id+'-btn');
+  var labels={per:'Todos',prop:'Todas',pais:'Todos'};
+  btn.textContent=vals.length===0?labels[id]:vals.length===1?vals[0]:vals.length+' seleccionados';
 }
-
 function poblarFiltros(){
-var afs=DATA.afiliados||[];
-var fill=function(id,vals){
-var dd=document.getElementById('ms-'+id+'-dd');
-while(dd.children.length>1)dd.removeChild(dd.lastChild);
-vals.forEach(function(v){
-var label=document.createElement('label');
-var cb=document.createElement('input');
-cb.type='checkbox';cb.value=v;
-cb.addEventListener('change',function(){updateMsBtn(id);render();});
-label.appendChild(cb);
-label.appendChild(document.createTextNode(' '+v));
-dd.appendChild(label);
-});
-};
-fill('per',[...new Set(afs.map(function(a){return a['\u00cdtems']||a['Per\u00edodo']||a['Periodo']||a['Per\u00EDodo'];}).filter(Boolean))].sort().filter(Boolean));
-
-var perSet=[];afs.forEach(function(a){var p=a['Per\u00edodo']||a['Periodo']||a['Per\u00EDodo'];if(p&&!perSet.includes(p))perSet.push(p);});perSet.sort();
-var propSet=[];afs.forEach(function(a){var p=a['Propiedad'];if(p&&!propSet.includes(p))propSet.push(p);});propSet.sort();
-var paisSet=[];afs.forEach(function(a){var p=a['Pais']||a['Pa\u00eds'];if(p&&!paisSet.includes(p))paisSet.push(p);});paisSet.sort();
-fill('per',perSet);fill('prop',propSet);fill('pais',paisSet);
+  var afs=DATA.afiliados||[];
+  var fill=function(id,vals){
+    var dd=document.getElementById('ms-'+id+'-dd');
+    while(dd.children.length>1)dd.removeChild(dd.lastChild);
+    vals.forEach(function(v){var lbl=document.createElement('label');var cb=document.createElement('input');cb.type='checkbox';cb.value=v;cb.addEventListener('change',function(){updateMsBtn(id);render();});lbl.appendChild(cb);lbl.appendChild(document.createTextNode(' '+v));dd.appendChild(lbl);});
+  };
+  var perSet=[],propSet=[],paisSet=[];
+  afs.forEach(function(a){
+    var p=a['Período']||a['Periodo'];if(p&&!perSet.includes(p))perSet.push(p);
+    var pr=a['Propiedad'];if(pr&&!propSet.includes(pr))propSet.push(pr);
+    var pa=a['Pais']||a['País'];if(pa&&!paisSet.includes(pa))paisSet.push(pa);
+  });
+  fill('per',perSet.sort());fill('prop',propSet.sort());fill('pais',paisSet.sort());
 }
 
+// ─── UTILS ────────────────────────────────────────────────────────────────
 function filtrar(arr,kP,kPr,kPa){
-kP=kP||'Per\u00edodo';kPr=kPr||'Propiedad';kPa=kPa||'Pa\u00eds';
-var p=getMsValues('per'),pr=getMsValues('prop'),pa=getMsValues('pais');
-return arr.filter(function(r){
-return (!p.length||(p.includes(r[kP]||r['Periodo']||r['Per\u00EDodo']||'')))
-&&(!pr.length||(pr.includes(r[kPr]||'')))
-&&(!pa.length||(pa.includes(r[kPa]||r['Pais']||'')));
-});
+  kP=kP||'Período';kPr=kPr||'Propiedad';kPa=kPa||'País';
+  var p=getMsValues('per'),pr=getMsValues('prop'),pa=getMsValues('pais');
+  return arr.filter(function(r){
+    return (!p.length||p.includes(r[kP]||r['Periodo']||''))
+      &&(!pr.length||pr.includes(r[kPr]||''))
+      &&(!pa.length||pa.includes(r[kPa]||r['Pais']||''));
+  });
 }
-
-function fmtFecha(v){if(!v)return'\u2014';try{return new Date(v).toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});}catch(e){return String(v);}}
+function fmtFecha(v){if(!v)return'—';try{return new Date(v).toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});}catch(e){return String(v);}}
 function fmtN(n){return Math.round(Number(n)||0).toLocaleString('es-CR');}
-function fmtP(a,b){return b>0?(Math.round(a/b*1000)/10).toFixed(1)+'%':'\u2014';}
+function fmtP(a,b){return b>0?(Math.round(a/b*1000)/10).toFixed(1)+'%':'—';}
 function sum(arr,k){return arr.reduce(function(t,r){return t+(parseFloat(r[k])||0);},0);}
 function corP(v){var n=parseFloat(v);if(isNaN(n)||v===null||v==='')return null;if(n>0&&n<1.5)n=Math.round(n*1000)/10;else n=Math.round(n*10)/10;return n;}
 function clsP(v){var n=parseFloat(v);return isNaN(n)?'':n>=15?'pct-ok':n>=8?'pct-warn':'pct-err';}
-function toggleAc(h){h.classList.toggle('open');h.nextElementSibling.classList.toggle('vis');if(h.nextElementSibling.nextElementSibling)h.nextElementSibling.nextElementSibling.classList.toggle('vis');}
+function toggleAc(h){h.classList.toggle('open');h.nextElementSibling.classList.toggle('vis');if(h.nextElementSibling.nextElementSibling&&h.nextElementSibling.nextElementSibling.classList.contains('ac-body'))h.nextElementSibling.nextElementSibling.classList.toggle('vis');}
 
+// ─── DRILL ────────────────────────────────────────────────────────────────
 var _drillTipo='';
 function drillTipoError(tipo,titulo){
-_drillTipo=tipo;
-var ft=getMsValues('per');
-var allRows=(DATA.tiersDetalle||[]).filter(function(r){return r.Error_Type===tipo&&(!ft.length||ft.includes(r.Periodo||r['Per\u00edodo']));});
-var propsDrill=[...new Set(allRows.map(function(r){return r.Propiedad;}).filter(Boolean))].sort();
-var paisesDrill=[...new Set(allRows.map(function(r){return r['Pa\u00eds']||r.Pais;}).filter(Boolean))].sort();
-document.getElementById('drill-title').textContent=titulo;
-document.getElementById('drill-sub').textContent='';
-var c=document.getElementById('drill-content');
-var pSel=propsDrill.length>1?'<label>Propiedad</label><select id="dp-sel" onchange="renderDrillTable()"><option value="">Todas ('+allRows.length+')</option>'+propsDrill.map(function(p){return '<option value="'+p+'">'+p+' ('+allRows.filter(function(r){return r.Propiedad===p;}).length+')</option>';}).join('')+'</select>':'';
-var paSel=paisesDrill.length>1?'<label>Pa\u00eds</label><select id="dpa-sel" onchange="renderDrillTable()"><option value="">Todos</option>'+paisesDrill.map(function(p){return '<option value="'+p+'">'+p+'</option>';}).join('')+'</select>':'';
-c.innerHTML='<div class="drill-filter">'+paSel+pSel+'<span class="drill-count" id="dc">'+allRows.length+' registros</span></div><div id="dt-wrap"></div>';
-renderDrillTable();
-document.getElementById('drill-overlay').classList.add('show');
+  _drillTipo=tipo;
+  var ft=getMsValues('per');
+  var allRows=(DATA.tiersDetalle||[]).filter(function(r){return r.Error_Type===tipo&&(!ft.length||ft.includes(r.Periodo||r['Período']));});
+  var propsDrill=[...new Set(allRows.map(function(r){return r.Propiedad;}).filter(Boolean))].sort();
+  var paisesDrill=[...new Set(allRows.map(function(r){return r['País']||r.Pais;}).filter(Boolean))].sort();
+  document.getElementById('drill-title').textContent=titulo;document.getElementById('drill-sub').textContent='';
+  var c=document.getElementById('drill-content');
+  var pSel=propsDrill.length>1?'<label>Propiedad</label><select id="dp-sel" onchange="renderDrillTable()"><option value="">Todas ('+allRows.length+')</option>'+propsDrill.map(function(p){return '<option value="'+p+'">'+p+' ('+allRows.filter(function(r){return r.Propiedad===p;}).length+')</option>';}).join('')+'</select>':'';
+  var paSel=paisesDrill.length>1?'<label>País</label><select id="dpa-sel" onchange="renderDrillTable()"><option value="">Todos</option>'+paisesDrill.map(function(p){return '<option value="'+p+'">'+p+'</option>';}).join('')+'</select>':'';
+  c.innerHTML='<div class="drill-filter">'+paSel+pSel+'<span class="drill-count" id="dc">'+allRows.length+' registros</span></div><div id="dt-wrap"></div>';
+  renderDrillTable();document.getElementById('drill-overlay').classList.add('show');
 }
 function renderDrillTable(){
-var ft=getMsValues('per');
-var allRows=(DATA.tiersDetalle||[]).filter(function(r){return r.Error_Type===_drillTipo&&(!ft.length||ft.includes(r.Periodo||r['Per\u00edodo']));});
-var pF=(document.getElementById('dp-sel')||{value:''}).value;
-var paF=(document.getElementById('dpa-sel')||{value:''}).value;
-var rows=allRows.filter(function(r){return (!pF||r.Propiedad===pF)&&(!paF||(r['Pa\u00eds']||r.Pais||'')===paF);});
-var cnt=document.getElementById('dc');if(cnt)cnt.textContent=rows.length+' registros';
-var wrap=document.getElementById('dt-wrap');if(!wrap)return;
-if(!rows.length){wrap.innerHTML='<div style="text-align:center;padding:24px;color:var(--gris)">Sin registros</div>';return;}
-var cols=[{k:'Nombre',l:'Nombre'},{k:'Reserva',l:'Reserva'},{k:'FechaIN',l:'Fecha llegada'},{k:'Noches',l:'Noches'},{k:'Propiedad',l:'Propiedad'},{k:'Periodo',l:'Per\u00edodo'},{k:'Tier_AKIN',l:'Tier'}];
-wrap.innerHTML='<div class="drill-wrap"><table><thead><tr>'+cols.map(function(c){return '<th>'+c.l+'</th>';}).join('')+'</tr></thead><tbody>'+rows.map(function(r){return '<tr>'+cols.map(function(c){return '<td>'+(c.k==='FechaIN'?fmtFecha(r[c.k]):r[c.k]||'\u2014')+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table></div>';
+  var ft=getMsValues('per');
+  var allRows=(DATA.tiersDetalle||[]).filter(function(r){return r.Error_Type===_drillTipo&&(!ft.length||ft.includes(r.Periodo||r['Período']));});
+  var pF=(document.getElementById('dp-sel')||{value:''}).value,paF=(document.getElementById('dpa-sel')||{value:''}).value;
+  var rows=allRows.filter(function(r){return (!pF||r.Propiedad===pF)&&(!paF||(r['País']||r.Pais||'')===paF);});
+  var cnt=document.getElementById('dc');if(cnt)cnt.textContent=rows.length+' registros';
+  var wrap=document.getElementById('dt-wrap');if(!wrap)return;
+  if(!rows.length){wrap.innerHTML='<div style="text-align:center;padding:22px;color:var(--gris)">Sin registros</div>';return;}
+  var cols=[{k:'Nombre',l:'Nombre'},{k:'Reserva',l:'Reserva'},{k:'FechaIN',l:'Fecha llegada'},{k:'Noches',l:'Noches'},{k:'Propiedad',l:'Propiedad'},{k:'Periodo',l:'Período'},{k:'Tier_AKIN',l:'Tier'}];
+  wrap.innerHTML='<div class="drill-wrap"><table><thead><tr>'+cols.map(function(c){return '<th>'+c.l+'</th>';}).join('')+'</tr></thead><tbody>'+rows.map(function(r){return '<tr>'+cols.map(function(c){return '<td>'+(c.k==='FechaIN'?fmtFecha(r[c.k]):r[c.k]||'—')+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table></div>';
 }
 function closeDrill(e){if(e&&e.target!==document.getElementById('drill-overlay')&&e.target!==document.getElementById('drill-close'))return;document.getElementById('drill-overlay').classList.remove('show');}
 window.doSDrill=function(idx){var c=(window._SDRILLS||[])[idx];if(c&&c.drill)drillTipoError(c.drill,c.label);};
 
 function drillAkinTier(tier){
-var fp=getMsValues('prop');
-var base=(DATA.akinTiers||[]).filter(function(r){return !fp.length||fp.includes(r.Propiedad||'');});
-var allTiers=[...new Set(base.map(function(r){return r.Viajero;}).filter(Boolean))].sort();
-var props=[...new Set(base.map(function(r){return r.Propiedad;}).filter(Boolean))].sort();
-var meses=[...new Set(base.map(function(r){if(!r['Joined date'])return null;try{var d=new Date(r['Joined date']);if(isNaN(d))return null;return d.getFullYear()+'-'+(String(d.getMonth()+1).padStart(2,'0'));}catch(e){return null;}}).filter(Boolean))].sort();
-document.getElementById('drill-title').textContent='Miembros Viajero Go';
-document.getElementById('drill-sub').textContent='';
-var c=document.getElementById('drill-content');
-var TIER_ORD=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
-var tOrd=TIER_ORD.filter(function(t){return allTiers.includes(t);}).concat(allTiers.filter(function(t){return !TIER_ORD.includes(t);}));
-var tSel=allTiers.length>1?'<label>Tier</label><select id="dt-tier" onchange="renderDrillAkinTier()"><option value="">Todos</option>'+tOrd.map(function(t){return '<option value="'+t+'"'+(t===tier?' selected':'')+'>'+t+' ('+base.filter(function(r){return r.Viajero===t;}).length+')</option>';}).join('')+'</select>':'';
-var mSel=meses.length>1?'<label>Mes</label><select id="dt-mes" onchange="renderDrillAkinTier()"><option value="">Todos</option>'+meses.map(function(m){return '<option value="'+m+'">'+m+'</option>';}).join('')+'</select>':'';
-var pSel=props.length>1?'<label>Propiedad</label><select id="dt-prop" onchange="renderDrillAkinTier()"><option value="">Todas</option>'+props.map(function(p){return '<option value="'+p+'">'+p+'</option>';}).join('')+'</select>':'';
-c.innerHTML='<div class="drill-filter">'+tSel+mSel+pSel+'<span class="drill-count" id="dc">'+base.filter(function(r){return !tier||r.Viajero===tier;}).length+' miembros</span></div><div id="dt-wrap"></div>';
-renderDrillAkinTier();
-document.getElementById('drill-overlay').classList.add('show');
+  var fp=getMsValues('prop');
+  var base=(DATA.akinTiers||[]).filter(function(r){return !fp.length||fp.includes(r.Propiedad||'');});
+  var allTiers=[...new Set(base.map(function(r){return r.Viajero;}).filter(Boolean))].sort();
+  var props=[...new Set(base.map(function(r){return r.Propiedad;}).filter(Boolean))].sort();
+  var meses=[...new Set(base.map(function(r){if(!r['Joined date'])return null;try{var d=new Date(r['Joined date']);if(isNaN(d))return null;return d.getFullYear()+'-'+(String(d.getMonth()+1).padStart(2,'0'));}catch(e){return null;}}).filter(Boolean))].sort();
+  var TIER_ORD=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
+  var tOrd=TIER_ORD.filter(function(t){return allTiers.includes(t);}).concat(allTiers.filter(function(t){return !TIER_ORD.includes(t);}));
+  document.getElementById('drill-title').textContent='Miembros Viajero Go';document.getElementById('drill-sub').textContent='';
+  var c=document.getElementById('drill-content');
+  var tSel=allTiers.length>1?'<label>Tier</label><select id="dt-tier" onchange="renderDrillAkinTier()"><option value="">Todos</option>'+tOrd.map(function(t){return '<option value="'+t+'"'+(t===tier?' selected':'')+'>'+t+' ('+base.filter(function(r){return r.Viajero===t;}).length+')</option>';}).join('')+'</select>':'';
+  var mSel=meses.length>1?'<label>Mes</label><select id="dt-mes" onchange="renderDrillAkinTier()"><option value="">Todos</option>'+meses.map(function(m){return '<option value="'+m+'">'+m+'</option>';}).join('')+'</select>':'';
+  var pSel=props.length>1?'<label>Propiedad</label><select id="dt-prop" onchange="renderDrillAkinTier()"><option value="">Todas</option>'+props.map(function(p){return '<option value="'+p+'">'+p+'</option>';}).join('')+'</select>':'';
+  c.innerHTML='<div class="drill-filter">'+tSel+mSel+pSel+'<span class="drill-count" id="dc">'+base.filter(function(r){return !tier||r.Viajero===tier;}).length+' miembros</span></div><div id="dt-wrap"></div>';
+  renderDrillAkinTier();document.getElementById('drill-overlay').classList.add('show');
 }
 function renderDrillAkinTier(){
-var fp=getMsValues('prop');
-var tierF=(document.getElementById('dt-tier')||{value:''}).value;
-var mesF=(document.getElementById('dt-mes')||{value:''}).value;
-var propF=(document.getElementById('dt-prop')||{value:''}).value;
-var base=(DATA.akinTiers||[]).filter(function(r){return !fp.length||fp.includes(r.Propiedad||'');});
-var rows=base.filter(function(r){
-if(tierF&&r.Viajero!==tierF)return false;
-if(propF&&r.Propiedad!==propF)return false;
-if(mesF){try{var d=new Date(r['Joined date']);var m=d.getFullYear()+'-'+(String(d.getMonth()+1).padStart(2,'0'));if(m!==mesF)return false;}catch(e){return false;}}
-return true;
-});
-var cnt=document.getElementById('dc');if(cnt)cnt.textContent=rows.length+' miembros';
-var wrap=document.getElementById('dt-wrap');if(!wrap)return;
-if(!rows.length){wrap.innerHTML='<div style="text-align:center;padding:24px;color:var(--gris)">Sin miembros</div>';return;}
-var cols=[{k:'Name',l:'Nombre'},{k:'Email',l:'Correo'},{k:'Propiedad',l:'Propiedad'},{k:'Viajero',l:'Tier'},{k:'Joined date',l:'Fecha ingreso'}];
-wrap.innerHTML='<div class="drill-wrap"><table><thead><tr>'+cols.map(function(c){return '<th>'+c.l+'</th>';}).join('')+'</tr></thead><tbody>'+rows.map(function(r){return '<tr>'+cols.map(function(c){return '<td>'+(c.k==='Joined date'?fmtFecha(r[c.k]):r[c.k]||'\u2014')+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table></div>';
+  var fp=getMsValues('prop');
+  var tierF=(document.getElementById('dt-tier')||{value:''}).value,mesF=(document.getElementById('dt-mes')||{value:''}).value,propF=(document.getElementById('dt-prop')||{value:''}).value;
+  var base=(DATA.akinTiers||[]).filter(function(r){return !fp.length||fp.includes(r.Propiedad||'');});
+  var rows=base.filter(function(r){
+    if(tierF&&r.Viajero!==tierF)return false;if(propF&&r.Propiedad!==propF)return false;
+    if(mesF){try{var d=new Date(r['Joined date']);var m=d.getFullYear()+'-'+(String(d.getMonth()+1).padStart(2,'0'));if(m!==mesF)return false;}catch(e){return false;}}
+    return true;
+  });
+  var cnt=document.getElementById('dc');if(cnt)cnt.textContent=rows.length+' miembros';
+  var wrap=document.getElementById('dt-wrap');if(!wrap)return;
+  if(!rows.length){wrap.innerHTML='<div style="text-align:center;padding:22px;color:var(--gris)">Sin miembros</div>';return;}
+  var cols=[{k:'Name',l:'Nombre'},{k:'Email',l:'Correo'},{k:'Propiedad',l:'Propiedad'},{k:'Viajero',l:'Tier'},{k:'Joined date',l:'Fecha ingreso'}];
+  wrap.innerHTML='<div class="drill-wrap"><table><thead><tr>'+cols.map(function(c){return '<th>'+c.l+'</th>';}).join('')+'</tr></thead><tbody>'+rows.map(function(r){return '<tr>'+cols.map(function(c){return '<td>'+(c.k==='Joined date'?fmtFecha(r[c.k]):r[c.k]||'—')+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table></div>';
 }
 
+// ─── SYNTHESIS ────────────────────────────────────────────────────────────
+function renderSynthesis(afs,mb){
+  var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
+  var okN=mb.filter(function(r){return r.Error_Type==='OK';}).length;
+  var scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
+  var scReservas=mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).length;
+  var lkN=mb.filter(function(r){return r.Error_Type==='LEAKAGE';}).length;
+  var pLoy=ci>0?cb/ci*100:0;
+  var fp=getMsValues('prop');var scope=fp.length===1?fp[0]:'toda la cadena';
+  var headline=pLoy>=15?'Programa en meta — '+pLoy.toFixed(1)+'% de penetración en '+scope:pLoy>=8?'Programa en crecimiento — '+pLoy.toFixed(1)+'% de penetración (meta: 15%) en '+scope:'Adopción inicial — '+pLoy.toFixed(1)+'% de penetración (meta: 15%) en '+scope;
+  var items=[];
+  items.push({dot:pLoy>=15?'ok':pLoy>=8?'warn':'err',html:'<b>'+fmtN(cb)+'</b> miembros en check-in de <b>'+fmtN(ci)+'</b> · '+pLoy.toFixed(1)+'% penetración sobre check-ins'});
+  items.push({dot:'err',html:'<b>'+fmtN(scUnicos)+'</b> miembros únicos sin beneficio registrado (<b>'+fmtN(scReservas)+'</b> reservas sin canje)'});
+  if(okN>0)items.push({dot:'ok',html:'<b>'+okN+'</b> transacción'+(okN>1?'es':'')+' con registro OK — el proceso funciona donde se aplica'});
+  else items.push({dot:'warn',html:'0 transacciones OK aún · el problema es de registro en CB, no de demanda'});
+  if(lkN>0)items.push({dot:'err',html:'<b>'+lkN+'</b> caso'+(lkN>1?'s':'')+' de leakage — beneficio aplicado a huésped sin membresía'});
+  items.push({dot:'warn',html:'<b>'+fmtN(nv)+'</b> nuevos afiliados · '+(hu>0?(nv/hu*100).toFixed(1):0)+'% de adquisición sobre huéspedes'});
+  document.getElementById('synthesis-sec').innerHTML=
+    '<div class="synthesis">'+
+    '<div class="syn-tag">📍 Fase adopción inicial · ~3 meses activo · '+scope+'</div>'+
+    '<div class="syn-headline">'+headline+'</div>'+
+    '<div class="syn-items">'+items.map(function(it){return '<div class="syn-item"><div class="syn-dot '+it.dot+'"></div><span>'+it.html+'</span></div>';}).join('')+'</div></div>';
+}
+
+// ─── HERO KPIs ─────────────────────────────────────────────────────────────
 function renderHeroKPIs(afs,mb){
-var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
-var totalAfiliados=(DATA.distribucionTiers&&DATA.distribucionTiers.totalAfiliados)||0;
-var okN=mb.filter(function(r){return r.Error_Type==='OK';}).length;
-var pLoy=ci>0?cb/ci*100:0;
-var pHue=hu>0?cb/hu*100:0;
-var pRed=cb>0?okN/cb*100:0;
-var colRed=pRed>=10?'var(--ok)':pRed>=3?'#ca8a04':'var(--err)';
-var items=[
-{label:'Total en el programa',tip:'Total en el programa',val:totalAfiliados>0?fmtN(totalAfiliados):fmtN(cb),sub:'afiliados Viajero Go activos',hc:'#7c3aed',badge:null},
-{label:'% Loyalty sobre hu\u00e9spedes',tip:'% Loyalty sobre hu\u00e9spedes',val:hu>0?(Math.round(pHue*10)/10).toFixed(1)+'%':'\u2014',sub:fmtN(cb)+' miembros \u00b7 '+fmtN(hu)+' hu\u00e9spedes',hc:pLoy>=15?'var(--ok)':pLoy>=8?'#ca8a04':'var(--err)',badge:pLoy>=15?{cls:'b-ok',txt:'\u2705 Meta alcanzada'}:pLoy>=8?{cls:'b-warn',txt:'\u26a0\ufe0f En proceso'}:{cls:'b-err',txt:'\uD83D\uDD34 Bajo meta'}},
-{label:'Nuevos afiliados',tip:'Nuevos afiliados',val:fmtN(nv),sub:'de '+fmtN(hu)+' hu\u00e9spedes \u00b7 '+(hu>0?(nv/hu*100).toFixed(1):'0')+'% adquisici\u00f3n',hc:'#0369a1',badge:null},
-{label:'% Miembros que canjean',tip:'% Miembros que canjean',val:cb>0?(Math.round(pRed*10)/10).toFixed(1)+'%':'\u2014',sub:okN+' con registro OK',hc:colRed,badge:null},
-];
-document.getElementById('hero-kpis').innerHTML='<div class="hero-grid">'+items.map(function(it){return '<div class="hero-kpi" style="--hc:'+it.hc+'"><div class="hero-glow"></div><div class="hero-label">'+it.label+' '+ib(it.tip)+'</div><div class="hero-val">'+it.val+'</div><div class="hero-sub">'+it.sub+'</div>'+(it.badge?'<span class="hero-badge '+it.badge.cls+'">'+it.badge.txt+'</span>':'')+'</div>';}).join('')+'</div>';
+  var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
+  var totalAf=(DATA.distribucionTiers&&DATA.distribucionTiers.totalAfiliados)||0;
+  var okN=mb.filter(function(r){return r.Error_Type==='OK';}).length;
+  var pLoy=ci>0?cb/ci*100:0,pHue=hu>0?cb/hu*100:0,pRed=cb>0?okN/cb*100:0;
+  var colL=pLoy>=15?'var(--ok)':pLoy>=8?'#ca8a04':'var(--err)';
+  var colR=pRed>=10?'var(--ok)':pRed>=3?'#ca8a04':'var(--err)';
+  var items=[
+    {label:'Total en el programa',tip:'Total en el programa',val:totalAf>0?fmtN(totalAf):fmtN(cb),sub:'afiliados Viajero Go activos',hc:'#7c3aed',badge:null,meta:null},
+    {label:'% Loyalty sobre huéspedes',tip:'Penetración Loyalty',val:pHue.toFixed(1)+'%',sub:fmtN(cb)+' miembros · '+fmtN(hu)+' huéspedes',hc:colL,
+      badge:pLoy>=15?{cls:'b-ok',txt:'✅ Meta alcanzada'}:pLoy>=8?{cls:'b-warn',txt:'⚠️ En proceso'}:{cls:'b-err',txt:'🔴 Bajo meta'},
+      meta:{label:'Meta',val:'≥15%'}},
+    {label:'Nuevos afiliados',tip:'Nuevos afiliados',val:fmtN(nv),sub:fmtN(hu)+' huéspedes · '+(hu>0?(nv/hu*100).toFixed(1):0)+'% adquisición',hc:'#0369a1',badge:null,meta:null},
+    {label:'% Miembros que canjean',tip:'% Miembros que canjean',val:cb>0?pRed.toFixed(1)+'%':'—',sub:okN+' con registro OK',hc:colR,badge:null,meta:{label:'Meta futura',val:'≥30%'}},
+  ];
+  document.getElementById('hero-kpis').innerHTML=
+    '<div class="hero-grid">'+
+    items.map(function(it){
+      return '<div class="hero-kpi" style="--hc:'+it.hc+'">'+
+        '<div class="hero-glow"></div>'+
+        '<div class="hero-label">'+it.label+' '+ib(it.tip)+'</div>'+
+        '<div class="hero-val">'+it.val+'</div>'+
+        '<div class="hero-sub">'+it.sub+'</div>'+
+        (it.badge?'<span class="hero-badge '+it.badge.cls+'">'+it.badge.txt+'</span>':'')+
+        (it.meta?'<div class="hero-meta"><span>'+it.meta.label+'</span><b>'+it.meta.val+'</b></div>':'')+
+        '</div>';
+    }).join('')+'</div>';
 }
 
+// ─── ESTADO POR PROPIEDAD ─────────────────────────────────────────────────
 function renderSemaforoProps(afs,mb){
-var map={};
-afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={ci:0,cb:0,ok:0,trans:0,lk:0};map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;});
-mb.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={ci:0,cb:0,ok:0,trans:0,lk:0};var et=r.Error_Type||'';if(et&&et!=='NO LOYALTY')map[p].trans++;if(et==='OK')map[p].ok++;if(et==='LEAKAGE')map[p].lk++;});
-var props=Object.entries(map).filter(function(e){return e[1].ci>0||e[1].cb>0;}).map(function(e){var name=e[0],v=e[1];return {name:name,pctAdop:v.ci>0?Math.round(v.cb/v.ci*1000)/10:0,tieneRed:v.ok>0,pctCal:v.trans>0?Math.round(v.ok/v.trans*1000)/10:null,isBench:name.toLowerCase().includes('cali')&&v.ok>0,lk:v.lk};}).sort(function(a,b){return b.pctAdop-a.pctAdop;});
-var semIco=function(v,t){return v>=t[0]?'\uD83D\uDFE2':v>=t[1]?'\uD83D\uDFE1':'\uD83D\uDD34';};
-var semCol=function(v,t){return v>=t[0]?'var(--ok)':v>=t[1]?'#ca8a04':'var(--err)';};
-var rows=props.map(function(p){
-var calDisp=p.pctCal===null?'<span style="color:var(--gris);font-size:13px">\u2014</span>':'<span class="sp-sem">'+semIco(p.pctCal,[50,20])+' <b style="color:'+semCol(p.pctCal,[50,20])+'">'+p.pctCal.toFixed(1)+'%</b></span>';
-var bench=p.isBench?' <span style="font-size:9px;background:var(--ok-bg);color:var(--ok);padding:1px 7px;border-radius:5px;font-weight:700;vertical-align:middle">\u2605 Benchmark</span>':'';
-return '<tr '+(p.isBench?'class="sp-bench"':'')+'><td><b>'+p.name+'</b>'+bench+'</td><td class="tc"><span class="sp-sem">'+semIco(p.pctAdop,[15,8])+' <b style="color:'+semCol(p.pctAdop,[15,8])+'">'+p.pctAdop.toFixed(1)+'%</b></span></td><td class="tc">'+(p.tieneRed?'<span class="sp-sem">\uD83D\uDFE2 <b style="color:var(--ok)">S\u00ed</b></span>':'<span class="sp-sem">\uD83D\uDD34 <b style="color:var(--err)">No</b></span>')+'</td><td class="tc">'+calDisp+'</td><td class="tc">'+(p.lk>0?'<span class="ac-badge b-err">'+p.lk+' leakage</span>':'')+'</td></tr>';
-}).join('');
-document.getElementById('semaforo-props').innerHTML='<div class="sp-wrap"><table class="sp-table"><thead><tr><th>Propiedad</th><th class="tc">Adopci\u00f3n</th><th class="tc">Redenci\u00f3n</th><th class="tc">Calidad</th><th class="tc">Alertas</th></tr></thead><tbody>'+rows+'</tbody></table></div><div class="sp-legend"><span>\uD83D\uDFE2 Meta \u00b7 Adopci\u00f3n \u226515% \u00b7 Calidad \u226550%</span><span>\uD83D\uDFE1 En proceso \u00b7 Adopci\u00f3n 8-15% \u00b7 Calidad 20-50%</span><span>\uD83D\uDD34 Requiere atenci\u00f3n</span></div>';
+  var map={};
+  afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={ci:0,cb:0,ok:0,trans:0,lk:0,nv:0};map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
+  mb.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={ci:0,cb:0,ok:0,trans:0,lk:0,nv:0};var et=r.Error_Type||'';if(et&&et!=='NO LOYALTY')map[p].trans++;if(et==='OK')map[p].ok++;if(et==='LEAKAGE')map[p].lk++;});
+  var props=Object.entries(map).filter(function(e){return e[1].ci>0||e[1].cb>0;}).map(function(e){
+    var nm=e[0],v=e[1];return {name:nm,pctAdop:v.ci>0?Math.round(v.cb/v.ci*1000)/10:0,tieneRed:v.ok>0,pctCal:v.trans>0?Math.round(v.ok/v.trans*1000)/10:null,lk:v.lk,nv:v.nv,cb:v.cb,ci:v.ci};
+  }).sort(function(a,b){return b.pctAdop-a.pctAdop;});
+  var ico=function(v,t){return v>=t[0]?'🟢':v>=t[1]?'🟡':'🔴';};
+  var col=function(v,t){return v>=t[0]?'var(--ok)':v>=t[1]?'#ca8a04':'var(--err)';};
+  var benchProps=props.filter(function(p){return p.tieneRed;}).map(function(p){return p.name.replace('Viajero ','').replace(' Hostel','').replace(' & Salsa School','');});
+  var rows=props.map(function(p){
+    var calDisp=p.pctCal===null?'<span style="color:var(--gris)">—</span>':'<span style="display:inline-flex;align-items:center;gap:4px">'+ico(p.pctCal,[50,20])+' <b style="color:'+col(p.pctCal,[50,20])+'">'+p.pctCal.toFixed(1)+'%</b></span>';
+    var bench=p.tieneRed?' <span style="font-size:8px;background:var(--ok-bg);color:var(--ok);padding:1px 5px;border-radius:4px;font-weight:700">★ OK</span>':'';
+    return '<tr '+(p.tieneRed?'class="sp-bench"':'')+'>'+
+      '<td><b>'+p.name+'</b>'+bench+'</td>'+
+      '<td class="tc"><span style="display:inline-flex;align-items:center;gap:4px">'+ico(p.pctAdop,[15,8])+' <b style="color:'+col(p.pctAdop,[15,8])+'">'+p.pctAdop.toFixed(1)+'%</b></span></td>'+
+      '<td class="tc">'+(p.tieneRed?'<span style="color:var(--ok);font-weight:700">✅ Sí</span>':'<span style="color:var(--err);font-weight:700">❌ No</span>')+'</td>'+
+      '<td class="tc">'+calDisp+'</td>'+
+      '<td class="tc">'+(p.lk>0?'<span class="badge b-err">'+p.lk+' leak</span>':'')+
+        (p.nv===0&&p.ci>0?'<span class="badge b-gray" style="margin-left:3px">0 nuevos</span>':'')+'</td>'+
+      '</tr>';
+  }).join('');
+  document.getElementById('semaforo-props').innerHTML=
+    '<div class="sp-wrap"><table class="sp-table">'+
+    '<thead><tr><th>Propiedad</th><th class="tc">Adopción '+ib('Penetración Loyalty')+'</th><th class="tc">Redención '+ib('% Miembros que canjean')+'</th><th class="tc">Calidad '+ib('% OK Transacciones')+'</th><th class="tc">Alertas</th></tr></thead>'+
+    '<tbody>'+rows+'</tbody></table></div>'+
+    '<div class="sp-legend">'+
+    '<span>🟢 Meta alcanzada · Adopción ≥15% · Calidad ≥50%</span>'+
+    '<span>🟡 En proceso · Adopción 8-15% · Calidad 20-50%</span>'+
+    '<span>🔴 Requiere atención</span>'+
+    (benchProps.length?'<span>★ Con registros OK: '+benchProps.join(', ')+'</span>':'')+
+    '</div>';
 }
 
-function renderDistribucionTiers(){
-var cont=document.getElementById('tier-dist-wrap');
-var dist=DATA.distribucionTiers;
-if(!dist||!dist.global||!dist.global.length){cont.innerHTML='<div class="empty">Sin datos de distribuci\u00f3n de tiers.</div>';return;}
-var fp=getMsValues('prop');
-var filas=dist.global,total=dist.totalAfiliados||0;
-if(fp.length===1&&dist.porPropiedad){var pd=dist.porPropiedad.find(function(p){return p.Propiedad===fp[0];});if(pd){filas=pd.tiers;total=pd.Total;}}
-if(!filas.length){cont.innerHTML='<div class="empty">Sin datos para este filtro.</div>';return;}
-var TIER_CFG={Viajero:{ico:'\uD83C\uDFC6',col:'#7c3aed'},Nomad:{ico:'\uD83C\uDF0D',col:'#0369a1'},Explorer:{ico:'\uD83E\uDDED',col:'#0891b2'},Backpacker:{ico:'\uD83C\uDF92',col:'var(--coral)'},Tourist:{ico:'\uD83D\uDDFA\uFE0F',col:'#ca8a04'}};
-var D={ico:'\u2022',col:'var(--gris)'};
-var maxN=Math.max.apply(null,filas.map(function(f){return f.count;}));
-var tieneDetalle=(DATA.akinTiers||[]).length>0;
-cont.innerHTML='<div class="td-wrap"><table class="td-table"><thead><tr><th>Tier</th><th style="text-align:center">Afiliados</th><th style="text-align:center">% del total</th><th>Distribuci\u00f3n</th>'+(tieneDetalle?'<th></th>':'')+'</tr></thead><tbody>'+
-filas.map(function(f){var c=TIER_CFG[f.tier]||D;var bW=maxN>0?Math.round(f.count/maxN*100):0;return '<tr><td><span style="font-size:16px">'+c.ico+'</span> <b style="color:'+c.col+'">'+f.tier+'</b></td><td style="text-align:center;font-size:20px;font-weight:800;color:'+c.col+'">'+fmtN(f.count)+'</td><td style="text-align:center;font-size:13px;font-weight:700;color:var(--gris)">'+f.pct+'%</td><td><div class="td-bar"><div class="td-bar-fill" style="width:'+bW+'%;background:'+c.col+'"></div></div></td>'+(tieneDetalle?'<td><button class="hall-btn" onclick="drillAkinTier(\''+f.tier+'\')">Ver miembros \u2192</button></td>':'')+'</tr>';}).join('')+
-'<tr class="td-total"><td><b>Total</b></td><td style="text-align:center;font-size:18px">'+fmtN(total)+'</td><td style="text-align:center">100%</td><td></td>'+(tieneDetalle?'<td></td>':'')+'</tr>'+
-'</tbody></table></div>'+
-'<div style="font-size:11px;color:var(--gris);margin-top:8px;padding:8px 12px;background:var(--cream);border-radius:8px;">\u2139\uFE0F Refleja el estado actual de Akin_Tiers \u2014 no cambia con el filtro de per\u00edodo.</div>';
-
-var _at=DATA.akinTiers||[];
-if(_at.length){
-var _fp=getMsValues('prop');
-var _base=_fp.length===1?_at.filter(function(r){return r.Propiedad===_fp[0];}):_at;
-var TIER_ORD=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
-var tPresentes=TIER_ORD.filter(function(t){return _base.some(function(r){return r.Viajero===t;});});
-var _byMT={};
-_base.forEach(function(r){
-if(!r['Joined date'])return;
-try{var d=new Date(r['Joined date']);if(isNaN(d))return;
-var m=d.getFullYear()+'-'+(String(d.getMonth()+1).padStart(2,'0'));
-if(!_byMT[m])_byMT[m]={};
-var tier=r.Viajero||'Otro';
-_byMT[m][tier]=(_byMT[m][tier]||0)+1;
-}catch(e){}});
-var _meses=Object.keys(_byMT).sort();
-if(_meses.length>=1){
-var TIER_COLORS={Tourist:'#ca8a04',Backpacker:'#F04B24',Explorer:'#0891b2',Nomad:'#0369a1',Viajero:'#7c3aed'};
-var _cid='ch-enrol-'+Date.now();
-cont.insertAdjacentHTML('beforeend','<div style="margin-top:18px;background:var(--cream);border-radius:14px;padding:18px;border:1.5px solid var(--border)"><div style="font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">\uD83D\uDCC8 Picos de enrolamiento \u00b7 Joined date</div><div style="font-size:11px;color:var(--gris);margin-bottom:4px">Nuevos miembros por mes'+(_fp.length===1?' \u00b7 '+_fp[0]:' \u00b7 toda la cadena')+' <span style="color:var(--mid);font-size:10px">(barras apiladas por tier)</span></div><div style="font-size:10px;color:var(--gris);margin-bottom:12px">\uD83D\uDCA1 Un pico indica una acci\u00f3n exitosa en ese per\u00edodo \u2014 ident\u00edficala y repl\u00edcala.</div><div style="position:relative;height:200px"><canvas id="'+_cid+'"></canvas></div></div>');
-var datasets=tPresentes.map(function(tier){return {label:tier,data:_meses.map(function(m){return (_byMT[m]&&_byMT[m][tier])||0;}),backgroundColor:TIER_COLORS[tier]||'#ccc',borderRadius:4,borderWidth:0};});
-new Chart(document.getElementById(_cid),{type:'bar',data:{labels:_meses,datasets:datasets},options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true,ticks:{font:{size:11}}},y:{stacked:true,beginAtZero:true,ticks:{stepSize:1,font:{size:11}}}},plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}},tooltip:{callbacks:{title:function(v){var parts=v[0].label.split('-');return new Date(parts[0],parts[1]-1,1).toLocaleDateString('es-CO',{month:'long',year:'numeric'});},label:function(v){return v.dataset.label+': '+v.raw+' nuevos';}}}}}});
-}
-}
-}
-
+// ─── BENEFICIOS ────────────────────────────────────────────────────────────
 function renderBeneficios(bens){
-var tOK=sum(bens,'_tarifa_ok'),toOK=sum(bens,'_toallas_ok'),dOK=sum(bens,'_desayunos_ok');
-var tt=sum(bens,'_total_trans');
-var items=[{ico:'\uD83C\uDFF7\uFE0F',lbl:'Tarifa loyalty',desc:'Descuento seg\u00fan tier',n:tOK,col:'#B83D16'},{ico:'\uD83D\uDEC1',lbl:'Toalla',desc:'Bot\u00f3n toalla $0 (Backpacker+)',n:toOK,col:'#0369a1'},{ico:'\uD83C\uDF73',lbl:'Desayuno',desc:'Bot\u00f3n desayuno (Nomad/Viajero 3+ noches)',n:dOK,col:'#065f46'}];
-var tot=tOK+toOK+dOK||1;
-var top=items.reduce(function(a,b){return a.n>=b.n?a:b;});
-var lowB=items.filter(function(i){return i.n===0;}).map(function(i){return i.lbl;});
-var hayOK=tOK+toOK+dOK>0;
-var sinOKMsg='<div class="ctx-banner">\u2139\uFE0F Datos insuficientes para este per\u00edodo.<br>Solo <b>Cali</b> tiene redenciones correctamente registradas. Este indicador se activar\u00e1 conforme la operaci\u00f3n avance.<br><span style="font-size:10px;color:var(--mid)">El problema no es que no canjeen \u2014 es que a\u00fan no se est\u00e1 registrando correctamente en CB.</span></div>';
-document.getElementById('bene-wrap').innerHTML=
-'<div class="ac"><div class="ac-head '+(hayOK?'open':'')+'" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">\u2b50</span><div><div class="ac-tit">Beneficio m\u00e1s redimido '+ib('Beneficio m\u00e1s redimido')+'</div><div class="ac-sub">Solo redenciones OK \u00b7 '+fmtN(tOK+toOK+dOK)+' de '+fmtN(tt)+' totales</div></div></div><div class="ac-meta"><span class="ac-badge '+(hayOK?'b-coral':'b-gray')+'">'+(top.n>0?top.ico+' '+top.lbl+' lidera':'\u23f3 Sin OK a\u00fan')+'</span></div><span class="ac-arr">'+(hayOK?'&#9660;':'')+'</span></div>'+
-'<div class="ac-body '+(hayOK?'vis':'')+'"><div style="max-width:560px">'+
-(hayOK?items.map(function(it){var p=Math.round(it.n/tot*1000)/10;var isTop=it.n===top.n&&top.n>0;return '<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;"><div style="font-size:22px;width:32px;text-align:center">'+it.ico+'</div><div style="flex:1"><div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-size:13px;font-weight:700">'+it.lbl+(isTop?' <span style="font-size:9px;background:var(--coral);color:#fff;padding:1px 6px;border-radius:4px">Top</span>':'')+'</span><span style="font-size:13px;font-weight:800;color:'+it.col+'">'+fmtN(it.n)+' <span style="font-size:11px;color:var(--gris);font-weight:500">('+p.toFixed(1)+'%)</span></span></div><div style="height:9px;background:var(--cream-dark);border-radius:5px;overflow:hidden"><div style="height:100%;width:'+p+'%;background:'+it.col+';border-radius:5px;transition:width .7s"></div></div><div style="font-size:11px;color:var(--gris);margin-top:4px">'+it.desc+'</div></div></div>';}).join(''):sinOKMsg)+
-'</div>'+
-(lowB.length&&hayOK?'<div style="padding:12px 14px;background:var(--warn-bg);border-radius:10px;font-size:12px;color:var(--warn)">\u26a0\ufe0f <b>'+lowB.join(' y ')+'</b> en 0 \u2014 verificar tier o capacitaci\u00f3n en recepci\u00f3n.</div>':'')+
-'</div></div>';
+  var tOK=sum(bens,'_tarifa_ok'),toOK=sum(bens,'_toallas_ok'),dOK=sum(bens,'_desayunos_ok'),tt=sum(bens,'_total_trans');
+  var items=[{ico:'🏷️',lbl:'Tarifa loyalty',desc:'Descuento según tier',n:tOK,col:'#B83D16'},{ico:'🛁',lbl:'Toalla',desc:'Botón toalla $0 (Backpacker+)',n:toOK,col:'#0369a1'},{ico:'🍳',lbl:'Desayuno',desc:'Botón desayuno (Nomad/Viajero 3+ noches)',n:dOK,col:'#065f46'}];
+  var tot=tOK+toOK+dOK||1,top=items.reduce(function(a,b){return a.n>=b.n?a:b;}),hayOK=tot>1;
+  var sinOKMsg='<div class="ctx-banner">ℹ️ El problema no es que los huéspedes no quieran canjear — es que <b>aún no se está registrando correctamente en CB</b>.<br>Este indicador se activará conforme avance la capacitación operativa. Las propiedades con registros OK son la referencia del proceso correcto.</div>';
+  document.getElementById('bene-wrap').innerHTML=
+    '<div class="ac"><div class="ac-head '+(hayOK?'open':'')+'" onclick="toggleAc(this)">'+
+    '<div class="ac-left"><span class="ac-ico">⭐</span>'+
+    '<div><div class="ac-tit">Beneficio más redimido '+ib('Beneficio más redimido')+'</div>'+
+    '<div class="ac-sub">Solo redenciones OK · '+fmtN(tOK+toOK+dOK)+' de '+fmtN(tt)+' totales</div></div></div>'+
+    '<div class="ac-meta"><span class="ac-badge '+(hayOK?'b-coral':'b-gray')+'">'+(top.n>0?top.ico+' '+top.lbl+' lidera':'⏳ Sin OK aún')+'</span></div>'+
+    '<span class="ac-arr">▼</span></div>'+
+    '<div class="ac-body '+(hayOK?'vis':'')+'">'+
+    (hayOK?'<div style="max-width:500px">'+
+      items.map(function(it){var p=Math.round(it.n/tot*1000)/10,isTop=it.n===top.n&&top.n>0;
+        return '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">'+
+          '<div style="font-size:19px;width:26px;text-align:center">'+it.ico+'</div><div style="flex:1">'+
+          '<div style="display:flex;justify-content:space-between;margin-bottom:4px;">'+
+          '<span style="font-size:12px;font-weight:700">'+it.lbl+(isTop?' <span style="font-size:8px;background:var(--coral);color:#fff;padding:1px 5px;border-radius:3px">Top</span>':'')+'</span>'+
+          '<span style="font-size:12px;font-weight:800;color:'+it.col+'">'+fmtN(it.n)+' <span style="font-size:10px;color:var(--gris);font-weight:400">('+p.toFixed(1)+'%)</span></span></div>'+
+          '<div style="height:7px;background:var(--cd);border-radius:5px;overflow:hidden"><div style="height:100%;width:'+p+'%;background:'+it.col+';border-radius:5px;transition:width .7s"></div></div>'+
+          '<div style="font-size:9.5px;color:var(--gris);margin-top:3px">'+it.desc+'</div></div></div>';
+      }).join('')+'</div>'
+      :sinOKMsg)+
+    '</div></div>';
 }
 
+// ─── SEMÁFORO DETALLE (fix: unicos vs reservas) ───────────────────────────
 function renderSemaforoDetalle(mb){
-var t={'SIN CANJE':0,'LEAKAGE':0,'MISUSE':0,'OK':0,'TIER_INCORRECTO':0,'MAL COBRADO':0,'NO LOYALTY':0};
-mb.forEach(function(r){var k=r.Error_Type||'NO LOYALTY';if(k in t)t[k]++;});
-var tot=t['SIN CANJE']+t['LEAKAGE']+t['MISUSE']+t['OK']+t['TIER_INCORRECTO']+t['MAL COBRADO']||1;
-var scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size||t['SIN CANJE'];
-document.getElementById('sem-total').innerHTML='<b>'+fmtN(tot)+'</b> transacciones loyalty registradas en el per\u00edodo \u00b7 <span style="font-size:11px;color:var(--mid)">Fuente: CloudBeds + Akin</span>';
-var items=[
-{k:'OK',v:t['OK'],disp:t['OK'],cls:t['OK']>0?'s-verde':'s-gris',tipo:'registros perfectos',drill:false},
-{k:'Sin Canje',v:t['SIN CANJE'],disp:scUnicos,cls:t['SIN CANJE']===0?'s-verde':t['SIN CANJE']<20?'s-amarillo':'s-rojo',tipo:'miembros sin beneficio',drill:'SIN CANJE'},
-{k:'Leakage',v:t['LEAKAGE'],disp:t['LEAKAGE'],cls:t['LEAKAGE']===0?'s-verde':t['LEAKAGE']<10?'s-amarillo':'s-rojo',tipo:'beneficio a no-miembro',drill:'LEAKAGE'},
-{k:'Tier Incorrecto',v:t['TIER_INCORRECTO'],disp:t['TIER_INCORRECTO'],cls:t['TIER_INCORRECTO']===0?'s-verde':t['TIER_INCORRECTO']<5?'s-amarillo':'s-rojo',tipo:'tier no coincide',drill:'TIER_INCORRECTO'},
-{k:'Misuse',v:t['MISUSE'],disp:t['MISUSE'],cls:t['MISUSE']===0?'s-verde':'s-rojo',tipo:'fuera de flujo',drill:'MISUSE'},
-];
-if(t['MAL COBRADO']>0)items.push({k:'Mal Cobrado',v:t['MAL COBRADO'],disp:t['MAL COBRADO'],cls:'s-amarillo',tipo:'monto incorrecto',drill:'MAL COBRADO'});
-window._SDRILLS=items.map(function(i){return {drill:i.drill,label:i.k+' \u2014 detalle'};});
-document.getElementById('semaforo').innerHTML=items.map(function(i,idx){return '<div class="s-item '+i.cls+'"'+(i.drill&&t[i.drill]>0?' onclick="doSDrill('+idx+')" style="cursor:pointer"':'')+'>'+
-'<div class="s-val">'+fmtN(i.disp)+'</div><div class="s-pct">'+fmtP(i.v,tot)+' del total</div><div class="s-lbl">'+i.k+' '+ib(i.k)+'</div><div class="s-tipo">'+(i.drill&&t[i.drill]>0?'Ver detalle \u2192':i.tipo)+'</div></div>';}).join('');
+  var t={'SIN CANJE':0,'LEAKAGE':0,'MISUSE':0,'OK':0,'TIER_INCORRECTO':0,'MAL COBRADO':0,'NO LOYALTY':0};
+  mb.forEach(function(r){var k=r.Error_Type||'NO LOYALTY';if(k in t)t[k]++;});
+  var tot=t['SIN CANJE']+t['LEAKAGE']+t['MISUSE']+t['OK']+t['TIER_INCORRECTO']+t['MAL COBRADO']||1;
+  // ★ FIX: show unique members, not raw reservation count
+  var scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size||t['SIN CANJE'];
+  var scReservas=t['SIN CANJE'];
+  document.getElementById('sem-total').innerHTML='<b>'+fmtN(tot)+'</b> transacciones loyalty registradas · <span style="color:var(--mid);font-size:10px">Fuente: CloudBeds + Akin</span>';
+  var items=[
+    {k:'OK',v:t['OK'],disp:t['OK'],cls:t['OK']>0?'s-verde':'s-gris',tipo:'registros perfectos',drill:false,sub2:''},
+    {k:'Sin Canje',v:scReservas,disp:scUnicos,cls:t['SIN CANJE']===0?'s-verde':t['SIN CANJE']<20?'s-amarillo':'s-rojo',tipo:'miembros únicos',drill:'SIN CANJE',sub2:scReservas!==scUnicos?fmtN(scReservas)+' reservas':''},
+    {k:'Leakage',v:t['LEAKAGE'],disp:t['LEAKAGE'],cls:t['LEAKAGE']===0?'s-verde':t['LEAKAGE']<10?'s-amarillo':'s-rojo',tipo:'a no-miembro',drill:'LEAKAGE',sub2:''},
+    {k:'Tier Incorrecto',v:t['TIER_INCORRECTO'],disp:t['TIER_INCORRECTO'],cls:t['TIER_INCORRECTO']===0?'s-verde':t['TIER_INCORRECTO']<5?'s-amarillo':'s-rojo',tipo:'CB ≠ Akin',drill:'TIER_INCORRECTO',sub2:''},
+    {k:'Misuse',v:t['MISUSE'],disp:t['MISUSE'],cls:t['MISUSE']===0?'s-verde':'s-rojo',tipo:'fuera de flujo',drill:'MISUSE',sub2:''},
+  ];
+  if(t['MAL COBRADO']>0)items.push({k:'Mal Cobrado',v:t['MAL COBRADO'],disp:t['MAL COBRADO'],cls:'s-amarillo',tipo:'monto incorrecto',drill:'MAL COBRADO',sub2:''});
+  window._SDRILLS=items.map(function(i){return {drill:i.drill,label:i.k+' — detalle'};});
+  document.getElementById('semaforo').innerHTML=items.map(function(i,idx){
+    return '<div class="s-item '+i.cls+(i.drill&&t[i.drill]>0?' clickable':'')+'"'+(i.drill&&t[i.drill]>0?' onclick="doSDrill('+idx+')"':'')+'>'+
+      '<div class="s-val">'+fmtN(i.disp)+'</div>'+
+      '<div class="s-pct">'+fmtP(i.v,tot)+' del total</div>'+
+      (i.sub2?'<div class="s-sub">'+i.sub2+'</div>':'')+
+      '<div class="s-lbl">'+i.k+' '+ib(i.k)+'</div>'+
+      '<div class="s-tipo">'+(i.drill&&t[i.drill]>0?'Ver detalle →':i.tipo)+'</div>'+
+      '</div>';
+  }).join('');
 }
 
+// ─── HALLAZGOS (★ BUG FIXED: casos, not types) ────────────────────────────
 function renderHallazgos(hall){
-var cont=document.getElementById('hall-wrap-outer');
-if(!hall.length){cont.innerHTML='<div class="empty">\u2705 Sin hallazgos para este filtro</div>';return;}
-var byT={};
-hall.forEach(function(h){
-var k=(h['Categor\u00eda']||'')+'|'+(h['Severidad']||'')+'|'+(h['Error_Type']||'');
-if(!byT[k])byT[k]={cat:h['Categor\u00eda']||'General',sev:h['Severidad']||'Media',accion:h['Acci\u00f3n sugerida']||'',et:h['Error_Type']||'',total:0,props:{}};
-var m=(h.Hallazgo||'').match(/^(\d+)/);
-byT[k].total+=m?parseInt(m[1]):1;
-var p=h.Propiedad||'Sin especificar';
-byT[k].props[p]=(byT[k].props[p]||0)+(m?parseInt(m[1]):1);
-});
-var rows=Object.values(byT).map(function(g){
-var txt='',drill=null,tipBody='';
-if(g.et==='SIN CANJE'){
-var a=g.accion.toLowerCase();
-if(a.includes('tourist')){
-txt='Tourist sin tarifa loyalty';drill='SIN CANJE';
-tipBody='Tier Tourist: deb\u00edan recibir tarifa loyalty 15% en CB.\n\n\uD83D\uDCA1 '+g.accion;
-}else{
-txt='Backpacker+ sin tarifa ni beneficios';drill='SIN CANJE';
-tipBody='Tiers Backpacker+: tarifa loyalty + bot\u00f3n toalla.\n\n\uD83D\uDCA1 '+g.accion;
-}
-}else if(g.et==='LEAKAGE'){txt='Leakage';drill='LEAKAGE';tipBody='Beneficio a un NO-miembro.\n\n\uD83D\uDCA1 '+g.accion;}
-else if(g.et==='TIER_INCORRECTO'){txt='Tier incorrecto en CB';drill='TIER_INCORRECTO';tipBody='Tier en CB \u2260 real en Akin.\n\n\uD83D\uDCA1 '+g.accion;}
-else if(g.et==='MISUSE'){txt='Misuse del programa';drill='MISUSE';}
-else if(g.et==='MAL COBRADO'){txt='Monto incorrecto';drill='MAL COBRADO';}
-else if(g.cat==='Adopci\u00f3n'){txt='Penetraci\u00f3n <15%';}
-else if(g.cat==='Operaci\u00f3n'){txt='Sin redenci\u00f3n OK';}
-else txt='Casos detectados';
-return {cat:g.cat,sev:g.sev,accion:g.accion,et:g.et,total:g.total,props:g.props,txt:txt,drill:drill,tipBody:tipBody,numDisplay:g.total};
-});
-var sevOrd={Cr\u00edtica:0,Alta:1,Media:2};
-rows.sort(function(a,b){return ((sevOrd[a.sev]!==undefined?sevOrd[a.sev]:3)-(sevOrd[b.sev]!==undefined?sevOrd[b.sev]:3))||(b.total-a.total);});
-var nCrit=rows.filter(function(r){return r.sev==='Cr\u00edtica';}).length;
-var CM={Cr\u00edtica:'critica',Alta:'alta',Media:'media'};
-var SEV_LABEL={Cr\u00edtica:'\uD83D\uDD34 Cr\u00edtica',Alta:'\uD83D\uDFE0 Alta',Media:'\uD83D\uDFE1 Media'};
-window._HTIPS=rows.map(function(r){return {t:r.txt,b:r.tipBody||''};});
-var tableRows=rows.map(function(g,idx){
-var cls=CM[g.sev]||'media';
-var hasDrill=g.drill&&(DATA.tiersDetalle||[]).some(function(r){return r.Error_Type===g.drill;});
-var ibHall=g.tipBody?'<i class="info-btn" style="margin-left:6px;vertical-align:middle" onclick="event.stopPropagation();showTipIdx('+idx+')">i</i>':'';
-return '<tr><td><span class="hall-sev '+cls+'">'+(SEV_LABEL[g.sev]||g.sev)+'</span></td><td><span class="hall-tipo">'+g.txt+'</span>'+ibHall+'</td><td><div class="hall-num '+cls+'">'+fmtN(g.numDisplay)+'</div></td><td>'+(hasDrill?'<button class="hall-btn" onclick="drillTipoError(\''+g.drill+'\',\'Detalle\')">Ver detalle \u2192</button>':'<span style="color:var(--gris);font-size:12px">\u2014</span>')+'</td></tr>';
-}).join('');
-cont.innerHTML='<div class="ac"><div class="ac-head open" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">\u26a0\ufe0f</span><div><div class="ac-tit">Hallazgos</div><div class="ac-sub">'+rows.length+' tipos \u00b7 '+nCrit+' cr\u00edtico'+(nCrit!==1?'s':'')+'</div></div></div><div class="ac-meta"><span class="ac-badge b-err">'+nCrit+' cr\u00edtico'+(nCrit!==1?'s':'')+'</span></div><span class="ac-arr" style="transform:rotate(180deg)">&#9660;</span></div><div class="ac-body vis" style="padding:0"><div style="overflow-x:auto"><table class="hall-table"><thead><tr><th>Severidad</th><th>Hallazgo</th><th class="tc">Casos</th><th></th></tr></thead><tbody>'+tableRows+'</tbody></table></div></div></div>';
+  var cont=document.getElementById('hall-wrap-outer');
+  if(!hall.length){cont.innerHTML='<div class="empty">✅ Sin hallazgos para este filtro</div>';return;}
+  var byT={};
+  hall.forEach(function(h){
+    var k=(h['Categoría']||'')+'|'+(h['Severidad']||'')+'|'+(h['Error_Type']||'');
+    if(!byT[k])byT[k]={cat:h['Categoría']||'General',sev:h['Severidad']||'Media',accion:h['Acción sugerida']||'',et:h['Error_Type']||'',total:0,props:{}};
+    var m=(h.Hallazgo||'').match(/^(\d+)/);byT[k].total+=m?parseInt(m[1]):1;
+    var p=h.Propiedad||'Sin especificar';byT[k].props[p]=(byT[k].props[p]||0)+(m?parseInt(m[1]):1);
+  });
+  var rows=Object.values(byT).map(function(g){
+    var txt='',drill=null,tipBody='';
+    if(g.et==='SIN CANJE'){var a=g.accion.toLowerCase();
+      if(a.includes('tourist')){txt='Tourist sin tarifa loyalty';drill='SIN CANJE';tipBody='Tier Tourist: debían recibir tarifa loyalty 15% en CB.\n\n💡 '+g.accion;}
+      else{txt='Backpacker+ sin tarifa ni beneficios';drill='SIN CANJE';tipBody='Tiers Backpacker+: tarifa loyalty + botón toalla.\n\n💡 '+g.accion;}
+    }else if(g.et==='LEAKAGE'){txt='Leakage';drill='LEAKAGE';tipBody='Beneficio a un NO-miembro.\n\n💡 '+g.accion;}
+    else if(g.et==='TIER_INCORRECTO'){txt='Tier incorrecto en CB';drill='TIER_INCORRECTO';tipBody='Tier en CB ≠ real en Akin.\n\n💡 '+g.accion;}
+    else if(g.et==='MISUSE'){txt='Misuse del programa';drill='MISUSE';}
+    else if(g.et==='MAL COBRADO'){txt='Monto incorrecto';drill='MAL COBRADO';}
+    else if(g.cat==='Adopción'){txt='Penetración <15%';}
+    else if(g.cat==='Operación'){txt='Sin redención OK';}
+    else txt='Casos detectados';
+    return {cat:g.cat,sev:g.sev,accion:g.accion,et:g.et,total:g.total,props:g.props,txt:txt,drill:drill,tipBody:tipBody};
+  });
+  var sevOrd={'Crítica':0,'Alta':1,'Media':2};
+  rows.sort(function(a,b){return((sevOrd[a.sev]!==undefined?sevOrd[a.sev]:3)-(sevOrd[b.sev]!==undefined?sevOrd[b.sev]:3))||(b.total-a.total);});
+  // ★ FIX: sum .total (actual cases), not count rows
+  var nCrit=rows.filter(function(r){return r.sev==='Crítica';}).reduce(function(s,r){return s+r.total;},0);
+  var nAlta=rows.filter(function(r){return r.sev==='Alta';}).reduce(function(s,r){return s+r.total;},0);
+  var nMedia=rows.filter(function(r){return r.sev==='Media';}).reduce(function(s,r){return s+r.total;},0);
+  var CM={'Crítica':'critica','Alta':'alta','Media':'media'};
+  var SEV_LABEL={'Crítica':'🔴 Crítica','Alta':'🟠 Alta','Media':'🟡 Media'};
+  window._HTIPS=rows.map(function(r){return {t:r.txt,b:r.tipBody||''};});
+  var tableRows=rows.map(function(g,idx){
+    var cls=CM[g.sev]||'media',hasDrill=g.drill&&(DATA.tiersDetalle||[]).some(function(r){return r.Error_Type===g.drill;});
+    var ibHall=g.tipBody?'<i class="ib" style="margin-left:4px;vertical-align:middle" onclick="event.stopPropagation();showTipIdx('+idx+')">i</i>':'';
+    var topProps=Object.entries(g.props).sort(function(a,b){return b[1]-a[1];}).slice(0,3).map(function(e){return e[0].replace('Viajero ','').replace(' Hostel','')+'('+e[1]+')';}).join(', ');
+    return '<tr>'+
+      '<td><span class="hall-sev '+cls+'">'+(SEV_LABEL[g.sev]||g.sev)+'</span></td>'+
+      '<td><span class="hall-tipo">'+g.txt+'</span>'+ibHall+'<div class="hall-accion">'+g.accion+'</div></td>'+
+      '<td><div class="hall-num '+cls+'">'+fmtN(g.total)+'</div></td>'+
+      '<td style="font-size:9.5px;color:var(--gris);max-width:200px;line-height:1.4">'+topProps+'</td>'+
+      '<td>'+(hasDrill?'<button class="hall-btn" onclick="drillTipoError(\''+g.drill+'\',\''+g.txt+'\')">Ver →</button>':'—')+'</td>'+
+      '</tr>';
+  }).join('');
+  cont.innerHTML=
+    '<div class="ac"><div class="ac-head open" onclick="toggleAc(this)">'+
+    '<div class="ac-left"><span class="ac-ico">⚠️</span>'+
+    '<div><div class="ac-tit">Hallazgos '+ib('Semáforo de errores')+'</div>'+
+    '<div class="ac-sub">'+rows.length+' tipos · '+fmtN(nCrit)+' casos críticos · acción sugerida incluida</div></div></div>'+
+    '<div class="ac-meta">'+
+    '<span class="ac-badge b-err">🔴 '+fmtN(nCrit)+'</span>'+
+    '<span class="ac-badge" style="background:var(--orange-bg);color:var(--orange)">🟠 '+fmtN(nAlta)+'</span>'+
+    '<span class="ac-badge b-warn">🟡 '+fmtN(nMedia)+'</span>'+
+    '</div>'+
+    '<span class="ac-arr" style="transform:rotate(180deg)">▼</span></div>'+
+    '<div class="ac-body vis" style="padding:0"><div style="overflow-x:auto">'+
+    '<table class="hall-table"><thead><tr><th>Severidad</th><th>Hallazgo · Acción sugerida</th><th class="tc">Casos</th><th>Top propiedades</th><th></th></tr></thead>'+
+    '<tbody>'+tableRows+'</tbody></table></div></div></div>';
 }
 
+// ─── RANKING ──────────────────────────────────────────────────────────────
 function renderRanking(afs,mb){
-var cont=document.getElementById('ranking-wrap');
-var map={};
-afs.forEach(function(r){var p=r.Propiedad||'';if(!p)return;if(!map[p])map[p]={p:p,ci:0,cb:0,hu:0,nv:0,ok:0,err:0,sc:0};map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].hu+=parseFloat(r._huespedes)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
-mb.forEach(function(r){var p=r.Propiedad||'';if(!map[p])map[p]={p:p,ci:0,cb:0,hu:0,nv:0,ok:0,err:0,sc:0};var et=r.Error_Type||'';if(et==='SIN CANJE')map[p].sc++;else if(et==='OK')map[p].ok++;else if(et&&et!=='NO LOYALTY')map[p].err++;});
-var props=Object.values(map).filter(function(p){return p.ci>0||p.cb>0;});
-if(!props.length){cont.innerHTML='<div class="empty">Sin datos.</div>';return;}
-props.forEach(function(p){p.pct=p.ci>0?Math.round(p.cb/p.ci*1000)/10:0;p.pctAdq=p.hu>0?Math.round(p.nv/p.hu*1000)/10:0;p.pctOK=(p.ok+p.sc+p.err)>0?Math.round(p.ok/(p.ok+p.sc+p.err)*1000)/10:0;});
-var maxPct=Math.max.apply(null,props.map(function(p){return p.pct;}))||1;
-var maxNv=Math.max.apply(null,props.map(function(p){return p.nv;}))||1;
-var maxOK=Math.max.apply(null,props.map(function(p){return p.pctOK;}))||1;
-window._RD={props:props,maxPct:maxPct,maxNv:maxNv,maxOK:maxOK};
-cont.innerHTML='<div class="ac"><div class="ac-head open" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">\uD83C\uDFC6</span><div><div class="ac-tit">Ranking de propiedades</div><div class="ac-sub">'+props.length+' propiedades</div></div></div><div class="ac-meta"><select onclick="event.stopPropagation()" onchange="switchRank(this.value)" style="font-family:\'Outfit\',sans-serif;font-size:11px;font-weight:700;padding:4px 10px;border:1.5px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;"><option value="pen">% Penetraci\u00f3n</option><option value="adq">Nuevos afiliados</option><option value="ok">% Redenci\u00f3n OK</option></select></div><span class="ac-arr" style="transform:rotate(180deg)">&#9660;</span></div><div class="ac-body vis"><div id="rank-body">'+buildRankRows([].concat(props).sort(function(a,b){return b.pct-a.pct;}),'pen',maxPct,maxNv,maxOK)+'</div></div></div>';
+  var cont=document.getElementById('ranking-wrap'),fp=getMsValues('prop');
+  if(fp.length===1){cont.innerHTML='<div class="empty">Vista ranking disponible sin filtro de propiedad individual.</div>';return;}
+  var map={};
+  afs.forEach(function(r){var p=r.Propiedad||'';if(!p)return;if(!map[p])map[p]={p:p,ci:0,cb:0,hu:0,nv:0,ok:0,err:0,sc:0};map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].hu+=parseFloat(r._huespedes)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
+  mb.forEach(function(r){var p=r.Propiedad||'';if(!map[p])map[p]={p:p,ci:0,cb:0,hu:0,nv:0,ok:0,err:0,sc:0};var et=r.Error_Type||'';if(et==='SIN CANJE')map[p].sc++;else if(et==='OK')map[p].ok++;else if(et&&et!=='NO LOYALTY')map[p].err++;});
+  var props=Object.values(map).filter(function(p){return p.ci>0||p.cb>0;});
+  if(!props.length){cont.innerHTML='<div class="empty">Sin datos.</div>';return;}
+  props.forEach(function(p){p.pct=p.ci>0?Math.round(p.cb/p.ci*1000)/10:0;p.pctAdq=p.hu>0?Math.round(p.nv/p.hu*1000)/10:0;p.pctOK=(p.ok+p.sc+p.err)>0?Math.round(p.ok/(p.ok+p.sc+p.err)*1000)/10:0;});
+  var maxPct=Math.max(25,Math.max.apply(null,props.map(function(p){return p.pct;})));
+  var maxNv=Math.max.apply(null,props.map(function(p){return p.nv;}))||1;
+  window._RD={props:props,maxPct:maxPct,maxNv:maxNv};
+  cont.innerHTML=
+    '<div class="ac"><div class="ac-head open" onclick="toggleAc(this)">'+
+    '<div class="ac-left"><span class="ac-ico">🏆</span>'+
+    '<div><div class="ac-tit">Ranking de propiedades</div><div class="ac-sub">'+props.length+' propiedades · línea vertical = meta 15%</div></div></div>'+
+    '<div class="ac-meta">'+
+    '<div class="rank-tabs" onclick="event.stopPropagation()">'+
+    '<button class="rank-tab active" onclick="switchRank(\'pen\',this)">% Penetración</button>'+
+    '<button class="rank-tab" onclick="switchRank(\'adq\',this)">Nuevos afiliados</button>'+
+    '<button class="rank-tab" onclick="switchRank(\'ok\',this)">% Redención OK</button>'+
+    '</div></div>'+
+    '<span class="ac-arr" style="transform:rotate(180deg)">▼</span></div>'+
+    '<div class="ac-body vis"><div id="rank-body">'+buildRankRows([].concat(props).sort(function(a,b){return b.pct-a.pct;}),'pen')+'</div></div></div>';
 }
-window.switchRank=function(tipo){var rd=window._RD||{};var props=rd.props;if(!props)return;var s;if(tipo==='pen')s=[].concat(props).sort(function(a,b){return b.pct-a.pct;});else if(tipo==='adq')s=[].concat(props).sort(function(a,b){return b.nv-a.nv;});else s=[].concat(props).sort(function(a,b){return b.pctOK-a.pctOK;});var el=document.getElementById('rank-body');if(el)el.innerHTML=buildRankRows(s,tipo,rd.maxPct,rd.maxNv,rd.maxOK);};
-function buildRankRows(sorted,tipo,maxPct,maxNv,maxOK){return sorted.map(function(p,i){var bpct,val,sub,col;if(tipo==='pen'){bpct=maxPct>0?Math.round(p.pct/maxPct*100):0;val=p.pct.toFixed(1)+'%';sub=fmtN(p.cb)+' miembros de '+fmtN(p.ci)+' check-ins';col=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';}else if(tipo==='adq'){bpct=maxNv>0?Math.round(p.nv/maxNv*100):0;val=fmtN(p.nv);sub=p.pctAdq.toFixed(1)+'% adquisici\u00f3n';col='var(--coral)';}else{bpct=maxOK>0?Math.round(p.pctOK/maxOK*100):0;val=p.pctOK.toFixed(1)+'%';sub='redenci\u00f3n OK';col=p.pctOK>=50?'var(--ok)':p.pctOK>0?'#ca8a04':'var(--gris)';}var medal=i===0?'\uD83E\uDD47':i===1?'\uD83E\uDD48':i===2?'\uD83E\uDD49':String(i+1);return '<div class="rank-item"><div class="rank-pos">'+medal+'</div><div class="rank-name"><b>'+p.p+'</b><span>'+sub+'</span></div><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:'+bpct+'%;background:'+col+'"></div></div><div class="rank-val" style="color:'+col+'">'+val+'</div></div>';}).join('');}
+window.switchRank=function(tipo,btn){
+  var rd=window._RD||{},props=rd.props;if(!props)return;
+  document.querySelectorAll('.rank-tab').forEach(function(b){b.classList.remove('active');});if(btn)btn.classList.add('active');
+  var s=tipo==='pen'?[].concat(props).sort(function(a,b){return b.pct-a.pct;}):tipo==='adq'?[].concat(props).sort(function(a,b){return b.nv-a.nv;}):[].concat(props).sort(function(a,b){return b.pctOK-a.pctOK;});
+  var el=document.getElementById('rank-body');if(el)el.innerHTML=buildRankRows(s,tipo);
+};
+function buildRankRows(sorted,tipo){
+  var rd=window._RD||{};
+  return sorted.map(function(p,i){
+    var bpct,val,sub,col,tgt=null;
+    if(tipo==='pen'){bpct=Math.round(p.pct/rd.maxPct*100);val=p.pct.toFixed(1)+'%';sub=fmtN(p.cb)+' miembros de '+fmtN(p.ci)+' check-ins · '+fmtN(p.nv)+' nuevos';col=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';tgt=Math.round(15/rd.maxPct*100);}
+    else if(tipo==='adq'){bpct=rd.maxNv>0?Math.round(p.nv/rd.maxNv*100):0;val=fmtN(p.nv);sub=p.pctAdq.toFixed(1)+'% adquisición · '+fmtN(p.hu)+' huéspedes';col='var(--coral)';}
+    else{bpct=Math.round(p.pctOK);val=p.pctOK.toFixed(1)+'%';sub=p.ok+' OK de '+(p.ok+p.sc+p.err)+' transacciones';col=p.pctOK>=50?'var(--ok)':p.pctOK>0?'#ca8a04':'var(--gris)';}
+    var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':String(i+1);
+    return '<div class="rank-item">'+
+      '<div class="rank-pos">'+medal+'</div>'+
+      '<div class="rank-name"><b>'+p.p+'</b><span>'+sub+'</span></div>'+
+      '<div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:'+bpct+'%;background:'+col+'"></div>'+(tgt!==null?'<div class="rank-target" style="left:'+tgt+'%"></div>':'')+'</div>'+
+      '<div class="rank-val" style="color:'+col+'">'+val+'</div></div>';
+  }).join('');
+}
 
+// ─── TIER DIST ────────────────────────────────────────────────────────────
+function renderDistribucionTiers(){
+  var cont=document.getElementById('tier-dist-wrap'),dist=DATA.distribucionTiers;
+  if(!dist||!dist.global||!dist.global.length){cont.innerHTML='<div class="empty">Sin datos de distribución</div>';return;}
+  var fp=getMsValues('prop'),filas=dist.global,total=dist.totalAfiliados||0;
+  if(fp.length===1&&dist.porPropiedad){var pd=dist.porPropiedad.find(function(p){return p.Propiedad===fp[0];});if(pd){filas=pd.tiers;total=pd.Total;}}
+  if(!filas.length){cont.innerHTML='<div class="empty">Sin datos.</div>';return;}
+  var TCFG={Viajero:{ico:'🏆',col:'#7c3aed'},Nomad:{ico:'🌍',col:'#0369a1'},Explorer:{ico:'🧭',col:'#0891b2'},Backpacker:{ico:'🎒',col:'var(--coral)'},Tourist:{ico:'🗺️',col:'#ca8a04'}};
+  var D={ico:'•',col:'var(--gris)'},maxN=Math.max.apply(null,filas.map(function(f){return f.count;})),tDet=(DATA.akinTiers||[]).length>0;
+  cont.innerHTML=
+    '<div class="td-wrap"><table class="td-table"><thead><tr><th>Tier</th><th style="text-align:center">Afiliados</th><th style="text-align:center">%</th><th>Distribución</th>'+(tDet?'<th></th>':'')+'</tr></thead><tbody>'+
+    filas.map(function(f){var c=TCFG[f.tier]||D,bW=maxN>0?Math.round(f.count/maxN*100):0;
+      return '<tr><td><span style="font-size:14px">'+c.ico+'</span> <b style="color:'+c.col+'">'+f.tier+'</b></td>'+
+        '<td style="text-align:center;font-family:\'Syne\',sans-serif;font-size:19px;font-weight:800;color:'+c.col+'">'+fmtN(f.count)+'</td>'+
+        '<td style="text-align:center;font-size:12px;font-weight:700;color:var(--gris)">'+f.pct+'%</td>'+
+        '<td><div class="td-bar"><div class="td-bar-fill" style="width:'+bW+'%;background:'+c.col+'"></div></div></td>'+
+        (tDet?'<td><button class="hall-btn" onclick="drillAkinTier(\''+f.tier+'\')">Ver miembros →</button></td>':'')+
+        '</tr>';
+    }).join('')+
+    '<tr class="td-total"><td><b>Total</b></td><td style="text-align:center;font-family:\'Syne\',sans-serif;font-size:17px">'+fmtN(total)+'</td><td style="text-align:center">100%</td><td></td>'+(tDet?'<td></td>':'')+'</tr>'+
+    '</tbody></table></div>'+
+    '<div style="font-size:9.5px;color:var(--gris);margin-top:6px;padding:6px 10px;background:var(--cream);border-radius:7px;">ℹ️ Refleja el estado actual de Akin_Tiers — no cambia con el filtro de período.</div>';
+  // stacked bar chart
+  var _at=DATA.akinTiers||[];
+  if(_at.length){
+    var _fp=getMsValues('prop'),_base=_fp.length===1?_at.filter(function(r){return r.Propiedad===_fp[0];}):_at;
+    var TORD=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
+    var tPres=TORD.filter(function(t){return _base.some(function(r){return r.Viajero===t;});});
+    var _byMT={};
+    _base.forEach(function(r){if(!r['Joined date'])return;try{var d=new Date(r['Joined date']);if(isNaN(d))return;var m=d.getFullYear()+'-'+(String(d.getMonth()+1).padStart(2,'0'));if(!_byMT[m])_byMT[m]={};var tier=r.Viajero||'Otro';_byMT[m][tier]=(_byMT[m][tier]||0)+1;}catch(e){}});
+    var _meses=Object.keys(_byMT).sort();
+    if(_meses.length>=1){
+      var TCOLS={Tourist:'#ca8a04',Backpacker:'#F04B24',Explorer:'#0891b2',Nomad:'#0369a1',Viajero:'#7c3aed'};
+      var _cid='ch-enrol-'+Date.now();
+      cont.insertAdjacentHTML('beforeend',
+        '<div style="margin-top:13px;background:var(--cream);border-radius:11px;padding:15px;border:1.5px solid var(--border)">'+
+        '<div style="font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px">📈 Picos de enrolamiento '+ib('Afiliados por tier')+'</div>'+
+        '<div style="font-size:9.5px;color:var(--gris);margin-bottom:2px">Nuevos por mes'+(_fp.length===1?' · '+_fp[0]:' · toda la cadena')+'</div>'+
+        '<div style="font-size:9.5px;color:var(--mid);margin-bottom:10px">💡 Un pico indica acción exitosa — identifícala y replícala</div>'+
+        '<div style="position:relative;height:185px"><canvas id="'+_cid+'"></canvas></div></div>');
+      var ds=tPres.map(function(tier){return {label:tier,data:_meses.map(function(m){return (_byMT[m]&&_byMT[m][tier])||0;}),backgroundColor:TCOLS[tier]||'#ccc',borderRadius:3,borderWidth:0};});
+      new Chart(document.getElementById(_cid),{type:'bar',data:{labels:_meses,datasets:ds},options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true,ticks:{font:{size:10}}},y:{stacked:true,beginAtZero:true,ticks:{stepSize:1,font:{size:10}}}},plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:10}},tooltip:{callbacks:{title:function(v){var p=v[0].label.split('-');return new Date(p[0],p[1]-1,1).toLocaleDateString('es-CO',{month:'long',year:'numeric'});},label:function(v){return v.dataset.label+': '+v.raw+' nuevos';}}}}}});
+    }
+  }
+}
+
+// ─── TIERS ────────────────────────────────────────────────────────────────
 function renderTiers(rd){
-var BENS={Tourist:'Tarifa 15%',Backpacker:'Tarifa 15% + Toalla',Explorer:'Tarifa 20% + Toalla',Nomad:'Tarifa 20% + Toalla',Viajero:'Tarifa 25% + Toalla + Desayuno (3+ noches)'};
-var ORDEN=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
-var map={};
-rd.forEach(function(r){var t=r.Tier||'Sin tier';if(!map[t])map[t]={ok:0,err:0,sc:0,sm:0};map[t].ok+=parseInt(r.OK)||0;map[t].err+=parseInt(r.Con_Error)||0;map[t].sc+=parseInt(r.Sin_Canje)||0;map[t].sm+=parseInt(r.Sin_Membresia)||0;if(!r.Sin_Canje)map[t].sc+=parseInt(r.Sin_Registro)||0;});
-if(!Object.keys(map).length){document.getElementById('tiers-g').innerHTML='<div class="empty">Sin datos</div>';return;}
-document.getElementById('tiers-g').innerHTML=ORDEN.filter(function(t){return map[t];}).map(function(t){var g=map[t];var tot=g.ok+g.err+g.sc+(g.sm||0)||1;var pOK=Math.round(g.ok/tot*1000)/10;var col=pOK>=80?'var(--ok)':pOK>=50?'#ca8a04':'var(--err)';return '<div class="tier-c"><div class="t-top"><span class="t-nom">'+t+'</span><span class="t-tot">'+fmtN(tot)+' hu\u00e9s.</span></div><div class="t-bens">'+(BENS[t]||'')+'</div><div class="tier-bar"><div class="tier-fill" style="width:'+pOK+'%;background:'+col+'"></div></div><div class="tier-pct" style="color:'+col+'">'+pOK.toFixed(1)+'% OK</div><div class="tier-ns"><span>\u2705 '+fmtN(g.ok)+'</span><span>\u26a0\ufe0f '+fmtN(g.err)+'</span><span>\u274c '+fmtN(g.sc)+'</span>'+(g.sm>0?'<span>\u2b1c '+fmtN(g.sm)+'</span>':'')+'</div></div>';}).join('');}
+  var BENS={Tourist:'Tarifa 15%',Backpacker:'Tarifa 15% + Toalla',Explorer:'Tarifa 20% + Toalla',Nomad:'Tarifa 20% + Toalla',Viajero:'Tarifa 25% + Toalla + Desayuno (3+ noches)'};
+  var ORDEN=['Tourist','Backpacker','Explorer','Nomad','Viajero'],map={};
+  rd.forEach(function(r){var t=r.Tier||'Sin tier';if(!map[t])map[t]={ok:0,err:0,sc:0,sm:0};map[t].ok+=parseInt(r.OK)||0;map[t].err+=parseInt(r.Con_Error)||0;map[t].sc+=parseInt(r.Sin_Canje)||0;map[t].sm+=parseInt(r.Sin_Membresia)||0;if(!r.Sin_Canje)map[t].sc+=parseInt(r.Sin_Registro)||0;});
+  if(!Object.keys(map).length){document.getElementById('tiers-g').innerHTML='<div class="empty">Sin datos</div>';return;}
+  document.getElementById('tiers-g').innerHTML=ORDEN.filter(function(t){return map[t];}).map(function(t){
+    var g=map[t],tot=g.ok+g.err+g.sc+(g.sm||0)||1,pOK=Math.round(g.ok/tot*1000)/10;
+    var col=pOK>=80?'var(--ok)':pOK>=50?'#ca8a04':'var(--err)';
+    return '<div class="tier-c"><div class="t-top"><span class="t-nom">'+t+'</span><span class="t-tot">'+fmtN(tot)+' hués.</span></div>'+
+      '<div class="t-bens">'+(BENS[t]||'')+'</div>'+
+      '<div class="tier-bar"><div class="tier-fill" style="width:'+pOK+'%;background:'+col+'"></div></div>'+
+      '<div class="tier-pct" style="color:'+col+'">'+pOK.toFixed(1)+'% OK</div>'+
+      '<div class="tier-ns"><span>✅ '+fmtN(g.ok)+'</span><span>⚠️ '+fmtN(g.err)+'</span><span>❌ '+fmtN(g.sc)+'</span>'+(g.sm>0?'<span>⬜ '+fmtN(g.sm)+'</span>':'')+'</div></div>';
+  }).join('');
+}
 
+// ─── SIN CANJE (★ fixed: clear labeling, full explanation) ───────────────
 function renderSinCanje(sc){
-SC_DATA=sc;
-var t=sc.filter(function(r){return (r.Tier||'').toLowerCase()==='tourist';}).length;
-var b=sc.filter(function(r){return (r.Tier||'').toLowerCase()!=='tourist';}).length;
-var unicos=new Set(sc.map(function(r){return r.Nombre;}).filter(Boolean)).size||sc.length;
-document.getElementById('sc-wrap').innerHTML=
-'<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">\u274c</span><div><div class="ac-tit">Sin Canje \u2014 '+fmtN(unicos)+' miembros \u00fanicos</div><div class="ac-sub">'+sc.length+' reservas sin tarifa ni beneficios loyalty</div></div></div><div class="ac-meta"><span class="ac-badge b-warn">'+t+' Tourist</span><span class="ac-badge b-err">'+b+' Backpacker+</span></div><span class="ac-arr">&#9660;</span></div>'+
-'<div class="ac-preview">'+fmtN(unicos)+' miembros \u00fanicos \u00b7 Tourist: '+t+' \u00b7 Backpacker+: '+b+'</div>'+
-'<div class="ac-body"><div class="sc-cats"><div class="sc-cat t"><div class="sc-n">'+t+'</div><div class="sc-t">Tourist \u2014 Sin tarifa loyalty</div><div class="sc-d">Seleccionar tarifa loyalty en CB al check-in seg\u00fan nota de reserva o Akin.</div></div><div class="sc-cat b"><div class="sc-n">'+b+'</div><div class="sc-t">Backpacker+ \u2014 Sin nada registrado</div><div class="sc-d">Tarifa loyalty + bot\u00f3n toalla. Si Viajero con 3+ noches, tambi\u00e9n desayuno.</div></div></div>'+
-'<div style="font-size:11px;color:var(--mid);background:var(--cream);border-radius:8px;padding:8px 12px;margin-bottom:10px;">\u2139\uFE0F Un miembro con dos estad\u00edas aparece dos veces en el conteo de reservas.</div>'+
-'<input class="sc-q" id="sc-q" type="text" placeholder="Buscar nombre, propiedad, reserva, tier..." oninput="filtrarSC()"/><div class="sc-wrap" id="sc-tabla"></div></div></div>';
-filtrarSC();
+  SC_DATA=sc;
+  var tourist=sc.filter(function(r){return (r.Tier||'').toLowerCase()==='tourist';}).length;
+  var backpacker=sc.filter(function(r){return (r.Tier||'').toLowerCase()==='backpacker';}).length;
+  var otros=sc.length-tourist-backpacker;
+  var unicos=new Set(sc.map(function(r){return r.Nombre;}).filter(Boolean)).size||sc.length;
+  document.getElementById('sc-wrap').innerHTML=
+    '<div class="ac"><div class="ac-head" onclick="toggleAc(this)">'+
+    '<div class="ac-left"><span class="ac-ico">❌</span>'+
+    '<div><div class="ac-tit">Sin Canje '+ib('Sin Canje')+'</div>'+
+    '<div class="ac-sub"><b style="color:var(--err)">'+fmtN(unicos)+' miembros únicos</b> · '+fmtN(sc.length)+' reservas totales sin beneficio</div></div></div>'+
+    '<div class="ac-meta">'+
+    '<span class="ac-badge" style="background:#ffedd5;color:var(--orange)">'+tourist+' Tourist</span>'+
+    '<span class="ac-badge b-err">'+backpacker+' Backpacker</span>'+
+    (otros>0?'<span class="ac-badge b-purple">'+otros+' Otros</span>':'')+
+    '</div><span class="ac-arr">▼</span></div>'+
+    '<div class="ac-preview">'+fmtN(unicos)+' personas distintas sin atender · '+fmtN(sc.length)+' reservas en total (un miembro con 11 noches = 11 reservas, 1 persona)</div>'+
+    '<div class="ac-body">'+
+    '<div class="sc-grid">'+
+    '<div class="sc-cat tourist"><div class="sc-n">'+tourist+'</div><div class="sc-t">Tourist — Sin tarifa loyalty</div><div class="sc-d">Aplicar tarifa loyalty 15% en CB al check-in. Verificar tier en Akin primero.</div></div>'+
+    '<div class="sc-cat backpacker"><div class="sc-n">'+backpacker+'</div><div class="sc-t">Backpacker — Sin tarifa ni toalla</div><div class="sc-d">Tarifa loyalty + botón toalla $0. Confirmar tier en Akin.</div></div>'+
+    '<div class="sc-cat otros"><div class="sc-n">'+otros+'</div><div class="sc-t">Explorer / Nomad / Viajero</div><div class="sc-d">Tarifa + toalla. Si Nomad/Viajero 3+ noches → también desayuno.</div></div>'+
+    '</div>'+
+    '<div style="font-size:10px;color:var(--mid);background:var(--cream);border-radius:7px;padding:7px 10px;margin-bottom:8px;">ℹ️ <b>¿Por qué hay más reservas que miembros?</b> CB genera una reserva por noche en estadías largas, o el miembro hace check-in diariamente. Es el mismo huésped, pero el sistema lo registra como múltiples reservas. Los dos números son correctos y útiles para distintos propósitos.</div>'+
+    '<input class="sc-search" id="sc-q" type="text" placeholder="🔍 Buscar por nombre, propiedad, reserva, tier..." oninput="filtrarSC()"/>'+
+    '<div class="sc-wrap" id="sc-tabla"></div></div></div>';
+  filtrarSC();
 }
-function filtrarSC(){var q=(document.getElementById('sc-q')?document.getElementById('sc-q').value:'').toLowerCase();var rows=SC_DATA.filter(function(r){return !q||Object.values(r).some(function(v){return v&&v.toString().toLowerCase().includes(q);});});var wrap=document.getElementById('sc-tabla');if(!wrap)return;if(!rows.length){wrap.innerHTML='<div class="empty">Sin registros</div>';return;}wrap.innerHTML='<table><thead><tr><th>Nombre</th><th>Tier</th><th>Reserva</th><th>Fecha llegada</th><th>Per\u00edodo</th><th>Propiedad</th><th>Noches</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td><b>'+( r.Nombre||'\u2014')+'</b></td><td>'+(r.Tier||'\u2014')+'</td><td>'+(r.Reserva||'\u2014')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r['Per\u00edodo']||'\u2014')+'</td><td>'+(r.Propiedad||'\u2014')+'</td><td>'+(r.Noches||'\u2014')+'</td></tr>';}).join('')+'</tbody></table>';}
+function filtrarSC(){
+  var q=(document.getElementById('sc-q')?document.getElementById('sc-q').value:'').toLowerCase();
+  var rows=SC_DATA.filter(function(r){return !q||Object.values(r).some(function(v){return v&&v.toString().toLowerCase().includes(q);});});
+  var wrap=document.getElementById('sc-tabla');if(!wrap)return;
+  if(!rows.length){wrap.innerHTML='<div class="empty">Sin registros</div>';return;}
+  wrap.innerHTML='<table><thead><tr><th>Nombre</th><th>Tier</th><th>Reserva</th><th>Fecha llegada</th><th>Período</th><th>Propiedad</th><th>Noches</th></tr></thead><tbody>'+
+    rows.map(function(r){
+      var tier=(r.Tier||'').toLowerCase();
+      var tc=tier==='tourist'?'color:var(--orange)':tier==='backpacker'?'color:var(--err)':'color:var(--purple)';
+      return '<tr><td><b>'+(r.Nombre||'—')+'</b></td><td style="'+tc+';font-weight:700">'+(r.Tier||'—')+'</td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r['Período']||'—')+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Noches||'—')+'</td></tr>';
+    }).join('')+'</tbody></table>';
+}
 
+// ─── BAJO META ────────────────────────────────────────────────────────────
 function renderPropiedadesBajoMeta(afs){
-var cont=document.getElementById('bajo-meta-wrap');
-var map={};
-afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={ci:0,cb:0,nv:0};map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
-var bajometa=Object.entries(map).filter(function(e){return e[1].ci>0;}).map(function(e){var name=e[0],v=e[1];return {name:name,pct:Math.round(v.cb/v.ci*1000)/10,ci:v.ci,cb:v.cb,nv:v.nv};}).filter(function(p){return p.pct<15;}).sort(function(a,b){return a.pct-b.pct;});
-if(!bajometa.length){cont.innerHTML='<div style="background:var(--ok-bg);border-radius:12px;padding:16px 20px;font-size:13px;color:var(--ok);font-weight:700;">\u2705 Todas las propiedades est\u00e1n sobre el 15% de penetraci\u00f3n</div>';return;}
-var criticas=bajometa.filter(function(p){return p.pct<5;});
-var medias=bajometa.filter(function(p){return p.pct>=5&&p.pct<15;});
-var renderP=function(p){var isCrit=p.pct<5;var accion='';if(p.pct===0||p.cb===0)accion='\u00bfEst\u00e1 activa en el programa? Verificar acceso a CloudBeds y capacitaci\u00f3n';else if(p.pct<5)accion='Intervenci\u00f3n directa \u2014 diagn\u00f3stico urgente con el gerente';else accion='Refuerzo del proceso de enrolamiento en recepci\u00f3n';return '<div class="alert-prop '+(isCrit?'rojo':'amarillo')+'"><div class="alert-prop-pct" style="color:'+(isCrit?'var(--err)':'#ca8a04')+'">'+p.pct.toFixed(1)+'%</div><div class="alert-prop-info"><b>'+p.name+'</b><span>'+fmtN(p.cb)+' miembros de '+fmtN(p.ci)+' check-ins</span><span class="alert-prop-action" style="color:'+(isCrit?'var(--err)':'#ca8a04')+'">\u2192 '+accion+'</span></div>'+(p.nv===0?'<span class="ac-badge b-err">0 nuevos</span>':'')+'</div>';};
-cont.innerHTML=
-(criticas.length?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--err);margin-bottom:8px;">\uD83D\uDD34 Cr\u00edtico \u2014 Menos de 5%</div>'+criticas.map(renderP).join(''):'')+
-(medias.length?'<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#ca8a04;margin-bottom:8px;margin-top:'+(criticas.length?'16px':'0')+';}">\uD83D\uDFE1 Bajo meta \u2014 Entre 5% y 15%</div>'+medias.map(renderP).join(''):'');
+  var cont=document.getElementById('bajo-meta-wrap'),map={};
+  afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={ci:0,cb:0,nv:0};map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
+  var bajometa=Object.entries(map).filter(function(e){return e[1].ci>0;}).map(function(e){var n=e[0],v=e[1];return {name:n,pct:Math.round(v.cb/v.ci*1000)/10,ci:v.ci,cb:v.cb,nv:v.nv};}).filter(function(p){return p.pct<15;}).sort(function(a,b){return a.pct-b.pct;});
+  if(!bajometa.length){cont.innerHTML='<div style="background:var(--ok-bg);border-radius:10px;padding:13px 16px;font-size:12.5px;color:var(--ok);font-weight:700;">✅ Todas las propiedades están sobre el 15% de penetración</div>';return;}
+  var criticas=bajometa.filter(function(p){return p.pct<5;}),medias=bajometa.filter(function(p){return p.pct>=5&&p.pct<15;});
+  var renderP=function(p){
+    var isCrit=p.pct<5;
+    var ac=p.pct===0||p.cb===0?'¿Está activa en el programa? Verificar acceso a CB y capacitación del equipo':p.pct<5?'Intervención directa — diagnóstico urgente con el gerente':'Refuerzo del proceso de enrolamiento en recepción';
+    return '<div class="alert-prop '+(isCrit?'rojo':'amarillo')+'">'+
+      '<div class="alert-prop-pct" style="color:'+(isCrit?'var(--err)':'#ca8a04')+'">'+p.pct.toFixed(1)+'%</div>'+
+      '<div class="alert-prop-info"><b>'+p.name+'</b><span>'+fmtN(p.cb)+' miembros de '+fmtN(p.ci)+' check-ins</span>'+
+      '<span class="alert-prop-action" style="color:'+(isCrit?'var(--err)':'#ca8a04')+'">→ '+ac+'</span></div>'+
+      (p.nv===0?'<span class="badge b-err">0 nuevos</span>':'')+
+      '</div>';
+  };
+  cont.innerHTML=
+    (criticas.length?'<div style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--err);margin-bottom:7px;">🔴 Crítico — Menos de 5%</div>'+criticas.map(renderP).join(''):'')+
+    (medias.length?'<div style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#ca8a04;margin-bottom:7px;margin-top:'+(criticas.length?'15px':'0')+';">🟡 Bajo meta — Entre 5% y 15%</div>'+medias.map(renderP).join(''):'');
 }
 
+// ─── BENCHMARK (★ fixed: all props with OK, not just Cali) ───────────────
 function renderBenchmark(afs,bens){
-var cont=document.getElementById('benchmark-wrap');
-var caliAfs=afs.filter(function(r){return (r.Propiedad||'').toLowerCase().includes('cali');});
-var caliBens=bens.filter(function(r){return (r.Propiedad||'').toLowerCase().includes('cali');});
-if(!caliAfs.length){cont.innerHTML='';return;}
-var cb=sum(caliAfs,'_afiliados_cb'),ci=sum(caliAfs,'_check_ins');
-var tOK=sum(caliBens,'_tarifa_ok'),toOK=sum(caliBens,'_toallas_ok'),dOK=sum(caliBens,'_desayunos_ok');
-var totalOK=tOK+toOK+dOK;
-if(totalOK===0){cont.innerHTML='';return;}
-var pct=ci>0?(cb/ci*100).toFixed(1):'\u2014';
-cont.innerHTML='<div class="benchmark"><div class="benchmark-hdr"><span class="benchmark-ico">\u2b50</span><div><div class="benchmark-title">Cali \u2014 Benchmark del per\u00edodo</div><div class="benchmark-sub">\u00danica propiedad con redenciones correctamente registradas. El proceso de Cali es el est\u00e1ndar que todas las propiedades deben alcanzar.</div></div></div><div class="benchmark-grid"><div class="benchmark-stat"><div class="benchmark-n">'+pct+'%</div><div class="benchmark-l">Penetraci\u00f3n</div></div><div class="benchmark-stat"><div class="benchmark-n">'+fmtN(totalOK)+'</div><div class="benchmark-l">Redenciones OK</div></div><div class="benchmark-stat"><div class="benchmark-n">'+tOK+' tar \u00b7 '+toOK+' toa \u00b7 '+dOK+' des</div><div class="benchmark-l">Por tipo</div></div></div><div style="margin-top:12px;font-size:12px;color:var(--ok);">\uD83D\uDCA1 \u00bfTu propiedad necesita el protocolo? Pide el proceso a Cali o al coordinador Loyalty.</div></div>';
+  var cont=document.getElementById('benchmark-wrap');
+  var mb=filtrar(DATA.tiersDetalle||[],'Período','Propiedad','País');
+  var propsConOK=[...new Set(mb.filter(function(r){return r.Error_Type==='OK';}).map(function(r){return r.Propiedad;}).filter(Boolean))];
+  if(!propsConOK.length){cont.innerHTML='';return;}
+  var stats=propsConOK.map(function(nm){
+    var pAfs=afs.filter(function(r){return r.Propiedad===nm;}),pBens=bens.filter(function(r){return r.Propiedad===nm;});
+    var cb=sum(pAfs,'_afiliados_cb'),ci=sum(pAfs,'_check_ins');
+    var ok=sum(pBens,'_tarifa_ok')+sum(pBens,'_toallas_ok')+sum(pBens,'_desayunos_ok');
+    return {name:nm.replace('Viajero ','').replace(' Hostel','').replace(' & Salsa School',''),pct:ci>0?(cb/ci*100).toFixed(1):'—',ok:ok};
+  });
+  cont.innerHTML=
+    '<div class="benchmark"><div class="bench-hdr"><span class="bench-ico">⭐</span>'+
+    '<div><div class="bench-title">Benchmark — propiedades con proceso correcto</div>'+
+    '<div class="bench-sub">'+propsConOK.length+' propiedad'+(propsConOK.length>1?'es tienen':'  tiene')+' transacciones OK. Este es el estándar que todas deben alcanzar.</div></div></div>'+
+    '<div class="bench-grid">'+
+    stats.map(function(s){return '<div class="bench-stat"><div class="bench-n">'+s.pct+'%</div><div class="bench-l">Penetración</div><div style="margin-top:4px;font-size:12px;font-weight:800;color:var(--ok)">'+fmtN(s.ok)+' OK</div><div class="bench-l" style="margin-top:1px">'+s.name+'</div></div>';}).join('')+
+    '</div><div style="margin-top:10px;font-size:10.5px;color:var(--ok);">💡 ¿Necesitas el protocolo? Pide el proceso a estas propiedades o al coordinador Loyalty.</div></div>';
 }
 
+// ─── HISTÓRICO ────────────────────────────────────────────────────────────
 function renderHistoricoTranspuesto(){
-var afs=DATA.afiliados||[];
-var allPers=[...new Set(afs.filter(function(r){return r.Propiedad;}).map(function(r){return r['Per\u00edodo']||r['Periodo'];}).filter(Boolean))].sort();
-var allProps=[...new Set(afs.filter(function(r){return r.Propiedad;}).map(function(r){return r.Propiedad;}).filter(Boolean))].sort();
-var preview=document.getElementById('hist-preview');
-if(!allPers.length){document.getElementById('hist-body').innerHTML='<div class="empty">Sin datos hist\u00f3ricos disponibles.</div>';preview.textContent='Sin datos';return;}
-var agg={};
-afs.forEach(function(r){var p=r.Propiedad,per=r['Per\u00edodo']||r['Periodo'];if(!p||!per)return;if(!agg[p])agg[p]={};if(!agg[p][per])agg[p][per]={ci:0,cb:0};agg[p][per].ci+=parseFloat(r._check_ins)||0;agg[p][per].cb+=parseFloat(r._afiliados_cb)||0;});
-var getVal=function(prop,per){var d=agg[prop]&&agg[prop][per];if(!d||d.ci===0)return null;return Math.round(d.cb/d.ci*1000)/10;};
-var note=allPers.length<3?'<div class="ctx-banner">\u2139\uFE0F Hist\u00f3rico en construcci\u00f3n \u2014 '+allPers.length+' per\u00edodo'+(allPers.length>1?'s':'')+' disponibles. La tendencia ser\u00e1 significativa y accionable desde el per\u00edodo 3 en adelante.</div>':'';
-var rows=allProps.map(function(prop){var vals=allPers.map(function(per){return getVal(prop,per);});var defined=vals.filter(function(v){return v!==null;});var trend='<span style="color:var(--gris)">\u2014</span>';if(defined.length>=2){var last=defined[defined.length-1],prev=defined[defined.length-2];trend=last>prev?'<span style="color:var(--ok)">\u2191</span>':last<prev?'<span style="color:var(--err)">\u2193</span>':'<span style="color:var(--gris)">\u2192</span>';}return '<tr><td><b>'+prop+'</b></td>'+vals.map(function(v){return v===null?'<td class="tc" style="color:#ccc">\u2014</td>':'<td class="tc '+clsP(v)+'">'+v.toFixed(1)+'%</td>';}).join('')+'<td class="tc" style="font-size:16px">'+trend+'</td></tr>';}).join('');
-document.getElementById('hist-body').innerHTML=note+'<div style="overflow-x:auto"><table class="hall-table"><thead><tr><th>Propiedad</th>'+allPers.map(function(p){return '<th class="tc">'+p+'</th>';}).join('')+'<th class="tc">Tendencia</th></tr></thead><tbody>'+rows+'</tbody></table></div><div style="font-size:11px;color:var(--gris);margin-top:8px;padding:8px 12px;background:var(--cream);border-radius:8px;">M\u00e9trica: % Penetraci\u00f3n (miembros / check-ins). Verde \u226515% \u00b7 Amarillo 8-15% \u00b7 Rojo <8%</div>';
-preview.textContent=allPers.join(' \u00b7 ')+' \u00b7 '+allProps.length+' propiedades';
+  var afs=DATA.afiliados||[];
+  var allPers=[...new Set(afs.filter(function(r){return r.Propiedad;}).map(function(r){return r['Período']||r['Periodo'];}).filter(Boolean))].sort();
+  var allProps=[...new Set(afs.filter(function(r){return r.Propiedad;}).map(function(r){return r.Propiedad;}).filter(Boolean))].sort();
+  var prev=document.getElementById('hist-preview');
+  if(!allPers.length){document.getElementById('hist-body').innerHTML='<div class="empty">Sin datos históricos.</div>';prev.textContent='Sin datos';return;}
+  var agg={};
+  afs.forEach(function(r){var p=r.Propiedad,per=r['Período']||r['Periodo'];if(!p||!per)return;if(!agg[p])agg[p]={};if(!agg[p][per])agg[p][per]={ci:0,cb:0};agg[p][per].ci+=parseFloat(r._check_ins)||0;agg[p][per].cb+=parseFloat(r._afiliados_cb)||0;});
+  var getV=function(prop,per){var d=agg[prop]&&agg[prop][per];if(!d||d.ci===0)return null;return Math.round(d.cb/d.ci*1000)/10;};
+  var note=allPers.length<3?'<div class="ctx-banner">ℹ️ Histórico en construcción — '+allPers.length+' período'+(allPers.length>1?'s':'')+' disponibles. Será accionable a partir del período 4.</div>':'';
+  var rows=allProps.map(function(prop){
+    var vals=allPers.map(function(per){return getV(prop,per);});
+    var def=vals.filter(function(v){return v!==null;});
+    var trend='<span style="color:var(--gris)">—</span>';
+    if(def.length>=2){var last=def[def.length-1],prev2=def[def.length-2];trend=last>prev2?'<span style="color:var(--ok)">↑</span>':last<prev2?'<span style="color:var(--err)">↓</span>':'<span style="color:var(--gris)">→</span>';}
+    return '<tr><td><b>'+prop+'</b></td>'+vals.map(function(v){return v===null?'<td class="tc" style="color:#ccc">—</td>':'<td class="tc '+clsP(v)+'">'+v.toFixed(1)+'%</td>';}).join('')+'<td class="tc" style="font-size:13px">'+trend+'</td></tr>';
+  }).join('');
+  document.getElementById('hist-body').innerHTML=
+    note+'<div style="overflow-x:auto"><table class="hall-table">'+
+    '<thead><tr><th>Propiedad</th>'+allPers.map(function(p){return '<th class="tc">'+p+'</th>';}).join('')+'<th class="tc">Tendencia</th></tr></thead>'+
+    '<tbody>'+rows+'</tbody></table></div>'+
+    '<div style="font-size:9.5px;color:var(--gris);margin-top:6px;padding:6px 10px;background:var(--cream);border-radius:7px;">% Penetración (miembros ÷ check-ins) · 🟢 ≥15% · 🟡 8-15% · 🔴 <8%</div>';
+  prev.textContent=allPers.join(' · ')+' · '+allProps.length+' propiedades';
 }
 
+// ─── FUNNEL ────────────────────────────────────────────────────────────────
 function renderFunnel(afs,mb){
-var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
-var sinMatch=(DATA.sinMatchAkin||[]).length;
-var pLoy=ci>0?cb/ci*100:0;
-var colCB=pLoy>=15?'var(--ok)':pLoy>=8?'#ca8a04':'var(--err)';
-var steps=[
-{ico:'\uD83C\uDFE8',lbl:'Hu\u00e9spedes totales',sub:'per\u00edodo seleccionado',n:hu,color:'var(--dark)',nota:null},
-{ico:'\u2705',lbl:'Check-ins realizados',sub:'registrados en CB',n:ci,color:'#0369a1',nota:null},
-{ico:'\uD83D\uDCB3',lbl:'Miembros hospedados',sub:'con check-in Viajero Go',n:cb,color:colCB,nota:sinMatch>0?'\u26a0\ufe0f '+sinMatch+' sin match en Akin':null},
-{ico:'\uD83C\uDD95',lbl:'Nuevos afiliados',sub:'enrolados en el per\u00edodo',n:nv,color:'#6d28d9',nota:null},
-];
-var mx=hu||1;
-document.getElementById('funnel-wrap').innerHTML='<div class="funnel-outer">'+steps.map(function(s){var pct=Math.round(s.n/mx*100);return '<div class="fn-row"><div class="fn-left"><span class="fn-ico">'+s.ico+'</span><div><div class="fn-lbl">'+s.lbl+'</div><div class="fn-sub">'+s.sub+'</div>'+(s.nota?'<div class="fn-nota">'+s.nota+'</div>':'')+'</div></div><div class="fn-bar-track"><div class="fn-bar-fill" style="width:'+pct+'%;background:'+s.color+';opacity:.8"></div></div><div class="fn-right"><div class="fn-n" style="color:'+s.color+'">'+fmtN(s.n)+'</div></div></div>';}).join('')+'</div>';
-document.getElementById('funnel-ac-sub').textContent=fmtN(hu)+' hu\u00e9spedes \u2192 '+fmtN(ci)+' check-ins \u2192 '+fmtN(cb)+' miembros \u2192 '+fmtN(nv)+' nuevos';
+  var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
+  var sinMatch=(DATA.sinMatchAkin||[]).length,pLoy=ci>0?cb/ci*100:0;
+  var colCB=pLoy>=15?'var(--ok)':pLoy>=8?'#ca8a04':'var(--err)';
+  var steps=[
+    {ico:'🏨',lbl:'Huéspedes totales',sub:'período seleccionado',n:hu,color:'var(--dark)',conv:null,nota:null},
+    {ico:'✅',lbl:'Check-ins en CB',sub:'registrados en CloudBeds',n:ci,color:'#0369a1',conv:hu>0?fmtP(ci,hu)+' de huéspedes':null,nota:null},
+    {ico:'💳',lbl:'Miembros hospedados',sub:'con check-in Viajero Go',n:cb,color:colCB,conv:ci>0?fmtP(cb,ci)+' penetración':null,nota:sinMatch>0?'⚠️ '+sinMatch+' sin match Akin':null},
+    {ico:'🆕',lbl:'Nuevos afiliados',sub:'enrolados en el período',n:nv,color:'#6d28d9',conv:hu>0?fmtP(nv,hu)+' adquisición':null,nota:null},
+  ];
+  var mx=hu||1;
+  document.getElementById('funnel-wrap').innerHTML=
+    '<div class="funnel-outer">'+steps.map(function(s){var pct=Math.round(s.n/mx*100);
+      return '<div class="fn-row"><div class="fn-left"><span class="fn-ico">'+s.ico+'</span>'+
+        '<div><div class="fn-lbl">'+s.lbl+'</div><div class="fn-sub">'+s.sub+'</div>'+(s.nota?'<div class="fn-nota">'+s.nota+'</div>':'')+'</div></div>'+
+        '<div class="fn-bar-track"><div class="fn-bar-fill" style="width:'+pct+'%;background:'+s.color+';opacity:.8"></div></div>'+
+        '<div class="fn-conv">'+(s.conv||'')+'</div>'+
+        '<div class="fn-right"><div class="fn-n" style="color:'+s.color+'">'+fmtN(s.n)+'</div></div></div>';
+    }).join('')+'</div>';
+  document.getElementById('funnel-ac-sub').textContent=fmtN(hu)+' huéspedes → '+fmtN(ci)+' check-ins → '+fmtN(cb)+' miembros → '+fmtN(nv)+' nuevos';
 }
 
+// ─── SIN MATCH ────────────────────────────────────────────────────────────
 function renderSinMatchAkin(){
-var cont=document.getElementById('sinmatch-wrap');
-var raw=DATA.sinMatchAkin||[];
-var fp=getMsValues('prop'),ft=getMsValues('per');
-var data=raw.filter(function(r){return (!fp.length||fp.includes(r.Propiedad||''))&&(!ft.length||ft.includes(r.Periodo||r['Per\u00edodo']||''));});
-var dataLimpia=data.filter(function(r){return !/(demo|test|wizard)/i.test(r.Nombre||'');});
-document.getElementById('match-cnt').textContent=dataLimpia.length;
-if(!dataLimpia.length){cont.innerHTML='<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">\uD83D\uDD17</span><div><div class="ac-tit">Incidencias t\u00e9cnicas '+ib('Incidencias t\u00e9cnicas')+'</div><div class="ac-sub">Reservas Akin sin match en CloudBeds</div></div></div><span class="ac-arr">&#9660;</span></div><div class="ac-body"><div class="empty">\u2705 Sin incidencias t\u00e9cnicas para este filtro.</div></div></div>';return;}
-cont.innerHTML='<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">\uD83D\uDD17</span><div><div class="ac-tit">Incidencias t\u00e9cnicas '+ib('Incidencias t\u00e9cnicas')+'</div><div class="ac-sub">'+dataLimpia.length+' reservas Akin sin match en CB</div></div></div><div class="ac-meta"><span class="ac-badge b-warn">Escalar a Akin</span></div><span class="ac-arr">&#9660;</span></div><div class="ac-preview">'+dataLimpia.length+' casos \u00b7 Fricci\u00f3n t\u00e9cnica Akin/CB \u2014 no accionable por la propiedad</div><div class="ac-body"><div class="match-banner">\uD83D\uDD27 <b>Fricci\u00f3n t\u00e9cnica entre plataformas</b> \u2014 No es un error operativo del equipo de recepci\u00f3n.<br>Causa: el n\u00famero de reserva o correo electr\u00f3nico difiere entre Akin y CloudBeds.<br><b>Acci\u00f3n:</b> Buscar por nombre en CB. Si no se resuelve, escalar directamente a Akin.</div><div class="sc-wrap"><table><thead><tr><th>Nombre</th><th># Reserva Akin</th><th>Fecha llegada</th><th>Propiedad</th><th>Per\u00edodo</th><th>Tier Akin</th></tr></thead><tbody>'+dataLimpia.map(function(r){return '<tr><td><b>'+(r.Nombre||'\u2014')+'</b></td><td>'+(r.Reserva||'\u2014')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r.Propiedad||'\u2014')+'</td><td>'+(r.Periodo||r['Per\u00edodo']||'\u2014')+'</td><td>'+(r.Tier_AKIN||'\u2014')+'</td></tr>';}).join('')+'</tbody></table></div></div></div>';
+  var cont=document.getElementById('sinmatch-wrap');
+  var raw=DATA.sinMatchAkin||[],fp=getMsValues('prop'),ft=getMsValues('per');
+  var data=raw.filter(function(r){return (!fp.length||fp.includes(r.Propiedad||''))&&(!ft.length||ft.includes(r.Periodo||r['Período']||''));});
+  var limpia=data.filter(function(r){return !/(demo|test|wizard)/i.test(r.Nombre||'');});
+  document.getElementById('match-cnt').textContent=limpia.length;
+  if(!limpia.length){
+    cont.innerHTML='<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">🔗</span><div><div class="ac-tit">Incidencias técnicas '+ib('Incidencias técnicas')+'</div><div class="ac-sub">Reservas Akin sin match en CB</div></div></div><span class="ac-arr">▼</span></div><div class="ac-body"><div class="empty">✅ Sin incidencias para este filtro.</div></div></div>';
+    return;
+  }
+  cont.innerHTML=
+    '<div class="ac"><div class="ac-head" onclick="toggleAc(this)">'+
+    '<div class="ac-left"><span class="ac-ico">🔗</span>'+
+    '<div><div class="ac-tit">Incidencias técnicas '+ib('Incidencias técnicas')+'</div>'+
+    '<div class="ac-sub">'+limpia.length+' reservas Akin sin match en CB</div></div></div>'+
+    '<div class="ac-meta"><span class="ac-badge b-warn">Escalar a Akin</span></div>'+
+    '<span class="ac-arr">▼</span></div>'+
+    '<div class="ac-preview">'+limpia.length+' casos · Fricción técnica Akin/CB — no accionable por la propiedad</div>'+
+    '<div class="ac-body">'+
+    '<div class="match-banner">🔧 <b>Fricción técnica entre plataformas</b> — No es error del equipo de recepción.<br>Causa: número de reserva o correo diferente entre Akin y CB.<br><b>Acción:</b> Buscar por nombre en CB. Si persiste → escalar a Akin.</div>'+
+    '<div class="sc-wrap"><table><thead><tr><th>Nombre</th><th># Reserva Akin</th><th>Fecha llegada</th><th>Propiedad</th><th>Período</th><th>Tier Akin</th></tr></thead><tbody>'+
+    limpia.map(function(r){return '<tr><td><b>'+(r.Nombre||'—')+'</b></td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Periodo||r['Período']||'—')+'</td><td>'+(r.Tier_AKIN||'—')+'</td></tr>';}).join('')+
+    '</tbody></table></div></div></div>';
 }
 
+// ─── RENDER ────────────────────────────────────────────────────────────────
 function render(){
-if(!DATA)return;
-var afs=filtrar(DATA.afiliados||[]);
-var bens=filtrar(DATA.beneficios||[]);
-var mb=filtrar(DATA.tiersDetalle||[],'Per\u00edodo','Propiedad','Pa\u00eds');
-var hall=filtrar(DATA.hallazgos||[],'Per\u00edodo','Propiedad','Pa\u00eds');
-var sc=filtrar(DATA.sinCanje||[],'Per\u00edodo','Propiedad','Pa\u00eds');
-var rd=filtrar(DATA.redencionPorTier||[],'Per\u00edodo','Propiedad','Pa\u00eds');
-renderHeroKPIs(afs,mb);
-renderSemaforoProps(afs,mb);
-renderDistribucionTiers();
-renderBeneficios(bens);
-renderSemaforoDetalle(mb);
-renderHallazgos(hall);
-renderRanking(afs,mb);
-renderTiers(rd);
-renderSinCanje(sc);
-renderPropiedadesBajoMeta(afs);
-renderBenchmark(afs,bens);
-renderHistoricoTranspuesto();
-renderFunnel(afs,mb);
-renderSinMatchAkin();
+  if(!DATA)return;
+  var afs=filtrar(DATA.afiliados||[]),bens=filtrar(DATA.beneficios||[]);
+  var mb=filtrar(DATA.tiersDetalle||[],'Período','Propiedad','País');
+  var hall=filtrar(DATA.hallazgos||[],'Período','Propiedad','País');
+  var sc=filtrar(DATA.sinCanje||[],'Período','Propiedad','País');
+  var rd=filtrar(DATA.redencionPorTier||[],'Período','Propiedad','País');
+  renderSynthesis(afs,mb);
+  renderHeroKPIs(afs,mb);
+  renderSemaforoProps(afs,mb);
+  renderBeneficios(bens);
+  renderSemaforoDetalle(mb);
+  renderHallazgos(hall);
+  renderRanking(afs,mb);
+  renderDistribucionTiers();
+  renderTiers(rd);
+  renderSinCanje(sc);
+  renderPropiedadesBajoMeta(afs);
+  renderBenchmark(afs,bens);
+  renderHistoricoTranspuesto();
+  renderFunnel(afs,mb);
+  renderSinMatchAkin();
 }
 
+// ─── INIT ──────────────────────────────────────────────────────────────────
 (function(){
-fetch(DATA_URL+'?t='+Date.now()).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(function(data){
-DATA=data;
-if(DATA.actualizado){var d=new Date(DATA.actualizado);document.getElementById('h-ts').textContent=d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+' \u00b7 '+d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});}
-poblarFiltros();render();
-}).catch(function(e){
-document.getElementById('h-ts').textContent='\u274c Error cargando datos';
-console.error(e);
-document.getElementById('hero-kpis').innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;border:1.5px solid var(--border);text-align:center;color:var(--err)">\u274c No se pudo cargar <code>../data/loyalty_data.json</code><br><span style="font-size:12px;color:var(--gris)">Verifica que el archivo existe en <code>data/</code>.</span></div>';
-});
+  fetch(DATA_URL+'?t='+Date.now())
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+    .then(function(data){
+      DATA=data;
+      if(DATA.actualizado){var d=new Date(DATA.actualizado);document.getElementById('h-ts').textContent=d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+' · '+d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});}
+      poblarFiltros();render();
+    })
+    .catch(function(e){
+      document.getElementById('h-ts').textContent='❌ Error';
+      console.error(e);
+      document.getElementById('synthesis-sec').innerHTML='<div style="background:#fff;border-radius:11px;padding:20px;border:1.5px solid var(--border);text-align:center;color:var(--err)">❌ No se pudo cargar <code>../data/loyalty_data.json</code></div>';
+    });
 })();
 </script>
 </body>
