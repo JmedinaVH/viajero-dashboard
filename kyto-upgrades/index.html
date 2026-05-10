@@ -105,7 +105,7 @@ main{max-width:1280px;margin:0 auto;padding:26px 36px 80px;}
 
 /* METODOLOGÍA */
 .metodo-banner{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rl);padding:16px 20px;margin-bottom:22px;}
-.metodo-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gris);margin-bottom:11px;display:flex;align-items:center;gap:6px;}
+.metodo-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gris);margin-bottom:11px;display:flex;align-items:center;gap:6px;cursor:pointer;}
 .metodo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .metodo-card{border-radius:10px;padding:13px 15px;border:1.5px solid;}
 .metodo-card.op{background:#f0fdf9;border-color:#a7f3d0;}
@@ -487,7 +487,7 @@ var cerrados=res.filter(function(r){return r.cerrado;}).map(function(r){return r
 var abiertos=res.filter(function(r){return !r.cerrado;}).map(function(r){return r.Período;});
 document.getElementById('metodo-sec').innerHTML=
 '<details class="metodo-banner">'+
-'<summary class="metodo-title">📐 ¿Cómo medimos? <span style="margin-left:auto;color:var(--gris);font-weight:700">▾</span></summary>'+
+'<summary class="metodo-title" style="list-style:none;width:100%">📐 ¿Cómo medimos? <span style="margin-left:auto;color:var(--gris);font-weight:700">▾</span></summary>'+
 '<div class="metodo-grid">'+
 '<div class="metodo-card op">'+
 '<div class="metodo-head"><span class="metodo-name">⚡ Conv % operativa</span><span class="metodo-tag tag-live">Tiempo real</span></div>'+
@@ -766,7 +766,7 @@ function renderTrend(res){
 var fp=getMsValues('per');
 var rows=(fp.length?res.filter(function(r){return fp.includes(r.Período);}):res)
 .slice().sort(function(a,b){return a.Período.localeCompare(b.Período);});
-if(rows.length<2){document.getElementById('trend-sec').innerHTML='<div class="empty">Se necesitan al menos 2 períodos para mostrar tendencia.</div>';return;}
+if(rows.length<1){document.getElementById('trend-sec').innerHTML='<div class="empty">Sin datos para el filtro seleccionado.</div>';return;}
 document.getElementById('trend-sec').innerHTML='<div class="trend-wrap"><table class="trend-table"><thead><tr>'+
 '<th>Período</th><th>Enviadas</th><th>Cumplidas</th><th>Conv %</th><th>Revenue</th><th>Ticket prom.</th><th>Estado</th>'+
 '</tr></thead><tbody>'+
@@ -817,11 +817,11 @@ var cerR=tr.filter(function(r){return r.cerrado&&r.conv_vs_hostal_pct!==null;});
 var hc=cerR.length?cerR[cerR.length-1].conv_vs_hostal_pct:null;
 var esDes=tipo==='Desayuno';
 var howTxt=esDes
-?'🍳 Lee: cumplidas <strong>÷ huéspedes totales</strong>'
-:'🛏️ Lee: cumplidas <strong>÷ check-ins totales</strong>';
+?'🍳 <strong>Cómo se calcula:</strong> Conv. vs hostal = cumplidas <strong>÷ huéspedes</strong> (solo mes cerrado)'
+:'🛏️ <strong>Cómo se calcula:</strong> Conv. vs hostal = cumplidas <strong>÷ check-ins</strong> (solo mes cerrado)';
 var hostalStr=hc!==null
 ?' · vs hostal: <b>'+fmtFrac(hc,2)+'</b>' // CORREGIDO
-:'<span style="color:var(--warn)"> · vs hostal: mes en curso</span>';
+:'<span style="color:var(--warn)"> · vs hostal: disponible al cerrar el mes</span>';
 return '<div class="tipo-card '+(tipo.toLowerCase())+'">'+
 '<div class="tipo-hdr">'+
 '<div class="tipo-name">'+(esDes?'🍳':'🛏️')+' '+tipo+'</div>'+
