@@ -478,13 +478,13 @@ function renderMetodo(res){
 var cerrados=res.filter(function(r){return r.cerrado;}).map(function(r){return r.Período;});
 var abiertos=res.filter(function(r){return !r.cerrado;}).map(function(r){return r.Período;});
 document.getElementById('metodo-sec').innerHTML=
-'<div class="metodo-banner">'+
-'<div class="metodo-title">📐 ¿Cómo medimos?</div>'+
+'<details class="metodo-banner">'+
+'<summary class="metodo-title">📐 ¿Cómo medimos? <span style="font-weight:600;color:var(--gris);text-transform:none;letter-spacing:0"> (ver)</span></summary>'+
 '<div class="metodo-grid">'+
 '<div class="metodo-card op">'+
 '<div class="metodo-head"><span class="metodo-name">⚡ Conv % operativa</span><span class="metodo-tag tag-live">Tiempo real</span></div>'+
 '<div class="metodo-formula">cumplidas ÷ enviadas</div>'+
-'<div class="metodo-desc">El <b>período = mes de check-in</b> del huésped (columna en <b>07_Kyto_Upselling_Raw</b>). Disponible siempre, incluso con el mes en curso.<br><br>Mayo en curso → datos parciales pero reales: refleja las ofertas del mes que ya se respondieron.<br><br>Responde: <b>¿Qué % de las ofertas enviadas fue aceptado?</b><br><br>💡 <i>Fecha creada</i> (fecha real de envío) está disponible en la hoja — en el futuro puede usarse para medir conversión por fecha de envío.</div>'+
+'<div class="metodo-desc"><b>Período = mes de envío</b> (derivado de <i>Fecha creada</i> en <b>07_Kyto_Upselling_Raw</b>). Disponible siempre, incluso con el mes en curso.<br><br>Responde: <b>¿Qué % de las ofertas enviadas fue aceptado?</b><br><br>💡 Si el mes está “En curso”, las cifras son parciales pero reales.</div>'+
 '</div>'+
 '<div class="metodo-card hostal">'+
 '<div class="metodo-head"><span class="metodo-name">🏨 Conv % vs hostal</span><span class="metodo-tag tag-cerr">Solo mes cerrado</span></div>'+
@@ -496,7 +496,7 @@ document.getElementById('metodo-sec').innerHTML=
 '</div>'+
 '</div>'+
 '<div class="metodo-nota">ℹ️ Para cerrar un mes: completar check-ins y huéspedes en <b>06_Kyto_Denominadores</b>, marcar <b>Cerrado = TRUE</b> y correr el AppScript.</div>'+
-'</div>';
+'</details>';
 }
 
 // ─── ALERTAS ───────────────────────────────────────────────────────────────
@@ -682,16 +682,31 @@ document.getElementById('gauge-sec').innerHTML=html;
 function renderRevenue(det){
 var totRev=det.reduce(function(s,r){return s+r.revenue_usd;},0);
 var totCum=det.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
+var ticket=totCum>0?totRev/totCum:0;
 var byTipo={};
 det.forEach(function(r){
 if(!byTipo[r.tipo])byTipo[r.tipo]={rev:0,cum:0};
 byTipo[r.tipo].rev+=r.revenue_usd;byTipo[r.tipo].cum+=r.ofertas_cumplidas;
 });
-var cards=[{lbl:'Revenue total',amt:totRev,sub:totCum+' conversiones',t:totCum>0?totRev/totCum:0}];
-Object.entries(byTipo).forEach(function(e){cards.push({lbl:'Revenue · '+e[0],amt:e[1].rev,sub:e[1].cum+' conversiones de '+e[0],t:e[1].cum>0?e[1].rev/e[1].cum:0});});
-document.getElementById('rev-sec').innerHTML='<div class="rev-grid">'+cards.map(function(c){
+var tipoCards=Object.entries(byTipo).map(function(e){
+return {lbl:'Revenue · '+e[0],amt:e[1].rev,sub:e[1].cum+' conversiones de '+e[0],t:e[1].cum>0?e[1].rev/e[1].cum:0};
+});
+
+document.getElementById('rev-sec').innerHTML=
+'<details class="rev-card" style="padding:0;overflow:hidden">'+
+'<summary style="list-style:none;cursor:pointer;padding:18px 16px">'+
+'<div class="rev-label">Revenue generado <span style="font-weight:600;color:var(--gris);text-transform:none;letter-spacing:0">(ver detalle)</span></div>'+
+'<div class="rev-amount">'+fmtUSD(totRev)+'</div>'+
+'<div class="rev-sub">'+totCum+' conversiones · ticket prom. '+(totCum>0?('<b>'+fmtUSD(ticket)+'</b>'):'—')+'</div>'+
+'</summary>'+
+'<div style="padding:0 16px 16px">'+
+'<div class="rev-grid">'+
+tipoCards.map(function(c){
 return '<div class="rev-card"><div class="rev-label">'+c.lbl+'</div><div class="rev-amount">'+fmtUSD(c.amt)+'</div><div class="rev-sub">'+c.sub+'</div>'+(c.t>0?'<span class="rev-ticket">💵 '+fmtUSD(c.t)+' / conversión</span>':'')+'</div>';
-}).join('')+'</div>';
+}).join('')+
+'</div>'+
+'</div>'+
+'</details>';
 }
 
 // ─── TREND TABLE ────────────────────────────────────────────────────────────
@@ -825,14 +840,14 @@ document.getElementById('timing-sec').innerHTML=
 '<div class="timing-wrap">'+
 '<div class="t-header">'+
 '<div><div class="t-title">Distribución de aceptaciones por franja</div>'+
-'<div class="t-subtitle">T-N = aceptó N días <b>antes</b> del check-in · T+N = ya estaba hospedado</div></div>'+
+'<div class="t-subtitle"><b>Qué mide:</b> cuántas aceptaciones ocurrieron en cada franja vs la fecha de check-in. T-N = N días antes · T+N = ya hospedado</div></div>'+
 (best?'<span class="t-best-badge">★ Franja líder: '+best+'</span>':'')+
 '</div>'+
 slotsHtml+
 '<div class="t-legend">'+
 '<span><div style="width:11px;height:11px;background:var(--ok);border-radius:3px"></div> Desayuno</span>'+
 '<span><div style="width:11px;height:11px;background:var(--blue);border-radius:3px"></div> Upgrade</span>'+
-'<span>Barras relativas al máximo del período</span>'+
+'<span><b>Barras:</b> % relativo al máximo del filtro actual (para comparar franjas)</span>'+
 '</div></div>';
 }
 
