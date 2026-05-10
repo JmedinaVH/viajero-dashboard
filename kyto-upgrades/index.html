@@ -183,8 +183,8 @@ main{max-width:1280px;margin:0 auto;padding:26px 36px 80px;}
 /* PROP CARDS */
 .prop-search{width:100%;max-width:380px;font-family:'Outfit',sans-serif;font-size:12px;padding:8px 12px;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;outline:none;color:var(--dark);margin-bottom:13px;transition:.15s;display:block;}
 .prop-search:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(6,95,70,.1);}
-.prop-grid{display:flex;flex-direction:column;gap:11px;}
-.prop-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;transition:.16s;}
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:12px;align-items:stretch;}
+.prop-card{height:100%;background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;transition:.16s;display:flex;flex-direction:column;}
 .prop-card:hover{box-shadow:var(--shm);}
 .prop-card.hidden{display:none;}
 .prop-card-head{display:flex;align-items:center;gap:14px;padding:15px 20px;cursor:pointer;}
@@ -279,7 +279,7 @@ main{max-width:1280px;margin:0 auto;padding:26px 36px 80px;}
 #tip-box p{font-size:12px;color:var(--gris);line-height:1.8;white-space:pre-line;}
 #tip-close{position:absolute;top:12px;right:13px;font-size:20px;cursor:pointer;color:var(--gris);background:none;border:none;}
 
-@media(max-width:960px){.hero-grid{grid-template-columns:1fr 1fr;}.tipo-grid{grid-template-columns:1fr;}}
+@media(max-width:960px){.hero-grid{grid-template-columns:1fr 1fr;}.tipo-grid{grid-template-columns:1fr;}.prop-grid{grid-template-columns:1fr;}}
 @media(max-width:640px){
 header,.filtros,.tabs-bar{padding-left:14px;padding-right:14px;}
 main{padding:14px 14px 60px;}
@@ -319,8 +319,7 @@ main{padding:14px 14px 60px;}
 
 <div class="tabs-bar">
 <button class="tab-btn active" onclick="switchTab('resumen',this)">¿Cómo vamos?</button>
-<button class="tab-btn" onclick="switchTab('propiedades',this)">Por propiedad</button>
-<button class="tab-btn" onclick="switchTab('timing',this)">Timing & Canal</button>
+<button class="tab-btn" onclick="switchTab('timing',this)">Operación (propiedad · timing · canal)</button>
 </div>
 
 <main>
@@ -329,8 +328,8 @@ main{padding:14px 14px 60px;}
 <div id="alerts-wrap"></div>
 <div class="sec"><div id="hero-kpis"></div></div>
 <div id="synthesis-sec"></div>
-<div id="conclusiones-sec"></div>
 <div id="top-sec"></div>
+<div id="conclusiones-sec"></div>
 <div class="sec">
 <div class="sec-hdr"><h2>Conversión vs universo real <i class="ib" onclick="openTip('conv_hostal')">i</i></h2><div class="linea"></div></div>
 <div id="gauge-sec"></div>
@@ -343,14 +342,6 @@ main{padding:14px 14px 60px;}
 <div id="metodo-sec"></div>
 </div>
 <!-- TAB 2 -->
-<div id="tab-propiedades" class="tab-content">
-<div class="sec">
-<div class="sec-hdr"><h2>Detalle por propiedad & tipo</h2><div class="linea"></div></div>
-<input class="prop-search" type="text" placeholder="🔍  Buscar propiedad... (preparado para 30 hostales)" oninput="filterPropCards(this.value)"/>
-<div class="prop-grid" id="prop-grid"></div>
-</div>
-</div>
-<!-- TAB 3 -->
 <div id="tab-timing" class="tab-content">
 <div class="sec">
 <div class="sec-hdr"><h2>¿Cuándo acepta el huésped? <i class="ib" onclick="openTip('timing')">i</i></h2><div class="linea"></div></div>
@@ -359,6 +350,11 @@ main{padding:14px 14px 60px;}
 <div class="sec">
 <div class="sec-hdr"><h2>Canal de aceptación <i class="ib" onclick="openTip('canal')">i</i></h2><div class="linea"></div></div>
 <div id="canal-sec"></div>
+</div>
+<div class="sec">
+<div class="sec-hdr"><h2>Detalle por propiedad & tipo</h2><div class="linea"></div></div>
+<input class="prop-search" type="text" placeholder="🔍  Buscar propiedad..." oninput="filterPropCards(this.value)"/>
+<div class="prop-grid" id="prop-grid"></div>
 </div>
 </div>
 </main>
@@ -981,40 +977,72 @@ slotsHtml+
 
 // ─── CANAL ──────────────────────────────────────────────────────────────────
 function renderCanal(det){
-// Agrupar SOLO por Propiedad (sin cortar por producto/tipo)
-var byK={};
+// Por propiedad, con desglose por producto en la MISMA fila (no una fila Desayuno + otra Upgrade).
+// Escala mejor cuando existan más productos.
+var byProp={};
 det.forEach(function(r){
-if(!r.ofertas_cumplidas)return;
-var k=r.Propiedad;
-if(!byK[k])byK[k]={prop:r.Propiedad,wa:0,em:0,ventas:0};
-byK[k].wa+=r.canal_wa_cumplidas||0;
-byK[k].em+=r.canal_email_cumplidas||0;
-byK[k].ventas+=r.ofertas_cumplidas||0;
+  if(!r.ofertas_cumplidas) return;
+  var prop=r.Propiedad||'Sin propiedad';
+  var tipo=r.tipo||'Sin tipo';
+  if(!byProp[prop]) byProp[prop]={prop:prop, ventas:0, wa:0, em:0, porTipo:{}};
+  if(!byProp[prop].porTipo[tipo]) byProp[prop].porTipo[tipo]={tipo:tipo, wa:0, em:0, ventas:0};
+
+  var wa=r.canal_wa_cumplidas||0;
+  var em=r.canal_email_cumplidas||0;
+  byProp[prop].wa += wa;
+  byProp[prop].em += em;
+  byProp[prop].ventas += (r.ofertas_cumplidas||0);
+  byProp[prop].porTipo[tipo].wa += wa;
+  byProp[prop].porTipo[tipo].em += em;
+  byProp[prop].porTipo[tipo].ventas += (r.ofertas_cumplidas||0);
 });
-var items=Object.values(byK).filter(function(v){return v.wa+v.em>0;})
+
+var items=Object.values(byProp).filter(function(v){return v.wa+v.em>0;})
   .sort(function(a,b){return (b.wa+b.em)-(a.wa+a.em);});
 if(!items.length){document.getElementById('canal-sec').innerHTML='<div class="empty">Sin datos de canal.</div>';return;}
 
+function miniBar(wa,em){
+  var tot=wa+em||1;
+  var wP=Math.round(wa/tot*100), eP=100-wP;
+  return ''+
+  '<div class="bar-duo" style="height:8px">'+
+  '<div style="width:'+wP+'%;background:var(--ok);height:100%"></div>'+
+  '<div style="width:'+eP+'%;background:var(--blue);height:100%"></div>'+
+  '</div>'+
+  '<div style="display:flex;justify-content:space-between;font-size:9px;margin-top:3px;color:var(--gris)"><span>'+wP+'% WA</span><span>'+eP+'% Email</span></div>';
+}
+
 document.getElementById('canal-sec').innerHTML=
 '<div class="canal-wrap"><table class="canal-table"><thead><tr>'+
-'<th>Propiedad</th><th>WA vs Email</th><th style="text-align:center">📱 WA</th><th style="text-align:center">📧 Email</th><th style="text-align:center">Canal líder</th>'+
+'<th>Propiedad</th><th>WA vs Email (global)</th><th>Por producto (WA vs Email)</th><th style="text-align:center">📱 WA</th><th style="text-align:center">📧 Email</th><th style="text-align:center">Canal líder</th>'+
 '</tr></thead><tbody>'+
 items.map(function(it){
-var tot=it.wa+it.em||1;
-var wP=Math.round(it.wa/tot*100),eP=100-wP;
-return '<tr>'+
-'<td><b>'+it.prop.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','')+'</b><br><span style="font-size:10px;color:var(--gris)">'+fmtN(it.ventas)+' ventas</span></td>'+
-'<td style="min-width:120px">'+
-'<div class="bar-duo"><div style="width:'+wP+'%;background:var(--ok);height:100%"></div><div style="width:'+eP+'%;background:var(--blue);height:100%"></div></div>'+
-'<div style="display:flex;justify-content:space-between;font-size:9px;margin-top:3px;color:var(--gris)"><span>'+wP+'% WA</span><span>'+eP+'% Email</span></div>'+
-'</td>'+
-'<td style="text-align:center;font-size:17px;font-weight:800;color:var(--ok)">'+it.wa+'</td>'+
-'<td style="text-align:center;font-size:17px;font-weight:800;color:var(--blue)">'+it.em+'</td>'+
-'<td style="text-align:center"><span class="badge '+(it.wa>=it.em?'b-ok':'b-blue')+'">'+(it.wa>=it.em?'📱 WhatsApp':'📧 Email')+'</span></td>'+
-'</tr>';
+  var lider = it.wa>=it.em ? '📱 WhatsApp' : '📧 Email';
+  var tipos = Object.values(it.porTipo||{}).filter(function(x){return (x.wa+x.em)>0;})
+    .sort(function(a,b){return (b.wa+b.em)-(a.wa+a.em);});
+  var tipoHtml = tipos.map(function(t,idx){
+    var icon = t.tipo==='Desayuno'?'🍳':t.tipo==='Upgrade'?'🛏️':'•';
+    return ''+
+    '<div style="padding:6px 0;'+(idx<tipos.length-1?'border-bottom:1px dashed var(--border)':'')+'">'+
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">'+
+    '<div style="font-size:10px;font-weight:900;color:var(--dark)">'+icon+' '+t.tipo+' <span style="font-weight:700;color:var(--gris)">'+fmtN(t.ventas)+' v</span></div>'+
+    '<div style="font-size:10px;font-weight:800;color:var(--gris)">'+fmtN(t.wa+t.em)+' con canal</div>'+
+    '</div>'+
+    '<div style="margin-top:5px">'+miniBar(t.wa,t.em)+'</div>'+
+    '</div>';
+  }).join('');
+  if(!tipoHtml) tipoHtml='<span style="color:var(--gris);font-size:11px">—</span>';
+  return '<tr>'+
+  '<td><b>'+it.prop.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','')+'</b><br><span style="font-size:10px;color:var(--gris)">'+fmtN(it.ventas)+' ventas</span></td>'+
+  '<td style="min-width:160px">'+miniBar(it.wa,it.em)+'</td>'+
+  '<td style="min-width:260px">'+tipoHtml+'</td>'+
+  '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--ok)">'+it.wa+'</td>'+
+  '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--blue)">'+it.em+'</td>'+
+  '<td style="text-align:center"><span class="badge '+(it.wa>=it.em?'b-ok':'b-blue')+'">'+lider+'</span></td>'+
+  '</tr>';
 }).join('')+
 '</tbody></table></div>'+
-'<div style="font-size:10px;color:var(--gris);margin-top:8px;padding:7px 11px;background:var(--cm);border-radius:8px;">ℹ️ Canal calculado sobre <b>ofertas cumplidas</b> con canal registrado. Esta tabla ignora el filtro de "Tipo oferta".</div>';
+'<div style="font-size:10px;color:var(--gris);margin-top:8px;padding:7px 11px;background:var(--cm);border-radius:8px;">ℹ️ Canal calculado sobre <b>ofertas cumplidas</b> con canal registrado. Se muestra global + desglose por producto en la misma fila.</div>';
 }
 
 function render(){
