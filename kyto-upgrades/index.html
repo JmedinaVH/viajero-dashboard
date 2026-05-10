@@ -1048,7 +1048,7 @@ function tipoCard(t){
 
 document.getElementById('canal-sec').innerHTML=
 '<div class="canal-wrap"><table class="canal-table"><thead><tr>'+
-'<th>Propiedad</th><th>WA vs Email (global)</th><th>Detalle por producto (abatible)</th><th style="text-align:center">📱 WA</th><th style="text-align:center">📧 Email</th><th style="text-align:center">Canal líder</th>'+
+'<th>Propiedad</th><th>WA vs Email (global)</th><th>Detalle por producto</th><th style="text-align:center">📱 WA</th><th style="text-align:center">📧 Email</th><th style="text-align:center">Canal líder</th>'+
 '</tr></thead><tbody>'+
 items.map(function(it){
   var lider = it.wa>=it.em ? '📱 WhatsApp' : '📧 Email';
@@ -1058,11 +1058,11 @@ items.map(function(it){
   var cardsHtml = tipos.map(tipoCard).join('');
   var abatible = ''+
     '<details style="background:transparent">'+
-      '<summary style="cursor:pointer;list-style:none;font-size:11px;font-weight:800;color:var(--dark)">'+
-        'Ver productos <span style="color:var(--gris);font-weight:700">('+(tipos.length||0)+')</span>'+
+      '<summary style="cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:flex-end;gap:6px;font-size:11px;font-weight:900;color:var(--gris);user-select:none" aria-label="Mostrar/ocultar productos">'+
+        '<span style="font-size:14px;line-height:1">▾</span>'+
       '</summary>'+
       '<div style="padding-top:10px">'+
-        '<div class="tipo-grid" style="grid-template-columns:1fr;gap:10px">'+(cardsHtml||'<span style="color:var(--gris);font-size:11px">—</span>')+'</div>'+
+        '<div class="tipo-grid" style="grid-template-columns:1fr 1fr;gap:10px">'+(cardsHtml||'<span style="color:var(--gris);font-size:11px">—</span>')+'</div>'+
       '</div>'+
     '</details>';
 
@@ -1070,13 +1070,13 @@ items.map(function(it){
   '<td><b>'+it.prop.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','')+'</b><br><span style="font-size:10px;color:var(--gris)">'+fmtN(it.ventas)+' ventas · '+fmtUSD(it.revenue)+'</span></td>'+
   '<td style="min-width:160px">'+miniBar(it.wa,it.em)+'</td>'+
   '<td style="min-width:320px">'+abatible+'</td>'+
-  '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--ok)">'+it.wa+'</td>'+
-  '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--blue)">'+it.em+'</td>'+
+  '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--ok)">'+fmtN(it.wa)+'</td>'+
+  '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--blue)">'+fmtN(it.em)+'</td>'+
   '<td style="text-align:center"><span class="badge '+(it.wa>=it.em?'b-ok':'b-blue')+'">'+lider+'</span></td>'+
   '</tr>';
 }).join('')+
 '</tbody></table></div>'+
-'<div style="font-size:10px;color:var(--gris);margin-top:8px;padding:7px 11px;background:var(--cm);border-radius:8px;">ℹ️ Canal calculado sobre <b>ofertas cumplidas</b> con canal registrado. Aquí se muestra el canal global por propiedad + un <b>abatible</b> con el detalle por producto (con conversión y revenue) para evitar duplicación.</div>';
+'<div style="font-size:10px;color:var(--gris);margin-top:8px;padding:7px 11px;background:var(--cm);border-radius:8px;">ℹ️ Canal calculado sobre <b>ofertas cumplidas</b> con canal registrado. Se muestra el canal global por propiedad + el detalle por producto (con conversión y revenue) para evitar duplicación.</div>';
 }
 
 function render(){
