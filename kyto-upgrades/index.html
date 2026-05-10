@@ -378,7 +378,7 @@ b:'Compara el rendimiento entre períodos.\n↑ Subió vs anterior · ↓ Bajó 
 },
 'timing':{
 t:'¿Cuándo acepta el huésped?',
-b:'Días entre la aceptación de la oferta y el check-in:\n\nT-3 = aceptó 3 días ANTES del check-in\nT-0 = aceptó el mismo día del check-in\nT+1 = aceptó 1 día DESPUÉS (ya estaba hospedado)\n\nBarra verde = Desayuno · Barra azul = Upgrade\n\nTiming ideal para enviar: T-2 a T-1.\nSi T+1 es alto → oportunidad de in-stay upsell.'
+b:'Qué muestra este gráfico (súper literal):\n\nCuenta cuántas ofertas fueron ACEPTADAS en cada franja de tiempo, comparando:\n(Fecha de aceptación) vs (Fecha de check-in)\n\nCómo leer T:\nT-3 = aceptó 3 días ANTES del check-in\nT-2 = aceptó 2 días ANTES del check-in\nT-1 = aceptó 1 día ANTES del check-in\nT-0 = aceptó el MISMO día del check-in\nT+1 = aceptó 1 día DESPUÉS (ya estaba hospedado)\n\nColores:\n🍳 Verde = Desayuno · 🛏️ Azul = Upgrade\n\nImportante (escala):\nLas barras son RELATIVAS al máximo del filtro actual.\nSirven para comparar qué franja domina (no para comparar entre meses si cambias el filtro).\n\nCómo usarlo:\nSi domina T-2/T-1 → buen timing pre check-in.\nSi domina T+1 → oportunidad de empujar upsell durante la estadía.'
 },
 'canal':{
 t:'Canal de aceptación',
@@ -386,6 +386,11 @@ b:'Muestra si la oferta fue aceptada por WhatsApp o Email.\n\nCada propiedad pue
 }
 };
 function openTip(k){var t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
+function openTipCustom(title,body){
+document.getElementById('tip-title').textContent=title;
+document.getElementById('tip-body').textContent=body;
+document.getElementById('tip-overlay').classList.add('show');
+}
 function closeTip(e){if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;document.getElementById('tip-overlay').classList.remove('show');}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')document.getElementById('tip-overlay').classList.remove('show');});
 
@@ -586,6 +591,14 @@ var totCum=det.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
 var totRev=det.reduce(function(s,r){return s+r.revenue_usd;},0);
 var conv=totEnv>0?totCum/totEnv:0;
 var ticket=totCum>0?totRev/totCum:0;
+
+// breakdown por tipo para el “ver más” del revenue
+var byTipo={};
+det.forEach(function(r){
+if(!byTipo[r.tipo])byTipo[r.tipo]={rev:0,cum:0};
+byTipo[r.tipo].rev+=r.revenue_usd;byTipo[r.tipo].cum+=r.ofertas_cumplidas;
+});
+
 var fp=getMsValues('per'),prev=null;
 if(fp.length===1){
 var allP=res.map(function(r){return r.Período;}).sort();
@@ -598,14 +611,25 @@ var d=curr-pv;
 if(Math.abs(d)<0.0001)return '<span class="hero-delta neutral">—</span>';
 return '<span class="hero-delta '+(d>0?'up':'down')+'">'+(d>0?'↑':'↓')+' '+fmt(Math.abs(d))+'</span>';
 }
+
+function revMore(){
+var lines=[];
+Object.keys(byTipo).sort().forEach(function(k){
+var rv=byTipo[k].rev||0, c=byTipo[k].cum||0;
+lines.push((k==='Desayuno'?'🍳':'🛏️')+' '+k+': '+fmtUSD(rv)+' · '+c+' ventas'+(c>0?' · ticket '+fmtUSD(rv/c):''));
+});
+openTipCustom('Revenue generado','Total: '+fmtUSD(totRev)+'\nVentas: '+totCum+'\nTicket prom.: '+(totCum>0?fmtUSD(ticket):'—')+'\n\nDetalle por tipo:\n'+(lines.length?lines.join('\n'):'—'));
+}
+
 var items=[
-{l:'Ofertas enviadas',v:fmtN(totEnv),s:totCum+' cumplidas',hc:'var(--green)',d:dlta(totEnv,prev?prev.ofertas_enviadas:null,fmtN)},
-{l:'Conversión global',v:fmtOferta(conv),s:'cumplidas ÷ enviadas · por mes de check-in',hc:colOferta(conv),d:dlta(conv,prev?prev.conv_oferta_pct:null,function(x){return fmtOferta(x,2);})},
-{l:'Revenue generado',v:fmtUSD(totRev),s:totCum+' ventas · '+fmtUSD(ticket)+' ticket',hc:'#0369a1',d:dlta(totRev,prev?prev.revenue_usd:null,fmtUSD)},
-{l:'Ticket promedio',v:ticket>0?fmtUSD(ticket):'—',s:'por oferta cumplida',hc:'#7c3aed',d:''}
+{l:'Ofertas enviadas',v:fmtN(totEnv),s:totCum+' cumplidas',hc:'var(--green)',d:dlta(totEnv,prev?prev.ofertas_enviadas:null,fmtN),on:null},
+{l:'Conversión global',v:fmtOferta(conv),s:'cumplidas ÷ enviadas · por mes de check-in',hc:colOferta(conv),d:dlta(conv,prev?prev.conv_oferta_pct:null,function(x){return fmtOferta(x,2);}),on:null},
+{l:'Revenue generado',v:fmtUSD(totRev),s:totCum+' ventas · '+fmtUSD(ticket)+' ticket · ver más',hc:'#0369a1',d:dlta(totRev,prev?prev.revenue_usd:null,fmtUSD),on:revMore},
+{l:'Ticket promedio',v:ticket>0?fmtUSD(ticket):'—',s:'por oferta cumplida',hc:'#7c3aed',d:'',on:null}
 ];
+
 document.getElementById('hero-kpis').innerHTML='<div class="hero-grid">'+items.map(function(it){
-return '<div class="hero-kpi" style="--hc:'+it.hc+'"><div class="hero-glow"></div>'+
+return '<div class="hero-kpi" '+(it.on?'onclick="('+it.on.toString()+')()"' : '')+' style="--hc:'+it.hc+';'+(it.on?'cursor:pointer;':'')+'"><div class="hero-glow"></div>'+
 '<div class="hero-label">'+it.l+'</div><div class="hero-val">'+it.v+'</div>'+
 '<div class="hero-sub">'+it.s+'</div>'+it.d+'</div>';
 }).join('')+'</div>';
@@ -797,6 +821,14 @@ return '<div class="prop-card" data-prop="'+prop+'">'+
 '<div class="prop-metrics">'+
 '<div class="prop-m"><div class="prop-m-val" style="color:'+colOferta(conv)+'">'+fmtN(tC)+'</div><div class="prop-m-lbl">Ventas</div></div>'+
 '<div class="prop-m"><div class="prop-m-val" style="color:var(--ok)">'+fmtUSD(tRv)+'</div><div class="prop-m-lbl">Revenue</div></div>'+
+'<div class="prop-m" style="min-width:120px">'+
+'<div style="font-size:8px;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;">Canal líder</div>'+
+'<div class="bar-duo" style="height:7px">'+
+'<div style="width:'+ ( (function(){ var wa=rows.reduce(function(s,r){return s+r.canal_wa_cumplidas;},0); var em=rows.reduce(function(s,r){return s+r.canal_email_cumplidas;},0); var tot=wa+em||1; return Math.round(wa/tot*100); })() ) +'%;background:var(--ok);height:100%"></div>'+
+'<div style="width:'+ ( (function(){ var wa=rows.reduce(function(s,r){return s+r.canal_wa_cumplidas;},0); var em=rows.reduce(function(s,r){return s+r.canal_email_cumplidas;},0); var tot=wa+em||1; return 100-Math.round(wa/tot*100); })() ) +'%;background:var(--blue);height:100%"></div>'+
+'</div>'+
+'<div style="display:flex;justify-content:space-between;font-size:9px;margin-top:3px;color:var(--gris)"><span>📱</span><span>📧</span></div>'+
+'</div>'+
 '</div>'+
 '<div class="prop-arr">▼</div>'+
 '</div>'+
@@ -840,14 +872,14 @@ document.getElementById('timing-sec').innerHTML=
 '<div class="timing-wrap">'+
 '<div class="t-header">'+
 '<div><div class="t-title">Distribución de aceptaciones por franja</div>'+
-'<div class="t-subtitle"><b>Qué mide:</b> cuántas aceptaciones ocurrieron en cada franja vs la fecha de check-in. T-N = N días antes · T+N = ya hospedado</div></div>'+
+'<div class="t-subtitle"><b>Qué mide (literal):</b> # aceptaciones según la diferencia <b>(aceptada en)</b> vs <b>(check-in)</b>. <b>T-</b> = antes del check-in · <b>T+</b> = ya hospedado</div></div>'+
 (best?'<span class="t-best-badge">★ Franja líder: '+best+'</span>':'')+
 '</div>'+
 slotsHtml+
 '<div class="t-legend">'+
 '<span><div style="width:11px;height:11px;background:var(--ok);border-radius:3px"></div> Desayuno</span>'+
 '<span><div style="width:11px;height:11px;background:var(--blue);border-radius:3px"></div> Upgrade</span>'+
-'<span><b>Barras:</b> % relativo al máximo del filtro actual (para comparar franjas)</span>'+
+'<span><b>Escala:</b> barras relativas al máximo del filtro actual (sirven para ver la franja líder)</span>'+
 '</div></div>';
 }
 
