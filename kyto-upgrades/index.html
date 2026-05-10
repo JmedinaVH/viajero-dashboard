@@ -33,11 +33,11 @@ header{background:var(--dark);padding:0 36px;display:flex;align-items:center;jus
 .h-logo{height:34px;object-fit:contain;}
 .h-sep{width:1px;height:28px;background:rgba(255,255,255,.15);}
 .h-title{color:#fff;font-size:16px;font-weight:700;}
-.h-sub{color:rgba(255,255,255,.38);font-size:10px;letter-spacing:.4px;text-transform:uppercase;margin-top:1px;}
+.h-sub{color:rgba(255,255,255,.38);font-size:10px;letter-spacing:.4px;margin-top:1px;}
 .h-right{display:flex;align-items:center;gap:10px;}
-.h-ts{text-align:right;}
+.h-ts{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:4px 10px;display:flex;flex-direction:column;align-items:flex-end;gap:1px;}
 .h-ts-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.3);}
-.h-ts-val{font-size:11px;color:rgba(255,255,255,.6);margin-top:1px;}
+.h-ts-val{font-size:11px;color:rgba(255,255,255,.6);}
 .h-live{display:flex;align-items:center;gap:5px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);border-radius:99px;padding:4px 11px;font-size:9px;font-weight:700;color:#10b981;letter-spacing:.5px;text-transform:uppercase;}
 .h-live .dot{width:5px;height:5px;border-radius:50%;background:#10b981;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.5);}50%{box-shadow:0 0 0 4px rgba(16,185,129,0);}}
@@ -141,22 +141,26 @@ main{max-width:1280px;margin:0 auto;padding:26px 36px 80px;}
 .sec-hdr h2{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}
 .sec-hdr .linea{flex:1;height:1px;background:var(--border);}
 
-/* GAUGE — Conversión vs hostal */
-.gauge-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
-.gauge-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:18px;position:relative;overflow:hidden;transition:.16s;}
-.gauge-card:hover{box-shadow:var(--shm);}
-.gauge-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gc,var(--green));}
-.gc-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px;}
-.gc-prop{font-size:12px;font-weight:800;color:var(--dark);line-height:1.35;}
-.gc-tipo{font-size:10px;color:var(--gris);font-weight:600;margin-top:1px;}
-/* HOW-TO pill — explica qué lee y cómo */
-.gc-how{font-size:9px;font-weight:600;color:var(--gris);background:var(--cream);border:1px solid var(--border);border-radius:7px;padding:5px 9px;margin-bottom:10px;line-height:1.55;}
-.gc-how strong{color:var(--dark);font-weight:800;}
-.gc-val{font-size:28px;font-weight:800;line-height:1;color:var(--gc,var(--green));margin-bottom:8px;}
-.gc-track{height:9px;background:var(--cd);border-radius:99px;overflow:hidden;margin-bottom:8px;}
-.gc-fill{height:100%;border-radius:99px;background:var(--gc,var(--green));transition:width .8s cubic-bezier(.4,0,.2,1);}
-.gc-foot{display:flex;justify-content:space-between;align-items:flex-end;font-size:10px;color:var(--gris);}
-.gc-foot-main{font-weight:700;color:var(--dark);font-size:11px;}
+/* GAUGE TABLE — Conversión vs hostal (escala para 30+ hosteles) */
+.gauge-table-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
+.gauge-table{width:100%;border-collapse:collapse;font-size:12px;}
+.gauge-table thead th{background:var(--cm);color:var(--mid);padding:9px 14px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;white-space:nowrap;cursor:pointer;user-select:none;transition:.14s;}
+.gauge-table thead th:hover{background:var(--cd);color:var(--dark);}
+.gauge-table thead th.sorted{color:var(--green);}
+.gauge-table thead th .sort-ico{margin-left:4px;opacity:.4;font-size:8px;}
+.gauge-table thead th.sorted .sort-ico{opacity:1;}
+.gauge-table tbody td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.gauge-table tbody tr:last-child td{border-bottom:none;}
+.gauge-table tbody tr:hover td{background:var(--cream);}
+.gt-prop{font-size:12px;font-weight:800;color:var(--dark);}
+.gt-prop-sub{font-size:10px;color:var(--gris);font-weight:500;margin-top:1px;}
+.gt-bar-wrap{display:flex;align-items:center;gap:8px;}
+.gt-bar-track{flex:1;min-width:80px;height:7px;background:var(--cd);border-radius:99px;overflow:hidden;}
+.gt-bar-fill{height:100%;border-radius:99px;transition:width .6s;}
+.gt-pct{font-size:13px;font-weight:800;min-width:48px;text-align:right;}
+.gt-denom{font-size:10px;color:var(--gris);}
+.gt-cum{font-size:12px;font-weight:700;color:var(--dark);}
+.gt-tipo-ico{font-size:13px;}
 
 /* REVENUE */
 .rev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;}
@@ -224,16 +228,23 @@ main{max-width:1280px;margin:0 auto;padding:26px 36px 80px;}
 .ch-email{background:var(--blue-bg);color:var(--blue);}
 .ch-sin{background:var(--cm);color:var(--gris);}
 
-/* TIMING */
-.timing-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:20px;}
-.t-bars{display:flex;align-items:flex-end;gap:12px;margin:16px 0 10px;overflow-x:auto;padding-bottom:4px;}
-.t-col{text-align:center;flex-shrink:0;min-width:46px;}
-.t-stacks{height:90px;display:flex;align-items:flex-end;justify-content:center;gap:3px;margin-bottom:6px;}
-.t-bar{width:16px;border-radius:4px 4px 0 0;min-height:3px;}
-.t-label{font-size:10px;font-weight:700;color:var(--dark);}
-.t-n{font-size:9px;color:var(--gris);margin-top:2px;}
-.t-best-tag{background:var(--green-soft);color:var(--ok);font-size:8px;font-weight:700;padding:1px 6px;border-radius:99px;margin-top:3px;display:inline-block;}
-.t-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:10px;color:var(--gris);border-top:1px solid var(--cd);padding-top:10px;margin-top:4px;}
+/* TIMING — barras horizontales */
+.timing-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:22px 24px;}
+.t-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.t-title{font-size:14px;font-weight:800;color:var(--dark);}
+.t-subtitle{font-size:11px;color:var(--gris);margin-top:3px;}
+.t-best-badge{background:var(--green-soft);color:var(--ok);font-size:10px;font-weight:700;padding:4px 12px;border-radius:99px;border:1px solid var(--green-mid);white-space:nowrap;}
+.t-slot{margin-bottom:10px;}
+.t-slot-lbl{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;}
+.t-slot-name{font-size:12px;font-weight:800;color:var(--dark);min-width:36px;}
+.t-slot-total{font-size:11px;color:var(--gris);font-weight:600;}
+.t-hbar-row{display:flex;align-items:center;gap:6px;margin-bottom:3px;}
+.t-hbar-tipo{font-size:9px;font-weight:700;color:var(--gris);min-width:62px;text-align:right;}
+.t-hbar-track{flex:1;height:11px;background:var(--cd);border-radius:99px;overflow:hidden;}
+.t-hbar-fill{height:100%;border-radius:99px;transition:width .6s;}
+.t-hbar-val{font-size:10px;font-weight:700;min-width:22px;text-align:left;color:var(--dark);}
+.t-divider{height:1px;background:var(--border);margin:12px 0;}
+.t-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:10px;color:var(--gris);padding-top:12px;margin-top:4px;border-top:1px solid var(--cd);}
 .t-legend span{display:flex;align-items:center;gap:5px;}
 
 /* CANAL */
@@ -293,7 +304,7 @@ main{padding:14px 14px 60px;}
 <div><div class="h-title">Kyto Upgrades</div><div class="h-sub">Viajero Hostels · Upselling pre check-in</div></div>
 </div>
 <div class="h-right">
-<div class="h-ts"><div class="h-ts-label">Actualizado</div><div class="h-ts-val" id="h-ts">—</div></div>
+<div class="h-ts"><div class="h-ts-label">Última actualización</div><div class="h-ts-val" id="h-ts">—</div></div>
 <div class="h-live"><div class="dot"></div>Live</div>
 <a href="../index.html" class="btn-hub">← Hub</a>
 </div>
@@ -316,10 +327,9 @@ main{padding:14px 14px 60px;}
 <!-- TAB 1 -->
 <div id="tab-resumen" class="tab-content active">
 <div id="alerts-wrap"></div>
+<div class="sec"><div id="hero-kpis"></div></div>
 <div id="synthesis-sec"></div>
 <div id="conclusiones-sec"></div>
-<div id="metodo-sec"></div>
-<div class="sec"><div id="hero-kpis"></div></div>
 <div class="sec">
 <div class="sec-hdr"><h2>Conversión vs universo real <i class="ib" onclick="openTip('conv_hostal')">i</i></h2><div class="linea"></div></div>
 <div id="gauge-sec"></div>
@@ -332,6 +342,7 @@ main{padding:14px 14px 60px;}
 <div class="sec-hdr"><h2>Tendencia por período <i class="ib" onclick="openTip('tendencia')">i</i></h2><div class="linea"></div></div>
 <div id="trend-sec"></div>
 </div>
+<div id="metodo-sec"></div>
 </div>
 <!-- TAB 2 -->
 <div id="tab-propiedades" class="tab-content">
@@ -600,10 +611,8 @@ return '<div class="hero-kpi" style="--hc:'+it.hc+'"><div class="hero-glow"></di
 }).join('')+'</div>';
 }
 
-// ─── GAUGE — CONVERSIÓN VS HOSTAL ──────────────────────────────────────────
-// BUGFIX: conv_vs_hostal_pct = 0.0011 significa 0.11%
-// fmtFrac(0.0011, 2) → (0.0011 * 100).toFixed(2) → '0.11%'  ✅
-// El bug anterior hacía fmtPct(pct*100) que multiplicaba x100 dos veces → '11.00%' ✗
+// ─── GAUGE TABLE — CONVERSIÓN VS HOSTAL ──────────────────────────────────
+var _gSort={col:'pct',asc:false};
 function renderGauge(det){
 var cerrados=det.filter(function(r){return r.cerrado&&r.conv_vs_hostal_pct!==null;});
 var wrap=document.getElementById('gauge-sec');
@@ -611,38 +620,62 @@ if(!cerrados.length){
 wrap.innerHTML='<div style="background:#fff;border-radius:14px;border:1.5px solid var(--border);padding:20px;font-size:12px;color:var(--gris);text-align:center;">⏳ Disponible solo para períodos cerrados. Filtra por <b>Abril</b> para ver los datos.</div>';
 return;
 }
-var maxP=Math.max.apply(null,cerrados.map(function(r){return r.conv_vs_hostal_pct||0;}));
-wrap.innerHTML='<div class="gauge-row">'+cerrados.map(function(r){
-var pct=r.conv_vs_hostal_pct; // fracción pura: 0.0011 = 0.11%
+_gSort._data=cerrados;
+_renderGaugeTable();
+}
+function _sortGauge(col){
+if(_gSort.col===col)_gSort.asc=!_gSort.asc;
+else{_gSort.col=col;_gSort.asc=col==='prop';}
+_renderGaugeTable();
+}
+function _renderGaugeTable(){
+var cerrados=_gSort._data||[];
+var col=_gSort.col,asc=_gSort.asc;
+var sorted=cerrados.slice().sort(function(a,b){
+var va,vb;
+if(col==='prop'){va=a.Propiedad;vb=b.Propiedad;return asc?va.localeCompare(vb):vb.localeCompare(va);}
+if(col==='tipo'){va=a.tipo;vb=b.tipo;return asc?va.localeCompare(vb):vb.localeCompare(va);}
+if(col==='pct'){va=a.conv_vs_hostal_pct||0;vb=b.conv_vs_hostal_pct||0;}
+else if(col==='cum'){va=a.ofertas_cumplidas||0;vb=b.ofertas_cumplidas||0;}
+else if(col==='den'){va=a.tipo==='Desayuno'?a._huespedes_hostal:a._checkins_hostal;vb=b.tipo==='Desayuno'?b._huespedes_hostal:b._checkins_hostal;}
+else va=vb=0;
+return asc?va-vb:vb-va;
+});
+var maxP=Math.max.apply(null,sorted.map(function(r){return r.conv_vs_hostal_pct||0;}));
+function th(label,c,tip){
+var ico=_gSort.col===c?(_gSort.asc?'↑':'↓'):'↕';
+return '<th class="'+(c===_gSort.col?'sorted':'')+' " onclick="_sortGauge(\''+c+'\')">'+label+' <span class="sort-ico">'+ico+'</span>'+(tip?' <i class="ib" style="vertical-align:middle" onclick="event.stopPropagation();openTip(\''+tip+'\')\">">i</i>':'')+'</th>';
+}
+var html='<div class="gauge-table-wrap">'+
+'<table class="gauge-table"><thead><tr>'+
+th('Propiedad','prop','')+
+th('Tipo','tipo','')+
+th('Conv % vs hostal','pct','conv_hostal')+
+th('Vendidas','cum','')+
+th('Universo','den','')+
+'<th>Período</th>'+
+'</tr></thead><tbody>'+
+sorted.map(function(r){
+var pct=r.conv_vs_hostal_pct;
 var col=colHostal(pct);
-var fillW=Math.min(100,maxP>0?Math.round(pct/Math.max(maxP*1.2,0.0001)*100):0);
+var fillW=Math.min(100,maxP>0?Math.round(pct/Math.max(maxP*1.1,0.0001)*100):0);
 var esDes=r.tipo==='Desayuno';
-var denomTexto=esDes
-?'🍳 Lee: cumplidas <strong>÷ huéspedes totales del hostal</strong>'
-:'🛏️ Lee: cumplidas <strong>÷ check-ins totales del hostal</strong>';
-var denomVal=esDes
-?fmtN(r._huespedes_hostal)+' huéspedes'
-:fmtN(r._checkins_hostal)+' check-ins';
-return '<div class="gauge-card" style="--gc:'+col+'">'+
-'<div class="gc-head">'+
-'<div><div class="gc-prop">'+r.Propiedad.replace('Viajero ','').replace(' Hostel','')+'</div>'+
-'<div class="gc-tipo">'+r.tipo+'</div></div>'+
-'<span class="badge b-ok">'+r.Período+'</span>'+
-'</div>'+
-// HOW-TO — explica qué lee y cómo lo calcula
-'<div class="gc-how">'+denomTexto+'</div>'+
-// VALOR CORREGIDO — fmtFrac no multiplica x100 dos veces
-'<div class="gc-val">'+fmtFrac(pct,2)+'</div>'+
-'<div class="gc-track"><div class="gc-fill" style="width:'+fillW+'%"></div></div>'+
-'<div class="gc-foot">'+
-'<span class="gc-foot-main">'+r.ofertas_cumplidas+' vendidas</span>'+
-'<span>'+denomVal+'</span>'+
-'</div>'+
-'</div>';
-}).join('')+'</div>'+
+var den=esDes?r._huespedes_hostal:r._checkins_hostal;
+var denLabel=esDes?'hués.':'CI';
+return '<tr>'+
+'<td><div class="gt-prop">'+r.Propiedad.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','')+'</div></td>'+
+'<td><span class="gt-tipo-ico">'+(esDes?'🍳':'🛏️')+'</span> <span style="font-size:11px;font-weight:600">'+r.tipo+'</span></td>'+
+'<td><div class="gt-bar-wrap"><div class="gt-bar-track"><div class="gt-bar-fill" style="width:'+fillW+'%;background:'+col+'"></div></div><span class="gt-pct" style="color:'+col+'">'+fmtFrac(pct,2)+'</span></div></td>'+
+'<td class="gt-cum">'+r.ofertas_cumplidas+'</td>'+
+'<td class="gt-denom">'+fmtN(den)+' '+denLabel+'</td>'+
+'<td><span class="badge b-ok">'+r.Período+'</span></td>'+
+'</tr>';
+}).join('')+
+'</tbody></table></div>'+
 '<div style="font-size:10px;color:var(--gris);margin-top:9px;padding:7px 11px;background:var(--cm);border-radius:8px;">'+
-'ℹ️ Denominadores de <b>06_Kyto_Denominadores</b>. 🟢 ≥ 1% · 🟡 0.5-1% · 🔴 < 0.5%. Solo períodos cerrados.'+
+'ℹ️ Clic en encabezado para ordenar. 🟢 ≥ 1% · 🟡 0.5-1% · 🔴 < 0.5% · Solo períodos cerrados · Denominadores desde <b>06_Kyto_Denominadores</b>'+
 '</div>';
+document.getElementById('gauge-sec').innerHTML=html;
 }
 
 // ─── REVENUE ────────────────────────────────────────────────────────────────
@@ -841,8 +874,8 @@ function render(){
 if(!DATA)return;
 var det=filtrar(DATA.detalle||[]);
 var res=DATA.resumen_por_periodo||[];
-renderAlerts(det);renderSynthesis(det,res);renderConclusiones(det,res);renderMetodo(res);
-renderHero(det,res);renderGauge(det);renderRevenue(det);renderTrend(res);
+renderAlerts(det);renderHero(det,res);renderSynthesis(det,res);renderConclusiones(det,res);
+renderGauge(det);renderRevenue(det);renderTrend(res);renderMetodo(res);
 renderPropCards(det);renderTiming(det);renderCanal(det);
 }
 
@@ -850,7 +883,9 @@ renderPropCards(det);renderTiming(det);renderCanal(det);
 try{
 var r=await fetch('../data/kyto_upselling.json?t='+Date.now());
 DATA=await r.json();
-if(DATA.actualizado){var dt=new Date(DATA.actualizado);document.getElementById('h-ts').textContent=dt.toLocaleString('es-CO',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});}
+if(DATA.actualizado){var dt=new Date(DATA.actualizado);var dStr=dt.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});
+var tStr=dt.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+document.getElementById('h-ts').textContent=dStr+' · '+tStr;}
 poblarFiltros();render();
 }catch(e){
 document.getElementById('h-ts').textContent='Sin datos';
