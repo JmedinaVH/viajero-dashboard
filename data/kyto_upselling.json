@@ -1,10 +1,10 @@
 {
-  "actualizado": "2026-05-10T04:14:17.826Z",
+  "actualizado": "2026-05-10T04:51:30.435Z",
   "fuente": "07_Kyto_Upselling_Raw · Via - Viajero Hostels",
   "resumen_por_periodo": [
     {
       "Período": "Abril",
-      "cerrado": false,
+      "cerrado": true,
       "ofertas_enviadas": 200,
       "ofertas_cumplidas": 15,
       "revenue_usd": 796.06,
@@ -17,7 +17,7 @@
   "detalle": [
     {
       "Período": "Abril",
-      "periodo_checkin": "Mayo",
+      "periodo_checkin": "Abril",
       "Propiedad": "Viajero Cartagena - Getsemaní Hostel",
       "tipo": "Desayuno",
       "ofertas_enviadas": 42,
@@ -29,10 +29,10 @@
       "conv_reservas_pct": 0.1429,
       "canal_wa_cumplidas": 4,
       "canal_email_cumplidas": 2,
-      "conv_vs_hostal_pct": null,
-      "cerrado": false,
-      "_checkins_hostal": 0,
-      "_huespedes_hostal": 0,
+      "conv_vs_hostal_pct": 0.0064,
+      "cerrado": true,
+      "_checkins_hostal": 675,
+      "_huespedes_hostal": 944,
       "avg_dias_envio_a_acept": 1,
       "avg_dias_antes_checkin": 1,
       "timing_dist": {
@@ -44,7 +44,7 @@
     },
     {
       "Período": "Abril",
-      "periodo_checkin": "Mayo",
+      "periodo_checkin": "Abril",
       "Propiedad": "Viajero Cartagena - Getsemaní Hostel",
       "tipo": "Upgrade",
       "ofertas_enviadas": 22,
@@ -56,10 +56,10 @@
       "conv_reservas_pct": 0.1364,
       "canal_wa_cumplidas": 1,
       "canal_email_cumplidas": 2,
-      "conv_vs_hostal_pct": null,
-      "cerrado": false,
-      "_checkins_hostal": 0,
-      "_huespedes_hostal": 0,
+      "conv_vs_hostal_pct": 0.0044,
+      "cerrado": true,
+      "_checkins_hostal": 675,
+      "_huespedes_hostal": 944,
       "avg_dias_envio_a_acept": 0.1,
       "avg_dias_antes_checkin": 1.7,
       "timing_dist": {
@@ -70,7 +70,7 @@
     },
     {
       "Período": "Abril",
-      "periodo_checkin": "Mayo",
+      "periodo_checkin": "Abril",
       "Propiedad": "Viajero CDMX - Centro Hostel",
       "tipo": "Desayuno",
       "ofertas_enviadas": 78,
@@ -82,10 +82,10 @@
       "conv_reservas_pct": 0.0641,
       "canal_wa_cumplidas": 4,
       "canal_email_cumplidas": 1,
-      "conv_vs_hostal_pct": null,
-      "cerrado": false,
-      "_checkins_hostal": 0,
-      "_huespedes_hostal": 0,
+      "conv_vs_hostal_pct": 0.0042,
+      "cerrado": true,
+      "_checkins_hostal": 1101,
+      "_huespedes_hostal": 1181,
       "avg_dias_envio_a_acept": 0.9,
       "avg_dias_antes_checkin": 0.6,
       "timing_dist": {
@@ -97,7 +97,7 @@
     },
     {
       "Período": "Abril",
-      "periodo_checkin": "Mayo",
+      "periodo_checkin": "Abril",
       "Propiedad": "Viajero CDMX - Centro Hostel",
       "tipo": "Upgrade",
       "ofertas_enviadas": 58,
@@ -109,10 +109,10 @@
       "conv_reservas_pct": 0.0172,
       "canal_wa_cumplidas": 0,
       "canal_email_cumplidas": 1,
-      "conv_vs_hostal_pct": null,
-      "cerrado": false,
-      "_checkins_hostal": 0,
-      "_huespedes_hostal": 0,
+      "conv_vs_hostal_pct": 0.0009,
+      "cerrado": true,
+      "_checkins_hostal": 1101,
+      "_huespedes_hostal": 1181,
       "avg_dias_envio_a_acept": 0.7,
       "avg_dias_antes_checkin": 0,
       "timing_dist": {
