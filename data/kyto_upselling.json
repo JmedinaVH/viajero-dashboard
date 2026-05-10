@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-05-10T03:22:59.934Z",
+  "actualizado": "2026-05-10T03:51:32.371Z",
   "fuente": "07_Kyto_Upselling_Raw · Via - Viajero Hostels",
   "resumen_por_periodo": [
     {
@@ -17,7 +17,7 @@
   "detalle": [
     {
       "Período": "Abril",
-      "periodo_checkin": "Mayo 2026",
+      "periodo_checkin": "Mayo",
       "Propiedad": "Viajero Cartagena - Getsemaní Hostel",
       "tipo": "Desayuno",
       "ofertas_enviadas": 42,
@@ -44,7 +44,7 @@
     },
     {
       "Período": "Abril",
-      "periodo_checkin": "Mayo 2026",
+      "periodo_checkin": "Mayo",
       "Propiedad": "Viajero Cartagena - Getsemaní Hostel",
       "tipo": "Upgrade",
       "ofertas_enviadas": 22,
@@ -70,7 +70,7 @@
     },
     {
       "Período": "Abril",
-      "periodo_checkin": "Mayo 2026",
+      "periodo_checkin": "Mayo",
       "Propiedad": "Viajero CDMX - Centro Hostel",
       "tipo": "Desayuno",
       "ofertas_enviadas": 78,
@@ -97,7 +97,7 @@
     },
     {
       "Período": "Abril",
-      "periodo_checkin": "Mayo 2026",
+      "periodo_checkin": "Mayo",
       "Propiedad": "Viajero CDMX - Centro Hostel",
       "tipo": "Upgrade",
       "ofertas_enviadas": 58,
@@ -123,7 +123,8 @@
   "_notas": {
     "conv_vs_hostal": "Desayuno = cumplidas / huéspedes hostal · Upgrade = cumplidas / check-ins hostal",
     "denominador": "Denominadores desde 06_Kyto_Denominadores. conv_vs_hostal_pct = null si mes no cerrado.",
-    "timing": "avg_dias_envio_a_acept: tiempo entre envío y aceptación. avg_dias_antes_checkin: días antes del CI en que se aceptó.",
-    "mes_en_curso": "Si cerrado = false, conv_vs_hostal_pct es null — el mes aún no tiene check-ins completos."
+    "timing": "avg_dias_envio_a_acept: tiempo entre envío y aceptación. avg_dias_antes_checkin: días antes del CI.",
+    "mes_en_curso": "cerrado = false → conv_vs_hostal_pct es null. Se activa al marcar Cerrado=TRUE en 06_Kyto_Denominadores.",
+    "periodo_envio": "Período = mes de envío de la oferta (Fecha creada). periodo_checkin = mes del check-in del huésped."
   }
 }
