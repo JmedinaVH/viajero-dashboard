@@ -778,7 +778,8 @@ function th(label,c,tip){
 var html='<div class="gauge-table-wrap">'+
 '<table class="gauge-table"><thead><tr>'+
 th('Propiedad','prop','')+
-th('Conv. vs hostal (mejor)','pct','conv_hostal')+
+th('🍳 Desayuno','pct','conv_hostal')+
+th('🛏️ Upgrade','pct','conv_hostal')+
 th('Vendidas','cum','')+
 th('Universo','den','')+
 '<th>Período</th>'+
@@ -866,17 +867,28 @@ th('Universo','den','')+
         '</div>'+
       '</div>';
 
+    // conv por tipo (no "mejor")
+    var dPct=d?d.conv_vs_hostal_pct||0:null;
+    var uPct=u?u.conv_vs_hostal_pct||0:null;
+
+    function cellPct(pct){
+      if(pct==null) return '<span style="color:var(--gris)">—</span>';
+      var col=colHostal(pct);
+      return '<span class="gt-pct" style="color:'+col+'">'+fmtFrac(pct,2)+'</span>';
+    }
+
     var row=''+
       '<tr onclick="toggleGaugeRow(this)" style="cursor:pointer">'+
         '<td><div class="gt-prop">'+propLabel+'</div></td>'+
-        '<td><div class="gt-bar-wrap"><div class="gt-bar-track"><div class="gt-bar-fill" style="width:'+fillW+'%;background:'+col+'"></div></div><span class="gt-pct" style="color:'+col+'">'+fmtFrac(best,2)+'</span></div></td>'+
+        '<td style="text-align:left">'+cellPct(dPct)+'</td>'+
+        '<td style="text-align:left">'+cellPct(uPct)+'</td>'+
         '<td class="gt-cum">'+fmtN(vend)+'</td>'+
         '<td class="gt-denom">'+uni+'</td>'+
         '<td><span class="badge b-ok">'+it.Período+'</span></td>'+
         '<td style="text-align:center"><span class="chev" style="display:inline-block;transition:.18s;transform:rotate(0deg);font-weight:900;color:var(--gris)">▾</span></td>'+
       '</tr>'+
       '<tr class="gauge-detail-row" style="display:none">'+
-        '<td colspan="6" style="padding:12px 14px;background:var(--surface)">'+panel+'</td>'+
+        '<td colspan="7" style="padding:12px 14px;background:var(--surface)">'+panel+'</td>'+
       '</tr>';
     return row;
   }).join('');
