@@ -814,29 +814,34 @@ document.getElementById('timing-sec').innerHTML=
 (best?'<div style="font-size:11px;color:var(--gris)">Mejor franja: <b style="color:var(--ok)">'+best+'</b></div>':'')+
 '</div>'+
 '<div class="t-bars">'+
-slots.map(function(s){
+var slotsHtml='';slotsHtml=slots.map(function(s){
 var d=mD[s]||0,u=mU[s]||0;
-var hD=d>0?Math.max(8,Math.round(d/maxV*82)):0;
-var hU=u>0?Math.max(8,Math.round(u/maxV*82)):0;
+var wD=maxV>0?Math.round(d/maxV*100):0;
+var wU=maxV>0?Math.round(u/maxV*100):0;
 var isBest=s===best;
-return '<div class="t-col">'+
-'<div class="t-stacks">'+
-(d>0?'<div class="t-bar" style="height:'+hD+'px;background:var(--ok)'+(isBest?';opacity:.9':'')+';"></div>':'')+
-(u>0?'<div class="t-bar" style="height:'+hU+'px;background:var(--blue)'+(isBest?';opacity:.9':'')+';"></div>':'')+
+var label=s==='T-0'?s+' (mismo día CI)':s==='T+1'?s+' (in-stay)':s;
+return '<div class="t-slot">'+
+'<div class="t-slot-lbl"><span class="t-slot-name">'+(isBest?'<b style="color:var(--ok)">'+label+'</b>':label)+'</span>'+
+(isBest?'<span class="t-best-badge">★ mejor · '+(d+u)+' aceptaciones</span>':'<span class="t-slot-total">'+(d+u)+' aceptaciones</span>')+
 '</div>'+
-'<div class="t-label">'+(isBest?'<b>'+s+'</b>':s)+'</div>'+
-'<div class="t-n">'+(d+u)+'</div>'+
-(isBest?'<div class="t-best-tag">★ mejor</div>':'')+
+(d>0?'<div class="t-hbar-row"><span class="t-hbar-tipo">🍳 Desayuno</span><div class="t-hbar-track"><div class="t-hbar-fill" style="width:'+wD+'%;background:var(--ok)"></div></div><span class="t-hbar-val">'+d+'</span></div>':'')+
+(u>0?'<div class="t-hbar-row"><span class="t-hbar-tipo">🛏️ Upgrade</span><div class="t-hbar-track"><div class="t-hbar-fill" style="width:'+wU+'%;background:var(--blue)"></div></div><span class="t-hbar-val">'+u+'</span></div>':'')+
 '</div>';
-}).join('')+
+}).join('<div class="t-divider"></div>');
+document.getElementById('timing-sec').innerHTML=
+'<div class="timing-wrap">'+
+'<div class="t-header">'+
+'<div><div class="t-title">Distribución de aceptaciones por franja</div>'+
+'<div class="t-subtitle">T-N = aceptó N días <b>antes</b> del check-in · T+N = ya estaba hospedado</div></div>'+
+(best?'<span class="t-best-badge">★ Franja líder: '+best+'</span>':'')+
 '</div>'+
+slotsHtml+
 '<div class="t-legend">'+
-'<span><div style="width:12px;height:12px;background:var(--ok);border-radius:3px"></div> Desayuno</span>'+
-'<span><div style="width:12px;height:12px;background:var(--blue);border-radius:3px"></div> Upgrade</span>'+
-'<span style="color:var(--gris)">T-0 = mismo día check-in · T+1 = ya hospedado</span>'+
+'<span><div style="width:11px;height:11px;background:var(--ok);border-radius:3px"></div> Desayuno</span>'+
+'<span><div style="width:11px;height:11px;background:var(--blue);border-radius:3px"></div> Upgrade</span>'+
+'<span>Barras relativas al máximo del período</span>'+
 '</div></div>';
 }
-
 // ─── CANAL ──────────────────────────────────────────────────────────────────
 function renderCanal(det){
 var byK={};
