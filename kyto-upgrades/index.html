@@ -351,11 +351,7 @@ main{padding:14px 14px 60px;}
 <div class="sec-hdr"><h2>Canal de aceptación <i class="ib" onclick="openTip('canal')">i</i></h2><div class="linea"></div></div>
 <div id="canal-sec"></div>
 </div>
-<div class="sec">
-<div class="sec-hdr"><h2>Detalle por propiedad & tipo</h2><div class="linea"></div></div>
-<input class="prop-search" type="text" placeholder="🔍  Buscar propiedad..." oninput="filterPropCards(this.value)"/>
-<div class="prop-grid" id="prop-grid"></div>
-</div>
+
 </div>
 </main>
 
@@ -977,24 +973,34 @@ slotsHtml+
 
 // ─── CANAL ──────────────────────────────────────────────────────────────────
 function renderCanal(det){
-// Por propiedad, con desglose por producto en la MISMA fila (no una fila Desayuno + otra Upgrade).
-// Escala mejor cuando existan más productos.
+// MERGE: Canal de aceptación + detalle por producto (cards) en un solo lugar.
+// Por propiedad: mostramos WA vs Email global y un abatible con cards por producto.
 var byProp={};
 det.forEach(function(r){
   if(!r.ofertas_cumplidas) return;
   var prop=r.Propiedad||'Sin propiedad';
   var tipo=r.tipo||'Sin tipo';
-  if(!byProp[prop]) byProp[prop]={prop:prop, ventas:0, wa:0, em:0, porTipo:{}};
-  if(!byProp[prop].porTipo[tipo]) byProp[prop].porTipo[tipo]={tipo:tipo, wa:0, em:0, ventas:0};
+  if(!byProp[prop]) byProp[prop]={prop:prop, ventas:0, enviadas:0, revenue:0, wa:0, em:0, porTipo:{}};
+  if(!byProp[prop].porTipo[tipo]) byProp[prop].porTipo[tipo]={tipo:tipo, wa:0, em:0, ventas:0, enviadas:0, revenue:0, conv_vs_hostal:null, cerrado:false};
 
-  var wa=r.canal_wa_cumplidas||0;
-  var em=r.canal_email_cumplidas||0;
+  var wa=Number(r.canal_wa_cumplidas||0);
+  var em=Number(r.canal_email_cumplidas||0);
   byProp[prop].wa += wa;
   byProp[prop].em += em;
-  byProp[prop].ventas += (r.ofertas_cumplidas||0);
+  byProp[prop].ventas += Number(r.ofertas_cumplidas||0);
+  byProp[prop].enviadas += Number(r.ofertas_enviadas||0);
+  byProp[prop].revenue += Number(r.revenue_usd||0);
+
   byProp[prop].porTipo[tipo].wa += wa;
   byProp[prop].porTipo[tipo].em += em;
-  byProp[prop].porTipo[tipo].ventas += (r.ofertas_cumplidas||0);
+  byProp[prop].porTipo[tipo].ventas += Number(r.ofertas_cumplidas||0);
+  byProp[prop].porTipo[tipo].enviadas += Number(r.ofertas_enviadas||0);
+  byProp[prop].porTipo[tipo].revenue += Number(r.revenue_usd||0);
+
+  if(r.cerrado && r.conv_vs_hostal_pct!=null){
+    byProp[prop].porTipo[tipo].conv_vs_hostal = r.conv_vs_hostal_pct;
+    byProp[prop].porTipo[tipo].cerrado = true;
+  }
 });
 
 var items=Object.values(byProp).filter(function(v){return v.wa+v.em>0;})
@@ -1012,37 +1018,65 @@ function miniBar(wa,em){
   '<div style="display:flex;justify-content:space-between;font-size:9px;margin-top:3px;color:var(--gris)"><span>'+wP+'% WA</span><span>'+eP+'% Email</span></div>';
 }
 
+function tipoCard(t){
+  var esDes=t.tipo==='Desayuno';
+  var cv=t.enviadas>0?(t.ventas/t.enviadas):0;
+  var howTxt=esDes
+    ?'🍳 <strong>Cómo se calcula:</strong> Conv. vs hostal = cumplidas <strong>÷ huéspedes</strong> (solo mes cerrado)'
+    :'🛏️ <strong>Cómo se calcula:</strong> Conv. vs hostal = cumplidas <strong>÷ check-ins</strong> (solo mes cerrado)';
+  var hostalStr=(t.cerrado && t.conv_vs_hostal!=null)
+    ?' · vs hostal: <b>'+fmtFrac(t.conv_vs_hostal,2)+'</b>'
+    :'<span style="color:var(--warn)"> · vs hostal: disponible al cerrar el mes</span>';
+
+  return ''+
+  '<div class="tipo-card '+(t.tipo||'').toLowerCase()+'" style="background:var(--cream)">'+
+    '<div class="tipo-hdr">'+
+      '<div class="tipo-name">'+(esDes?'🍳':'🛏️')+' '+t.tipo+'</div>'+
+      '<div class="tipo-conv-wrap"><div class="tipo-conv '+clsOferta(cv)+'">'+fmtOferta(cv)+'</div><div class="tipo-conv-lbl">conv. oferta</div></div>'+
+    '</div>'+
+    '<div class="tipo-how">'+howTxt+hostalStr+'</div>'+
+    '<div class="tipo-bar-row"><span style="min-width:52px">'+fmtN(t.ventas)+' / '+fmtN(t.enviadas)+'</span>'+
+      '<div class="tipo-bar-track"><div class="tipo-bar-fill" style="background:'+(esDes?'var(--ok)':'var(--blue)')+';width:'+Math.min(100,t.enviadas>0?Math.round((t.ventas/t.enviadas)/Math.max(0.25,(t.ventas/t.enviadas)*1.2)*100):0)+'%"></div></div>'+
+    '</div>'+
+    '<div class="tipo-rev">'+fmtUSD(t.revenue)+(t.ventas>0?' · '+fmtUSD(t.revenue/t.ventas)+'/venta':'')+'</div>'+
+    '<div style="margin-top:8px">'+
+      '<div style="font-size:9px;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Canal (solo cumplidas con canal)</div>'+
+      miniBar(t.wa,t.em)+
+    '</div>'+
+  '</div>';
+}
+
 document.getElementById('canal-sec').innerHTML=
 '<div class="canal-wrap"><table class="canal-table"><thead><tr>'+
-'<th>Propiedad</th><th>WA vs Email (global)</th><th>Por producto (WA vs Email)</th><th style="text-align:center">📱 WA</th><th style="text-align:center">📧 Email</th><th style="text-align:center">Canal líder</th>'+
+'<th>Propiedad</th><th>WA vs Email (global)</th><th>Detalle por producto (abatible)</th><th style="text-align:center">📱 WA</th><th style="text-align:center">📧 Email</th><th style="text-align:center">Canal líder</th>'+
 '</tr></thead><tbody>'+
 items.map(function(it){
   var lider = it.wa>=it.em ? '📱 WhatsApp' : '📧 Email';
   var tipos = Object.values(it.porTipo||{}).filter(function(x){return (x.wa+x.em)>0;})
     .sort(function(a,b){return (b.wa+b.em)-(a.wa+a.em);});
-  var tipoHtml = tipos.map(function(t,idx){
-    var icon = t.tipo==='Desayuno'?'🍳':t.tipo==='Upgrade'?'🛏️':'•';
-    return ''+
-    '<div style="padding:6px 0;'+(idx<tipos.length-1?'border-bottom:1px dashed var(--border)':'')+'">'+
-    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">'+
-    '<div style="font-size:10px;font-weight:900;color:var(--dark)">'+icon+' '+t.tipo+' <span style="font-weight:700;color:var(--gris)">'+fmtN(t.ventas)+' v</span></div>'+
-    '<div style="font-size:10px;font-weight:800;color:var(--gris)">'+fmtN(t.wa+t.em)+' con canal</div>'+
-    '</div>'+
-    '<div style="margin-top:5px">'+miniBar(t.wa,t.em)+'</div>'+
-    '</div>';
-  }).join('');
-  if(!tipoHtml) tipoHtml='<span style="color:var(--gris);font-size:11px">—</span>';
+
+  var cardsHtml = tipos.map(tipoCard).join('');
+  var abatible = ''+
+    '<details style="background:transparent">'+
+      '<summary style="cursor:pointer;list-style:none;font-size:11px;font-weight:800;color:var(--dark)">'+
+        'Ver productos <span style="color:var(--gris);font-weight:700">('+(tipos.length||0)+')</span>'+
+      '</summary>'+
+      '<div style="padding-top:10px">'+
+        '<div class="tipo-grid" style="grid-template-columns:1fr;gap:10px">'+(cardsHtml||'<span style="color:var(--gris);font-size:11px">—</span>')+'</div>'+
+      '</div>'+
+    '</details>';
+
   return '<tr>'+
-  '<td><b>'+it.prop.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','')+'</b><br><span style="font-size:10px;color:var(--gris)">'+fmtN(it.ventas)+' ventas</span></td>'+
+  '<td><b>'+it.prop.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','')+'</b><br><span style="font-size:10px;color:var(--gris)">'+fmtN(it.ventas)+' ventas · '+fmtUSD(it.revenue)+'</span></td>'+
   '<td style="min-width:160px">'+miniBar(it.wa,it.em)+'</td>'+
-  '<td style="min-width:260px">'+tipoHtml+'</td>'+
+  '<td style="min-width:320px">'+abatible+'</td>'+
   '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--ok)">'+it.wa+'</td>'+
   '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--blue)">'+it.em+'</td>'+
   '<td style="text-align:center"><span class="badge '+(it.wa>=it.em?'b-ok':'b-blue')+'">'+lider+'</span></td>'+
   '</tr>';
 }).join('')+
 '</tbody></table></div>'+
-'<div style="font-size:10px;color:var(--gris);margin-top:8px;padding:7px 11px;background:var(--cm);border-radius:8px;">ℹ️ Canal calculado sobre <b>ofertas cumplidas</b> con canal registrado. Se muestra global + desglose por producto en la misma fila.</div>';
+'<div style="font-size:10px;color:var(--gris);margin-top:8px;padding:7px 11px;background:var(--cm);border-radius:8px;">ℹ️ Canal calculado sobre <b>ofertas cumplidas</b> con canal registrado. Aquí se muestra el canal global por propiedad + un <b>abatible</b> con el detalle por producto (con conversión y revenue) para evitar duplicación.</div>';
 }
 
 function render(){
@@ -1052,7 +1086,7 @@ var detCanal=filtrarSinTipo(DATA.detalle||[]);
 var res=DATA.resumen_por_periodo||[];
 renderAlerts(det);renderHero(det,res);renderSynthesis(det,res);renderConclusiones(det,res);renderTopGlobal(det);
 renderGauge(det);renderTrend(res);renderMetodo(res);
-renderPropCards(det);renderTiming(det);renderCanal(detCanal);
+renderTiming(det);renderCanal(detCanal);
 }
 
 (async function(){
