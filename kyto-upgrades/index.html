@@ -806,15 +806,8 @@ if(!slots.length){document.getElementById('timing-sec').innerHTML='<div class="e
 var maxV=Math.max(1,...slots.map(function(s){return Math.max(mD[s]||0,mU[s]||0);}));
 var totBySlot=slots.map(function(s){return{s:s,n:(mD[s]||0)+(mU[s]||0)};}).sort(function(a,b){return b.n-a.n;});
 var best=totBySlot[0]?totBySlot[0].s:null;
-document.getElementById('timing-sec').innerHTML=
-'<div class="timing-wrap">'+
-'<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">'+
-'<div><div style="font-size:14px;font-weight:800">Distribución de aceptaciones por franja</div>'+
-'<div style="font-size:11px;color:var(--gris);margin-top:2px">T-N = aceptó N días antes del CI · T+N = ya estaba hospedado</div></div>'+
-(best?'<div style="font-size:11px;color:var(--gris)">Mejor franja: <b style="color:var(--ok)">'+best+'</b></div>':'')+
-'</div>'+
-'<div class="t-bars">'+
-var slotsHtml='';slotsHtml=slots.map(function(s){
+var slotsHtml='';
+slotsHtml=slots.map(function(s){
 var d=mD[s]||0,u=mU[s]||0;
 var wD=maxV>0?Math.round(d/maxV*100):0;
 var wU=maxV>0?Math.round(u/maxV*100):0;
@@ -842,6 +835,7 @@ slotsHtml+
 '<span>Barras relativas al máximo del período</span>'+
 '</div></div>';
 }
+
 // ─── CANAL ──────────────────────────────────────────────────────────────────
 function renderCanal(det){
 var byK={};
