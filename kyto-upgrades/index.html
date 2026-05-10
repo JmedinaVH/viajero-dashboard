@@ -330,6 +330,7 @@ main{padding:14px 14px 60px;}
 <div class="sec"><div id="hero-kpis"></div></div>
 <div id="synthesis-sec"></div>
 <div id="conclusiones-sec"></div>
+<div id="top-sec"></div>
 <div class="sec">
 <div class="sec-hdr"><h2>Conversión vs universo real <i class="ib" onclick="openTip('conv_hostal')">i</i></h2><div class="linea"></div></div>
 <div id="gauge-sec"></div>
@@ -371,7 +372,7 @@ b:'¿Qué lee esta métrica?\n\n🍳 Desayuno = cumplidas ÷ total huéspedes de
 },
 'tendencia':{
 t:'Tendencia por período',
-b:'Compara el rendimiento entre períodos.\n↑ Subió vs anterior · ↓ Bajó vs anterior\n\nCada período = mes de check-in del huésped.\nMayo aparece como "En curso" — datos parciales: solo incluye los check-ins del mes que ya ocurrieron.\n\nConv % columna = conv. operativa (cumplidas ÷ enviadas).\nConv % vs hostal solo se muestra en la sección de gauges cuando el mes está cerrado.'
+b:'Compara el rendimiento entre períodos.\n↑ Subió vs anterior · ↓ Bajó vs anterior\n\nCada período = mes de oferta (mes de envío/creación, derivado de "Fecha creada").\nMayo aparece como "En curso" — datos parciales: solo incluye los check-ins del mes que ya ocurrieron.\n\nConv % columna = conv. operativa (cumplidas ÷ enviadas).\nConv % vs hostal solo se muestra en la sección de gauges cuando el mes está cerrado.'
 },
 'timing':{
 t:'¿Cuándo acepta el huésped?',
@@ -462,6 +463,15 @@ return(!p.length||p.includes(r.Período||''))&&(!pr.length||pr.includes(r.Propie
 });
 }
 
+// Igual que filtrar(), pero IGNORA el filtro de Tipo (producto).
+// Usado para "Canal de aceptación" cuando queremos ver el canal por propiedad, sin sesgo de producto.
+function filtrarSinTipo(arr){
+var p=getMsValues('per'),pr=getMsValues('prop');
+return arr.filter(function(r){
+return(!p.length||p.includes(r.Período||''))&&(!pr.length||pr.includes(r.Propiedad||''));
+});
+}
+
 // ─── FORMATO ───────────────────────────────────────────────────────────────
 function fmtN(n){return Math.round(Number(n)||0).toLocaleString('es-CO');}
 function fmtUSD(n){return '$'+(Math.round((Number(n)||0)*100)/100).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});}
@@ -492,7 +502,7 @@ document.getElementById('metodo-sec').innerHTML=
 '<div class="metodo-card op">'+
 '<div class="metodo-head"><span class="metodo-name">⚡ Conv % operativa</span><span class="metodo-tag tag-live">Tiempo real</span></div>'+
 '<div class="metodo-formula">cumplidas ÷ enviadas</div>'+
-'<div class="metodo-desc"><b>Período = mes de envío</b> (derivado de <i>Fecha creada</i> en <b>07_Kyto_Upselling_Raw</b>). Disponible siempre, incluso con el mes en curso.<br><br>Responde: <b>¿Qué % de las ofertas enviadas fue aceptado?</b><br><br>💡 Si el mes está “En curso”, las cifras son parciales pero reales.</div>'+
+'<div class="metodo-desc"><b>Período = mes de oferta</b> (mes de envío/creación, derivado de <i>Fecha creada</i> en <b>07_Kyto_Upselling_Raw</b>). Disponible siempre, incluso con el mes en curso.<br><br>Responde: <b>¿Qué % de las ofertas enviadas fue aceptado?</b><br><br>💡 Si el mes está “En curso”, las cifras son parciales pero reales.</div>'+
 '</div>'+
 '<div class="metodo-card hostal">'+
 '<div class="metodo-head"><span class="metodo-name">🏨 Conv % vs hostal</span><span class="metodo-tag tag-cerr">Solo mes cerrado</span></div>'+
@@ -534,7 +544,7 @@ var nProps=[...new Set(det.map(function(r){return r.Propiedad;}))].length;
 var items=[
 {dot:conv>=0.1?'ok':conv>=0.06?'warn':'err',h:'<b>'+totCum+'</b> ofertas cumplidas de <b>'+totEnv+'</b> enviadas · conv. global '+fmtOferta(conv)},
 {dot:'ok',h:'<b>'+fmtUSD(totRev)+'</b> generados · ticket promedio <b>'+fmtUSD(ticket)+'</b> por venta'},
-{dot:'info',h:'<b>'+nProps+'</b> propiedad'+(nProps!==1?'es':'')+' activa'+(nProps!==1?'s':'')+' · <b>'+pCerrados+'</b> período'+(pCerrados!==1?'s':'')+' cerrado'+(pCerrados!==1?'s':'')}
+{dot:'info',h:'<b>'+nProps+'</b> propiedad'+(nProps!==1?'es':'')+' activa'+(nProps!==1?'s':'')+' · <b>'+pCerrados+'</b> período'+(pCerrados!==1?'s':'')+' cerrado'+(pCerrados!==1?'s':'')+' · <b>'+(res.length-pCerrados)+'</b> en curso'}
 ];
 var cero=det.filter(function(r){return r.tipo==='Upgrade'&&r.ofertas_cumplidas===0&&r.ofertas_enviadas>5;});
 if(cero.length)items.push({dot:'err',h:'<b>'+cero.length+'</b> caso'+(cero.length!==1?'s':'')+' con 0% en Upgrade — requieren atención'});
@@ -548,6 +558,67 @@ return '<div class="syn-item"><div class="syn-dot '+it.dot+'"></div><span>'+it.h
 }
 
 // ─── CONCLUSIONES AUTOMÁTICAS ──────────────────────────────────────────────
+function renderConclusiones(det,res){
+}
+
+// ─── TOP GLOBAL: CANAL + PRODUCTO ─────────────────────────────────────────
+function renderTopGlobal(det){
+var wa=det.reduce(function(s,r){return s+(r.canal_wa_cumplidas||0);},0);
+var em=det.reduce(function(s,r){return s+(r.canal_email_cumplidas||0);},0);
+var totCh=wa+em;
+var chTop=totCh? (wa>=em?'WhatsApp':'Email') : '—';
+var chTopN=totCh? Math.max(wa,em) : 0;
+var chTopPct=totCh? Math.round(chTopN/totCh*100) : 0;
+
+// producto = Tipo (Desayuno / Upgrade) usando cumplidas y revenue
+var byTipo={};
+det.forEach(function(r){
+if(!byTipo[r.tipo])byTipo[r.tipo]={cum:0,rev:0};
+byTipo[r.tipo].cum+=r.ofertas_cumplidas||0;
+byTipo[r.tipo].rev+=r.revenue_usd||0;
+});
+var tipos=Object.keys(byTipo);
+var topByCum=tipos.slice().sort(function(a,b){return (byTipo[b].cum||0)-(byTipo[a].cum||0);})[0]||'—';
+var topByRev=tipos.slice().sort(function(a,b){return (byTipo[b].rev||0)-(byTipo[a].rev||0);})[0]||'—';
+
+var html=''+
+'<div class="sec">'+
+'<div class="sec-hdr"><h2>Top global (ventas)</h2><div class="linea"></div></div>'+
+'<div class="gauge-table-wrap" style="padding:14px 16px">'+
+'<div style="display:grid;grid-template-columns:1.2fr 1fr;gap:12px">'+
+'<div style="border:1.5px solid var(--border);border-radius:14px;padding:14px;background:var(--cream)">'+
+'<div style="font-size:10px;color:var(--gris);font-weight:800;text-transform:uppercase;letter-spacing:.6px">Canal top (todas las ventas)</div>'+
+'<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:6px">'+
+'<div style="font-size:22px;font-weight:900;color:var(--dark)">'+(totCh?('📱/📧 '+chTop):'—')+'</div>'+
+'<div style="font-size:11px;color:var(--gris);font-weight:700">'+(totCh?('<b>'+chTopN+'</b> de <b>'+totCh+'</b> ('+chTopPct+'%)'):'Sin canal registrado')+'</div>'+
+'</div>'+
+'<div style="margin-top:10px">'+
+'<div class="bar-duo" style="height:10px">'+
+'<div style="width:'+(totCh?Math.round(wa/totCh*100):0)+'%;background:var(--ok);height:100%"></div>'+
+'<div style="width:'+(totCh?100-Math.round(wa/totCh*100):0)+'%;background:var(--blue);height:100%"></div>'+
+'</div>'+
+'<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--gris);margin-top:5px"><span>📱 WA: <b>'+wa+'</b></span><span>📧 Email: <b>'+em+'</b></span></div>'+
+'</div>'+
+'</div>'+
+
+'<div style="border:1.5px solid var(--border);border-radius:14px;padding:14px;background:var(--cream)">'+
+'<div style="font-size:10px;color:var(--gris);font-weight:800;text-transform:uppercase;letter-spacing:.6px">Producto más vendido</div>'+
+'<div style="font-size:22px;font-weight:900;color:var(--dark);margin-top:6px">'+(topByCum==='Desayuno'?'🍳 ':'🛏️ ')+topByCum+'</div>'+
+'<div style="font-size:11px;color:var(--gris);line-height:1.6;margin-top:6px">'+
+'Por volumen: <b>'+topByCum+'</b> ('+fmtN((byTipo[topByCum]||{}).cum||0)+' ventas)<br>'+
+'Por revenue: <b>'+topByRev+'</b> ('+fmtUSD((byTipo[topByRev]||{}).rev||0)+')'+
+'</div>'+
+'</div>'+
+
+'</div>'+
+'<div style="font-size:10px;color:var(--gris);margin-top:10px">'+
+'Nota: por ahora "producto" = <b>Tipo oferta</b> (Desayuno/Upgrade). Si quieres "Subtipo" como producto real, lo sacamos del raw y lo exportamos al JSON.'+
+'</div>'+
+'</div></div>';
+
+document.getElementById('top-sec').innerHTML=html;
+}
+
 function renderConclusiones(det,res){
 var ins=[];
 // mejor propiedad
@@ -617,7 +688,7 @@ return '<span class="hero-delta '+(d>0?'up':'down')+'">'+(d>0?'↑':'↓')+' '+f
 
 var items=[
 {l:'Ofertas enviadas',v:fmtN(totEnv),s:totCum+' cumplidas',hc:'var(--green)',d:dlta(totEnv,prev?prev.ofertas_enviadas:null,fmtN)},
-{l:'Conversión global',v:fmtOferta(conv),s:'cumplidas ÷ enviadas · por mes de check-in',hc:colOferta(conv),d:dlta(conv,prev?prev.conv_oferta_pct:null,function(x){return fmtOferta(x,2);})},
+{l:'Conversión global',v:fmtOferta(conv),s:'cumplidas ÷ enviadas · por mes de oferta',hc:colOferta(conv),d:dlta(conv,prev?prev.conv_oferta_pct:null,function(x){return fmtOferta(x,2);})},
 {l:'Revenue generado',v:fmtUSD(totRev),s:totCum+' ventas · '+fmtUSD(ticket)+' ticket',hc:'#0369a1',d:dlta(totRev,prev?prev.revenue_usd:null,fmtUSD),id:'hero-rev'},
 {l:'Ticket promedio',v:ticket>0?fmtUSD(ticket):'—',s:'por oferta cumplida',hc:'#7c3aed',d:''}
 ];
@@ -811,8 +882,9 @@ var e=tr.reduce(function(s,r){return s+r.ofertas_enviadas;},0);
 var c=tr.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
 var rv=tr.reduce(function(s,r){return s+r.revenue_usd;},0);
 var cv=e>0?c/e:0;
-var wa=tr.reduce(function(s,r){return s+r.canal_wa_cumplidas;},0);
-var em=tr.reduce(function(s,r){return s+r.canal_email_cumplidas;},0);
+// Canal se ve en la pestaña "Timing & Canal" (para evitar duplicación)
+var wa=0;
+var em=0;
 var cerR=tr.filter(function(r){return r.cerrado&&r.conv_vs_hostal_pct!==null;});
 var hc=cerR.length?cerR[cerR.length-1].conv_vs_hostal_pct:null;
 var esDes=tipo==='Desayuno';
@@ -833,10 +905,6 @@ return '<div class="tipo-card '+(tipo.toLowerCase())+'">'+
 '<div class="tipo-bar-track"><div class="tipo-bar-fill" style="background:'+(esDes?'var(--ok)':'var(--blue)')+';width:'+Math.min(100,e>0?Math.round(cv/Math.max(0.25,cv*1.2)*100):0)+'%"></div></div>'+
 '</div>'+
 '<div class="tipo-rev">'+fmtUSD(rv)+(c>0?' · '+fmtUSD(rv/c)+'/venta':'')+'</div>'+
-'<div class="tipo-channel">'+
-(wa>0?'<span class="tipo-ch ch-wa">📱 WA: '+wa+'</span>':'')+
-(em>0?'<span class="tipo-ch ch-email">📧 Email: '+em+'</span>':'')+
-(wa===0&&em===0&&c>0?'<span class="tipo-ch ch-sin">Canal desconocido</span>':'')+
 '</div></div>';
 }).join('');
 return '<div class="prop-card" data-prop="'+prop+'">'+
@@ -913,24 +981,29 @@ slotsHtml+
 
 // ─── CANAL ──────────────────────────────────────────────────────────────────
 function renderCanal(det){
+// Agrupar SOLO por Propiedad (sin cortar por producto/tipo)
 var byK={};
 det.forEach(function(r){
 if(!r.ofertas_cumplidas)return;
-var k=r.Propiedad+'||'+r.tipo;
-if(!byK[k])byK[k]={prop:r.Propiedad,tipo:r.tipo,wa:0,em:0};
-byK[k].wa+=r.canal_wa_cumplidas;byK[k].em+=r.canal_email_cumplidas;
+var k=r.Propiedad;
+if(!byK[k])byK[k]={prop:r.Propiedad,wa:0,em:0,ventas:0};
+byK[k].wa+=r.canal_wa_cumplidas||0;
+byK[k].em+=r.canal_email_cumplidas||0;
+byK[k].ventas+=r.ofertas_cumplidas||0;
 });
-var items=Object.values(byK).filter(function(v){return v.wa+v.em>0;});
+var items=Object.values(byK).filter(function(v){return v.wa+v.em>0;})
+  .sort(function(a,b){return (b.wa+b.em)-(a.wa+a.em);});
 if(!items.length){document.getElementById('canal-sec').innerHTML='<div class="empty">Sin datos de canal.</div>';return;}
+
 document.getElementById('canal-sec').innerHTML=
 '<div class="canal-wrap"><table class="canal-table"><thead><tr>'+
-'<th>Propiedad · Tipo</th><th>WA vs Email</th><th style="text-align:center">📱 WA</th><th style="text-align:center">📧 Email</th><th style="text-align:center">Canal líder</th>'+
+'<th>Propiedad</th><th>WA vs Email</th><th style="text-align:center">📱 WA</th><th style="text-align:center">📧 Email</th><th style="text-align:center">Canal líder</th>'+
 '</tr></thead><tbody>'+
 items.map(function(it){
 var tot=it.wa+it.em||1;
 var wP=Math.round(it.wa/tot*100),eP=100-wP;
 return '<tr>'+
-'<td><b>'+it.prop.replace('Viajero ','')+'</b><br><span style="font-size:10px;color:var(--gris)">'+it.tipo+'</span></td>'+
+'<td><b>'+it.prop.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','')+'</b><br><span style="font-size:10px;color:var(--gris)">'+fmtN(it.ventas)+' ventas</span></td>'+
 '<td style="min-width:120px">'+
 '<div class="bar-duo"><div style="width:'+wP+'%;background:var(--ok);height:100%"></div><div style="width:'+eP+'%;background:var(--blue);height:100%"></div></div>'+
 '<div style="display:flex;justify-content:space-between;font-size:9px;margin-top:3px;color:var(--gris)"><span>'+wP+'% WA</span><span>'+eP+'% Email</span></div>'+
@@ -941,16 +1014,17 @@ return '<tr>'+
 '</tr>';
 }).join('')+
 '</tbody></table></div>'+
-'<div style="font-size:10px;color:var(--gris);margin-top:8px;padding:7px 11px;background:var(--cm);border-radius:8px;">ℹ️ Solo conversiones con canal registrado.</div>';
+'<div style="font-size:10px;color:var(--gris);margin-top:8px;padding:7px 11px;background:var(--cm);border-radius:8px;">ℹ️ Canal calculado sobre <b>ofertas cumplidas</b> con canal registrado. Esta tabla ignora el filtro de "Tipo oferta".</div>';
 }
 
 function render(){
 if(!DATA)return;
 var det=filtrar(DATA.detalle||[]);
+var detCanal=filtrarSinTipo(DATA.detalle||[]);
 var res=DATA.resumen_por_periodo||[];
-renderAlerts(det);renderHero(det,res);renderSynthesis(det,res);renderConclusiones(det,res);
+renderAlerts(det);renderHero(det,res);renderSynthesis(det,res);renderConclusiones(det,res);renderTopGlobal(det);
 renderGauge(det);renderTrend(res);renderMetodo(res);
-renderPropCards(det);renderTiming(det);renderCanal(det);
+renderPropCards(det);renderTiming(det);renderCanal(detCanal);
 }
 
 (async function(){
