@@ -1048,43 +1048,51 @@ function tipoCard(t){
 
 document.getElementById('canal-sec').innerHTML=
 '<div class="canal-wrap"><table class="canal-table"><thead><tr>'+
-'<th>Propiedad</th><th>WA vs Email (global)</th><th>Detalle por producto</th><th style="text-align:center">📱 WA</th><th style="text-align:center">📧 Email</th><th style="text-align:center">Canal líder</th>'+
+'<th>Propiedad</th><th>WA vs Email (global)</th><th style="text-align:center">📱 WA</th><th style="text-align:center">📧 Email</th><th style="text-align:center">Canal líder</th><th style="width:34px"></th>'+
 '</tr></thead><tbody>'+
 items.map(function(it){
   var lider = it.wa>=it.em ? '📱 WhatsApp' : '📧 Email';
   var tipos = Object.values(it.porTipo||{}).filter(function(x){return (x.wa+x.em)>0;})
     .sort(function(a,b){return (b.wa+b.em)-(a.wa+a.em);});
 
-  var cardsHtml = tipos.map(tipoCard).join('');
-  var abatible = ''+
-    '<details style="background:transparent" onclick="event.stopPropagation()">'+
-      '<summary style="cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:flex-end;font-size:11px;font-weight:900;color:var(--gris);user-select:none" aria-label="Desplegar detalle">'+
-        '<span style="font-size:14px;line-height:1;color:var(--gris)">▾</span>'+
-      '</summary>'+
-      '<div style="margin-top:10px;background:var(--cream);border:1.5px solid var(--border);border-radius:14px;padding:12px">'+
-        '<div class="tipo-grid" style="grid-template-columns:1fr 1fr;gap:12px">'+(cardsHtml||'<span style="color:var(--gris);font-size:11px">—</span>')+'</div>'+
-      '</div>'+
-    '</details>';
+  var cardsHtml = tipos.map(tipoCard).join('') || '<span style="color:var(--gris);font-size:11px">—</span>';
+  var panel = ''+
+    '<div style="background:var(--cream);border:1.5px solid var(--border);border-radius:14px;padding:12px">'+
+      '<div class="tipo-grid" style="grid-template-columns:1fr 1fr;gap:12px">'+cardsHtml+'</div>'+
+    '</div>';
 
-  return '<tr onclick="toggleCanalRow(this)">' +
-  '<td><b>'+it.prop.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','')+'</b><br><span style="font-size:10px;color:var(--gris)">'+fmtN(it.ventas)+' ventas · '+fmtUSD(it.revenue)+'</span></td>'+
-  '<td style="min-width:160px">'+miniBar(it.wa,it.em)+'</td>'+
-  '<td style="min-width:320px">'+abatible+'</td>'+
-  '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--ok)">'+fmtN(it.wa)+'</td>'+
-  '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--blue)">'+fmtN(it.em)+'</td>'+
-  '<td style="text-align:center"><span class="badge '+(it.wa>=it.em?'b-ok':'b-blue')+'">'+lider+'</span></td>'+
+  var row=''+
+  '<tr onclick="toggleCanalRow(this)" style="cursor:pointer">'+
+    '<td><b>'+it.prop.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','')+'</b><br><span style="font-size:10px;color:var(--gris)">'+fmtN(it.ventas)+' ventas · '+fmtUSD(it.revenue)+'</span></td>'+
+    '<td style="min-width:160px">'+miniBar(it.wa,it.em)+'</td>'+
+    '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--ok)">'+fmtN(it.wa)+'</td>'+
+    '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--blue)">'+fmtN(it.em)+'</td>'+
+    '<td style="text-align:center"><span class="badge '+(it.wa>=it.em?'b-ok':'b-blue')+'">'+lider+'</span></td>'+
+    '<td style="text-align:center">'+
+      '<span class="chev" style="display:inline-block;transition:.18s;transform:rotate(0deg);font-weight:900;color:var(--gris)">▾</span>'+
+    '</td>'+
   '</tr>';
+
+  var detail=''+
+  '<tr class="canal-detail-row" style="display:none">'+
+    '<td colspan="6" style="padding:12px 14px;background:var(--surface)">'+panel+'</td>'+
+  '</tr>';
+
+  return row+detail;
 }).join('')+
 '</tbody></table></div>'+
 '<div style="font-size:10px;color:var(--gris);margin-top:8px;padding:7px 11px;background:var(--cm);border-radius:8px;">ℹ️ Canal calculado sobre <b>ofertas cumplidas</b> con canal registrado. Se muestra el canal global por propiedad + el detalle por producto (con conversión y revenue) para evitar duplicación.</div>';
 }
 
 function toggleCanalRow(tr){
-  // Permite abrir/cerrar el detalle haciendo clic en cualquier parte de la fila.
-  // El click dentro del detalle no propaga (para poder seleccionar/copiar sin colapsar).
-  var d=tr.querySelector('details');
-  if(!d) return;
-  d.open=!d.open;
+  // Abre/cierra el panel "detalle" como una FILA completa debajo (igual a mock).
+  var nxt=tr.nextElementSibling;
+  if(!nxt || !nxt.classList || !nxt.classList.contains('canal-detail-row')) return;
+  var open=nxt.style.display==='table-row';
+  nxt.style.display=open?'none':'table-row';
+  // rota el chevron
+  var ch=tr.querySelector('.chev');
+  if(ch) ch.style.transform=open?'rotate(0deg)':'rotate(180deg)';
 }
 
 function render(){
