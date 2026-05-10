@@ -738,10 +738,20 @@ _gSort._data=cerrados;
 _renderGaugeTable();
 }
 function _sortGauge(col){
-if(_gSort.col===col)_gSort.asc=!_gSort.asc;
-else{_gSort.col=col;_gSort.asc=col==='prop';}
-_renderGaugeTable();
+  if(_gSort.col===col)_gSort.asc=!_gSort.asc;
+  else{_gSort.col=col;_gSort.asc=col==='prop';}
+  _renderGaugeTable();
 }
+
+function toggleGaugeRow(tr){
+  var nxt=tr.nextElementSibling;
+  if(!nxt || !nxt.classList || !nxt.classList.contains('gauge-detail-row')) return;
+  var open=nxt.style.display==='table-row';
+  nxt.style.display=open?'none':'table-row';
+  var ch=tr.querySelector('.chev');
+  if(ch) ch.style.transform=open?'rotate(0deg)':'rotate(180deg)';
+}
+
 function _renderGaugeTable(){
 var cerrados=_gSort._data||[];
 var col=_gSort.col,asc=_gSort.asc;
@@ -757,34 +767,120 @@ return asc?va-vb:vb-va;
 });
 var maxP=Math.max.apply(null,sorted.map(function(r){return r.conv_vs_hostal_pct||0;}));
 function th(label,c,tip){
-var ico=_gSort.col===c?(_gSort.asc?'↑':'↓'):'↕';
-return '<th class="'+(c===_gSort.col?'sorted':'')+' " onclick="_sortGauge(\''+c+'\')">'+label+' <span class="sort-ico">'+ico+'</span>'+(tip?' <i class="ib" style="vertical-align:middle" onclick="event.stopPropagation();openTip(\''+tip+'\')\">">i</i>':'')+'</th>';
+  var ico=_gSort.col===c?(_gSort.asc?'↑':'↓'):'↕';
+  return '<th class="'+(c===_gSort.col?'sorted':'')+'" onclick="_sortGauge(\''+c+'\')">'+
+    label+' <span class="sort-ico">'+ico+'</span>'+
+    (tip?(' <i class="ib" style="vertical-align:middle" onclick="event.stopPropagation();openTip(\''+tip+'\')">i</i>'):'')+
+  '</th>';
 }
+
+// NUEVO: con 30+ hostales, tabla por PROPIEDAD con desplegable (2 cards: Desayuno + Upgrade)
 var html='<div class="gauge-table-wrap">'+
 '<table class="gauge-table"><thead><tr>'+
 th('Propiedad','prop','')+
-th('Tipo','tipo','')+
-th('Conv % vs hostal','pct','conv_hostal')+
+th('Conv. vs hostal (mejor)','pct','conv_hostal')+
 th('Vendidas','cum','')+
 th('Universo','den','')+
 '<th>Período</th>'+
+'<th style="width:34px"></th>'+
 '</tr></thead><tbody>'+
-sorted.map(function(r){
-var pct=r.conv_vs_hostal_pct;
-var col=colHostal(pct);
-var fillW=Math.min(100,maxP>0?Math.round(pct/Math.max(maxP*1.1,0.0001)*100):0);
-var esDes=r.tipo==='Desayuno';
-var den=esDes?r._huespedes_hostal:r._checkins_hostal;
-var denLabel=esDes?'hués.':'CI';
-return '<tr>'+
-'<td><div class="gt-prop">'+r.Propiedad.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','')+'</div></td>'+
-'<td><span class="gt-tipo-ico">'+(esDes?'🍳':'🛏️')+'</span> <span style="font-size:11px;font-weight:600">'+r.tipo+'</span></td>'+
-'<td><div class="gt-bar-wrap"><div class="gt-bar-track"><div class="gt-bar-fill" style="width:'+fillW+'%;background:'+col+'"></div></div><span class="gt-pct" style="color:'+col+'">'+fmtFrac(pct,2)+'</span></div></td>'+
-'<td class="gt-cum">'+r.ofertas_cumplidas+'</td>'+
-'<td class="gt-denom">'+fmtN(den)+' '+denLabel+'</td>'+
-'<td><span class="badge b-ok">'+r.Período+'</span></td>'+
-'</tr>';
-}).join('')+
+
+// agrupamos por Propiedad + Período (solo cerrados)
+(function(){
+  var g={};
+  sorted.forEach(function(r){
+    var k=(r.Propiedad||'')+'||'+(r.Período||'');
+    if(!g[k]) g[k]={Propiedad:r.Propiedad,Período:r.Período,rows:[]};
+    g[k].rows.push(r);
+  });
+  var items=Object.values(g);
+
+  // orden: por propiedad o por mejor conv
+  if(_gSort.col==='prop'){
+    items.sort(function(a,b){
+      return _gSort.asc
+        ? (a.Propiedad||'').localeCompare(b.Propiedad||'')
+        : (b.Propiedad||'').localeCompare(a.Propiedad||'');
+    });
+  }else{
+    function bestPct(it){
+      var p=it.rows.map(function(r){return r.conv_vs_hostal_pct||0;});
+      return Math.max.apply(null,p);
+    }
+    items.sort(function(a,b){
+      return _gSort.asc ? (bestPct(a)-bestPct(b)) : (bestPct(b)-bestPct(a));
+    });
+  }
+
+  function mkCard(r){
+    var esDes=r.tipo==='Desayuno';
+    var den=esDes?r._huespedes_hostal:r._checkins_hostal;
+    var denLabel=esDes?'hués.':'CI';
+    var pct=r.conv_vs_hostal_pct||0;
+    var col=colHostal(pct);
+    return ''+
+      '<div class="tipo-card '+(esDes?'desayuno':'upgrade')+'" style="background:var(--surface)">'+
+        '<div class="tipo-hdr">'+
+          '<div class="tipo-name">'+(esDes?'🍳':'🛏️')+' '+r.tipo+'</div>'+
+          '<div class="tipo-conv-wrap"><div class="tipo-conv" style="color:'+col+'">'+fmtFrac(pct,2)+'</div><div class="tipo-conv-lbl">conv. vs hostal</div></div>'+
+        '</div>'+
+        '<div class="tipo-how">'+
+          (esDes
+            ?'🍳 <strong>Cálculo:</strong> cumplidas <strong>÷ huéspedes</strong>'
+            :'🛏️ <strong>Cálculo:</strong> cumplidas <strong>÷ check-ins</strong>')+
+          ' · Período cerrado'+
+        '</div>'+
+        '<div class="tipo-bar-row"><span style="min-width:70px">'+fmtN(r.ofertas_cumplidas)+' vend.</span>'+
+          '<div class="tipo-bar-track"><div class="tipo-bar-fill" style="background:'+col+';width:'+Math.min(100,Math.round((pct/Math.max(0.02,pct*1.25))*100))+'%"></div></div>'+
+        '</div>'+
+        '<div class="tipo-rev" style="display:flex;justify-content:space-between;gap:10px">'+
+          '<span><b>Universo:</b> '+fmtN(den)+' '+denLabel+'</span>'+
+          '<span style="color:var(--gris)"><b>Período:</b> '+r.Período+'</span>'+
+        '</div>'+
+      '</div>';
+  }
+
+  return items.map(function(it){
+    var propLabel=(it.Propiedad||'').replace('Viajero ','').replace(' Hostel','').replace(' Hostal','');
+    var d=it.rows.find(function(r){return r.tipo==='Desayuno';});
+    var u=it.rows.find(function(r){return r.tipo==='Upgrade';});
+
+    var best=Math.max(d?d.conv_vs_hostal_pct||0:0, u?u.conv_vs_hostal_pct||0:0);
+    var col=colHostal(best);
+    var maxP=Math.max.apply(null, items.map(function(x){
+      var dd=x.rows.find(function(r){return r.tipo==='Desayuno';});
+      var uu=x.rows.find(function(r){return r.tipo==='Upgrade';});
+      return Math.max(dd?dd.conv_vs_hostal_pct||0:0, uu?uu.conv_vs_hostal_pct||0:0);
+    }))||0.0001;
+    var fillW=Math.min(100,Math.round(best/Math.max(maxP*1.1,0.0001)*100));
+
+    var vend=(d?d.ofertas_cumplidas||0:0)+(u?u.ofertas_cumplidas||0:0);
+    // universo: mostramos ambos (huespedes + checkins) en una sola celda
+    var uni=(d?fmtN(d._huespedes_hostal)+' hués.':'—')+' · '+(u?fmtN(u._checkins_hostal)+' CI':'—');
+
+    var panel=''+
+      '<div style="background:var(--cream);border:1.5px solid var(--border);border-radius:14px;padding:12px">'+
+        '<div class="tipo-grid" style="grid-template-columns:1fr 1fr;gap:12px">'+
+          (d?mkCard(d):'<div class="tipo-card" style="background:var(--surface);border:1.5px dashed var(--border)">Sin Desayuno</div>')+
+          (u?mkCard(u):'<div class="tipo-card" style="background:var(--surface);border:1.5px dashed var(--border)">Sin Upgrade</div>')+
+        '</div>'+
+      '</div>';
+
+    var row=''+
+      '<tr onclick="toggleGaugeRow(this)" style="cursor:pointer">'+
+        '<td><div class="gt-prop">'+propLabel+'</div></td>'+
+        '<td><div class="gt-bar-wrap"><div class="gt-bar-track"><div class="gt-bar-fill" style="width:'+fillW+'%;background:'+col+'"></div></div><span class="gt-pct" style="color:'+col+'">'+fmtFrac(best,2)+'</span></div></td>'+
+        '<td class="gt-cum">'+fmtN(vend)+'</td>'+
+        '<td class="gt-denom">'+uni+'</td>'+
+        '<td><span class="badge b-ok">'+it.Período+'</span></td>'+
+        '<td style="text-align:center"><span class="chev" style="display:inline-block;transition:.18s;transform:rotate(0deg);font-weight:900;color:var(--gris)">▾</span></td>'+
+      '</tr>'+
+      '<tr class="gauge-detail-row" style="display:none">'+
+        '<td colspan="6" style="padding:12px 14px;background:var(--surface)">'+panel+'</td>'+
+      '</tr>';
+    return row;
+  }).join('');
+})()+
 '</tbody></table></div>'+
 '<div style="font-size:10px;color:var(--gris);margin-top:9px;padding:7px 11px;background:var(--cm);border-radius:8px;">'+
 'ℹ️ Clic en encabezado para ordenar. 🟢 ≥ 1% · 🟡 0.5-1% · 🔴 < 0.5% · Solo períodos cerrados · Denominadores desde <b>06_Kyto_Denominadores</b>'+
