@@ -388,6 +388,12 @@ document.getElementById('tip-title').textContent=title;
 document.getElementById('tip-body').textContent=body;
 document.getElementById('tip-overlay').classList.add('show');
 }
+// Permite mostrar "cards" en el overlay (no solo texto plano)
+function openTipCards(title, cardsHtml){
+document.getElementById('tip-title').textContent=title;
+document.getElementById('tip-body').innerHTML=cardsHtml;
+document.getElementById('tip-overlay').classList.add('show');
+}
 function closeTip(e){if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;document.getElementById('tip-overlay').classList.remove('show');}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')document.getElementById('tip-overlay').classList.remove('show');});
 
@@ -628,12 +634,30 @@ document.getElementById('hero-kpis').innerHTML=html;
 var el=document.getElementById('hero-rev');
 if(el){
 el.onclick=function(){
-var lines=[];
-Object.keys(byTipo).sort().forEach(function(k){
-var rv=byTipo[k].rev||0, c=byTipo[k].cum||0;
-lines.push((k==='Desayuno'?'🍳':'🛏️')+' '+k+': '+fmtUSD(rv)+' · '+c+' ventas'+(c>0?' · ticket '+fmtUSD(rv/c):''));
-});
-openTipCustom('Revenue generado','Total: '+fmtUSD(totRev)+'\nVentas: '+totCum+'\nTicket prom.: '+(totCum>0?fmtUSD(ticket):'—')+'\n\nDetalle por tipo:\n'+(lines.length?lines.join('\n'):'—'));
+// 2 cards: Desayuno y Upgrade
+function card(tipo, icono, colorVar){
+var rv=(byTipo[tipo]||{}).rev||0;
+var c=(byTipo[tipo]||{}).cum||0;
+var t=c>0?rv/c:0;
+return ''+
+'<div style="border:1.5px solid var(--border);border-radius:12px;padding:14px 14px;margin:10px 0;background:var(--cream)">'+
+'<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px">'+
+'<div style="font-weight:900;font-size:13px;color:var(--dark)">'+icono+' '+tipo+'</div>'+
+'<div style="font-weight:900;font-size:13px;color:'+colorVar+'">'+fmtUSD(rv)+'</div>'+
+'</div>'+
+'<div style="font-size:11px;color:var(--gris);line-height:1.65">'+
+'<b>'+c+'</b> ventas · ticket prom. <b>'+(c>0?fmtUSD(t):'—')+'</b><br>'+
+'Cómo leer: revenue generado por <b>'+tipo.toLowerCase()+'</b> (solo ofertas cumplidas).'+
+'</div>'+
+'</div>';
+}
+var cardsHtml=
+'<div style="font-size:11px;color:var(--gris);margin-bottom:8px;line-height:1.6">'+
+'Total: <b>'+fmtUSD(totRev)+'</b> · <b>'+totCum+'</b> ventas · ticket prom. <b>'+(totCum>0?fmtUSD(ticket):'—')+'</b>'+
+'</div>'+
+card('Desayuno','🍳','var(--ok)')+
+card('Upgrade','🛏️','var(--blue)');
+openTipCards('Revenue generado',cardsHtml);
 };
 }
 }
@@ -925,7 +949,7 @@ if(!DATA)return;
 var det=filtrar(DATA.detalle||[]);
 var res=DATA.resumen_por_periodo||[];
 renderAlerts(det);renderHero(det,res);renderSynthesis(det,res);renderConclusiones(det,res);
-renderGauge(det);renderRevenue(det);renderTrend(res);renderMetodo(res);
+renderGauge(det);renderTrend(res);renderMetodo(res);
 renderPropCards(det);renderTiming(det);renderCanal(det);
 }
 
@@ -939,7 +963,7 @@ document.getElementById('h-ts').textContent=dStr+' · '+tStr;}
 poblarFiltros();render();
 }catch(e){
 document.getElementById('h-ts').textContent='Sin datos';
-document.getElementById('synthesis-sec').innerHTML='<div class="alert-banner red"><div class="alert-ico">❌</div><div class="alert-text"><div class="alert-title">No se pudieron cargar los datos</div><div class="alert-desc">Verifica que <code>../data/kyto_upselling.json</code> existe y está accesible.</div></div></div>';
+document.getElementById('synthesis-sec').innerHTML='<div class="alert-banner red"><div class="alert-ico">❌</div><div class="alert-text"><div class="alert-title">No se pudieron cargar los datos</div><div class="alert-desc">Verifica que <code>../data/kyto_upselling.json</code> exista, que sea JSON válido y que GitHub Pages ya haya actualizado.</div></div></div>';
 console.error(e);
 }
 })();
