@@ -17,6 +17,7 @@
 --amber:#92400e;--amber-soft:#fef3c7;
 --red:#991b1b;--red-soft:#fee2e2;
 }
+html{scroll-behavior:smooth;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh;}
 header{background:var(--dark);padding:0 36px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.25);}
@@ -127,7 +128,7 @@ main{max-width:1200px;margin:0 auto;padding:36px 48px 80px;}
 .ac-arrow{font-size:18px;color:var(--gris);transition:transform .25s ease;}
 .acordeon-item.open .ac-arrow{transform:rotate(180deg);}
 .ac-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
-.acordeon-item.open .ac-body{max-height:600px;}
+.acordeon-item.open .ac-body{max-height:2000px;}
 .ac-body-inner{padding:0 20px 18px;}
 .ac-table{width:100%;border-collapse:collapse;font-size:13px;}
 .ac-table th{padding:7px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gris);border-bottom:2px solid var(--border);text-align:center;}
@@ -154,7 +155,7 @@ header{padding:0 20px;height:auto;min-height:64px;padding-top:12px;padding-botto
 .filtros{padding:10px 20px;}
 main{padding:24px 20px 60px;}
 .city-grid{grid-template-columns:1fr;}
-.kpi-strip{grid-template-columns:1fr 1fr;}
+.kpi-strip{grid-template-columns:1fr;}
 }
 /* Secciones abatibles */
 .sec-label.toggleable{cursor:pointer;user-select:none;}
@@ -250,6 +251,11 @@ main{padding:24px 20px 60px;}
 
 <script>
 const DATA_URL = '../data/merch_data.json';
+
+function calcStock(ph){
+  if(!ph || ph.enviado === 0) return 0;
+  return ph.vendido > ph.enviado ? ph.enviado - ph.vendido : ph.stock;
+}
 const H_ORDER = ['BOG','TAY','MED','GTP','GTS','CLO'];
 const H_SHORT = {BOG:'Bogotá',TAY:'Tayrona',MED:'Medellín',GTP:'Guatapé',GTS:'Getsemaní',CLO:'Cali'};
 const H_COLORS = {BOG:'#c99b1a',TAY:'#1a7fd4',MED:'#2d8a4e',GTP:'#9b59b6',GTS:'#d4541a',CLO:'#e74c3c'};
@@ -379,7 +385,7 @@ function renderBarras(){
     ? DATA.resumenHostal.map(r=>({l:H_SHORT[r.key]||r.nombre, k:r.key, v:r.vendido}))
     : [{l:H_SHORT[FILTRO]||nombreHostal(FILTRO), k:FILTRO, v:DATA.resumenHostal.find(r=>r.key===FILTRO)?.vendido||0}];
   cd = [...cd].sort((a,b)=>b.v-a.v);
-  const mc = Math.max(...cd.map(x=>x.v), 1);
+  const mc = cd.length ? Math.max(...cd.map(x=>x.v), 1) : 1;
   document.getElementById('barCiudad').innerHTML = cd.map(r=>`
     <div class="bar-row">
       <span class="bar-label" title="${nombreHostal(r.k)}">${r.l}</span>
@@ -390,7 +396,7 @@ function renderBarras(){
     l:p.producto,
     v:FILTRO==='todos' ? p.totalVendido : (p.porHostal.find(x=>x.key===FILTRO)||{}).vendido||0
   })).sort((a,b)=>b.v-a.v);
-  const mp = Math.max(...pd.map(x=>x.v), 1);
+  const mp = pd.length ? Math.max(...pd.map(x=>x.v), 1) : 1;
   document.getElementById('barProducto').innerHTML = pd.map(r=>`
     <div class="bar-row">
       <span class="bar-label">${r.l}</span>
@@ -540,7 +546,7 @@ function renderInsights(){
 
   const lider = [...DATA.resumenHostal].sort((a,b)=>b.vendido-a.vendido)[0];
   const estrella = DATA.productos.reduce((a,b)=>b.totalVendido>a.totalVendido?b:a, DATA.productos[0]);
-  const masStock = [...DATA.productos].sort((a,b)=>b.totalStock-a.totalStock)[0];
+  const masStock = DATA.productos.length ? [...DATA.productos].map(p=>({...p, stockRealCalc: p.porHostal.reduce((sum,ph)=>sum+calcStock(ph),0)})).sort((a,b)=>b.stockRealCalc-a.stockRealCalc)[0] : null;
   const bajoST = DATA.resumenHostal.filter(r=>r.sellThr<15);
 
   const items = [
@@ -558,8 +564,8 @@ function renderInsights(){
       body:`ST global: <strong>${k.sellThrGlobal}%</strong>. ${k.sellThrGlobal>=20?'Ritmo de rotación saludable.':'Por debajo del 20% — revisar visibilidad y precio.'}`},
     bajoST.length > 0 && FILTRO==='todos' ? {cls:'warn', title:'🔻 Rotación baja',
       body:`${bajoST.map(r=>r.nombre).join(', ')} tienen ST &lt;15%. Evaluar activaciones o descuentos focalizados.`} : null,
-    masStock && masStock.totalStock > 5 ? {cls:'', title:'💡 Oportunidad',
-      body:`<strong>${masStock.producto}</strong> tiene el mayor stock sin rotar (${masStock.totalStock} uds). Priorizar visibilidad en punto de venta.`} : null,
+    masStock && masStock.stockRealCalc > 5 ? {cls:'', title:'💡 Oportunidad',
+      body:`<strong>${masStock.producto}</strong> tiene el mayor stock sin rotar (${masStock.stockRealCalc} uds). Priorizar visibilidad en punto de venta.`} : null,
   ].filter(Boolean);
   document.getElementById('insightsGrid').innerHTML = items.map(i=>`
     <div class="insight ${i.cls}">
