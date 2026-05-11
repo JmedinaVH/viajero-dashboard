@@ -578,12 +578,15 @@ function renderInsights(){
     masStock && masStock.stockRealCalc > 5 ? {cls:'', title:'💡 Oportunidad',
       body:`<strong>${masStock.producto}</strong> tiene el mayor stock sin rotar (${masStock.stockRealCalc} uds). Priorizar visibilidad en punto de venta.`} : null,
   ].filter(Boolean);
-  document.getElementById('insightsGrid').innerHTML = items.map(i=>`
+ document.getElementById('insightsGrid').innerHTML = items
+  .map(i => `
     <div class="insight ${i.cls}">
-      <div class="insight-icon">${icoOf(i.title)}</div><div class="insight-title">${lblOf(i.title)}</div>
+      <div class="insight-icon">${icoOf(i.title)}</div>
+      <div class="insight-title">${lblOf(i.title)}</div>
       <div class="insight-body">${i.body}</div>
-    </div>`
-  }).join('');
+    </div>
+  `)
+  .join('');
 }
 
 function renderAcordeon_OLD(){
