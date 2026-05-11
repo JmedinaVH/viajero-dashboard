@@ -88,6 +88,7 @@ main{max-width:1200px;margin:0 auto;padding:36px 48px 80px;}
 .hcell{display:inline-flex;align-items:center;justify-content:center;width:42px;height:26px;border-radius:6px;font-weight:700;font-size:13px;}
 .hc-none{background:#f1f5f9;color:#94a3b8;}
 .hc-na{background:#f8f8f8;color:#cbd5e1;font-size:11px;font-style:italic;}
+.hc-ghost{background:#fdf4ff;color:#7e22ce;font-size:11px;font-weight:700;border:1.5px dashed #a855f7;}
 .hc-low{background:#fef9c3;color:#713f12;}
 .hc-mid{background:#bbf7d0;color:#14532d;}
 .hc-high{background:#6ee7b7;color:#064e3b;}
@@ -134,6 +135,9 @@ main{max-width:1200px;margin:0 auto;padding:36px 48px 80px;}
 .ac-table tr.total-row td{font-weight:700;background:var(--cream);border-top:2px solid var(--border);border-bottom:none;}
 .ac-table tr:hover:not(.total-row) td{background:var(--cream);}
 .ac-table tr.not-sent td{color:#b0a9a4;font-style:italic;}
+.ac-table tr.ghost-row td{background:#fdf4ff !important;}
+.ac-table tr.ghost-row td.left{color:#7e22ce;font-weight:700;}
+.ghost-badge{display:inline-flex;align-items:center;gap:4px;background:#fdf4ff;border:1.5px dashed #a855f7;color:#7e22ce;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;}
 .alert-row td{background:#fff7ed!important;}
 .stock-neg{color:#dc2626;font-weight:700;}
 .cons-table{width:100%;border-collapse:collapse;font-size:13px;}
@@ -207,6 +211,7 @@ main{padding:24px 20px 60px;}
       <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gris)"><div style="width:12px;height:12px;border-radius:3px;background:#f1f5f9"></div>Agotado</div>
       <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gris)"><div style="width:12px;height:12px;border-radius:3px;background:#fee2e2"></div>⚠️ Vendido &gt; Enviado</div>
       <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gris)"><div style="width:12px;height:12px;border-radius:3px;background:#f8f8f8;border:1px solid #e2e8f0"></div>No enviado</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gris)"><div style="width:12px;height:12px;border-radius:3px;background:#fdf4ff;border:1.5px dashed #a855f7"></div>Venta sin envío registrado</div>
     </div>
   </div>
 
@@ -427,14 +432,16 @@ function renderCityCards(){
 function renderHeatmap(){
   const hs = FILTRO==='todos' ? H_ORDER : [FILTRO];
   const hCls = (ph) => {
-    if(ph.enviado === 0) return 'hc-na';            // nunca se envió
-    if(ph.vendido > ph.enviado) return 'hc-alert';  // sobrestock
-    if(ph.stock === 0) return 'hc-none';            // agotado
+    if(ph.enviado === 0 && ph.vendido > 0) return 'hc-ghost';  // venta sin envío registrado
+    if(ph.enviado === 0) return 'hc-na';                        // nunca se envió
+    if(ph.vendido > ph.enviado) return 'hc-alert';              // vendido > enviado
+    if(ph.stock === 0) return 'hc-none';                        // agotado
     if(ph.stock >= 10) return 'hc-high';
     if(ph.stock >= 5)  return 'hc-mid';
     return 'hc-low';
   };
   const hVal = (ph) => {
+    if(ph.enviado === 0 && ph.vendido > 0) return `+${ph.vendido}?`; // venta sin envío
     if(ph.enviado === 0) return '—';
     if(ph.vendido > ph.enviado) return `${ph.enviado - ph.vendido}`; // negativo
     return ph.stock;
@@ -492,6 +499,15 @@ function renderInsights(){
   const estrella = DATA.productos.reduce((a,b)=>b.totalVendido>a.totalVendido?b:a, DATA.productos[0]);
   const masStock = [...DATA.productos].sort((a,b)=>b.totalStock-a.totalStock)[0];
   const bajoST = DATA.resumenHostal.filter(r=>r.sellThr<15);
+  // Ventas fantasma: enviado=0 pero vendido>0
+  const fantasmas = [];
+  DATA.productos.forEach(p => {
+    p.porHostal.forEach(ph => {
+      if(ph.enviado === 0 && (ph.vendido||0) > 0 && (FILTRO==='todos'||ph.key===FILTRO)){
+        fantasmas.push(`<strong>${p.producto}</strong> en ${H_SHORT[ph.key]||ph.key} (${ph.vendido} ud${ph.vendido>1?'s':''})`);
+      }
+    });
+  });
   const items = [
     {cls:'',     title:'🏆 Ciudad más activa',   body:`<strong>${lider.nombre}</strong> lidera con ${lider.vendido} uds y ${lider.sellThr}% sell-through.`},
     {cls:'coral',title:'⭐ Producto estrella',    body:`<strong>${estrella.producto}</strong>: ${estrella.totalVendido} uds vendidas, ${estrella.sellThrTotal}% de rotación global.`},
@@ -499,6 +515,7 @@ function renderInsights(){
     {cls:k.sellThrGlobal>=20?'green':'warn',title:'📊 Sell-through global',body:`ST global: <strong>${k.sellThrGlobal}%</strong>. ${k.sellThrGlobal>=20?'Ritmo de rotación saludable.':'Por debajo del 20% — revisar visibilidad y precio.'}`},
     bajoST.length>0 && FILTRO==='todos' ? {cls:'warn',title:'🔻 Rotación baja',body:`${bajoST.map(r=>r.nombre).join(', ')} tienen ST &lt;15%. Evaluar activaciones o descuentos focalizados.`} : null,
     masStock && masStock.totalStock>5 ? {cls:'',title:'💡 Oportunidad',body:`<strong>${masStock.producto}</strong> tiene el mayor stock sin rotar (${masStock.totalStock} uds). Priorizar visibilidad en punto de venta.`} : null,
+    fantasmas.length>0 ? {cls:'coral',title:'👻 Ventas sin envío registrado',body:`${fantasmas.join(' / ')}. El producto se vendió pero no figura como enviado a esa sede. Revisar transferencias informales o registros pendientes.`} : null,
   ].filter(Boolean);
   document.getElementById('insightsGrid').innerHTML = items.map(i=>`
     <div class="insight ${i.cls}">
@@ -510,17 +527,27 @@ function renderInsights(){
 function renderAcordeon(){
   const list = FILTRO==='todos' ? DATA.resumenHostal : DATA.resumenHostal.filter(r=>r.key===FILTRO);
   const tieneAlerta = (hKey) => DATA.stockCritico.some(s=>s.tipo==='alerta'&&s.key===hKey);
+  const tieneGhost  = (hKey) => DATA.productos.some(p => {
+    const ph = p.porHostal.find(x=>x.key===hKey)||{};
+    return ph.enviado === 0 && (ph.vendido||0) > 0;
+  });
 
   document.getElementById('acordeonContainer').innerHTML = list.map(h=>{
     const stockR = stockRealHostal(h.key);
     const stockDisplay = stockR < 0 ? `<span class="stock-neg">${stockR}</span>` : stockR;
 
-    // Filas: sólo productos enviados a esta sede + fila de no-enviados colapsada
-    const prodEnviados = DATA.productos.filter(p=>(p.porHostal.find(x=>x.key===h.key)||{}).enviado > 0);
-    const prodNoEnviados = DATA.productos.filter(p=>((p.porHostal.find(x=>x.key===h.key)||{}).enviado||0) === 0);
+    // Filas: productos enviados, fantasmas (vendido sin envío) y no-enviados sin actividad
+    const prodEnviados   = DATA.productos.filter(p => (p.porHostal.find(x=>x.key===h.key)||{}).enviado > 0);
+    const prodGhost      = DATA.productos.filter(p => {
+      const ph = p.porHostal.find(x=>x.key===h.key)||{};
+      return ph.enviado === 0 && (ph.vendido||0) > 0;
+    });
+    const prodNoEnviados = DATA.productos.filter(p => {
+      const ph = p.porHostal.find(x=>x.key===h.key)||{};
+      return ph.enviado === 0 && (ph.vendido||0) === 0;
+    });
 
-    const sinTallaHostal = prodEnviados.every(p => SIN_TALLA.includes(p.producto));
-    const mostrarTallas = prodEnviados.some(p => !SIN_TALLA.includes(p.producto));
+    const mostrarTallas = [...prodEnviados, ...prodGhost].some(p => !SIN_TALLA.includes(p.producto));
 
     const filasProd = prodEnviados.map(p=>{
       const ph = p.porHostal.find(x=>x.key===h.key) || {enviado:0,vendido:0,stock:0,sellThr:0,alerta:false,tallas:{S:0,M:0,L:0}};
@@ -537,7 +564,18 @@ function renderAcordeon(){
       </tr>`;
     }).join('');
 
-    const filasNoEnviados = prodNoEnviados.length > 0
+    const filasGhost = prodGhost.map(p => {
+      const ph = p.porHostal.find(x=>x.key===h.key) || {enviado:0,vendido:0,stock:0,tallas:{S:0,M:0,L:0}};
+      const tieneTalla = !SIN_TALLA.includes(p.producto);
+      return `<tr class="ghost-row">
+        <td class="left">${p.producto} <span class="ghost-badge">👻 venta sin envío</span></td>
+        ${mostrarTallas && tieneTalla ? `<td>?</td><td>?</td><td>?</td>` : mostrarTallas ? '<td colspan="3" style="color:#a855f7;font-size:11px">unitalla</td>' : ''}
+        <td style="color:#a855f7">0</td>
+        <td style="color:#7e22ce;font-weight:700">${ph.vendido}</td>
+        <td style="color:#dc2626;font-weight:700">${-ph.vendido}</td>
+        <td><span class="ghost-badge">sin envío</span></td>
+      </tr>`;
+    }).join('');
       ? prodNoEnviados.map(p=>`
         <tr class="not-sent">
           <td class="left" style="color:#b0a9a4">${p.producto}</td>
@@ -552,7 +590,8 @@ function renderAcordeon(){
         <div class="ac-left">
           <span class="ac-key">${h.key}</span>
           <span class="ac-name">${h.nombre}</span>
-          ${tieneAlerta(h.key)?'<span class="tag tag-alert" style="font-size:10px">⚠️ alerta</span>':''}
+          ${tieneAlerta(h.key)?'<span class="tag tag-alert" style="font-size:10px">⚠️ sobrestock</span>':''}
+          ${tieneGhost(h.key) ?'<span class="ghost-badge" style="font-size:10px">👻 venta sin envío</span>':''}
         </div>
         <div class="ac-right">
           <div class="ac-stat"><div class="ac-stat-val">${h.vendido}</div><div class="ac-stat-lbl">vendido</div></div>
@@ -572,6 +611,7 @@ function renderAcordeon(){
             </tr></thead>
             <tbody>
               ${filasProd}
+              ${filasGhost}
               ${filasNoEnviados}
               <tr class="total-row">
                 <td class="left">TOTAL</td>
@@ -584,7 +624,10 @@ function renderAcordeon(){
             </tbody>
           </table>
           ${tieneAlerta(h.key)?`<p style="font-size:11px;color:#856404;background:#fffbea;border-left:3px solid #c99b1a;padding:8px 12px;margin-top:10px;border-radius:0 6px 6px 0;line-height:1.6;">
-            ⚠️ <strong>Nota:</strong> Hay producto(s) donde lo vendido supera lo enviado. Verificar si hubo reposición no registrada, transferencia entre puntos o error en conteo.
+            ⚠️ <strong>Sobrestock:</strong> Hay producto(s) donde lo vendido supera lo enviado. Verificar si hubo reposición no registrada, transferencia entre puntos o error en conteo.
+          </p>`:''}
+          ${tieneGhost(h.key)?`<p style="font-size:11px;color:#7e22ce;background:#fdf4ff;border-left:3px solid #a855f7;padding:8px 12px;margin-top:10px;border-radius:0 6px 6px 0;line-height:1.6;">
+            👻 <strong>Venta sin envío:</strong> Se registró una venta de un producto que no figura como enviado a esta sede. Puede ser una transferencia informal, producto propio del staff, o error de registro. Verificar e incluir en el próximo envío.
           </p>`:''}
         </div>
       </div>
