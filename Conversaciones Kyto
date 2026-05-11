@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Viajero · Conversaciones Kyto</title>
+<link rel="icon" type="image/png" href="../favicon-32x32.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --dark:#1E100A;
+  --cream:#F4EFE9;--cm:#EDE5DA;--cd:#E0D5C8;--border:#DDD4CA;
+  --gris:#7A6E68;--mid:#6B3A28;
+  --ok:#15803d;--ok-bg:#dcfce7;
+  --warn:#854d0e;--warn-bg:#fef9c3;
+  --err:#dc2626;--err-bg:#fee2e2;
+  --blue:#0369a1;--blue-bg:#e0f2fe;
+  --orange:#c2410c;--orange-bg:#ffedd5;
+  --purple:#7c3aed;--purple-bg:#ede9fe;
+  --surface:#fff;
+  --rl:18px;
+  --sh:0 2px 8px rgba(30,16,10,.06),0 4px 20px rgba(30,16,10,.07);
+  --shm:0 6px 28px rgba(30,16,10,.11);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+
+/* HEADER — estilo Kyto */
+header{background:var(--dark);padding:0 36px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.25);} 
+.h-left{display:flex;align-items:center;gap:14px;}
+.h-logo{height:34px;object-fit:contain;}
+.h-sep{width:1px;height:28px;background:rgba(255,255,255,.15);} 
+.h-title{color:#fff;font-size:16px;font-weight:700;}
+.h-sub{color:rgba(255,255,255,.38);font-size:10px;letter-spacing:.4px;margin-top:1px;}
+.h-right{display:flex;align-items:center;gap:10px;}
+.h-ts{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:4px 10px;display:flex;flex-direction:column;align-items:flex-end;gap:1px;}
+.h-ts-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.3);} 
+.h-ts-val{font-size:11px;color:rgba(255,255,255,.6);} 
+.h-live{display:flex;align-items:center;gap:5px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);border-radius:99px;padding:4px 11px;font-size:9px;font-weight:700;color:#10b981;letter-spacing:.5px;text-transform:uppercase;}
+.h-live .dot{width:5px;height:5px;border-radius:50%;background:#10b981;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.5);}50%{box-shadow:0 0 0 4px rgba(16,185,129,0);}}
+.btn-hub{display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.6);font-size:11px;font-weight:600;text-decoration:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:5px 11px;transition:.18s;}
+.btn-hub:hover{background:rgba(255,255,255,.13);color:#fff;}
+
+/* FILTER BAR */
+.filtros{background:var(--orange);padding:9px 36px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:64px;z-index:199;border-bottom:2px solid #9a3412;}
+.fg label{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.55);margin-bottom:3px;}
+.sel{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:5px 9px;border:1.5px solid rgba(255,255,255,.22);border-radius:7px;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;min-width:160px;outline:none;}
+
+main{max-width:1220px;margin:0 auto;padding:26px 36px 80px;}
+
+.hero{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;}
+.kpi{background:var(--surface);border-radius:var(--rl);padding:20px 18px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .18s,transform .18s;}
+.kpi:hover{box-shadow:var(--shm);transform:translateY(-2px);} 
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--hc,var(--orange));border-radius:var(--rl) var(--rl) 0 0;}
+.k-lbl{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;}
+.k-val{font-size:32px;font-weight:800;line-height:1;color:var(--hc,var(--dark));margin-bottom:5px;}
+.k-sub{font-size:11px;color:var(--gris);line-height:1.4;}
+
+.sec{margin-bottom:22px;}
+.sec-hdr{display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+.sec-hdr h2{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}
+.sec-hdr .linea{flex:1;height:1px;background:var(--border);} 
+
+.card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:18px 18px;box-shadow:var(--sh);} 
+
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;} 
+
+.badge{display:inline-flex;align-items:center;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;}
+.b-ok{background:var(--ok-bg);color:var(--ok);} .b-warn{background:var(--warn-bg);color:var(--warn);} .b-err{background:var(--err-bg);color:var(--err);} .b-blue{background:var(--blue-bg);color:var(--blue);} .b-orange{background:var(--orange-bg);color:var(--orange);} 
+
+.mini{font-size:11px;color:var(--gris);line-height:1.7;}
+
+.bar{height:10px;background:var(--cd);border-radius:99px;overflow:hidden;display:flex;}
+.bar>div{height:100%;}
+
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead th{background:var(--cm);color:var(--mid);padding:9px 13px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;white-space:nowrap;}
+tbody td{padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+
+@media(max-width:960px){.hero{grid-template-columns:1fr 1fr;}.row2{grid-template-columns:1fr;}}
+@media(max-width:640px){header,.filtros{padding-left:14px;padding-right:14px;}main{padding:14px 14px 60px;}.hero{grid-template-columns:1fr 1fr;}}
+@media(max-width:420px){.hero{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-left">
+    <img class="h-logo" src="../02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero" onerror="this.style.display='none'"/>
+    <div class="h-sep"></div>
+    <div>
+      <div class="h-title">Conversaciones Kyto</div>
+      <div class="h-sub">Via · Viajero Hostels</div>
+    </div>
+  </div>
+  <div class="h-right">
+    <div class="h-ts">
+      <div class="h-ts-label">Última actualización</div>
+      <div class="h-ts-val" id="h-ts">—</div>
+    </div>
+    <div class="h-live"><div class="dot"></div>Live</div>
+    <a href="../index.html" class="btn-hub">← Hub</a>
+  </div>
+</header>
+
+<div class="filtros">
+  <div class="fg">
+    <label>Período</label>
+    <select class="sel" id="per" onchange="render()"></select>
+  </div>
+</div>
+
+<main>
+  <div class="hero" id="hero"></div>
+
+  <div class="sec">
+    <div class="sec-hdr"><h2>Satisfacción</h2><div class="linea"></div></div>
+    <div class="row2">
+      <div class="card" id="sat-card"></div>
+      <div class="card" id="hitl-card"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr"><h2>Etiquetas (Top)</h2><div class="linea"></div></div>
+    <div class="card" id="tags"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr"><h2>Detalle por período</h2><div class="linea"></div></div>
+    <div class="card" style="padding:0;overflow:hidden" id="tbl"></div>
+  </div>
+</main>
+
+<script>
+var DATA=null;
+
+function fmtN(n){return Math.round(Number(n)||0).toLocaleString('es-CO');}
+function fmtMinFromSeconds(s){
+  var n=Math.round((Number(s)||0)/60);
+  if(n<60) return n+' min';
+  var h=Math.floor(n/60), m=n%60;
+  return h+' h '+(m?m+' min':'');
+}
+function fmtHrs(n){return (Math.round((Number(n)||0)*10)/10).toLocaleString('es-CO');}
+function pct(p){return (Math.round((Number(p)||0)*1000)/10).toFixed(1)+'%';}
+
+function kpi(label,val,sub,hc){
+  return '<div class="kpi" style="--hc:'+hc+'">'+
+    '<div class="k-lbl">'+label+'</div>'+
+    '<div class="k-val">'+val+'</div>'+
+    '<div class="k-sub">'+sub+'</div>'+
+  '</div>';
+}
+
+function fillPeriodo(){
+  var sel=document.getElementById('per');
+  var pers=(DATA.conversaciones||[]).map(function(r){return r['Período'];});
+  sel.innerHTML = '<option value="__all">Todos</option>' + pers.map(function(p){return '<option value="'+p+'">'+p+'</option>';}).join('');
+}
+
+function getRows(){
+  var v=document.getElementById('per').value;
+  var rows=(DATA.conversaciones||[]);
+  if(v && v!=='__all') rows=rows.filter(function(r){return r['Período']===v;});
+  return rows;
+}
+
+function sum(rows,k){return rows.reduce(function(s,r){return s+(Number(r[k])||0);},0);}
+function avgWeighted(rows,k,weightK){
+  var w=sum(rows,weightK);
+  if(!w) return 0;
+  var t=rows.reduce(function(s,r){return s + (Number(r[k])||0)*(Number(r[weightK])||0);},0);
+  return t/w;
+}
+
+function render(){
+  if(!DATA) return;
+  var rows=getRows();
+  var totConv=sum(rows,'conversaciones');
+  var totUsers=sum(rows,'usuarios');
+  var totMsgs=sum(rows,'mensajes_total');
+  var sat=avgWeighted(rows,'satisfaccion_score','conversaciones');
+  var tr=avgWeighted(rows,'tiempo_respuesta_s','conversaciones');
+
+  var hitl=sum(rows,'hitl_solicitudes');
+  var hitlRate=totConv?hitl/totConv:0;
+
+  var fte=avgWeighted(rows,'fte_dia','conversaciones');
+  var hrs=sum(rows,'horas_ahorradas');
+
+  document.getElementById('hero').innerHTML =
+    kpi('Conversaciones', fmtN(totConv), fmtN(totUsers)+' usuarios', 'var(--orange)')+
+    kpi('Tiempo respuesta', fmtMinFromSeconds(tr), 'promedio ponderado', 'var(--blue)')+
+    kpi('Mensajes', fmtN(totMsgs), 'User prom: '+(avgWeighted(rows,'msg_user_prom','conversaciones').toFixed(1))+' · Bot prom: '+(avgWeighted(rows,'msg_bot_prom','conversaciones').toFixed(1)), 'var(--purple)')+
+    kpi('Ahorro trabajo', fmtN(hrs)+' h', 'FTE/día: '+fte.toFixed(2), 'var(--ok)');
+
+  // Satisfaction
+  var b=avgWeighted(rows,'satisfaccion_buena_pct','conversaciones');
+  var n=avgWeighted(rows,'satisfaccion_normal_pct','conversaciones');
+  var m=avgWeighted(rows,'satisfaccion_mala_pct','conversaciones');
+  document.getElementById('sat-card').innerHTML =
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px">'+
+      '<div><div style="font-weight:900;font-size:13px">Score de satisfacción</div><div class="mini">Escala 0-100 (promedio ponderado por conversaciones)</div></div>'+
+      '<div style="font-weight:900;font-size:22px;color:var(--ok)">'+Math.round(sat)+'</div>'+
+    '</div>'+
+    '<div class="bar" title="Buena / Normal / Mala">'+
+      '<div style="width:'+(b*100)+'%;background:var(--ok)"></div>'+
+      '<div style="width:'+(n*100)+'%;background:#eab308"></div>'+
+      '<div style="width:'+(m*100)+'%;background:var(--err)"></div>'+
+    '</div>'+
+    '<div style="display:flex;justify-content:space-between;margin-top:8px" class="mini">'+
+      '<span><span class="badge b-ok">Buena</span> '+pct(b)+'</span>'+
+      '<span><span class="badge b-warn">Normal</span> '+pct(n)+'</span>'+
+      '<span><span class="badge b-err">Mala</span> '+pct(m)+'</span>'+
+    '</div>';
+
+  // HITL
+  document.getElementById('hitl-card').innerHTML =
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px">'+
+      '<div><div style="font-weight:900;font-size:13px">HITL (intervención humana)</div><div class="mini">Solicitudes por el usuario o por frustración / soporte</div></div>'+
+      '<div style="font-weight:900;font-size:22px;color:var(--orange)">'+pct(hitlRate)+'</div>'+
+    '</div>'+
+    '<div class="mini">'+
+      '<div style="display:flex;justify-content:space-between"><span>Total solicitudes</span><b>'+fmtN(hitl)+'</b></div>'+
+      '<div style="display:flex;justify-content:space-between"><span>Manage booking</span><b>'+fmtN(sum(rows,'hitl_manage_booking'))+'</b></div>'+
+      '<div style="display:flex;justify-content:space-between"><span>Front desk</span><b>'+fmtN(sum(rows,'hitl_front_desk'))+'</b></div>'+
+      '<div style="display:flex;justify-content:space-between"><span>Partnerships</span><b>'+fmtN(sum(rows,'hitl_partnerships'))+'</b></div>'+
+      '<div style="display:flex;justify-content:space-between"><span>Explicit support</span><b>'+fmtN(sum(rows,'hitl_explicit_support'))+'</b></div>'+
+      '<div style="display:flex;justify-content:space-between"><span>Bot frustration</span><b>'+fmtN(sum(rows,'hitl_bot_frustration'))+'</b></div>'+
+    '</div>';
+
+  // Tags
+  var tags=[
+    {k:'etiqueta_reservas', lbl:'Reservas'},
+    {k:'etiqueta_precios', lbl:'Precios'},
+    {k:'etiqueta_eventos', lbl:'Eventos'},
+    {k:'etiqueta_ubicacion', lbl:'Ubicación'},
+    {k:'etiqueta_faq', lbl:'FAQ'},
+  ];
+  var totTags=sum(rows,'etiquetas_total')||1;
+  var tagRows=tags.map(function(t){return {lbl:t.lbl, n:sum(rows,t.k)||0};}).sort(function(a,b){return b.n-a.n;});
+  document.getElementById('tags').innerHTML =
+    '<div style="font-weight:900;font-size:13px;margin-bottom:10px">Distribución de etiquetas</div>'+
+    '<div class="mini" style="margin-bottom:10px">Total etiquetas registradas: <b>'+fmtN(sum(rows,'etiquetas_total'))+'</b></div>'+
+    tagRows.map(function(t){
+      var p=totTags? (t.n/totTags*100):0;
+      return '<div style="margin-bottom:10px">'+
+        '<div style="display:flex;justify-content:space-between;gap:10px" class="mini"><span>'+t.lbl+'</span><b>'+fmtN(t.n)+' · '+p.toFixed(1)+'%</b></div>'+
+        '<div class="bar" style="height:8px"><div style="width:'+p+'%;background:var(--orange)"></div></div>'+
+      '</div>';
+    }).join('');
+
+  // Table
+  var t = (DATA.conversaciones||[]).slice().sort(function(a,b){
+    return String(a['Período']||'').localeCompare(String(b['Período']||''));
+  });
+  document.getElementById('tbl').innerHTML =
+    '<table><thead><tr>'+
+      '<th>Período</th><th>Conversaciones</th><th>Usuarios</th><th>TR</th><th>Duración</th><th>Msgs</th><th>Sat</th><th>HITL</th><th>FTE/día</th><th>Horas ahorr.</th>'+
+    '</tr></thead><tbody>'+
+    t.map(function(r){
+      return '<tr>'+
+        '<td><b>'+r['Período']+'</b></td>'+
+        '<td>'+fmtN(r.conversaciones)+'</td>'+
+        '<td>'+fmtN(r.usuarios)+'</td>'+
+        '<td>'+fmtMinFromSeconds(r.tiempo_respuesta_s)+'</td>'+
+        '<td>'+fmtN(r.duracion_prom_min)+' min</td>'+
+        '<td>'+fmtN(r.mensajes_total)+'</td>'+
+        '<td><span class="badge b-ok">'+fmtN(r.satisfaccion_score)+'</span></td>'+
+        '<td>'+fmtN(r.hitl_solicitudes)+' ('+pct(r.hitl_tasa_pct)+')</td>'+
+        '<td>'+Number(r.fte_dia||0).toFixed(2)+'</td>'+
+        '<td>'+fmtN(r.horas_ahorradas)+'</td>'+
+      '</tr>';
+    }).join('')+
+    '</tbody></table>';
+}
+
+(async function(){
+  try{
+    var r=await fetch('../data/kyto_conversaciones.json?t='+Date.now());
+    DATA=await r.json();
+    if(DATA.actualizado){
+      var dt=new Date(DATA.actualizado);
+      document.getElementById('h-ts').textContent = dt.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+' · '+dt.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+    }
+    fillPeriodo();
+    render();
+  }catch(e){
+    document.getElementById('h-ts').textContent='Sin datos';
+    document.getElementById('hero').innerHTML = '<div class="card" style="grid-column:1/-1">❌ No se pudieron cargar los datos. Verifica <code>../data/kyto_conversaciones.json</code>.</div>';
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>
