@@ -494,11 +494,27 @@ function renderProdTable(){
 
 function renderInsights(){
   const k = getKpis();
-  const alertas = DATA.stockCritico.filter(s=>s.tipo==='alerta' && (FILTRO==='todos'||s.key===FILTRO));
-  const lider = [...DATA.resumenHostal].sort((a,b)=>b.vendido-a.vendido)[0];
-  const estrella = DATA.productos.reduce((a,b)=>b.totalVendido>a.totalVendido?b:a, DATA.productos[0]);
-  const masStock = [...DATA.productos].sort((a,b)=>b.totalStock-a.totalStock)[0];
-  const bajoST = DATA.resumenHostal.filter(r=>r.sellThr<15);
+
+  // Sobrestock real: vendido > enviado Y enviado > 0 (excluye ghosts donde enviado=0)
+  const alertas = [];
+  DATA.productos.forEach(p => {
+    p.porHostal.forEach(ph => {
+      if(ph.enviado > 0 && ph.vendido > ph.enviado && (FILTRO==='todos'||ph.key===FILTRO)){
+        alertas.push({producto: p.producto, hostal: ph.nombre||nombreHostal(ph.key), key: ph.key});
+      }
+    });
+  });
+
+  // Agotados exactos (vendido === enviado, sin sobrestock): informativo, no alerta
+  const agotados = [];
+  DATA.productos.forEach(p => {
+    p.porHostal.forEach(ph => {
+      if(ph.enviado > 0 && ph.vendido === ph.enviado && (FILTRO==='todos'||ph.key===FILTRO)){
+        agotados.push(`<strong>${p.producto}</strong> en ${H_SHORT[ph.key]||ph.key}`);
+      }
+    });
+  });
+
   // Ventas fantasma: enviado=0 pero vendido>0
   const fantasmas = [];
   DATA.productos.forEach(p => {
@@ -508,14 +524,29 @@ function renderInsights(){
       }
     });
   });
+
+  const lider = [...DATA.resumenHostal].sort((a,b)=>b.vendido-a.vendido)[0];
+  const estrella = DATA.productos.reduce((a,b)=>b.totalVendido>a.totalVendido?b:a, DATA.productos[0]);
+  const masStock = [...DATA.productos].sort((a,b)=>b.totalStock-a.totalStock)[0];
+  const bajoST = DATA.resumenHostal.filter(r=>r.sellThr<15);
+
   const items = [
-    {cls:'',     title:'🏆 Ciudad más activa',   body:`<strong>${lider.nombre}</strong> lidera con ${lider.vendido} uds y ${lider.sellThr}% sell-through.`},
-    {cls:'coral',title:'⭐ Producto estrella',    body:`<strong>${estrella.producto}</strong>: ${estrella.totalVendido} uds vendidas, ${estrella.sellThrTotal}% de rotación global.`},
-    alertas.length>0 ? {cls:'warn',title:'⚠️ Alerta de inventario',body:`${alertas.map(a=>`<strong>${a.producto}</strong> en ${a.hostal}: vendido supera enviado`).join(' / ')}. Verificar conteo físico o reposición no registrada.`} : null,
-    {cls:k.sellThrGlobal>=20?'green':'warn',title:'📊 Sell-through global',body:`ST global: <strong>${k.sellThrGlobal}%</strong>. ${k.sellThrGlobal>=20?'Ritmo de rotación saludable.':'Por debajo del 20% — revisar visibilidad y precio.'}`},
-    bajoST.length>0 && FILTRO==='todos' ? {cls:'warn',title:'🔻 Rotación baja',body:`${bajoST.map(r=>r.nombre).join(', ')} tienen ST &lt;15%. Evaluar activaciones o descuentos focalizados.`} : null,
-    masStock && masStock.totalStock>5 ? {cls:'',title:'💡 Oportunidad',body:`<strong>${masStock.producto}</strong> tiene el mayor stock sin rotar (${masStock.totalStock} uds). Priorizar visibilidad en punto de venta.`} : null,
-    fantasmas.length>0 ? {cls:'coral',title:'👻 Ventas sin envío registrado',body:`${fantasmas.join(' / ')}. El producto se vendió pero no figura como enviado a esa sede. Revisar transferencias informales o registros pendientes.`} : null,
+    {cls:'', title:'🏆 Ciudad más activa',
+      body:`<strong>${lider.nombre}</strong> lidera con ${lider.vendido} uds y ${lider.sellThr}% sell-through.`},
+    {cls:'coral', title:'⭐ Producto estrella',
+      body:`<strong>${estrella.producto}</strong>: ${estrella.totalVendido} uds vendidas, ${estrella.sellThrTotal}% de rotación global.`},
+    alertas.length > 0 ? {cls:'warn', title:'⚠️ Sobrestock — vendido supera enviado',
+      body:`${alertas.map(a=>`<strong>${a.producto}</strong> en ${a.hostal}`).join(' · ')}. El conteo de ventas supera el inventario enviado — verificar reposición no registrada o error de conteo.`} : null,
+    agotados.length > 0 ? {cls:'green', title:'✅ Productos agotados',
+      body:`${agotados.join(' · ')}. Vendido exactamente lo enviado — considerar reposición.`} : null,
+    fantasmas.length > 0 ? {cls:'coral', title:'👻 Venta sin envío registrado',
+      body:`${fantasmas.join(' · ')}. Se vendió un producto que no figura como enviado a esa sede. Revisar si hubo transferencia informal o error de registro.`} : null,
+    {cls: k.sellThrGlobal>=20?'green':'warn', title:'📊 Sell-through global',
+      body:`ST global: <strong>${k.sellThrGlobal}%</strong>. ${k.sellThrGlobal>=20?'Ritmo de rotación saludable.':'Por debajo del 20% — revisar visibilidad y precio.'}`},
+    bajoST.length > 0 && FILTRO==='todos' ? {cls:'warn', title:'🔻 Rotación baja',
+      body:`${bajoST.map(r=>r.nombre).join(', ')} tienen ST &lt;15%. Evaluar activaciones o descuentos focalizados.`} : null,
+    masStock && masStock.totalStock > 5 ? {cls:'', title:'💡 Oportunidad',
+      body:`<strong>${masStock.producto}</strong> tiene el mayor stock sin rotar (${masStock.totalStock} uds). Priorizar visibilidad en punto de venta.`} : null,
   ].filter(Boolean);
   document.getElementById('insightsGrid').innerHTML = items.map(i=>`
     <div class="insight ${i.cls}">
@@ -526,7 +557,11 @@ function renderInsights(){
 
 function renderAcordeon(){
   const list = FILTRO==='todos' ? DATA.resumenHostal : DATA.resumenHostal.filter(r=>r.key===FILTRO);
-  const tieneAlerta = (hKey) => DATA.stockCritico.some(s=>s.tipo==='alerta'&&s.key===hKey);
+  // Sobrestock real: vendido > enviado > 0 (excluye ghosts)
+  const tieneAlerta = (hKey) => DATA.productos.some(p => {
+    const ph = p.porHostal.find(x=>x.key===hKey)||{};
+    return ph.enviado > 0 && ph.vendido > ph.enviado;
+  });
   const tieneGhost  = (hKey) => DATA.productos.some(p => {
     const ph = p.porHostal.find(x=>x.key===hKey)||{};
     return ph.enviado === 0 && (ph.vendido||0) > 0;
