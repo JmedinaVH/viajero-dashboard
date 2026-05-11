@@ -270,11 +270,9 @@ async function cargarDatos(){
     const r = await fetch(DATA_URL + '?t=' + Date.now());
     if(!r.ok) throw new Error('HTTP '+r.status);
     DATA = await r.json();
-    // Corregir stock real sumando porHostal (puede ser negativo si vendido > enviado)
     DATA.productos.forEach(p => {
       p.stockReal = p.porHostal.reduce((a, h) => a + (h.vendido - h.enviado > 0 ? -(h.vendido - h.enviado) : h.stock), 0);
     });
-    renderTodo();
     const dt = new Date(DATA.actualizado);
     document.getElementById('h-ts').textContent =
       dt.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+
@@ -283,7 +281,16 @@ async function cargarDatos(){
     document.querySelector('main').innerHTML =
       '<p style="padding:60px;color:var(--gris);text-align:center;font-size:14px;">'+
       '⚠️ No se pudo cargar <code>data/merch_data.json</code>.<br>'+
-      'Asegúrate de haber subido el archivo al repositorio en la ruta correcta.</p>';
+      'Verifica que el archivo existe en <code>data/merch_data.json</code>.<br><br>'+
+      '<small style="color:#aaa">'+e.message+'</small></p>';
+    return;
+  }
+  try{
+    renderTodo();
+  } catch(e){
+    console.error('Error en render:', e);
+    document.getElementById('kpiStrip').innerHTML =
+      '<p style="color:#dc2626;font-size:12px;padding:10px">⚠️ Error al renderizar: '+e.message+'</p>';
   }
 }
 
@@ -544,8 +551,9 @@ function renderInsights(){
     });
   });
 
-  const lider = [...DATA.resumenHostal].sort((a,b)=>b.vendido-a.vendido)[0];
-  const estrella = DATA.productos.reduce((a,b)=>b.totalVendido>a.totalVendido?b:a, DATA.productos[0]);
+  const lider = DATA.resumenHostal.length ? [...DATA.resumenHostal].sort((a,b)=>b.vendido-a.vendido)[0] : null;
+  const estrella = DATA.productos.length ? DATA.productos.reduce((a,b)=>b.totalVendido>a.totalVendido?b:a, DATA.productos[0]) : null;
+  if(!lider || !estrella) return;
   const masStock = DATA.productos.length ? [...DATA.productos].map(p=>({...p, stockRealCalc: p.porHostal.reduce((sum,ph)=>sum+calcStock(ph),0)})).sort((a,b)=>b.stockRealCalc-a.stockRealCalc)[0] : null;
   const bajoST = DATA.resumenHostal.filter(r=>r.sellThr<15);
 
@@ -573,6 +581,10 @@ function renderInsights(){
       <div class="insight-body">${i.body}</div>
     </div>`
   }).join('');
+}
+
+function renderAcordeon_OLD(){
+// replaced
 }
 
 function renderAcordeon(){
