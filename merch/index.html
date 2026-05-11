@@ -565,7 +565,7 @@ function renderInsights(){
     <div class="insight ${i.cls}">
       <div class="insight-icon">${i.title.match(/^\S+/)?.[0]||''}</div><div class="insight-title">${i.title.replace(/^\S+\s*/,'')||i.title}</div>
       <div class="insight-body">${i.body}</div>
-    </div>`;
+    </div>`
   }).join('');
 }
 
