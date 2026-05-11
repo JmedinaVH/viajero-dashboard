@@ -252,6 +252,9 @@ main{padding:24px 20px 60px;}
 <script>
 const DATA_URL = '../data/merch_data.json';
 
+function icoOf(t){ var s=t.split(' '); return s.length?s[0]:''; }
+function lblOf(t){ var s=t.indexOf(' '); return s>-1?t.slice(s+1):t; }
+
 function calcStock(ph){
   if(!ph || ph.enviado === 0) return 0;
   return ph.vendido > ph.enviado ? ph.enviado - ph.vendido : ph.stock;
@@ -577,7 +580,7 @@ function renderInsights(){
   ].filter(Boolean);
   document.getElementById('insightsGrid').innerHTML = items.map(i=>`
     <div class="insight ${i.cls}">
-      <div class="insight-icon">${i.title.match(/^\S+/)?.[0]||''}</div><div class="insight-title">${i.title.replace(/^\S+\s*/,'')||i.title}</div>
+      <div class="insight-icon">${icoOf(i.title)}</div><div class="insight-title">${lblOf(i.title)}</div>
       <div class="insight-body">${i.body}</div>
     </div>`
   }).join('');
