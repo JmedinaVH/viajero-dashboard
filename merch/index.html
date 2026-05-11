@@ -576,6 +576,8 @@ function renderAcordeon(){
         <td><span class="ghost-badge">sin envío</span></td>
       </tr>`;
     }).join('');
+
+    const filasNoEnviados = prodNoEnviados.length > 0
       ? prodNoEnviados.map(p=>`
         <tr class="not-sent">
           <td class="left" style="color:#b0a9a4">${p.producto}</td>
