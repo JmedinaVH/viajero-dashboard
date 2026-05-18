@@ -484,11 +484,24 @@ tbody tr:hover td{background:var(--cream);}
 
   <!-- 4. Lista de trabajo -->
   <div class="sec">
-    <div class="sec-hdr"><h2>Lista de trabajo — miembros sin beneficio <i class="ib" onclick="openTip('Sin beneficio')">i</i></h2><div class="linea"></div></div>
-    <div id="prop-sc-legend"></div>
-    <input class="sc-search" id="sc-q" type="text" placeholder="🔍 Buscar por nombre, propiedad, reserva, nivel..." oninput="filtrarSC()"/>
-    <div class="sc-wrap" id="sc-tabla"></div>
-    <div style="font-size:10px;color:var(--mid);background:var(--cream);border-radius:8px;padding:7px 10px;margin-top:8px;">ℹ️ <b>¿Por qué hay más reservas que personas?</b> CloudBeds registra una reserva por noche en estadías largas. Ambos números son útiles: las personas para entender alcance, las reservas para el trabajo diario.</div>
+    <div class="ac">
+      <div class="ac-head" onclick="toggleAc(this)">
+        <div class="ac-left">
+          <span class="ac-ico">📋</span>
+          <div>
+            <div class="ac-tit">Lista de trabajo — miembros sin beneficio <i class="ib" onclick="event.stopPropagation();openTip('Sin beneficio')">i</i></div>
+            <div class="ac-sub" id="sc-ac-sub">Haz clic para ver la lista y filtrar por nivel</div>
+          </div>
+        </div>
+        <span class="ac-arr">▼</span>
+      </div>
+      <div class="ac-body">
+        <div id="prop-sc-legend"></div>
+        <input class="sc-search" id="sc-q" type="text" placeholder="🔍 Buscar por nombre, propiedad, reserva, nivel..." oninput="filtrarSC()"/>
+        <div class="sc-wrap" id="sc-tabla"></div>
+        <div style="font-size:10px;color:var(--mid);background:var(--cream);border-radius:8px;padding:7px 10px;margin-top:8px;">ℹ️ <b>¿Por qué hay más reservas que personas?</b> CloudBeds registra una reserva por noche en estadías largas. Ambos números son útiles: las personas para entender alcance, las reservas para el trabajo diario.</div>
+      </div>
+    </div>
   </div>
 
   <!-- 5. Problemas técnicos -->
@@ -549,7 +562,7 @@ var TIPS={
 'Estado por propiedad':{t:'Estado por propiedad',b:'Vista ejecutiva de 3 dimensiones por propiedad:\n\n• % Miembros: de cada 100 check-ins, cuántos son miembros (meta ≥15%)\n• Beneficios aplicados: ¿hay al menos un registro correcto?\n• Errores: principales problemas detectados\n\n🟢 Meta · 🟡 En proceso · 🔴 Necesita atención'},
 'Tendencia':{t:'Tendencia por propiedad',b:'% de huéspedes que son miembros por período.\n\nCon 2 períodos la tendencia es indicativa. Será concluyente a partir del 4to período.\n\n🟢 ≥15% · 🟡 8-15% · 🔴 <8%'},
 'Acción por propiedad':{t:'Diagnóstico por propiedad',b:'Diagnóstico automático por propiedad según sus datos.\n\n🔴 Crítico: acción esta semana\n🟡 Atención: refuerzo del proceso\n🟢 En camino: mantener y documentar\n\nFiltra por propiedad para ver solo una.'},
-'Resumen de errores':{t:'Detalle de errores',b:'Estado de todas las transacciones en el período.\n\nCada tarjeta es clicable para ver el detalle individual.\n\n• Sin beneficio: personas únicas que no recibieron nada\n• A no-miembro: siempre revisar — implica pérdida de ingreso.'},
+'Resumen de errores':{t:'Estado del programa — cómo leer las tarjetas',b:'✅ Correctos\nEl beneficio fue registrado correctamente en CloudBeds (tarifa, toalla o desayuno según el nivel del huésped).\n\n❌ Sin beneficio\nMiembros que se hospedaron y NO recibieron su beneficio. El número grande = personas únicas (puede haber varias reservas por persona en estadías largas).\n\n\ud83d\udcb8 Descuento a no-miembro\nSe aplicó un descuento de lealtad a un huésped que NO está inscrito en Viajero Go. Siempre revisar — implica pérdida directa de ingreso.\n\n⚠️ Nivel incorrecto\nEl beneficio se aplicó con el nivel equivocado. El nivel registrado en CloudBeds no coincide con el nivel real del huésped en Akin.\n\n\ud83d\udeab Mal aplicado\nBeneficio aplicado fuera del proceso: sin verificar en Akin, en categoría incorrecta, o sin completar el registro en CloudBeds.\n\nHaz clic en las tarjetas con “Ver detalle →” para ver el listado individual.'},
 'Sin beneficio':{t:'Lista de trabajo — Sin beneficio',b:'Miembros que se hospedaron y no recibieron su beneficio.\n\nEl número grande = personas únicas.\nLas filas de la tabla = reservas (puede haber varias por persona en estadías largas).\n\nUsa el buscador para filtrar por propiedad o nivel.'},
 'Problemas técnicos':{t:'Problemas técnicos',b:'Reservas reconocidas en Akin pero CloudBeds no las encuentra.\n\nCausa: número de reserva o correo diferente entre sistemas.\n\n→ NO es error del equipo de recepción.\n→ Buscar al huésped por nombre en CB. Si persiste → escalar a Akin.'},
 'Estado actividad':{t:'Estado de actividad de miembros',b:'Clasificación de cada miembro según su comportamiento reciente:\n\n• Activo: reservas en los últimos 90 días\n• Ocasional: última reserva hace 91-180 días\n• Dormido: última reserva hace 181-365 días\n• Inactivo: sin reservas en más de 365 días o nunca'},
@@ -557,7 +570,7 @@ var TIPS={
 'Miembros del programa':{t:'Distribución por nivel',b:'Total de personas inscritas en Viajero Go según Akin, por nivel.\n\nHaz clic en cada nivel para ver la lista de miembros.\n\n⚠️ Este número no cambia con el filtro de período — muestra el estado actual del programa.'},
 'Ranking':{t:'Ranking de propiedades',b:'Tres vistas:\n• % Miembros: miembros ÷ check-ins (meta ≥15%)\n• Nuevos inscritos: en el período seleccionado\n• % Beneficios correctos: aplicaciones sin error\n\nLa línea vertical en "% Miembros" es la meta del 15%.'},
 'Embudo':{t:'Embudo de inscripción',b:'Flujo desde el total de huéspedes hasta los nuevos inscritos.\n\nCada barra es proporcional al total de huéspedes.\n\nLa conversión entre pasos muestra dónde se pierden oportunidades de inscripción.'},
-'Detalle por nivel':{t:'Calidad de ejecución por nivel',b:'Por cada nivel: cuántos huéspedes tuvieron su beneficio correcto, con error, sin nada, o sin membresía.\n\nPermite identificar qué nivel está más desatendido operativamente.'},
+'Detalle por nivel':{t:'Cómo leer estas tarjetas',b:'Cada nivel tiene beneficios distintos. Los números muestran cuántas transacciones de ese nivel quedaron con cada resultado:\n\n✅ Correctos = el beneficio fue bien registrado en CloudBeds\n❌ Sin beneficio = el miembro se hospedó y no recibió nada\n💸 A no-miembro = se aplicó sin membresía (pérdida de ingreso)\n⚠️ Nivel incorrecto = el beneficio se aplicó con nivel equivocado en CB vs Akin\n\nPermite identificar qué nivel está más desatendido operativamente.'}, 
 'Beneficio más aplicado':{t:'Beneficios correctos',b:'Solo cuenta aplicaciones donde el beneficio fue aplicado correctamente.\n\nTarifa con descuento, toalla sin costo, desayuno según nivel.\n\nSi todos están en 0 → el problema es de registro en CB, no de demanda del huésped.'},
 };
 function openTip(k){var t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
@@ -903,18 +916,18 @@ function renderPropSemaforo(mb){
   var scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
   document.getElementById('prop-sem-total').innerHTML='<b>'+fmtN(tot)+'</b> transacciones en el período · <span style="color:var(--mid);font-size:10px">Fuente: CloudBeds + Akin</span>';
   var items=[
-    {k:'OK',label:'Correctos',sub:'El beneficio fue registrado correctamente en CloudBeds (tarifa, toalla o desayuno según el nivel del huésped).',val:t['OK'],cls:'s-verde',drill:false},
-    {k:'SIN CANJE',label:'Sin beneficio',sub:'Miembros que se hospedaron y NO recibieron su beneficio. Número = personas únicas (puede haber varias reservas por persona).',descExtra:t['SIN CANJE']+' reservas · '+scUnicos+' personas',val:scUnicos,cls:t['SIN CANJE']===0?'s-verde':t['SIN CANJE']<20?'s-amarillo':'s-rojo',drill:'SIN CANJE'},
-    {k:'LEAKAGE',label:'Descuento a no-miembro',sub:'Se aplicó descuento de lealtad a un huésped que NO está inscrito en Viajero Go — implica pérdida directa de ingreso.',val:t['LEAKAGE'],cls:t['LEAKAGE']===0?'s-verde':t['LEAKAGE']<10?'s-amarillo':'s-rojo',drill:'LEAKAGE'},
-    {k:'TIER_INCORRECTO',label:'Nivel incorrecto',sub:'El beneficio se aplicó con el nivel equivocado. El nivel en CloudBeds no coincide con el nivel real en Akin.',val:t['TIER_INCORRECTO'],cls:t['TIER_INCORRECTO']===0?'s-verde':t['TIER_INCORRECTO']<5?'s-amarillo':'s-rojo',drill:'TIER_INCORRECTO'},
-    {k:'MISUSE',label:'Mal aplicado',sub:'Beneficio aplicado fuera del proceso: sin verificar en Akin, en categoría incorrecta, o sin completar el registro en CloudBeds.',val:t['MISUSE'],cls:t['MISUSE']===0?'s-verde':'s-rojo',drill:'MISUSE'},
+    {k:'OK',label:'Correctos',sub:'Bien registrado en CB',val:t['OK'],cls:'s-verde',drill:false},
+    {k:'SIN CANJE',label:'Sin beneficio',sub:'',descExtra:t['SIN CANJE']+' reservas · '+scUnicos+' personas',val:scUnicos,cls:t['SIN CANJE']===0?'s-verde':t['SIN CANJE']<20?'s-amarillo':'s-rojo',drill:'SIN CANJE'},
+    {k:'LEAKAGE',label:'Descuento a no-miembro',sub:'Pérdida de ingreso',val:t['LEAKAGE'],cls:t['LEAKAGE']===0?'s-verde':t['LEAKAGE']<10?'s-amarillo':'s-rojo',drill:'LEAKAGE'},
+    {k:'TIER_INCORRECTO',label:'Nivel incorrecto',sub:'CB ≠ Akin',val:t['TIER_INCORRECTO'],cls:t['TIER_INCORRECTO']===0?'s-verde':t['TIER_INCORRECTO']<5?'s-amarillo':'s-rojo',drill:'TIER_INCORRECTO'},
+    {k:'MISUSE',label:'Mal aplicado',sub:'Fuera del proceso',val:t['MISUSE'],cls:t['MISUSE']===0?'s-verde':'s-rojo',drill:'MISUSE'},
   ];
   document.getElementById('prop-semaforo').innerHTML=items.map(function(i){
     var hasDrill=i.drill&&i.val>0;
     return '<div class="s-item '+i.cls+(hasDrill?' clickable':'')+'"'+(hasDrill?' onclick="drillTipoError(\''+i.drill+'\',\''+i.label+'\')"':'')+'>'+
       '<div class="s-val">'+fmtN(i.val)+'</div>'+
       '<div class="s-lbl">'+i.label+'</div>'+
-      '<div class="s-sub" style="font-size:10px;color:var(--gris);line-height:1.5;margin:5px 0;">'+i.sub+'</div>'+
+      (i.sub?'<div class="s-sub">'+i.sub+'</div>':'')+
       (i.descExtra?'<div style="font-size:9px;font-weight:700;color:var(--mid);margin-bottom:4px;">'+i.descExtra+'</div>':'')+
       (hasDrill?'<div class="s-tipo">Ver detalle →</div>':'')+
       '</div>';
@@ -1235,10 +1248,7 @@ function renderCtxTiersDetail(afs,mb){
   var TIER_BENEFITS={'Tourist':'Tarifa -15% en CloudBeds al check-in','Backpacker':'Tarifa con descuento + toalla sin costo','Explorer':'Tarifa + toalla + desayuno','Nomad':'Tarifa + toalla + desayuno + upgrade de habitación','Viajero':'Todos los beneficios premium del programa'};
   var TIER_COLORS={'Tourist':'#f97316','Backpacker':'#ef4444','Explorer':'#8b5cf6','Nomad':'#0ea5e9','Viajero':'#14b8a6'};
   var TIER_ORDER=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
-  var note='<div style="font-size:11px;background:rgba(240,75,36,.05);border:1.5px solid rgba(240,75,36,.12);border-radius:9px;padding:9px 13px;margin-bottom:12px;color:var(--mid);line-height:1.7;">'+
-    '<b>Cómo leer estas tarjetas:</b> cada nivel tiene beneficios distintos. Los números muestran cuántas transacciones de ese nivel quedaron con cada resultado: '+
-    '✅ Correctos = bien registrado en CB &nbsp;·&nbsp; ❌ Sin beneficio = no recibió nada &nbsp;·&nbsp; 💸 A no-miembro = se aplicó sin membresía (pérdida de ingreso)'+
-    '</div>';
+  var note='';
   var cards=TIER_ORDER.map(function(tier){
     var rows=mb.filter(function(r){return (r.Tier_AKIN||r.Tier||'')===tier;});
     if(!rows.length)return '';
