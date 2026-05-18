@@ -234,6 +234,9 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .rank-tabs{display:flex;gap:3px;margin-bottom:12px;}
 .rank-tab{font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--gris);background:var(--cm);border:1.5px solid var(--border);border-radius:7px;padding:4px 10px;cursor:pointer;transition:.13s;}
 .rank-tab.active{background:var(--coral);color:#fff;border-color:var(--coral);}
+.prop-filter-btn{font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--gris);background:var(--cm);border:1.5px solid var(--border);border-radius:7px;padding:5px 12px;cursor:pointer;transition:.13s;}
+.prop-filter-btn.active{background:var(--dark);color:#fff;border-color:var(--dark);}
+.prop-filter-btn:hover:not(.active){background:var(--cd);}
 
 /* SC */
 .sc-search{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:9px;font-family:'Outfit',sans-serif;font-size:13px;margin-bottom:9px;background:var(--cream);transition:.14s;}
@@ -434,6 +437,10 @@ tbody tr:hover td{background:var(--cream);}
   <div id="exec-headline"></div>
   <div id="exec-ctx-kpis"></div>
   <div class="sec">
+    <div class="sec-hdr"><h2>Embudo de inscripción <i class="ib" onclick="openTip('Embudo')">i</i></h2><div class="linea"></div></div>
+    <div id="exec-funnel"></div>
+  </div>
+  <div class="sec">
     <div class="sec-hdr"><h2>Estado por propiedad <i class="ib" onclick="openTip('Estado por propiedad')">i</i></h2><div class="linea"></div></div>
     <div id="exec-prop-status"></div>
   </div>
@@ -444,21 +451,34 @@ tbody tr:hover td{background:var(--cream);}
 </div>
 
 <!-- ═══ TAB 2: POR PROPIEDAD ═══ -->
-<!-- Audiencia: Gerentes · Operaciones -->
-<!-- Qué muestra: diagnóstico accionable, errores, casos sin beneficio, problemas técnicos -->
-<!-- NO contiene: KPIs globales de penetración (eso es Tab 1) -->
 <div id="tab-prop" class="tab-content">
   <div class="aud-label aud-ops">🏨 Vista operativa — detalle por propiedad</div>
+
+  <!-- 1. Semáforo -->
   <div class="sec">
-    <div class="sec-hdr"><h2>Diagnóstico por propiedad <i class="ib" onclick="openTip('Acción por propiedad')">i</i></h2><div class="linea"></div></div>
-    <div id="prop-actions"></div>
-  </div>
-  <div class="sec">
-    <div class="sec-hdr"><h2>Detalle de errores del programa <i class="ib" onclick="openTip('Resumen de errores')">i</i></h2><div class="linea"></div></div>
+    <div class="sec-hdr"><h2>Estado del programa <i class="ib" onclick="openTip('Resumen de errores')">i</i></h2><div class="linea"></div></div>
     <div style="font-size:11px;color:var(--gris);margin-bottom:9px;" id="prop-sem-total"></div>
     <div class="semaforo-grid" id="prop-semaforo"></div>
+  </div>
+
+  <!-- 2. Hallazgos -->
+  <div class="sec">
     <div id="prop-hallazgos"></div>
   </div>
+
+  <!-- 3. Diagnóstico por propiedad -->
+  <div class="sec">
+    <div class="sec-hdr"><h2>Diagnóstico por propiedad <i class="ib" onclick="openTip('Acción por propiedad')">i</i></h2><div class="linea"></div></div>
+    <div style="display:flex;gap:6px;margin-bottom:12px;" id="prop-filter-btns">
+      <button onclick="filterPropCards('all',this)" class="prop-filter-btn active">Todas</button>
+      <button onclick="filterPropCards('critico',this)" class="prop-filter-btn">🔴 Solo críticas</button>
+      <button onclick="filterPropCards('atencion',this)" class="prop-filter-btn">🟡 Solo atención</button>
+      <button onclick="filterPropCards('ok',this)" class="prop-filter-btn">🟢 Solo en camino</button>
+    </div>
+    <div id="prop-actions"></div>
+  </div>
+
+  <!-- 4. Lista de trabajo -->
   <div class="sec">
     <div class="sec-hdr"><h2>Lista de trabajo — miembros sin beneficio <i class="ib" onclick="openTip('Sin beneficio')">i</i></h2><div class="linea"></div></div>
     <div id="prop-sc-legend"></div>
@@ -466,6 +486,8 @@ tbody tr:hover td{background:var(--cream);}
     <div class="sc-wrap" id="sc-tabla"></div>
     <div style="font-size:10px;color:var(--mid);background:var(--cream);border-radius:8px;padding:7px 10px;margin-top:8px;">ℹ️ <b>¿Por qué hay más reservas que personas?</b> CloudBeds registra una reserva por noche en estadías largas. Ambos números son útiles: las personas para entender alcance, las reservas para el trabajo diario.</div>
   </div>
+
+  <!-- 5. Problemas técnicos -->
   <div class="sec">
     <div class="sec-hdr"><h2>Problemas técnicos <i class="ib" onclick="openTip('Problemas técnicos')">i</i></h2><span class="sec-cnt" id="match-cnt">0</span><div class="linea"></div></div>
     <div id="prop-sinmatch"></div>
@@ -512,10 +534,6 @@ tbody tr:hover td{background:var(--cream);}
   <div class="sec">
     <div class="sec-hdr"><h2>Calidad de ejecución por nivel <i class="ib" onclick="openTip('Detalle por nivel')">i</i></h2><div class="linea"></div></div>
     <div class="tiers-g" id="ctx-tiers-g"></div>
-  </div>
-  <div class="sec">
-    <div class="sec-hdr"><h2>Beneficios aplicados correctamente <i class="ib" onclick="openTip('Beneficio más aplicado')">i</i></h2><div class="linea"></div></div>
-    <div id="ctx-beneficios"></div>
   </div>
 </div>
 
@@ -708,39 +726,31 @@ function renderExecPropStatus(afs,mb){
     warn:{dot:'🟡',col:'#92400e',bg:'#fef9c3',pill:'En proceso'},
     crit:{dot:'🔴',col:'var(--err)',bg:'var(--err-bg)',pill:'Necesita atención'}
   };
-  var critN=props.filter(function(p){return p.status==='crit';}).length;
+  var critProps=props.filter(function(p){return p.status==='crit';});
   var warnN=props.filter(function(p){return p.status==='warn';}).length;
   var okN=props.filter(function(p){return p.status==='ok';}).length;
+  var critN=critProps.length;
   document.getElementById('exec-prop-status').innerHTML=
-    '<div style="display:flex;gap:8px;margin-bottom:11px;font-size:11px;flex-wrap:wrap;">'+
-    (critN?'<span style="background:var(--err-bg);color:var(--err);font-weight:700;padding:3px 10px;border-radius:99px;">🔴 '+critN+' necesita'+(critN>1?' atención':'  atención')+'</span>':'')+
-    (warnN?'<span style="background:#fef9c3;color:#92400e;font-weight:700;padding:3px 10px;border-radius:99px;">🟡 '+warnN+' en proceso</span>':'')+
-    (okN?'<span style="background:var(--ok-bg);color:var(--ok);font-weight:700;padding:3px 10px;border-radius:99px;">🟢 '+okN+' en meta</span>':'')+
+    '<div style="display:flex;gap:8px;margin-bottom:14px;font-size:11px;flex-wrap:wrap;align-items:center;">'+
+    (critN?'<span style="background:var(--err-bg);color:var(--err);font-weight:700;padding:4px 12px;border-radius:99px;font-size:12px;">🔴 '+critN+' necesita'+(critN>1?'n':'')+' atención</span>':'')+
+    (warnN?'<span style="background:#fef9c3;color:#92400e;font-weight:700;padding:4px 12px;border-radius:99px;font-size:12px;">🟡 '+warnN+' en proceso</span>':'')+
+    (okN?'<span style="background:var(--ok-bg);color:var(--ok);font-weight:700;padding:4px 12px;border-radius:99px;font-size:12px;">🟢 '+okN+' en meta</span>':'')+
     '</div>'+
-    '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:9px;">'+
-    props.map(function(p){
-      var cfg=CFG[p.status];
+    (critN?'<div style="background:var(--surface);border-radius:var(--r);border:1.5px solid #fca5a5;overflow:hidden;margin-bottom:10px;">'+
+    '<div style="background:var(--err-bg);padding:8px 14px;font-size:9px;font-weight:700;color:var(--err);text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid #fca5a5;">Propiedades que necesitan intervención inmediata</div>'+
+    critProps.map(function(p,i){
       var alertas=[];
-      if(p.lk>0)alertas.push('💸 '+p.lk+' no-miembro');
-      if(p.nv===0&&p.ci>0)alertas.push('0 nuevos');
-      if(p.ok>0)alertas.push('✅ '+p.ok+' OK');
-      return '<div style="background:#fff;border-radius:10px;border:1.5px solid '+( p.status==='crit'?'#fca5a5':p.status==='warn'?'#fde68a':'#86efac')+';padding:13px 14px;position:relative;overflow:hidden;">'+
-        '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:'+cfg.col+';border-radius:10px 10px 0 0;"></div>'+
-        '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">'+
-        '<div style="flex:1;">'+
-          '<div style="font-size:12px;font-weight:700;line-height:1.3;margin-bottom:4px;">'+p.name.replace('Viajero ','')+'</div>'+
-          '<div style="font-size:9px;font-weight:700;color:'+cfg.col+';background:'+cfg.bg+';display:inline-block;padding:1px 7px;border-radius:99px;">'+cfg.pill+'</div>'+
-          (alertas.length?'<div style="font-size:9px;color:var(--gris);margin-top:5px;line-height:1.5;">'+alertas.join(' · ')+'</div>':'')+
+      if(p.lk>0)alertas.push('💸 '+p.lk+' sin membresía');
+      if(p.nv===0)alertas.push('0 nuevos inscritos');
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:'+(i<critProps.length-1?'1px solid var(--border)':'none')+';gap:12px;">'+
+        '<div style="flex:1;"><span style="font-size:12px;font-weight:700;">'+p.name.replace('Viajero ','')+'</span>'+
+        (alertas.length?'<span style="font-size:10px;color:var(--gris);margin-left:8px;">'+alertas.join(' · ')+'</span>':'')+
         '</div>'+
-        '<div style="text-align:right;flex-shrink:0;">'+
-          '<div style="font-size:22px;font-weight:800;line-height:1;color:'+cfg.col+';">'+p.pct.toFixed(1)+'%</div>'+
-          '<div style="font-size:9px;color:var(--gris);margin-top:1px;">miembros</div>'+
-        '</div>'+
-        '</div>'+
+        '<span style="font-size:16px;font-weight:800;color:var(--err);white-space:nowrap;">'+p.pct.toFixed(1)+'%</span>'+
         '</div>';
     }).join('')+
-    '</div>'+
-    '<div style="font-size:10px;color:var(--gris);margin-top:9px;padding:5px 10px;background:var(--cream);border-radius:6px;">Meta: ≥15% de huéspedes son miembros · Detalle completo → Tab <b>Por propiedad</b></div>';
+    '</div>':'<div style="background:var(--ok-bg);border:1.5px solid #86efac;border-radius:var(--r);padding:12px 16px;font-size:12px;color:var(--ok);font-weight:600;margin-bottom:10px;">✅ Todas las propiedades están en proceso o en meta</div>')+
+    '<div style="font-size:10px;color:var(--gris);padding:5px 8px;background:var(--cream);border-radius:6px;">Para ver todas las propiedades con detalle operativo → Tab <b>Por propiedad</b></div>';
 }
 
 function renderExecTrend(afs){
@@ -988,7 +998,6 @@ function renderCtxTab(){
   renderCtxRanking(afs,mb);
   renderCtxFunnel(afs,mb);
   renderCtxTiersDetail(afs,mb);
-  renderCtxBeneficios(mb);
   _ctxRendered=true;
 }
 
@@ -1045,6 +1054,35 @@ function renderCtxRanking(afs,mb){
   window._RD={props:props,maxPct:maxPct,maxNv:maxNv};
   cont.innerHTML='<div class="ac"><div class="ac-head open" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">🏆</span><div><div class="ac-tit">Ranking de propiedades</div><div class="ac-sub">'+props.length+' propiedades · línea = meta 15%</div></div></div><div class="ac-meta"><div class="rank-tabs" onclick="event.stopPropagation()"><button class="rank-tab active" onclick="switchRank(\'pct\',this)">% Miembros</button><button class="rank-tab" onclick="switchRank(\'nv\',this)">Nuevos</button><button class="rank-tab" onclick="switchRank(\'ok\',this)">% Sin error</button></div></div><span class="ac-arr" style="transform:rotate(180deg)">▼</span></div><div class="ac-body vis"><div id="rank-body">'+buildRankRows([].concat(props).sort(function(a,b){return b.pct-a.pct;}),'pct')+'</div></div></div>';
 }
+function renderExecFunnel(afs,mb){
+  var el=document.getElementById('exec-funnel');if(!el)return;
+  var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
+  var items=[
+    {ico:'🏠',lbl:'Total huéspedes',sub:'entran al hostel',n:hu,col:'#94a3b8'},
+    {ico:'🔑',lbl:'Hacen check-in',sub:'registrados en CB',n:ci,col:'var(--coral)'},
+    {ico:'💳',lbl:'Son miembros activos',sub:'de Viajero Go',n:cb,col:'var(--blue)'},
+    {ico:'✨',lbl:'Nuevos inscritos',sub:'se unieron en el período',n:nv,col:'var(--ok)'},
+  ];
+  var maxN=Math.max.apply(null,items.map(function(i){return i.n;}));
+  el.innerHTML='<div class="funnel-outer">'+items.map(function(it,idx){
+    var bpct=maxN>0?Math.round(it.n/maxN*100):0;
+    var conv=idx>0&&items[idx-1].n>0?'→ '+(Math.round(it.n/items[idx-1].n*1000)/10)+'%':'';
+    return '<div class="fn-row"><div class="fn-left"><div class="fn-ico">'+it.ico+'</div><div><div class="fn-lbl">'+it.lbl+'</div><div class="fn-sub">'+it.sub+'</div></div></div><div class="fn-bar-track"><div class="fn-bar-fill" style="width:'+bpct+'%;background:'+it.col+'"></div></div><div class="fn-conv">'+conv+'</div><div class="fn-right"><div class="fn-n">'+fmtN(it.n)+'</div></div></div>';
+  }).join('')+'</div>';
+}
+
+/* ── FILTER PROP CARDS ───────────────── */
+function filterPropCards(status,btn){
+  document.querySelectorAll('.prop-filter-btn').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  document.querySelectorAll('.prop-card').forEach(function(card){
+    var head=card.querySelector('.prop-card-head');
+    if(status==='all'){card.style.display='';return;}
+    var show=head&&head.classList.contains(status);
+    card.style.display=show?'':'none';
+  });
+}
+
 window.switchRank=function(tipo,btn){var rd=window._RD||{};if(!rd.props)return;document.querySelectorAll('.rank-tab').forEach(function(b){b.classList.remove('active');});if(btn)btn.classList.add('active');var s=tipo==='pct'?[].concat(rd.props).sort(function(a,b){return b.pct-a.pct;}):tipo==='nv'?[].concat(rd.props).sort(function(a,b){return b.nv-a.nv;}):[].concat(rd.props).sort(function(a,b){return b.pctOK-a.pctOK;});var el=document.getElementById('rank-body');if(el)el.innerHTML=buildRankRows(s,tipo);};
 function buildRankRows(sorted,tipo){
   var rd=window._RD||{};
@@ -1094,7 +1132,7 @@ function renderCtxTiersDetail(afs,mb){
     else if(et==='SIN CANJE')tierMap[tier].sc++;
     else tierMap[tier].nl++;
   });
-  var tiers=Object.entries(tierMap).filter(function(e){return e[0]!=='Sin nivel';});
+  var tiers=Object.entries(tierMap).filter(function(e){var k=e[0];return k&&k!=='Sin nivel'&&k!=='Sin tier'&&k!=='sin nivel'&&k!=='sin tier'&&k!=='';});
   if(!tiers.length){document.getElementById('ctx-tiers-g').innerHTML='<div class="empty">Sin datos para este filtro</div>';return;}
   document.getElementById('ctx-tiers-g').innerHTML=tiers.map(function(e){
     var name=e[0],d=e[1],cfg=TIER_CONFIG[name]||{col:'#94a3b8',bens:'—'};
@@ -1134,6 +1172,7 @@ function render(){
   renderExecCtxKPIs(afs,mb);
   renderExecPropStatus(afs,mb);
   renderExecTrend(afs);
+  renderExecFunnel(afs,mb);
 
   // Tab 2: siempre
   renderPropActions(afs,mb);
