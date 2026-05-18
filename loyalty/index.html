@@ -987,7 +987,7 @@ function renderCtxTierDonut(){
   requestAnimationFrame(function(){
     var canvas=document.getElementById('donut-canvas');
     if(!canvas||!window.Chart)return;
-    _donutChart=new Chart(canvas,{type:'doughnut',data:{labels:tiers.map(function(t){return t.name;}),datasets:[{data:tiers.map(function(t){return parseInt(t.count)||0;}),backgroundColor:tiers.map(function(t){return TIER_COLORS[t.name]||'#94a3b8';}),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.label+': '+ctx.raw+' ('+Math.round(ctx.raw/total*1000)/10+'%)';}}}}},animation:{duration:600}}});
+    _donutChart=new Chart(canvas,{type:'doughnut',data:{labels:tiers.map(function(t){return t.name;}),datasets:[{data:tiers.map(function(t){return parseInt(t.count)||0;}),backgroundColor:tiers.map(function(t){return TIER_COLORS[t.name]||'#94a3b8';}),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.label+': '+ctx.raw+' ('+Math.round(ctx.raw/total*1000)/10+'%)';}}}},animation:{duration:600}}});
   });
 }
 function drillTierMembers(tier){
