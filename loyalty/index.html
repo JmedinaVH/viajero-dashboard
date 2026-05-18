@@ -545,7 +545,7 @@ var TIPS={
 function openTip(k){var t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
 function closeTip(e){if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;document.getElementById('tip-overlay').classList.remove('show');}
 function closeDrill(e){if(e&&e.target!==document.getElementById('drill-overlay')&&e.target!==document.getElementById('drill-close'))return;document.getElementById('drill-overlay').classList.remove('show');}
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('tip-overlay').classList.remove('show');document.getElementById('drill-overlay').classList.remove('show');});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('tip-overlay').classList.remove('show');document.getElementById('drill-overlay').classList.remove('show');}});
 function ib(k){return '<i class="ib" onclick="event.stopPropagation();openTip(\''+k+'\')" >i</i>';}
 
 /* ── TABS ─────────────────────────────── */
@@ -684,7 +684,7 @@ function renderExecCtxKPIs(afs,mb){
   var colRed=pRed>=10?'var(--ok)':pRed>=3?'#ca8a04':'var(--err)';
   var items=[
     {label:'Nuevos inscritos',tip:'Tendencia',val:fmtN(nv),sub:fmtN(hu)+' huéspedes · '+(hu>0?(nv/hu*100).toFixed(1):0)+'% captación',kc:'var(--blue)',badge:null,footer:null},
-    {label:'Beneficios correctos',tip:'Resumen de errores',val:cb>0?pRed.toFixed(1)+'%':'—',sub:okN+' registros correctos en CB',kc:colRed,badge:null,footer:{label:'Meta futura',val:'≥30%'}],
+    {label:'Beneficios correctos',tip:'Resumen de errores',val:cb>0?pRed.toFixed(1)+'%':'—',sub:okN+' registros correctos en CB',kc:colRed,badge:null,footer:{label:'Meta futura',val:'≥30%'}},
     {label:'Miembros sin beneficio',tip:'Sin beneficio',val:fmtN(scUnicos),sub:'personas únicas · detalle en Tab Propiedad',kc:'var(--err)',badge:{cls:'b-err',txt:'Lista de trabajo'},footer:null},
   ];
   document.getElementById('exec-ctx-kpis').innerHTML=
