@@ -831,7 +831,7 @@ function renderPropHallazgos(hall){
       '<td><span class="hall-tipo">'+(ET_LABELS[g.et]||g.cat)+'</span><div class="hall-accion">'+g.accion+'</div></td>'+
       '<td style="text-align:center;font-size:18px;font-weight:800;color:var(--'+(cls==='critica'?'err':cls==='alta'?'orange':'warn')+')">'+fmtN(g.total)+'</td>'+
       '<td style="font-size:10px;color:var(--gris);max-width:180px;line-height:1.4">'+topProps+'</td>'+
-      '<td>'+(hasDrill?'<button class="hall-btn" onclick="drillTipoError(\''+g.et+'\',\'+(ET_LABELS[g.et]||g.cat)+'\')>Ver →</button>':'—')+'</td>'+
+      '<td>'+(hasDrill?'<button class="hall-btn" onclick="drillTipoError(\''+g.et+'\',\''+(ET_LABELS[g.et]||g.cat)+'\')">Ver →</button>':'—')+'</td>'+
       '</tr>';
   }).join('');
   cont.innerHTML='<div class="ac"><div class="ac-head open" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">⚠️</span><div><div class="ac-tit">Hallazgos detectados</div><div class="ac-sub">'+rows.length+' tipos de problema con acción sugerida</div></div></div><span class="ac-arr" style="transform:rotate(180deg)">▼</span></div><div class="ac-body vis" style="padding:0"><div style="overflow-x:auto"><table class="hall-table"><thead><tr><th>Nivel</th><th>Problema · Acción</th><th class="tc">Casos</th><th>Top propiedades</th><th></th></tr></thead><tbody>'+tableRows+'</tbody></table></div></div></div>';
