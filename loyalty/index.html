@@ -913,20 +913,36 @@ function renderPropActions(afs,mb){
 }
 
 function renderPropSemaforo(mb){
+  var fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');
+  var isFiltered=fp.length||ft.length||fpa.length;
   var t,scUnicos;
-  if(mb.length>0){
+  if(!isFiltered&&DATA._resumen){
+    var res=DATA._resumen;
+    t={OK:res.ok||0,'SIN CANJE':res.sin_canje||0,LEAKAGE:res.leakage||0,TIER_INCORRECTO:res.tier_incorrecto||0,MISUSE:res.misuse||0};
+    scUnicos=new Set((DATA.sinCanje||[]).map(function(r){return r.Nombre;}).filter(Boolean)).size;
+  } else {
     t={OK:0,'SIN CANJE':0,LEAKAGE:0,TIER_INCORRECTO:0,MISUSE:0};
     mb.forEach(function(r){var k=r.Error_Type||'';if(k in t)t[k]++;});
     scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
-  } else if(DATA&&DATA._resumen){
-    var rs=DATA._resumen;
-    t={OK:rs.ok||0,'SIN CANJE':rs.sin_canje||0,LEAKAGE:rs.leakage||0,TIER_INCORRECTO:rs.tier_incorrecto||0,MISUSE:rs.misuse||0};
-    scUnicos=rs.sin_canje||0;
-  } else {
-    t={OK:0,'SIN CANJE':0,LEAKAGE:0,TIER_INCORRECTO:0,MISUSE:0};
-    scUnicos=0;
   }
   var tot=Object.values(t).reduce(function(a,b){return a+b;},0)||1;
+  document.getElementById('prop-sem-total').innerHTML='<b>'+fmtN(tot)+'</b> transacciones · <span style="color:var(--mid);font-size:10px">Fuente: CloudBeds + Akin</span>';
+  var items=[
+    {k:'OK',label:'Correctos',sub:'Bien registrado en CB',val:t['OK'],cls:'s-verde',drill:false},
+    {k:'SIN CANJE',label:'Sin beneficio',sub:scUnicos+' personas · '+t['SIN CANJE']+' reservas',val:scUnicos,cls:t['SIN CANJE']===0?'s-verde':t['SIN CANJE']<20?'s-amarillo':'s-rojo',drill:'SIN CANJE'},
+    {k:'LEAKAGE',label:'Descuento a no-miembro',sub:'Pérdida de ingreso',val:t['LEAKAGE'],cls:t['LEAKAGE']===0?'s-verde':t['LEAKAGE']<10?'s-amarillo':'s-rojo',drill:'LEAKAGE'},
+    {k:'TIER_INCORRECTO',label:'Nivel incorrecto',sub:'CB ≠ Akin',val:t['TIER_INCORRECTO'],cls:t['TIER_INCORRECTO']===0?'s-verde':t['TIER_INCORRECTO']<5?'s-amarillo':'s-rojo',drill:'TIER_INCORRECTO'},
+    {k:'MISUSE',label:'Mal aplicado',sub:'Fuera del proceso',val:t['MISUSE'],cls:t['MISUSE']===0?'s-verde':'s-rojo',drill:'MISUSE'},
+  ];
+  document.getElementById('prop-semaforo').innerHTML=items.map(function(i){
+    var hasDrill=i.drill&&i.val>0;
+    return '<div class="s-item '+i.cls+(hasDrill?' clickable':'')+'"'+(hasDrill?' onclick="drillTipoError(\''+i.drill+'\',\''+i.label+'\')"':'')+'>'+
+      '<div class="s-val">'+fmtN(i.val)+'</div>'+
+      '<div class="s-lbl">'+i.label+'</div>'+
+      '<div class="s-sub">'+i.sub+'</div>'+
+      (hasDrill?'<div class="s-tipo">Ver detalle →</div>':'')+
+      '</div>';
+  }).join('');
 }
 
 function renderPropHallazgos(hall){
