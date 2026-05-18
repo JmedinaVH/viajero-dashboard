@@ -387,6 +387,8 @@ tbody tr:hover td{background:var(--cream);}
   .tab-btn{font-size:11px;padding:10px 12px;}
 }
 @media(max-width:400px){.ctx-grid{grid-template-columns:1fr;}.beh-grid{grid-template-columns:1fr;}}
+.detail-sheet-btn{display:inline-flex;align-items:center;gap:7px;background:var(--dark);color:#fff;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;text-decoration:none;transition:.15s;margin-bottom:16px;}
+.detail-sheet-btn:hover{background:var(--coral);}
 </style>
 </head>
 <body>
@@ -457,6 +459,7 @@ tbody tr:hover td{background:var(--cream);}
 <!-- ═══ TAB 2: POR PROPIEDAD ═══ -->
 <div id="tab-prop" class="tab-content">
   <div class="aud-label aud-ops">🏨 Vista operativa — detalle por propiedad</div>
+<div id="detail-sheet-wrapper" style="margin-bottom:8px;"></div>
 
   <!-- 1. Semáforo -->
   <div class="sec">
@@ -1369,6 +1372,12 @@ function renderCtxBeneficios(mb){
    RENDER PRINCIPAL
    Llama solo lo que se necesita según tab
 ═══════════════════════════════════════ */
+function renderDetailSheetBtn(){
+ var el=document.getElementById('detail-sheet-wrapper');if(!el)return;
+ var url=DATA.sheetUrl||'';
+ if(!url){el.innerHTML='';return;}
+ el.innerHTML='<a href="'+url+'" target="_blank" class="detail-sheet-btn">Ver detalle reserva por reserva →</a>';
+}
 function render(){
   if(!DATA)return;
   var afs=filtrar(DATA.afiliados||[]);
@@ -1384,6 +1393,7 @@ function render(){
   renderExecTrend(afs);
 
   // Tab 2: siempre
+  renderDetailSheetBtn();
   renderPropActions(afs,mb);
   renderPropSemaforo(mb);
   renderPropHallazgos(filtrar(DATA.hallazgos||[]));
@@ -1407,6 +1417,7 @@ fetch(DATA_URL)
   })
   .then(function(data){
     DATA=data;
+    SC_DATA=DATA.sinCanje||[];
     var ts=new Date();
     document.getElementById('h-ts').textContent=ts.toLocaleString('es-CO',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
     poblarFiltros();
