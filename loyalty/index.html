@@ -71,7 +71,6 @@ header{background:var(--dark);padding:0 36px;display:flex;align-items:center;jus
 .tabs-bar{background:var(--surface);border-bottom:2px solid var(--border);padding:0 36px;position:sticky;top:111px;z-index:198;display:flex;overflow-x:auto;}
 .tab-btn{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--gris);background:none;border:none;border-bottom:3px solid transparent;padding:13px 20px;cursor:pointer;transition:.16s;margin-bottom:-2px;white-space:nowrap;}
 .tab-btn:hover{color:var(--dark);}
-.tab-btn:focus-visible{outline:2px solid var(--coral);outline-offset:-2px;border-radius:4px;}
 .tab-btn.active{color:var(--coral);border-bottom-color:var(--coral);}
 .tab-content{display:none;}
 .tab-content.active{display:block;}
@@ -161,8 +160,6 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .prop-action-grid{display:flex;flex-direction:column;gap:10px;}
 .prop-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;transition:.16s;}
 .prop-card:hover{box-shadow:var(--shm);}
-.prop-card-head{transition:background .13s;}
-.prop-card-head:hover{background:var(--cream);}
 .prop-card-head{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;}
 .prop-card-head.critico{border-left:4px solid var(--err);}
 .prop-card-head.atencion{border-left:4px solid #eab308;}
@@ -187,48 +184,11 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .prop-action-detail{font-size:10px;color:var(--gris);line-height:1.4;}
 .prop-action-urgent{font-size:9px;font-weight:700;color:var(--err);background:var(--err-bg);padding:1px 7px;border-radius:99px;display:inline-block;margin-top:3px;}
 
-/* PROP GRID TILES */
-.prop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:9px;}
-.prop-tile{background:var(--surface);border-radius:var(--r);padding:13px 12px 11px;border:1.5px solid var(--border);cursor:pointer;transition:transform .16s,box-shadow .16s,border-color .16s;border-top:3px solid transparent;}
-.prop-tile.critico{border-top-color:var(--err);}
-.prop-tile.atencion{border-top-color:#eab308;}
-.prop-tile.ok{border-top-color:var(--ok);}
-.prop-tile:hover{box-shadow:var(--shm);transform:translateY(-2px);}
-.pt-name{font-size:11px;font-weight:700;margin-bottom:5px;line-height:1.3;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.pt-pct{font-size:22px;font-weight:800;line-height:1;}
-.pt-lbl{font-size:9px;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-top:2px;margin-bottom:7px;}
-.pt-alerts{display:flex;flex-wrap:wrap;gap:3px;}
-.pt-alert{font-size:9px;background:var(--cream);color:var(--dark);padding:1px 5px;border-radius:99px;white-space:nowrap;}
-.pt-alert.err{background:var(--err-bg);color:var(--err);}
-.pt-alert.ok{background:var(--ok-bg);color:var(--ok);}
-
-/* PROP MODAL */
-#prop-modal-overlay{display:none;position:fixed;inset:0;z-index:9200;background:rgba(15,8,4,.55);align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
-#prop-modal-overlay.show{display:flex;}
-#prop-modal-box{background:#fff;border-radius:16px;max-width:520px;width:100%;padding:24px;box-shadow:0 24px 80px rgba(30,16,10,.22);position:relative;animation:popIn .17s;max-height:82vh;overflow-y:auto;}
-#prop-modal-title{font-size:17px;font-weight:800;margin-bottom:8px;padding-right:36px;line-height:1.3;}
-#prop-modal-pct{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);}
-#prop-modal-close{position:absolute;top:12px;right:14px;font-size:14px;cursor:pointer;color:var(--gris);background:var(--cm);border:none;border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;transition:.13s;font-weight:700;}
-#prop-modal-close:hover{background:var(--err-bg);color:var(--err);}
-
-/* SPARKLINE GRID */
-.spark-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px;}
-.spark-tile{background:var(--surface);border-radius:var(--r);padding:11px 12px 10px;border:1.5px solid var(--border);transition:.15s;}
-.spark-tile:hover{box-shadow:var(--sh);border-color:var(--cd);}
-.st-name{font-size:10px;font-weight:700;color:var(--dark);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.st-spark{margin-bottom:4px;}
-.st-bottom{display:flex;justify-content:space-between;align-items:center;}
-.st-val{font-size:13px;font-weight:800;}
-.st-trend{font-size:14px;font-weight:700;}
-
 /* SEMAFORO */
 .semaforo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px;margin-bottom:16px;}
 .s-item{background:var(--surface);border-radius:var(--r);padding:14px 12px;border:1.5px solid var(--border);text-align:center;transition:.16s;position:relative;overflow:hidden;}
-.s-item.clickable{cursor:pointer;transition:transform .16s,box-shadow .16s,border-color .16s;}
-.s-item.clickable:hover{box-shadow:var(--shm);transform:translateY(-2px);}
-.s-verde.clickable:hover{border-color:var(--ok-light);}
-.s-amarillo.clickable:hover{border-color:#fde68a;}
-.s-rojo.clickable:hover{border-color:#fca5a5;}
+.s-item.clickable{cursor:pointer;}
+.s-item:hover.clickable{box-shadow:var(--shm);}
 .s-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0;}
 .s-verde::before{background:var(--ok);}
 .s-amarillo::before{background:#eab308;}
@@ -262,7 +222,6 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 
 /* RANK */
 .rank-item{display:flex;align-items:center;gap:11px;background:var(--surface);border-radius:11px;padding:12px 14px;border:1.5px solid var(--border);margin-bottom:7px;transition:.16s;}
-.rank-item{transition:box-shadow .16s,transform .16s,border-color .16s;}
 .rank-item:hover{box-shadow:var(--sh);transform:translateX(3px);border-color:var(--coral-mid);}
 .rank-pos{font-size:14px;font-weight:800;color:var(--coral);min-width:26px;text-align:center;}
 .rank-name{flex:1;}
@@ -284,8 +243,7 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .sc-search:focus{outline:none;border-color:var(--coral);background:#fff;}
 .sc-wrap{overflow-x:auto;max-height:320px;border-radius:9px;border:1.5px solid var(--border);}
 .sc-legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
-.sc-leg-item{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;flex:1;min-width:140px;transition:.15s;}
-.sc-leg-item:hover{box-shadow:var(--sh);border-color:var(--cd);background:var(--cream);transform:translateY(-1px);}
+.sc-leg-item{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;flex:1;min-width:140px;}
 .sc-leg-n{font-size:22px;font-weight:800;}
 .sc-leg-title{font-size:11px;font-weight:700;margin-bottom:1px;}
 .sc-leg-desc{font-size:10px;color:var(--gris);line-height:1.4;}
@@ -399,15 +357,13 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 @keyframes popIn{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
 #tip-box h4{font-size:15px;font-weight:800;margin-bottom:7px;}
 #tip-box p{font-size:12px;color:var(--gris);line-height:1.75;white-space:pre-line;}
-#tip-close{position:absolute;top:10px;right:10px;font-size:14px;cursor:pointer;color:var(--gris);background:var(--cm);border:none;border-radius:7px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;transition:.13s;font-weight:700;line-height:1;}
-#tip-close:hover{background:var(--err-bg);color:var(--err);}
+#tip-close{position:absolute;top:12px;right:13px;font-size:18px;cursor:pointer;color:var(--gris);background:none;border:none;}
 #drill-overlay{display:none;position:fixed;inset:0;z-index:9500;background:rgba(15,8,4,.6);align-items:flex-start;justify-content:center;padding:34px 20px;overflow-y:auto;backdrop-filter:blur(4px);}
 #drill-overlay.show{display:flex;}
 #drill-box{background:#fff;border-radius:16px;width:100%;max-width:920px;padding:24px;box-shadow:0 24px 80px rgba(30,16,10,.22);position:relative;animation:popIn .17s;margin:auto;}
 #drill-box h3{font-size:16px;font-weight:800;margin-bottom:4px;}
 #drill-sub{font-size:11px;color:var(--gris);margin-bottom:13px;}
-#drill-close{position:absolute;top:12px;right:14px;font-size:14px;cursor:pointer;color:var(--gris);background:var(--cm);border:none;border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;transition:.13s;font-weight:700;line-height:1;}
-#drill-close:hover{background:var(--err-bg);color:var(--err);}
+#drill-close{position:absolute;top:14px;right:16px;font-size:20px;cursor:pointer;color:var(--gris);background:none;border:none;}
 .drill-filter{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;padding:10px 13px;background:var(--cream);border-radius:9px;border:1.5px solid var(--border);}
 .drill-filter label{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;}
 .drill-filter select{font-family:'Outfit',sans-serif;font-size:11px;font-weight:600;padding:4px 20px 4px 8px;border:1.5px solid var(--border);border-radius:6px;background:#fff;cursor:pointer;}
@@ -440,20 +396,6 @@ tbody tr:hover td{background:var(--cream);}
 </div>
 <div id="drill-overlay" onclick="closeDrill(event)">
   <div id="drill-box"><button id="drill-close" onclick="closeDrill()">×</button><h3 id="drill-title"></h3><p id="drill-sub"></p><div id="drill-content"></div></div>
-</div>
-<div id="detail-loading-banner" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999;background:var(--dark);color:#fff;font-size:12px;font-weight:600;padding:9px 20px;border-radius:99px;gap:9px;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,.3);">
-  <div style="width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;"></div>
-  Cargando detalle de reservas...
-</div>
-<style>@keyframes spin{to{transform:rotate(360deg);}}</style>
-
-<div id="prop-modal-overlay" onclick="closePropModal(event)">
-  <div id="prop-modal-box">
-    <button id="prop-modal-close" onclick="closePropModal()">×</button>
-    <div id="prop-modal-title"></div>
-    <div id="prop-modal-pct"></div>
-    <div id="prop-modal-actions"></div>
-  </div>
 </div>
 
 <header>
@@ -507,21 +449,8 @@ tbody tr:hover td{background:var(--cream);}
     <div id="exec-movers"></div>
   </div>
   <div class="sec">
-    <div class="ac">
-      <div class="ac-head" onclick="toggleAc(this)">
-        <div class="ac-left">
-          <span class="ac-ico">📈</span>
-          <div>
-            <div class="ac-tit">Tendencia por propiedad <i class="ib" onclick="event.stopPropagation();openTip('Tendencia')">i</i></div>
-            <div class="ac-sub" id="trend-ac-sub">Haz clic para ver el histórico por propiedad</div>
-          </div>
-        </div>
-        <span class="ac-arr">▼</span>
-      </div>
-      <div class="ac-body" style="padding:16px 20px;">
-        <div id="exec-trend"></div>
-      </div>
-    </div>
+    <div class="sec-hdr"><h2>Tendencia por propiedad <i class="ib" onclick="openTip('Tendencia')">i</i></h2><div class="linea"></div></div>
+    <div id="exec-trend"></div>
   </div>
 </div>
 
@@ -556,12 +485,12 @@ tbody tr:hover td{background:var(--cream);}
   <!-- 4. Lista de trabajo -->
   <div class="sec">
     <div class="ac">
-      <div class="ac-head" onclick="toggleAcLista(this)">
+      <div class="ac-head" onclick="toggleAc(this)">
         <div class="ac-left">
           <span class="ac-ico">📋</span>
           <div>
             <div class="ac-tit">Lista de trabajo — miembros sin beneficio <i class="ib" onclick="event.stopPropagation();openTip('Sin beneficio')">i</i></div>
-            <div class="ac-sub" id="sc-ac-sub">Haz clic para cargar la lista (carga rápida)</div>
+            <div class="ac-sub" id="sc-ac-sub">Haz clic para ver la lista y filtrar por nivel</div>
           </div>
         </div>
         <span class="ac-arr">▼</span>
@@ -625,38 +554,8 @@ tbody tr:hover td{background:var(--cream);}
 
 <script>
 var DATA_URL='../data/loyalty_data.json';
-var DETAIL_URL='../data/loyalty_detail.json';
 var DATA=null,SC_DATA=[],MEMBER_DATA=[];
 var _donutChart=null;
-// v18: tiersDetalle y sinCanje viven en loyalty_detail.json (lazy load)
-var _detailData=null,_detailLoading=false,_detailCallbacks=[];
-function loadDetail(cb){
-  if(_detailData){cb(_detailData);return;}
-  _detailCallbacks.push(cb);
-  if(_detailLoading)return;
-  _detailLoading=true;
-  var el=document.getElementById('detail-loading-banner');
-  if(el)el.style.display='flex';
-  fetch(DETAIL_URL)
-    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
-    .then(function(d){
-      _detailData=d;
-      DATA.tiersDetalle=d.tiersDetalle||[];
-      DATA.sinCanje=d.sinCanje||[];
-      SC_DATA=DATA.sinCanje;
-      _detailLoading=false;
-      if(el)el.style.display='none';
-      _detailCallbacks.forEach(function(fn){fn(d);});
-      _detailCallbacks=[];
-    })
-    .catch(function(err){
-      _detailLoading=false;
-      if(el)el.style.display='none';
-      console.error('loyalty_detail.json error:',err);
-      _detailCallbacks.forEach(function(fn){fn({tiersDetalle:[],sinCanje:[]});});
-      _detailCallbacks=[];
-    });
-}
 
 /* ── TIPS ─────────────────────────────── */
 var TIPS={
@@ -677,34 +576,7 @@ var TIPS={
 function openTip(k){var t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
 function closeTip(e){if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;document.getElementById('tip-overlay').classList.remove('show');}
 function closeDrill(e){if(e&&e.target!==document.getElementById('drill-overlay')&&e.target!==document.getElementById('drill-close'))return;document.getElementById('drill-overlay').classList.remove('show');}
-function openPropModal(propName){
-  var p=window._PROP_MAP&&window._PROP_MAP[propName];if(!p)return;
-  var CFG={critico:{ico:'🔴',lbl:'Crítico',col:'var(--err)'},atencion:{ico:'🟡',lbl:'Necesita atención',col:'#ca8a04'},ok:{ico:'🟢',lbl:'En camino',col:'var(--ok)'}};
-  var cfg=CFG[p.status];
-  var actions=[];
-  if(p.cb===0&&p.ci>0)actions.push({ico:'⛔',label:'Sin miembros registrados en el período',detail:'El equipo puede desconocer el programa o no tener acceso a Akin.',urgent:true});
-  else if(p.pct<5)actions.push({ico:'🚨',label:'Solo '+p.pct.toFixed(1)+'% de huéspedes son miembros (meta: 15%)',detail:'Muy por debajo de la meta. Reunión urgente con el gerente.',urgent:true});
-  else if(p.pct<15)actions.push({ico:'📋',label:p.pct.toFixed(1)+'% de huéspedes son miembros — en camino',detail:'Reforzar el proceso de inscripción en cada check-in.',urgent:false});
-  else actions.push({ico:'🎯',label:p.pct.toFixed(1)+'% de huéspedes son miembros — meta alcanzada',detail:'Mantener el proceso documentado y compartirlo con otras propiedades.',urgent:false});
-  if(p.nv===0&&p.ci>0)actions.push({ico:'➕',label:'0 nuevos inscritos en este período',detail:'El equipo no está invitando activamente a los huéspedes.',urgent:p.status==='critico'});
-  if(p.ok===0&&p.cb>0)actions.push({ico:'📱',label:'Ningún beneficio registrado correctamente en CloudBeds',detail:'Los miembros se hospedan pero no se marcan los beneficios. Revisar capacitación.',urgent:true});
-  else if(p.ok>0)actions.push({ico:'✅',label:p.ok+' beneficio'+(p.ok>1?'s':'')+' aplicado'+(p.ok>1?'s':'')+' correctamente',detail:'El proceso funciona. Documentar y replicar a otras propiedades.',urgent:false});
-  if(p.sc>0){var scU=new Set((DATA.sinCanje||[]).filter(function(r){return r.Propiedad===p.name;}).map(function(r){return r.Nombre;}).filter(Boolean)).size;actions.push({ico:'❌',label:scU+' miembro'+(scU>1?'s':'')+' único'+(scU>1?'s':'')+' sin beneficio ('+p.sc+' reservas)',detail:'Ir a Lista de trabajo y filtrar por esta propiedad.',urgent:p.sc>20});}
-  if(p.lk>0)actions.push({ico:'💸',label:p.lk+' descuento'+(p.lk>1?'s':'')+' a huésped sin membresía',detail:'Pérdida directa de ingreso. Siempre verificar en Akin antes de aplicar beneficios.',urgent:true});
-  if(p.tiI>0)actions.push({ico:'⚠️',label:p.tiI+' beneficio'+(p.tiI>1?'s':'')+' con nivel incorrecto',detail:'El nivel en CB no coincide con el nivel real en Akin.',urgent:false});
-  if(p.ms>0)actions.push({ico:'🚫',label:p.ms+' mal aplicado'+(p.ms>1?'s':''),detail:'Aplicado fuera del proceso o sin verificar en Akin.',urgent:false});
-  document.getElementById('prop-modal-title').innerHTML=propName+'&nbsp;<span style="font-size:11px;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--cm);color:var(--mid);">'+cfg.ico+' '+cfg.lbl+'</span>';
-  document.getElementById('prop-modal-pct').innerHTML='<span style="font-size:34px;font-weight:800;color:'+cfg.col+'">'+p.pct.toFixed(1)+'%</span>&nbsp;<span style="font-size:12px;color:var(--gris)">de huéspedes son miembros &nbsp;·&nbsp; meta: 15%</span>';
-  document.getElementById('prop-modal-actions').innerHTML=actions.map(function(a){return '<div class="prop-action-item"><div class="prop-action-ico">'+a.ico+'</div><div class="prop-action-text"><div class="prop-action-label">'+a.label+'</div><div class="prop-action-detail">'+a.detail+'</div>'+(a.urgent?'<span class="prop-action-urgent">Acción urgente esta semana</span>':'')+'</div></div>';}).join('');
-  document.getElementById('prop-modal-overlay').classList.add('show');
-}
-function closePropModal(e){if(e&&e.target!==document.getElementById('prop-modal-overlay')&&e.target!==document.getElementById('prop-modal-close'))return;document.getElementById('prop-modal-overlay').classList.remove('show');}
-function filterPropCards(type,btn){
-  document.querySelectorAll('.prop-filter-btn').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  document.querySelectorAll('.prop-tile').forEach(function(tile){tile.style.display=(type==='all'||tile.classList.contains(type))?'':'none';});
-}
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('tip-overlay').classList.remove('show');document.getElementById('drill-overlay').classList.remove('show');var pm=document.getElementById('prop-modal-overlay');if(pm)pm.classList.remove('show');}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('tip-overlay').classList.remove('show');document.getElementById('drill-overlay').classList.remove('show');}});
 function ib(k){return '<i class="ib" onclick="event.stopPropagation();openTip(\''+k+'\')" >i</i>';}
 
 /* ── TABS ─────────────────────────────── */
@@ -713,7 +585,6 @@ function switchTab(id,btn){
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
   if(id==='ctx')renderCtxTab();
   if(id==='members')renderMembersTab();
 }
@@ -759,42 +630,12 @@ function fmtN(n){return Math.round(Number(n)||0).toLocaleString('es-CR');}
 function fmtP(a,b){return b>0?(Math.round(a/b*1000)/10).toFixed(1)+'%':'—';}
 function sum(arr,k){return arr.reduce(function(t,r){return t+(parseFloat(r[k])||0);},0);}
 function clsP(v){var n=parseFloat(v);return isNaN(n)?'':n>=15?'pct-ok':n>=8?'pct-warn':'pct-err';}
-function toggleAc(h){
-  h.classList.toggle('open');
-  var body=h.nextElementSibling;
-  body.classList.toggle('vis');
-  if(body.classList.contains('vis')){
-    var inp=body.querySelector('input[type="text"]');
-    if(inp)setTimeout(function(){inp.focus();},200);
-  }
-}
+function toggleAc(h){h.classList.toggle('open');h.nextElementSibling.classList.toggle('vis');}
 function togglePropCard(h){h.classList.toggle('open');h.nextElementSibling.classList.toggle('vis');}
-function toggleAcLista(h){
-  // Lazy load de loyalty_detail.json al abrir la lista de trabajo
-  h.classList.toggle('open');
-  var body=h.nextElementSibling;
-  body.classList.toggle('vis');
-  if(body.classList.contains('vis')&&!_detailData){
-    body.innerHTML='<div style="padding:20px;text-align:center;color:var(--gris);font-size:12px;">⏳ Cargando lista de trabajo...</div>';
-    loadDetail(function(d){
-      renderSinCanje(d.sinCanje||[]);
-      var inp=body.querySelector('input[type="text"]');
-      if(inp)setTimeout(function(){inp.focus();},200);
-    });
-  } else if(body.classList.contains('vis')){
-    var inp=body.querySelector('input[type="text"]');
-    if(inp)setTimeout(function(){inp.focus();},200);
-  }
-}
 
 /* ── DRILL OVERLAY ────────────────────── */
 var _drillTipo='';
 function drillTipoError(tipo,titulo){
-  // v18: lazy load del detalle
-  if(!_detailData){
-    loadDetail(function(){drillTipoError(tipo,titulo);});
-    return;
-  }
   _drillTipo=tipo;
   var ft=getMsValues('per'),fp=getMsValues('prop'),fpa=getMsValues('pais');
   var allRows=(DATA.tiersDetalle||[]).filter(function(r){
@@ -1027,35 +868,7 @@ function renderExecTrend(afs){
     if(def.length>=2){var last=def[def.length-1],prev=def[def.length-2];trend=last>prev?'<span style="color:var(--ok);font-weight:700">↑</span>':last<prev?'<span style="color:var(--err);font-weight:700">↓</span>':'<span style="color:var(--gris)">→</span>';}
     return '<tr><td><b>'+prop+'</b></td>'+vals.map(function(v){return v===null?'<td class="tc" style="color:#ccc">—</td>':'<td class="tc '+clsP(v)+'">'+v.toFixed(1)+'%</td>';}).join('')+'<td class="tc" style="font-size:16px">'+trend+'</td></tr>';
   }).join('');
-    var sn2=function(n){return n.replace('Viajero ','').replace(' Hostel','').replace(' &Spa','').replace(' &Ecohabs','').replace(' & Lake Club','').replace(' &Salsa School','');};
-  var makeSpark=function(vals,col,w,h){
-    var def=vals.filter(function(v){return v!==null;});
-    if(def.length<2)return '<div style="height:'+h+'px;display:flex;align-items:center;font-size:9px;color:var(--gris)">—</div>';
-    var minV=Math.min.apply(null,def),maxV=Math.max.apply(null,def);
-    var rng=maxV-minV||1;var pd=3,iw=w-pd*2,ih=h-pd*2;
-    var idxs=vals.reduce(function(a,v,i){if(v!==null)a.push(i);return a;},[]);
-    var pts=idxs.map(function(i){return(Math.round((i/(Math.max(vals.length-1,1)))*iw)+pd)+','+(Math.round((1-(vals[i]-minV)/rng)*ih)+pd);}).join(' ');
-    var li=idxs[idxs.length-1];
-    var lx=Math.round((li/(Math.max(vals.length-1,1)))*iw)+pd,ly=Math.round((1-(vals[li]-minV)/rng)*ih)+pd;
-    return '<svg width="'+w+'" height="'+h+'" style="overflow:visible"><polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><circle cx="'+lx+'" cy="'+ly+'" r="2.5" fill="'+col+'"/></svg>';
-  };
-  var upN=0,downN=0;
-  var tiles=allProps.map(function(prop){
-    var vals=allPers.map(function(per){return getV(prop,per);});
-    var def=vals.filter(function(v){return v!==null;});
-    var lastV=def.length>0?def[def.length-1]:null;
-    var col=lastV===null?'var(--gris)':lastV>=15?'var(--ok)':lastV>=8?'#ca8a04':'var(--err)';
-    var trendArrow='→',trendCol='var(--gris)';
-    if(def.length>=2){if(def[def.length-1]>def[def.length-2]){trendArrow='↑';trendCol='var(--ok)';upN++;}else if(def[def.length-1]<def[def.length-2]){trendArrow='↓';trendCol='var(--err)';downN++;}}
-    return '<div class="spark-tile">'+
-      '<div class="st-name">'+sn2(prop)+'</div>'+
-      '<div class="st-spark">'+makeSpark(vals,col,100,34)+'</div>'+
-      '<div class="st-bottom"><span class="st-val" style="color:'+col+'">'+(lastV!==null?lastV.toFixed(1)+'%':'—')+'</span><span class="st-trend" style="color:'+trendCol+'">'+trendArrow+'</span></div>'+
-      '</div>';
-  }).join('');
-  var subEl=document.getElementById('trend-ac-sub');
-  if(subEl)subEl.textContent=allProps.length+' propiedades · ↑ '+upN+' en alza · ↓ '+downN+' a la baja';
-  document.getElementById('exec-trend').innerHTML=note+'<div class="spark-grid">'+tiles+'</div><div style="font-size:10px;color:var(--gris);margin-top:8px;padding:5px 8px;background:var(--cream);border-radius:6px;">🟢 ≥15% meta · 🟡 8–15% en proceso · 🔴 <8% bajo meta · cada gráfica muestra la evolución del período</div>';
+  document.getElementById('exec-trend').innerHTML=note+'<div style="overflow-x:auto"><table class="trend-table"><thead><tr><th>Propiedad</th>'+allPers.map(function(p){return '<th class="tc">'+p+'</th>';}).join('')+'<th class="tc">Tendencia</th></tr></thead><tbody>'+rows+'</tbody></table></div><div style="font-size:10px;color:var(--gris);margin-top:7px;padding:6px 10px;background:var(--cream);border-radius:8px;">Métrica: % de huéspedes que son miembros · 🟢 ≥15% · 🟡 8-15% · 🔴 <8%</div>';
 }
 
 /* ═══════════════════════════════════════
@@ -1066,40 +879,7 @@ function renderExecTrend(afs){
 function renderPropActions(afs,mb){
   var cont=document.getElementById('prop-actions');
   var map={};
-  afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={name:p,ci:0,cb:0,hu:0,nv:0,ok:0,sc:0,lk:0,tiI:0,ms:0,trans:0};map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].hu+=parseFloat(r._huespedes)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
-  mb.forEach(function(r){var p=r.Propiedad||'';if(!p||!map[p])return;var et=r.Error_Type||'';if(et==='OK')map[p].ok++;else if(et==='SIN CANJE')map[p].sc++;else if(et==='LEAKAGE')map[p].lk++;else if(et==='TIER_INCORRECTO')map[p].tiI++;else if(et==='MISUSE')map[p].ms++;if(et&&et!=='NO LOYALTY')map[p].trans++;});
-  var props=Object.values(map).filter(function(p){return p.ci>0||p.cb>0;});
-  props.forEach(function(p){p.pct=p.ci>0?Math.round(p.cb/p.ci*1000)/10:0;p.status=p.pct<5||p.cb===0?'critico':p.ok===0&&p.cb>0?'atencion':p.pct<15?'atencion':'ok';});
-  props.sort(function(a,b){var o={critico:0,atencion:1,ok:2};return(o[a.status]-o[b.status])||a.pct-b.pct;});
-  window._PROP_MAP=map;window._PROP_MB=mb;
-  var CFG={critico:{col:'var(--err)'},atencion:{col:'#ca8a04'},ok:{col:'var(--ok)'}};
-  var sn=function(n){return n.replace('Viajero ','').replace(' Hostel','').replace(' &Spa','').replace(' &Ecohabs','').replace(' & Lake Club','').replace(' &Salsa School','');}
-  var critN=props.filter(function(p){return p.status==='critico';}).length;
-  var warnN=props.filter(function(p){return p.status==='atencion';}).length;
-  var okN=props.filter(function(p){return p.status==='ok';}).length;
-  var summary='<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">'+
-    (critN?'<span style="background:var(--err-bg);color:var(--err);font-weight:700;padding:4px 12px;border-radius:99px;font-size:11px;">🔴 '+critN+' críticas</span>':'')+
-    (warnN?'<span style="background:#fef9c3;color:#92400e;font-weight:700;padding:4px 12px;border-radius:99px;font-size:11px;">🟡 '+warnN+' atención</span>':'')+
-    (okN?'<span style="background:var(--ok-bg);color:var(--ok);font-weight:700;padding:4px 12px;border-radius:99px;font-size:11px;">🟢 '+okN+' en camino</span>':'')+
-    '<span style="font-size:10px;color:var(--gris);margin-left:auto;">Haz clic en cada propiedad para ver el detalle</span>'+
-    '</div>';
-  cont.innerHTML=summary+'<div class="prop-grid">'+props.map(function(p){
-    var cfg=CFG[p.status];
-    var alerts=[];
-    if(p.lk>0)alerts.push({t:'💸 '+p.lk,cls:'err'});
-    if(p.ok>0)alerts.push({t:'✅ '+p.ok,cls:'ok'});
-    if(p.sc>0){var scU=new Set((DATA.sinCanje||[]).filter(function(r){return r.Propiedad===p.name;}).map(function(r){return r.Nombre;}).filter(Boolean)).size;alerts.push({t:'❌ '+scU,cls:'err'});}
-    if(p.nv===0)alerts.push({t:'0 nuevos',cls:''});
-    return '<div class="prop-tile '+p.status+'" onclick="openPropModal(\'' +p.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')" title="'+sn(p.name)+'">'+
-      '<div class="pt-name">'+sn(p.name)+'</div>'+
-      '<div class="pt-pct" style="color:'+cfg.col+'">'+p.pct.toFixed(1)+'%</div>'+
-      '<div class="pt-lbl">miembros</div>'+
-      '<div class="pt-alerts">'+alerts.slice(0,4).map(function(a){return '<span class="pt-alert '+(a.cls||'')+'">'+a.t+'</span>';}).join('')+'</div>'+
-      '</div>';
-  }).join('')+'</div>';
-  /* LEGACY REMOVED - replaced with grid above */
-  return;
-  var _legacy=function(){
+  afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={name:p,ci:0,cb:0,hu:0,nv:0,ok:0,sc:0,lk:0,tiI:0,trans:0};map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].hu+=parseFloat(r._huespedes)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
   mb.forEach(function(r){var p=r.Propiedad||'';if(!p||!map[p])return;var et=r.Error_Type||'';if(et==='OK')map[p].ok++;else if(et==='SIN CANJE')map[p].sc++;else if(et==='LEAKAGE')map[p].lk++;else if(et==='TIER_INCORRECTO')map[p].tiI++;if(et&&et!=='NO LOYALTY')map[p].trans++;});
   var props=Object.values(map).filter(function(p){return p.ci>0||p.cb>0;});
   props.forEach(function(p){p.pct=p.ci>0?Math.round(p.cb/p.ci*1000)/10:0;p.status=p.pct<5||p.cb===0?'critico':p.ok===0&&p.cb>0?'atencion':p.pct<15?'atencion':'ok';});
@@ -1130,21 +910,10 @@ function renderPropActions(afs,mb){
 }
 
 function renderPropSemaforo(mb){
-  var t,scUnicos;
-  if(mb.length>0){
-    t={OK:0,'SIN CANJE':0,LEAKAGE:0,TIER_INCORRECTO:0,MISUSE:0};
-    mb.forEach(function(r){var k=r.Error_Type||'';if(k in t)t[k]++;});
-    scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
-  } else if(DATA&&DATA._resumen){
-    // Fallback: usar resumen de loyalty_data.json mientras detail no ha cargado
-    var rs=DATA._resumen;
-    t={OK:rs.ok||0,'SIN CANJE':rs.sin_canje||0,LEAKAGE:rs.leakage||0,TIER_INCORRECTO:rs.tier_incorrecto||0,MISUSE:rs.misuse||0};
-    scUnicos=rs.sin_canje||0; // reservas como proxy hasta que cargue detail
-  } else {
-    t={OK:0,'SIN CANJE':0,LEAKAGE:0,TIER_INCORRECTO:0,MISUSE:0};
-    scUnicos=0;
-  }
+  var t={OK:0,'SIN CANJE':0,LEAKAGE:0,TIER_INCORRECTO:0,MISUSE:0};
+  mb.forEach(function(r){var k=r.Error_Type||'';if(k in t)t[k]++;});
   var tot=Object.values(t).reduce(function(a,b){return a+b;},0)||1;
+  var scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
   document.getElementById('prop-sem-total').innerHTML='<b>'+fmtN(tot)+'</b> transacciones en el período · <span style="color:var(--mid);font-size:10px">Fuente: CloudBeds + Akin</span>';
   var items=[
     {k:'OK',label:'Correctos',sub:'Bien registrado en CB',val:t['OK'],cls:'s-verde',drill:false},
@@ -1221,8 +990,6 @@ function renderSinCanje(sc){
     '<div style="font-size:10px;color:var(--gris);margin-top:5px;background:var(--cream);padding:5px 9px;border-radius:7px;">'+
     'ℹ️ La lista de abajo muestra a qué personas hay que aplicarles el beneficio que no recibieron. Usa el buscador para filtrar por propiedad o nombre.'+
     '</div>';
-  var subEl=document.getElementById('sc-ac-sub');
-  if(subEl)subEl.textContent=fmtN(unicos)+' personas sin beneficio · '+fmtN(sc.length)+' reservas';
   filtrarSC();
 }
 function scFilterTier(tier,clickedId){
