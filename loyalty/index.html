@@ -102,35 +102,34 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .hl-kpi-meta{font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;}
 .hl-status{display:inline-flex;font-size:10px;font-weight:700;border-radius:99px;padding:3px 10px;border:1px solid;margin-top:6px;}
 
-/* KPI CARDS — RESUMEN EJECUTIVO (nuevas, más visuales) */
-.exec-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;}
-.exec-kpi-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:0;overflow:hidden;position:relative;transition:box-shadow .18s;cursor:default;}
+/* KPI CARDS — RESUMEN EJECUTIVO */
+.exec-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px;}
+.exec-kpi-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;transition:box-shadow .18s;display:flex;flex-direction:column;}
 .exec-kpi-card:hover{box-shadow:var(--shm);}
-.ekc-stripe{height:4px;width:100%;}
-.ekc-body{padding:16px 18px 14px;}
-.ekc-label{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;display:flex;align-items:center;gap:4px;}
-.ekc-main{display:flex;align-items:flex-end;gap:10px;margin-bottom:6px;}
-.ekc-val{font-size:32px;font-weight:800;line-height:1;}
-.ekc-unit{font-size:13px;font-weight:700;color:var(--gris);margin-bottom:4px;}
-.ekc-sub{font-size:11px;color:var(--gris);line-height:1.45;margin-bottom:8px;}
-.ekc-footer{display:flex;align-items:center;justify-content:space-between;padding:8px 18px 10px;background:var(--cream);border-top:1px solid var(--border);}
-.ekc-footer-label{font-size:10px;color:var(--gris);font-weight:600;}
-.ekc-footer-val{font-size:11px;font-weight:800;}
-.ekc-badge{display:inline-flex;font-size:9px;font-weight:700;padding:3px 9px;border-radius:99px;margin-top:2px;}
+.ekc-top{padding:18px 20px 14px;flex:1;}
+.ekc-label{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px;display:flex;align-items:center;gap:5px;}
+.ekc-metric{display:flex;align-items:baseline;gap:6px;margin-bottom:6px;}
+.ekc-val{font-size:36px;font-weight:800;line-height:1;}
+.ekc-unit{font-size:16px;font-weight:700;color:var(--gris);line-height:1;}
+.ekc-desc{font-size:11px;color:var(--gris);line-height:1.5;}
+.ekc-tag{display:inline-flex;font-size:9px;font-weight:700;padding:3px 9px;border-radius:99px;margin-top:8px;}
+.ekc-bottom{padding:9px 20px 10px;border-top:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--cream);}
+.ekc-bottom-lbl{font-size:10px;color:var(--gris);font-weight:500;}
+.ekc-bottom-val{font-size:12px;font-weight:800;}
 
 /* KPI ROW SECUNDARIA (mix reservas + noches) */
 .exec-kpi-row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
-.ekr2-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
-.ekr2-stripe{height:4px;}
-.ekr2-body{padding:14px 18px 10px;}
-.ekr2-label{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;}
-.ekr2-val{font-size:28px;font-weight:800;line-height:1;margin-bottom:3px;}
-.ekr2-sub{font-size:11px;color:var(--gris);}
-.ekr2-compare{display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
-.ekr2-compare-item{flex:1;text-align:center;}
-.ekr2-compare-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--gris);}
-.ekr2-compare-n{font-size:14px;font-weight:800;margin-top:2px;}
-.ekr2-compare-sep{width:1px;background:var(--border);align-self:stretch;}
+.ekr2-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;display:flex;flex-direction:column;}
+.ekr2-top{padding:16px 20px 12px;flex:1;}
+.ekr2-label{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;display:flex;align-items:center;gap:5px;}
+.ekr2-metric{display:flex;align-items:baseline;gap:6px;margin-bottom:4px;}
+.ekr2-val{font-size:30px;font-weight:800;line-height:1;}
+.ekr2-desc{font-size:11px;color:var(--gris);line-height:1.5;}
+.ekr2-compare{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid var(--border);}
+.ekr2-col{padding:10px 20px;text-align:center;}
+.ekr2-col+.ekr2-col{border-left:1.5px solid var(--border);}
+.ekr2-col-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gris);margin-bottom:4px;}
+.ekr2-col-val{font-size:16px;font-weight:800;}
 
 /* EXEC BOTTOM ROW: pais left + funnel right — same height */
 .exec-bottom-row{display:grid;grid-template-columns:1fr 340px;gap:16px;margin-bottom:20px;align-items:stretch;}
@@ -184,22 +183,25 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .b-blue{background:var(--blue-bg);color:var(--blue);}
 .b-teal{background:var(--teal-bg);color:var(--teal);}
 
-/* SEMAFORO — más cómodo */
-.semaforo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
-.s-item{background:var(--surface);border-radius:var(--r);padding:16px 14px;border:1.5px solid var(--border);text-align:center;transition:.16s;position:relative;overflow:hidden;}
+/* SEMAFORO — lista horizontal tipo scorecard */
+.semaforo-grid{display:flex;flex-direction:column;gap:0;margin-bottom:16px;background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
+.s-item{display:flex;align-items:center;gap:16px;padding:14px 20px;border-bottom:1px solid var(--border);transition:.13s;position:relative;}
+.s-item:last-child{border-bottom:none;}
 .s-item.clickable{cursor:pointer;}
-.s-item:hover.clickable{box-shadow:var(--shm);}
-.s-item::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--r) var(--r) 0 0;}
-.s-verde::before{background:var(--ok);}
-.s-amarillo::before{background:#eab308;}
-.s-rojo::before{background:var(--err);}
-.s-val{font-size:30px;font-weight:800;line-height:1;margin-bottom:4px;}
+.s-item:hover.clickable{background:var(--coral-soft);}
+.s-accent{width:4px;height:36px;border-radius:2px;flex-shrink:0;}
+.s-verde .s-accent{background:var(--ok);}
+.s-amarillo .s-accent{background:#eab308;}
+.s-rojo .s-accent{background:var(--err);}
+.s-val{font-size:28px;font-weight:800;line-height:1;min-width:64px;flex-shrink:0;}
 .s-verde .s-val{color:var(--ok);}
 .s-amarillo .s-val{color:var(--warn);}
 .s-rojo .s-val{color:var(--err);}
-.s-lbl{font-size:10px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.4px;}
-.s-sub{font-size:9px;color:var(--gris);margin-top:3px;line-height:1.4;}
-.s-tipo{font-size:9px;font-weight:600;padding:3px 8px;border-radius:99px;display:inline-block;margin-top:6px;}
+.s-info{flex:1;}
+.s-lbl{font-size:12px;font-weight:700;color:var(--dark);line-height:1.2;}
+.s-sub{font-size:10px;color:var(--gris);margin-top:2px;line-height:1.4;}
+.s-right{flex-shrink:0;text-align:right;}
+.s-tipo{font-size:9px;font-weight:700;padding:3px 9px;border-radius:99px;display:inline-flex;align-items:center;gap:4px;}
 .s-verde .s-tipo{background:var(--ok-bg);color:var(--ok);}
 .s-amarillo .s-tipo{background:var(--warn-bg);color:var(--warn);}
 .s-rojo .s-tipo{background:var(--err-bg);color:var(--err);}
@@ -527,19 +529,22 @@ var _drawerProp=null,_drawerSCData=[];
 
 /* ── TIPS ─────────────────────────────── */
 var TIPS={
-'Estado por propiedad':{t:'Estado por propiedad',b:'Vista ejecutiva por propiedad:\n\n• % Miembros: de cada 100 check-ins, cuántos son miembros (meta ≥15%)\n• Beneficios aplicados: ¿hay al menos un registro correcto?\n• Errores: principales problemas detectados\n\n🟢 Meta · 🟡 En proceso · 🔴 Necesita atención'},
-'Tendencia':{t:'Tendencia mensual',b:'Tres métricas en el tiempo:\n\n1. % Miembros: de cada 100 huéspedes, cuántos son miembros (meta ≥15%)\n2. % Beneficios OK: de los miembros hospedados, cuántos recibieron su beneficio en CB\n3. Nuevos inscritos: personas que se unieron al programa en cada período\n\nSe necesitan al menos 2 períodos para ver tendencia.'},
-'Acción por propiedad':{t:'Diagnóstico por propiedad',b:'Tabla compacta de todas las propiedades.\n\nHaz clic en cualquier fila para ver:\n• Diagnóstico detallado con acciones concretas\n• Lista de trabajo: miembros sin beneficio de esa propiedad\n\n🔴 Crítico: acción esta semana\n🟡 Atención: refuerzo del proceso\n🟢 En camino: mantener y documentar'},
-'Resumen de errores':{t:'Estado global del programa',b:'Resumen de todas las transacciones del período:\n\n✅ Correctos: beneficio bien registrado en CloudBeds.\n\n❌ Sin beneficio: miembros únicos que se hospedaron sin recibir nada.\n\n💸 Descuento a no-miembro: se aplicó beneficio a alguien que NO es miembro. Pérdida de ingreso.\n\n⚠️ Nivel incorrecto: el nivel registrado en CB no coincide con el nivel real en Akin.\n\n🚫 Mal aplicado: fuera del proceso establecido.\n\nHaz clic en las tarjetas (excepto "Correctos") para ver el listado individual.'},
-'Sin beneficio':{t:'Lista de trabajo — Sin beneficio',b:'Miembros que se hospedaron y no recibieron su beneficio.\n\nAccesible desde el panel de cada propiedad — el equipo puede filtrar solo su hostel y trabajar la lista directamente.'},
-'Problemas técnicos':{t:'Problemas técnicos de sincronización',b:'Reservas reconocidas en Akin pero que CloudBeds no puede encontrar.\n\nCausa: número de reserva o correo difiere entre sistemas. No es un error del equipo de recepción.\n\n→ Buscar al huésped por nombre en CB.\n→ Si no aparece: escalar a Akin con número de reserva.'},
-'Estado actividad':{t:'Estado de actividad de miembros',b:'Clasificación según su última reserva:\n\n• Activo: reservas en los últimos 90 días\n• Ocasional: última reserva hace 91–180 días\n• Dormido: última reserva hace 181–365 días\n• Inactivo: sin reservas en más de 365 días, o nunca registró una estadía'},
-'Directorio miembros':{t:'Directorio de miembros',b:'Lista completa de miembros con su historial de visitas.\n\nColumnas clave:\n• Estadías: número total de reservas registradas\n• Noches: total de noches acumuladas\n• Propiedades: cuántos hostels distintos ha visitado\n• Últ. estadía: días desde la última visita\n• Estado: clasificación de actividad según frecuencia'},
-'Miembros del programa':{t:'Distribución de miembros por nivel',b:'Total de personas inscritas en Viajero Go según Akin, desglosado por nivel.\n\nHaz clic en cada nivel para ver la lista completa de miembros.\n\n⚠️ Este número refleja el estado actual del programa y no cambia con el filtro de período — es el total acumulado en Akin.'},
-'Ranking':{t:'Ranking de propiedades',b:'Tres mini-gráficas ordenadas de mayor a menor:\n\n1. % Miembros: de cada 100 huéspedes, cuántos son miembros (meta ≥15%). La línea vertical es la meta.\n2. Nuevos inscritos: captación en el período\n3. % Beneficios OK: proporción de aplicaciones correctamente registradas en CB'},
-'Embudo':{t:'Inscripción y penetración',b:'Dos vistas complementarias:\n\n📊 Penetración por país: % de check-ins que son miembros, por país. Verde ≥15%, amarillo 8-14%, rojo <8%.\n\n🔽 Embudo de inscripción: flujo desde total de huéspedes hasta nuevos inscritos. Cada barra es proporcional al total de huéspedes. La tasa de conversión entre pasos muestra dónde se pierden oportunidades.'},
-'Movimiento':{t:'Cambio vs período anterior',b:'Variación en puntos porcentuales (pp) de penetración entre el período más reciente y el anterior.\n\nEjemplo: si en marzo fue 10% y en abril 13%, el cambio es +3pp.\n\n↑ Verde: la propiedad mejoró su penetración\n↓ Rojo: la propiedad bajó su penetración\n\nNota: con pocos períodos es orientativo, no concluyente.'},
-'Detalle por nivel':{t:'Cómo leer estas tarjetas',b:'Cada nivel del programa tiene beneficios distintos. Los números muestran el resultado de cada transacción de ese nivel:\n\n✅ Correctos: beneficio bien registrado en CB\n❌ Sin beneficio: el miembro se hospedó y no recibió nada\n💸 A no-miembro: se aplicó sin membresía activa\n⚠️ Nivel incorrecto: el beneficio fue registrado con el nivel equivocado'},
+'Tendencia':{t:'Tendencia mensual',b:'Tres métricas clave en el tiempo:\n\n1. % Miembros / huéspedes\nDe cada 100 huéspedes del período, cuántos son miembros activos de Viajero Go. Meta: ≥15%.\n\n2. % Beneficios OK\nDe los miembros que se hospedaron (check-in en CB), cuántos recibieron su beneficio correctamente registrado. Meta futura: ≥30%.\n\n3. Tasa de captación\n% de huéspedes totales que se unieron al programa en ese período. Meta futura: ≥5%.\n\nNota: se necesitan al menos 4 períodos para leer tendencias con confianza.'},
+'Nuevos inscritos / huésped':{t:'Nuevos inscritos / huésped',b:'Cuántos de cada 100 huéspedes se unieron por primera vez al programa Viajero Go en este período.\n\nFórmula: (nuevos inscritos ÷ total huéspedes) × 100\n\nNo confundir con penetración — un miembro ya inscrito que vuelve no cuenta aquí.\n\nMeta futura: ≥5%.'},
+'Beneficios correctos':{t:'Beneficios correctos en CB',b:'De los miembros que hicieron check-in, cuántos tuvieron su beneficio correctamente registrado en CloudBeds.\n\nFórmula: (registros OK ÷ total check-ins de miembros) × 100\n\nSi este % es bajo, el problema es de ejecución en recepción — el equipo no está marcando el beneficio en CB aunque el huésped sí sea miembro.\n\nMeta futura: ≥30%.'},
+'Sin beneficio':{t:'Miembros sin beneficio',b:'Número de personas únicas que siendo miembros activos de Viajero Go, se hospedaron y no recibieron su beneficio en CloudBeds.\n\nEstas personas tienen membresía válida — el error fue operativo en recepción.\n\nHaz clic en cualquier propiedad en el tab "Por propiedad" para ver la lista individual y actuar propiedad por propiedad.'},
+'Acción por propiedad':{t:'Diagnóstico por propiedad',b:'Tabla de todas las propiedades con sus métricas del período.\n\nColumnas:\n• % Miembros: de los check-ins en CB, cuántos son miembros (meta ≥15%)\n• Nuevos: personas que se unieron al programa en el período\n• Benef. OK: % de miembros hospedados que recibieron su beneficio\n• Errores: sin beneficio, leakage y nivel incorrecto\n\n🔴 Crítico → acción esta semana\n🟡 Atención → refuerzo del proceso\n🟢 En camino → mantener\n\nClic en cualquier fila para ver el diagnóstico completo y lista de trabajo.'},
+'Resumen de errores':{t:'Estado global del programa',b:'Resumen de todas las interacciones de miembros en el período:\n\n✅ Correctos\nBeneficio aplicado y registrado correctamente en CloudBeds.\n\n❌ Sin beneficio\nMiembros únicos hospedados sin recibir su beneficio. Error operativo en recepción.\n\n💸 A no-miembro\nSe aplicó un descuento a un huésped que NO tiene membresía activa. Pérdida directa de ingreso.\n\n⚠️ Nivel incorrecto\nEl beneficio fue registrado con un nivel diferente al real en Akin.\n\n🚫 Mal aplicado\nAplicación fuera del proceso establecido.\n\nClic en cada categoría (excepto Correctos) para ver el listado individual.'},
+'Problemas técnicos':{t:'Problemas técnicos Akin ↔ CB',b:'Reservas que Akin reconoce como de miembros pero que CloudBeds no puede encontrar.\n\nCausa más común: el número de reserva o el correo electrónico difiere entre ambos sistemas.\n\nEsto NO es un error del equipo de recepción.\n\nPasos a seguir:\n1. Buscar al huésped por nombre en CloudBeds\n2. Si no aparece → escalar a soporte de Akin con el número de reserva'},
+'Estado actividad':{t:'Estado de actividad de miembros',b:'Clasificación de cada miembro según cuándo fue su última reserva registrada en Akin:\n\n🟢 Activo: reserva en los últimos 90 días\n🔵 Ocasional: última reserva hace 91–180 días\n🟡 Dormido: última reserva hace 181–365 días\n🔴 Inactivo: sin reservas en más de 365 días, o nunca ha registrado una estadía\n\nEsta clasificación es sobre el historial total del miembro, no sobre el período filtrado.'},
+'Directorio miembros':{t:'Directorio de miembros',b:'Lista completa de todos los miembros inscritos en Viajero Go, con su historial acumulado.\n\n• Estadías: número total de reservas registradas en Akin\n• Noches: total de noches acumuladas en todos los hostels\n• Propiedades: cuántos hostels distintos ha visitado\n• Últ. estadía: fecha de su reserva más reciente\n• Estado: clasificación de actividad (Activo / Ocasional / Dormido / Inactivo)\n\nUsa el buscador para filtrar por nombre, correo o estado.'},
+'Miembros del programa':{t:'Distribución de miembros por nivel',b:'Total de personas inscritas en Viajero Go según Akin, agrupadas por nivel de membresía.\n\nNiveles (de menor a mayor beneficio):\nTourist → Backpacker → Explorer → Nomad → Viajero\n\nClic en cualquier nivel para ver la lista completa de sus miembros.\n\n⚠️ Este dato NO cambia con el filtro de período. Refleja el estado actual del programa, no el de un mes específico.'},
+'Ranking':{t:'Ranking de propiedades',b:'Tres métricas ordenadas de mayor a menor por propiedad:\n\n1. % Miembros\n% de huéspedes que son miembros activos. La línea vertical indica la meta del 15%.\n\n2. Captación\n% de huéspedes totales que se unieron al programa en el período seleccionado.\n\n3. % Beneficios OK\n% de check-ins de miembros que recibieron su beneficio correctamente registrado en CB.'},
+'Embudo':{t:'Cómo leer estas dos vistas',b:'Penetración por país\nMuestra qué % de los check-ins en CB son miembros activos, por país de la propiedad. Verde ≥15%, amarillo 8–14%, rojo <8%. Ayuda a priorizar dónde hay más oportunidad.\n\nEmbudo de inscripción\nCuatro datos del período:\n🏠 Huéspedes: total de personas que se alojaron\n🔑 Check-ins CB: registros en CloudBeds (dato operativo independiente)\n💳 Son miembros: % calculado sobre los check-ins\n✨ Nuevos inscritos: % calculado sobre los huéspedes totales\n\nHuéspedes y check-ins son fuentes distintas — su diferencia es normal.'},
+'Movimiento':{t:'Cambio vs período anterior',b:'Compara la penetración (% de check-ins que son miembros) entre el período más reciente y el inmediatamente anterior.\n\nLa variación se expresa en puntos porcentuales (pp).\n\nEjemplo: si en abril fue 10% y en mayo 13%, el cambio es +3 pp.\n\n↑ Verde → la propiedad mejoró su penetración\n↓ Rojo → la propiedad bajó su penetración\n\nCon solo 2 períodos los datos son orientativos. A partir del 4to período la señal es más confiable.'},
+'Detalle por nivel':{t:'Calidad de ejecución por nivel',b:'Cada tarjeta representa un nivel de membresía. Los números muestran cómo se ejecutaron los beneficios para ese nivel en el período:\n\n✅ Correctos: registrado bien en CB\n❌ Sin beneficio: el miembro se hospedó pero no recibió nada\n💸 A no-miembro: se aplicó el beneficio sin membresía válida\n⚠️ Nivel incorrecto: el nivel en CB no coincide con el real en Akin\n🚫 Mal aplicado: fuera del proceso\n\nLa barra muestra el % de transacciones sin error para ese nivel.'},
+'Reservas miembros':{t:'% Reservas de miembros',b:'Porcentaje de todas las reservas del período que pertenecen a miembros activos de Viajero Go.\n\nFórmula: reservas de miembros ÷ total de reservas × 100\n\nUna reserva puede tener varias noches. Este indicador mide participación en volumen de reservas, complementa el % de miembros sobre check-ins.'},
+'Noches promedio':{t:'Noches promedio por estadía',b:'Duración media de cada reserva, comparando miembros vs no-miembros.\n\nSi los valores son iguales (o muy similares), significa que en este período la membresía no está correlacionada con estadías más largas.\n\nCuando los miembros se quedan más noches, es un indicador de mayor valor por huésped y un argumento clave para justificar el programa.'},
 };
 
 function openTip(k){var t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
@@ -722,14 +727,14 @@ function renderExecCtxKPIs(afs,mb){
   var colRed=pRed>=30?'var(--ok)':pRed>=10?'#ca8a04':'var(--err)';
 
   var card1={
-    label:'Nuevos inscritos / huésped',tip:'Tendencia',stripe:colNv,
+    label:'Nuevos inscritos / huésped',tip:'Nuevos inscritos / huésped',stripe:colNv,
     val:nvRate.toFixed(1),unit:'%',
     sub:fmtN(nv)+' nuevos de '+fmtN(hu)+' huéspedes totales',
     footerLabel:'Meta futura',footerVal:'≥5%',footerCol:colNv,
     badge:null
   };
   var card2={
-    label:'Beneficios correctos en CB',tip:'Resumen de errores',stripe:colRed,
+    label:'Beneficios correctos en CB',tip:'Beneficios correctos',stripe:colRed,
     val:cb>0?pRed.toFixed(1):'—',unit:cb>0?'%':'',
     sub:okN+' registros OK de '+fmtN(cb)+' miembros hospedados',
     footerLabel:'Meta futura',footerVal:'≥30%',footerCol:colRed,
@@ -746,19 +751,18 @@ function renderExecCtxKPIs(afs,mb){
   var cards=[card1,card2,card3];
   var html='<div class="exec-kpi-grid">'+cards.map(function(c){
     return '<div class="exec-kpi-card">'+
-      '<div class="ekc-stripe" style="background:'+c.stripe+'"></div>'+
-      '<div class="ekc-body">'+
+      '<div class="ekc-top">'+
         '<div class="ekc-label">'+c.label+' '+ib(c.tip)+'</div>'+
-        '<div class="ekc-main">'+
+        '<div class="ekc-metric">'+
           '<div class="ekc-val" style="color:'+c.stripe+'">'+c.val+'</div>'+
-          (c.unit?'<div class="ekc-unit">'+c.unit+'</div>':'')+
+          (c.unit?'<div class="ekc-unit" style="color:'+c.stripe+'">'+c.unit+'</div>':'')+
         '</div>'+
-        '<div class="ekc-sub">'+c.sub+'</div>'+
-        (c.badge?'<span class="ekc-badge '+c.badge.cls+'">'+c.badge.txt+'</span>':'')+
+        '<div class="ekc-desc">'+c.sub+'</div>'+
+        (c.badge?'<span class="ekc-tag '+c.badge.cls+'">'+c.badge.txt+'</span>':'')+
       '</div>'+
-      '<div class="ekc-footer">'+
-        '<span class="ekc-footer-label">'+c.footerLabel+'</span>'+
-        '<span class="ekc-footer-val" style="color:'+c.footerCol+'">'+c.footerVal+'</span>'+
+      '<div class="ekc-bottom">'+
+        '<span class="ekc-bottom-lbl">'+c.footerLabel+'</span>'+
+        '<span class="ekc-bottom-val" style="color:'+c.footerCol+'">'+c.footerVal+'</span>'+
       '</div>'+
     '</div>';
   }).join('')+'</div>';
@@ -768,49 +772,29 @@ function renderExecCtxKPIs(afs,mb){
   var nochesData=DATA.nochesPromedio||null;
   if(mixData&&nochesData){
     var pctMiembro=mixData.total>0?Math.round(mixData.miembros/mixData.total*1000)/10:0;
-    var diffNoches=nochesData.miembros-nochesData.no_miembros;
-    var diffTxt='';
-    /* Solo mostrar diferencia si es significativa (≥0.1 noches) */
-    if(Math.abs(diffNoches)>=0.1){
-      diffTxt=' · '+(diffNoches>0?'+':'')+diffNoches.toFixed(1)+' vs no-miembros';
-    }
+    var diffNoches=Math.round((nochesData.miembros-nochesData.no_miembros)*10)/10;
+    var sameNoches=Math.abs(diffNoches)<0.1;
     html+='<div class="exec-kpi-row2">'+
       '<div class="ekr2-card">'+
-        '<div class="ekr2-stripe" style="background:var(--teal)"></div>'+
-        '<div class="ekr2-body">'+
-          '<div class="ekr2-label">% Reservas de miembros '+ib('Tendencia')+'</div>'+
-          '<div class="ekr2-val" style="color:var(--teal)">'+pctMiembro.toFixed(1)+'%</div>'+
-          '<div class="ekr2-sub">de '+fmtN(mixData.total)+' reservas totales son de miembros</div>'+
-          '<div class="ekr2-compare">'+
-            '<div class="ekr2-compare-item">'+
-              '<div class="ekr2-compare-lbl">Miembros</div>'+
-              '<div class="ekr2-compare-n" style="color:var(--teal)">'+fmtN(mixData.miembros)+'</div>'+
-            '</div>'+
-            '<div class="ekr2-compare-sep"></div>'+
-            '<div class="ekr2-compare-item">'+
-              '<div class="ekr2-compare-lbl">No-miembros</div>'+
-              '<div class="ekr2-compare-n" style="color:var(--gris)">'+fmtN(mixData.no_miembros)+'</div>'+
-            '</div>'+
-          '</div>'+
+        '<div class="ekr2-top">'+
+          '<div class="ekr2-label">% Reservas de miembros '+ib('Reservas miembros')+'</div>'+
+          '<div class="ekr2-metric"><div class="ekr2-val" style="color:var(--teal)">'+pctMiembro.toFixed(1)+'%</div></div>'+
+          '<div class="ekr2-desc">de '+fmtN(mixData.total)+' reservas totales son de miembros activos</div>'+
+        '</div>'+
+        '<div class="ekr2-compare">'+
+          '<div class="ekr2-col"><div class="ekr2-col-lbl">Miembros</div><div class="ekr2-col-val" style="color:var(--teal)">'+fmtN(mixData.miembros)+'</div></div>'+
+          '<div class="ekr2-col"><div class="ekr2-col-lbl">No-miembros</div><div class="ekr2-col-val" style="color:var(--gris)">'+fmtN(mixData.no_miembros)+'</div></div>'+
         '</div>'+
       '</div>'+
       '<div class="ekr2-card">'+
-        '<div class="ekr2-stripe" style="background:var(--purple)"></div>'+
-        '<div class="ekr2-body">'+
-          '<div class="ekr2-label">Noches promedio por estadía '+ib('Tendencia')+'</div>'+
-          '<div class="ekr2-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div>'+
-          '<div class="ekr2-sub">noches promedio · miembros'+(diffTxt||' · comparado con no-miembros abajo')+'</div>'+
-          '<div class="ekr2-compare">'+
-            '<div class="ekr2-compare-item">'+
-              '<div class="ekr2-compare-lbl">Miembros</div>'+
-              '<div class="ekr2-compare-n" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div>'+
-            '</div>'+
-            '<div class="ekr2-compare-sep"></div>'+
-            '<div class="ekr2-compare-item">'+
-              '<div class="ekr2-compare-lbl">No-miembros</div>'+
-              '<div class="ekr2-compare-n" style="color:var(--gris)">'+nochesData.no_miembros.toFixed(1)+'</div>'+
-            '</div>'+
-          '</div>'+
+        '<div class="ekr2-top">'+
+          '<div class="ekr2-label">Noches promedio por estadía '+ib('Noches promedio')+'</div>'+
+          '<div class="ekr2-metric"><div class="ekr2-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div><div style="font-size:13px;font-weight:600;color:var(--gris);line-height:1;padding-bottom:3px;">noches · miembros</div></div>'+
+          '<div class="ekr2-desc">'+(sameNoches?'Estadía igual entre miembros y no-miembros en este período':(diffNoches>0?'Miembros se quedan <b>+'+diffNoches.toFixed(1)+' noches más</b> que no-miembros':'No-miembros se quedan <b>'+Math.abs(diffNoches).toFixed(1)+' noches más</b> que miembros'))+'</div>'+
+        '</div>'+
+        '<div class="ekr2-compare">'+
+          '<div class="ekr2-col"><div class="ekr2-col-lbl">Miembros</div><div class="ekr2-col-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div></div>'+
+          '<div class="ekr2-col"><div class="ekr2-col-lbl">No-miembros</div><div class="ekr2-col-val" style="color:var(--gris)">'+nochesData.no_miembros.toFixed(1)+'</div></div>'+
         '</div>'+
       '</div>'+
     '</div>';
@@ -892,11 +876,13 @@ function renderExecPaisPenetracion(afsAll){
 function renderExecFunnelCompact(afs){
   var el=document.getElementById('exec-funnel');if(!el)return;
   var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
+  /* Huéspedes y check-ins son datos independientes, NO conversión entre sí.
+     Miembros = % de check-ins. Nuevos = % de huéspedes (captación). */
   var items=[
     {ico:'🏠',lbl:'Total huéspedes',sub:'base del período',n:hu,col:'#94a3b8',conv:null},
-    {ico:'🔑',lbl:'Check-ins registrados',sub:'en CloudBeds',n:ci,col:'var(--coral)',conv:hu>0?Math.round(ci/hu*100)+'%':null},
-    {ico:'💳',lbl:'Son miembros',sub:'Viajero Go activos',n:cb,col:'var(--blue)',conv:ci>0?Math.round(cb/ci*100)+'%':null},
-    {ico:'✨',lbl:'Nuevos inscritos',sub:'se unieron en el período',n:nv,col:'var(--ok)',conv:cb>0?Math.round(nv/cb*100)+'%':null},
+    {ico:'🔑',lbl:'Check-ins en CB',sub:'registros en CloudBeds',n:ci,col:'var(--coral)',conv:null},
+    {ico:'💳',lbl:'Son miembros',sub:'de los check-ins',n:cb,col:'var(--blue)',conv:ci>0?(cb/ci*100).toFixed(1)+'%':null},
+    {ico:'✨',lbl:'Nuevos inscritos',sub:'de los huéspedes totales',n:nv,col:'var(--ok)',conv:hu>0?(nv/hu*100).toFixed(1)+'%':null},
   ];
   var maxN=Math.max.apply(null,items.map(function(i){return i.n;}))||1;
   el.innerHTML=
@@ -1044,13 +1030,19 @@ function renderPropSemaforo(mb){
     {k:'TIER_INCORRECTO',label:'Nivel incorrecto',sub:'CB ≠ Akin',val:t['TIER_INCORRECTO'],cls:t['TIER_INCORRECTO']===0?'s-verde':t['TIER_INCORRECTO']<5?'s-amarillo':'s-rojo',drill:'TIER_INCORRECTO'},
     {k:'MISUSE',label:'Mal aplicado',sub:'Fuera del proceso',val:t['MISUSE'],cls:t['MISUSE']===0?'s-verde':'s-rojo',drill:'MISUSE'},
   ];
+  var icoMap={OK:'✅','SIN CANJE':'❌',LEAKAGE:'💸',TIER_INCORRECTO:'⚠️',MISUSE:'🚫'};
   document.getElementById('prop-semaforo').innerHTML=items.map(function(i){
     var hasDrill=i.drill&&i.val>0;
     return '<div class="s-item '+i.cls+(hasDrill?' clickable':'')+'"'+(hasDrill?' onclick="drillTipoError(\''+i.drill+'\',\''+i.label+'\')"':'')+'>'+
+      '<div class="s-accent"></div>'+
       '<div class="s-val">'+fmtN(i.val)+'</div>'+
-      '<div class="s-lbl">'+i.label+'</div>'+
-      '<div class="s-sub">'+i.sub+'</div>'+
-      (hasDrill?'<div class="s-tipo">Ver detalle →</div>':'')+
+      '<div class="s-info">'+
+        '<div class="s-lbl">'+(icoMap[i.k]||'')+' '+i.label+'</div>'+
+        '<div class="s-sub">'+i.sub+'</div>'+
+      '</div>'+
+      '<div class="s-right">'+
+        (hasDrill?'<span class="s-tipo">Ver lista →</span>':'<span class="s-tipo" style="background:var(--ok-bg);color:var(--ok)">✓ Sin problemas</span>')+
+      '</div>'+
       '</div>';
   }).join('');
 }
