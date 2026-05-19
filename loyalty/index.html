@@ -715,9 +715,11 @@ function drillTipoError(tipo,titulo){
 ═══════════════════════════════════════ */
 function renderExecHeadline(afs,mb){
   var ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb');
-  var mixData=DATA.mixReservas||null;
-  var totalRes=mixData?mixData.total:ci;
-  var loyRes=mixData?mixData.miembros:cb;
+var fp2=getMsValues('prop'),ft2=getMsValues('per'),fpa2=getMsValues('pais');
+var isFiltered2=fp2.length||ft2.length||fpa2.length;
+var mixData=(!isFiltered2&&DATA.mixReservas)||null;
+var totalRes=mixData?mixData.total:ci;
+var loyRes=mixData?mixData.miembros:cb;
   var pLoy=totalRes>0?loyRes/totalRes*100:0;
   var fp=getMsValues('prop'),fpa=getMsValues('pais');
   var scope=fp.length===1?fp[0]:fpa.length===1?fpa[0]:'toda la cadena';
