@@ -1189,34 +1189,6 @@ function renderPropSemaforo(mb){
     '<div class="semaforo-grid">'+buildItems(opItems)+'</div>';
 }
 
-  /* Cierre visual del universo loyalty */
-  var closureHtml='<div style="background:var(--blue-bg);border:1.5px solid var(--blue);border-radius:var(--r);padding:12px 18px;margin-bottom:8px;">'+
-    '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--blue);margin-bottom:8px;">🎁 Universo loyalty — '+fmtN(loyTotal)+' reservas evaluadas</div>'+
-    '<div style="display:flex;gap:0;font-size:11px;">'+
-      '<div style="flex:1;text-align:center;padding:6px 10px;border-right:1px solid rgba(3,105,161,.15);">'+
-        '<div style="font-weight:800;font-size:18px;color:var(--ok)">'+fmtN(t['OK'])+'</div>'+
-        '<div style="color:var(--gris);font-size:9px;margin-top:2px;">✅ Correctas</div>'+
-      '</div>'+
-      '<div style="flex:1;text-align:center;padding:6px 10px;border-right:1px solid rgba(3,105,161,.15);">'+
-        '<div style="font-weight:800;font-size:18px;color:var(--err)">'+fmtN(t['SIN CANJE']||0)+'</div>'+
-        '<div style="color:var(--gris);font-size:9px;margin-top:2px;">❌ Sin beneficio</div>'+
-      '</div>'+
-      '<div style="flex:1;text-align:center;padding:6px 10px;border-right:1px solid rgba(3,105,161,.15);">'+
-        '<div style="font-weight:800;font-size:18px;color:var(--warn)">'+fmtN(t['TIER_INCORRECTO']||0)+'</div>'+
-        '<div style="color:var(--gris);font-size:9px;margin-top:2px;">⚠️ Nivel incorrecto</div>'+
-      '</div>'+
-      '<div style="flex:1;text-align:center;padding:6px 10px;">'+
-        '<div style="font-weight:800;font-size:18px;color:var(--blue)">'+fmtN(loyTotal)+'</div>'+
-        '<div style="color:var(--gris);font-size:9px;margin-top:2px;">= Total loyalty</div>'+
-      '</div>'+
-    '</div>'+
-  '</div>';
-
-  /* Separador operacional */
-    var opHeader='<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--orange);padding:10px 2px 6px;margin-top:4px;">💸 Riesgos operacionales — fuera del universo loyalty</div>';
-  document.getElementById('prop-semaforo').innerHTML=closureHtml+'<div class="semaforo-grid">'+buildItems(loyItems)+'</div>'+opHeader+'<div class="semaforo-grid">'+buildItems(opItems)+'</div>';
-}
-
 /* Tabla compacta de propiedades con drawer */
 function renderPropActions(afs,mb){
   var cont=document.getElementById('prop-actions');
