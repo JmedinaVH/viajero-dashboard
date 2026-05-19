@@ -788,54 +788,37 @@ function renderExecPaisPenetracion(afsAll){
   var map={};
   afsAll.forEach(function(r){
     var pa=r['Pais']||r['País']||r['pais']||'Sin país';if(!pa)return;
-    if(!map[pa])map[pa]={ci:0,cb:0,nv:0};
+    if(!map[pa])map[pa]={ci:0,cb:0,nv:0,props:new Set()};
     map[pa].ci+=parseFloat(r._check_ins)||0;
     map[pa].cb+=parseFloat(r._afiliados_cb)||0;
     map[pa].nv+=parseFloat(r._nuevos)||0;
+    if(r.Propiedad)map[pa].props.add(r.Propiedad);
   });
   var paises=Object.entries(map).map(function(e){
     var pa=e[0],v=e[1],pct=v.ci>0?Math.round(v.cb/v.ci*1000)/10:0;
-    return {pa:pa,ci:v.ci,cb:v.cb,pct:pct};
+    return {pa:pa,ci:v.ci,cb:v.cb,nv:v.nv,pct:pct,props:v.props.size};
   }).filter(function(p){return p.ci>0;}).sort(function(a,b){return b.pct-a.pct;});
-  var flags={'Colombia':'\ud83c\udde8\ud83c\uddf4','Per\u00fa':'\ud83c\uddf5\ud83c\uddea','M\u00e9xico':'\ud83c\uddf2\ud83c\uddfd','Mexico':'\ud83c\uddf2\ud83c\uddfd','Argentina':'\ud83c\udde6\ud83c\uddf7','Uruguay':'\ud83c\uddfa\ud83c\uddfe','Costa Rica':'\ud83c\udde8\ud83c\uddf7','Panama':'\ud83c\uddf5\ud83c\udde6','Panam\u00e1':'\ud83c\uddf5\ud83c\udde6','Ecuador':'\ud83c\uddea\ud83c\udde8','Chile':'\ud83c\udde8\ud83c\uddf1','USA':'\ud83c\uddfa\ud83c\uddf8','Estados Unidos':'\ud83c\uddfa\ud83c\uddf8'};
-  var labels=paises.map(function(p){return (flags[p.pa]||'')+' '+p.pa;});
-  var values=paises.map(function(p){return p.pct;});
-  var bgColors=paises.map(function(p){return p.pct>=15?'rgba(21,128,61,.8)':p.pct>=8?'rgba(202,138,4,.8)':'rgba(220,38,38,.75)';});
-  var chartH=Math.max(140,paises.length*34);
-  el.innerHTML=
-    '<div class="rmc-card" style="padding:14px 16px">'+
-    '<div class="rmc-title">Penetraci\u00f3n por pa\u00eds '+ib('Qu\u00e9 es penetraci\u00f3n: % de check-ins que son miembros activos · Meta: 15%')+'</div>'+
-    '<div class="rmc-sub" style="margin-bottom:8px">% miembros de check-ins \u00b7 \ud83d\udfe2 \u226515% \u00b7 \ud83d\udfe1 8-14% \u00b7 \ud83d\udd34 &lt;8%</div>'+
-    '<div style="position:relative;height:'+chartH+'px"><canvas id="pais-bar-chart"></canvas></div>'+
+  var flags={'Colombia':'🇨🇴','Perú':'🇵🇪','México':'🇲🇽','Mexico':'🇲🇽','Argentina':'🇦🇷','Uruguay':'🇺🇾','Costa Rica':'🇨🇷','Panama':'🇵🇦','Panamá':'🇵🇦','Ecuador':'🇪🇨','Chile':'🇨🇱','USA':'🇺🇸','Estados Unidos':'🇺🇸'};
+  var maxPct=Math.max(25,Math.max.apply(null,paises.map(function(p){return p.pct;})));
+  el.innerHTML='<div style="margin-bottom:6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);">Penetración por país</div>'+
+    '<div style="background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;">'+
+    paises.map(function(p,i){
+      var col=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';
+      var barW=Math.round(p.pct/maxPct*100);
+      var flag=flags[p.pa]||'🏳️';
+      return '<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:'+(i<paises.length-1?'1px solid var(--border)':'none')+';">' +
+        '<div style="font-size:15px;flex-shrink:0;">'+flag+'</div>'+
+        '<div style="flex:1;min-width:0;">'+
+          '<div style="font-size:11px;font-weight:700;margin-bottom:3px;">'+p.pa+'<span style="font-size:9px;color:var(--gris);font-weight:500;margin-left:6px;">'+p.props+' prop. · '+fmtN(p.nv)+' nuevos</span></div>'+
+          '<div style="height:5px;background:var(--cd);border-radius:99px;overflow:hidden;"><div style="width:'+barW+'%;height:100%;background:'+col+';border-radius:99px;"></div></div>'+
+        '</div>'+
+        '<div style="text-align:right;flex-shrink:0;">'+
+          '<div style="font-size:13px;font-weight:800;color:'+col+';">'+p.pct.toFixed(1)+'%</div>'+
+          '<div style="font-size:9px;color:var(--gris);">'+fmtN(p.cb)+'/'+fmtN(p.ci)+'</div>'+
+        '</div>'+
+      '</div>';
+    }).join('')+
     '</div>';
-  requestAnimationFrame(function(){
-    var canvas=document.getElementById('pais-bar-chart');
-    if(!canvas||!window.Chart)return;
-    new Chart(canvas,{
-      type:'bar',
-      data:{
-        labels:labels,
-        datasets:[
-          {data:values,backgroundColor:bgColors,borderRadius:4,barPercentage:0.6},
-          {type:'line',data:labels.map(function(){return 15;}),borderColor:'rgba(30,16,10,.3)',borderWidth:1.5,borderDash:[5,4],pointRadius:0,fill:false}
-        ]
-      },
-      options:{
-        indexAxis:'y',
-        responsive:true,
-        maintainAspectRatio:false,
-        plugins:{
-          legend:{display:false},
-          tooltip:{callbacks:{label:function(ctx){if(ctx.datasetIndex===1)return null;return ctx.raw.toFixed(1)+'% penetraci\u00f3n';}}}
-        },
-        scales:{
-          x:{min:0,max:Math.max(25,Math.ceil(Math.max.apply(null,values)/5)*5+5),ticks:{callback:function(v){return v+'%';},font:{size:10}},grid:{color:'rgba(0,0,0,.05)'},border:{display:false}},
-          y:{grid:{display:false},ticks:{font:{size:11}}}
-        },
-        animation:{duration:400}
-      }
-    });
-  });
 }
 
 /* Movimiento del período */
@@ -977,8 +960,7 @@ function renderPropSemaforo(mb){
 function renderPropActions(afs,mb){
   var cont=document.getElementById('prop-actions');
   var map={};
-  afs.forEach(function(r){var p=r.Propiedad;if(!p)return;
-    if(!map[p])map[p]={name:p,pais:r.Pais||r['Pa\u00eds']||'',ci:0,cb:0,nv:0,ok:0,sc:0,lk:0,tiI:0};
+  afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={name:p,pais:r.Pais||r['Pa\u00eds']||'',ci:0,cb:0,nv:0,ok:0,sc:0,lk:0,tiI:0};
     map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
   mb.forEach(function(r){var p=r.Propiedad||'';if(!map[p])return;var et=r.Error_Type||'';
     if(et==='OK')map[p].ok++;else if(et==='SIN CANJE')map[p].sc++;else if(et==='LEAKAGE')map[p].lk++;else if(et==='TIER_INCORRECTO')map[p].tiI++;});
@@ -994,35 +976,41 @@ function renderPropActions(afs,mb){
   var sBadge={critico:'b-err',atencion:'b-warn',ok:'b-ok'};
   cont.innerHTML=
     '<div class="prop-table-wrap">'+
-    '<table class="prop-tbl"><thead><tr>'+
+    '<table class="prop-tbl">'+
+    '<thead><tr>'+
     '<th>Propiedad</th>'+
     '<th class="tc">% Miembros</th>'+
     '<th class="tc">Nuevos</th>'+
     '<th class="tc">% Benef. OK</th>'+
-    '<th class="tc">Errores</th>'+
+    '<th class="tc">Errores clave</th>'+
     '<th class="tc">Estado</th>'+
     '</tr></thead><tbody>'+
     props.map(function(p){
       var colPct=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';
       var colOK=p.pctOK>=50?'var(--ok)':p.pctOK>0?'#ca8a04':'var(--gris)';
       var nom=p.name.replace('Viajero ','').replace(' Hostel','');
-      var errs=[];
-      if(p.sc>0)errs.push('<span class="badge b-err">'+p.sc+' sin benef.</span>');
-      if(p.lk>0)errs.push('<span class="badge b-warn">'+p.lk+' leakage</span>');
-      if(p.tiI>0)errs.push('<span class="badge b-blue">'+p.tiI+' nivel</span>');
-      return '<tr onclick="openDrawer(\''+p.name+'\')">' +
-        '<td><b style="font-size:12px">'+nom+'</b>'+(p.pais?'<span style="display:block;font-size:10px;color:var(--gris)">'+p.pais+'</span>':'')+' <span style="font-size:9px;color:var(--gris)">[ver detalle \u2192]</span></td>'+
-        '<td class="tc"><b style="color:'+colPct+'">'+p.pct.toFixed(1)+'%</b>'+
-        '<div style="height:4px;background:var(--cd);border-radius:99px;overflow:hidden;width:52px;margin:3px auto 0">'+
-        '<div style="height:4px;background:'+colPct+';width:'+Math.min(p.pct/25*100,100)+'%;border-radius:99px"></div></div></td>'+
+      var errHtml=[];
+      if(p.sc>0)errHtml.push('<span class="badge b-err">'+p.sc+' sin benef.</span>');
+      if(p.lk>0)errHtml.push('<span class="badge b-warn">'+p.lk+' leakage</span>');
+      if(p.tiI>0)errHtml.push('<span class="badge b-blue">'+p.tiI+' nivel</span>');
+      return '<tr onclick="openDrawer(\''+p.name+'\')">'+
+        '<td>'+
+          '<b style="font-size:12px">'+nom+'</b>'+
+          (p.pais?'<span style="display:block;font-size:10px;color:var(--gris)">'+p.pais+'</span>':'')+
+        '</td>'+
+        '<td class="tc">'+
+          '<b style="color:'+colPct+'">'+p.pct.toFixed(1)+'%</b>'+
+          '<div style="height:4px;background:var(--cd);border-radius:99px;overflow:hidden;width:52px;margin:3px auto 0">'+
+          '<div style="height:4px;background:'+colPct+';width:'+Math.min(p.pct/25*100,100)+'%;border-radius:99px"></div></div>'+
+        '</td>'+
         '<td class="tc"><b>'+fmtN(p.nv)+'</b></td>'+
         '<td class="tc"><b style="color:'+colOK+'">'+p.pctOK.toFixed(0)+'%</b></td>'+
-        '<td style="font-size:11px">'+(errs.length?errs.join(' '):'<span style="color:var(--gris)">&mdash;</span>')+'</td>'+
+        '<td style="font-size:11px">'+( errHtml.length?errHtml.join(' '):'<span style="color:var(--gris)">&mdash;</span>')+' </td>'+
         '<td class="tc">'+sIco[p.status]+'<span class="badge '+sBadge[p.status]+'" style="margin-left:4px">'+sLbl[p.status]+'</span></td>'+
         '</tr>';
     }).join('')+
     '</tbody></table></div>'+
-    '<p style="font-size:11px;color:var(--gris);margin-top:8px">\ud83d\udd0e Clic en cualquier fila \u2192 diagn\u00f3stico completo y lista de trabajo</p>';
+    '<p style="font-size:11px;color:var(--gris);margin-top:8px;padding-left:2px">\ud83d\udd0e Clic en cualquier fila \u2192 diagn\u00f3stico detallado y lista de trabajo de esa propiedad</p>';
 }
 
 function renderSinMatchAkin(){
@@ -1144,7 +1132,7 @@ function renderCtxTierDonut(){
   requestAnimationFrame(function(){
     var canvas=document.getElementById('donut-canvas');
     if(!canvas||!window.Chart)return;
-    _donutChart=new Chart(canvas,{type:'doughnut',data:{labels:tiers.map(function(t){return t.name;}),datasets:[{data:tiers.map(function(t){return parseInt(t.count)||0;}),backgroundColor:tiers.map(function(t){return TIER_COLORS[t.name]||'#94a3b8';}),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){var p=total>0?Math.round(ctx.raw/total*1000)/10:0;return ctx.label+': '+ctx.raw+' ('+(isNaN(p)?0:p)+'%)';}}},animation:{duration:600}}});
+    _donutChart=new Chart(canvas,{type:'doughnut',data:{labels:tiers.map(function(t){return t.name;}),datasets:[{data:tiers.map(function(t){return parseInt(t.count)||0;}),backgroundColor:tiers.map(function(t){return TIER_COLORS[t.name]||'#94a3b8';}),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.label+': '+ctx.raw+' ('+Math.round(ctx.raw/total*1000)/10+'%)';}}}},animation:{duration:600}}});
   });
 }
 
