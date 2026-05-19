@@ -556,6 +556,7 @@ var TIPS={
 'Tendencia':{t:'Tendencia mensual',b:'Tres métricas clave en el tiempo:\n\n1. % Miembros / huéspedes\nDe cada 100 huéspedes del período, cuántos son miembros activos de Viajero Go. Meta: ≥15%.\n\n2. % Beneficios OK\nDe los miembros que se hospedaron (check-in en CB), cuántos recibieron su beneficio correctamente registrado. Meta futura: ≥30%.\n\n3. Tasa de captación\n% de huéspedes totales que se unieron al programa en ese período. Meta futura: ≥5%.\n\nNota: se necesitan al menos 4 períodos para leer tendencias con confianza.'},
 'Nuevos inscritos / huésped':{t:'Nuevos inscritos / huésped',b:'Cuántos de cada 100 huéspedes se unieron por primera vez al programa Viajero Go en este período.\n\nFórmula: (nuevos inscritos ÷ total huéspedes) × 100\n\nNo confundir con penetración — un miembro ya inscrito que vuelve no cuenta aquí.\n\nMeta futura: ≥5%.'},
 'Beneficios correctos':{t:'Beneficios correctos en CB',b:'De los miembros que hicieron check-in, cuántos tuvieron su beneficio correctamente registrado en CloudBeds.\n\nFórmula: (registros OK ÷ total check-ins de miembros) × 100\n\nSi este % es bajo, el problema es de ejecución en recepción — el equipo no está marcando el beneficio en CB aunque el huésped sí sea miembro.\n\nMeta futura: ≥30%.'},
+'Penetración loyalty':{t:'¿Qué es la penetración loyalty?',b:'Penetración = check-ins de miembros ÷ check-ins totales.\n\nEjemplo: si entraron 1.000 huéspedes y 150 eran miembros → 15%.\n\nLa meta del 15% significa que 1 de cada 7 huéspedes debería ser miembro activo del programa.\n\nActualmente en 11.1% — faltan ~4 puntos para llegar a la meta.'},
 'Sin beneficio':{t:'Miembros sin beneficio',b:'Número de personas únicas que siendo miembros activos de Viajero Go, se hospedaron y no recibieron su beneficio en CloudBeds.\n\nEstas personas tienen membresía válida — el error fue operativo en recepción.\n\nHaz clic en cualquier propiedad en el tab "Por propiedad" para ver la lista individual y actuar propiedad por propiedad.'},
 'Ejecución loyalty':{t:'¿Qué mide Ejecución loyalty?',b:'Esta sección muestra qué pasó con las reservas donde el huésped SÍ era miembro activo de Viajero Go.\n\n✅ Correctamente ejecutadas\nEl beneficio fue registrado en CloudBeds. El proceso funcionó.\n\n❌ Sin beneficio\nEl miembro se hospedó pero nadie registró el beneficio en CB. Error operativo de recepción.\n\n⚠️ Nivel incorrecto\nEl beneficio fue marcado con un nivel diferente al real en Akin.\n\nEl dato de personas únicas (bajo el total) muestra cuántos miembros distintos recibieron su beneficio al menos una vez — es más revelador que el % de reservas.\n\nBase: solo reservas loyalty. Una persona puede tener varias reservas en el período.'},
 'Acción por propiedad':{t:'Diagnóstico por propiedad',b:'Tabla de todas las propiedades con sus métricas del período.\n\nColumnas:\n• % Miembros: de los check-ins en CB, cuántos son miembros (meta ≥15%)\n• Nuevos: personas que se unieron al programa en el período\n• Benef. OK: % de miembros hospedados que recibieron su beneficio\n• Errores: sin beneficio, leakage y nivel incorrecto\n\n🔴 Crítico → acción esta semana\n🟡 Atención → refuerzo del proceso\n🟢 En camino → mantener\n\nClic en cualquier fila para ver el diagnóstico completo y lista de trabajo.'},
@@ -1311,12 +1312,15 @@ function renderMembersTab(){
   var avgP=mb.reduce(function(s,r){return s+(parseFloat(r.properties_visited)||0);},0)/totalM;
   var multi=mb.filter(function(r){return (parseFloat(r.properties_visited)||0)>1;}).length;
  var kpis=[
-{label:'Reservas promedio por miembro',val:avgB.toFixed(1),sub:
-  fmtP(mb.filter(function(r){return (parseFloat(r.total_bookings)||0)===1;}).length,totalM)+' · 1 visita  &nbsp;'+
-  fmtP(mb.filter(function(r){var b=parseFloat(r.total_bookings)||0;return b>=2&&b<=5;}).length,totalM)+' · 2-5 visitas  &nbsp;'+
-  fmtP(mb.filter(function(r){return (parseFloat(r.total_bookings)||0)>=6;}).length,totalM)+' · 6+  &nbsp;'+
-  fmtP(mb.filter(function(r){return (r.activity_status||'').toUpperCase()==='INACTIVE';}).length,totalM)+' · sin actividad reciente',
-bkc:'var(--teal)'},    {label:'Noches acumuladas promedio por miembro',val:avgN.toFixed(1),sub:'total noches históricas ÷ miembros registrados',bkc:'var(--blue)'},
+{label:'Reservas promedio por miembro '+ib('Distribución visitas'),
+val:avgB.toFixed(1),
+sub:'<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">'+
+  '<span style="font-size:9px;background:var(--teal-bg);color:var(--teal);padding:2px 7px;border-radius:99px;font-weight:700;">'+fmtP(mb.filter(function(r){return (parseFloat(r.total_bookings)||0)===1;}).length,totalM)+' · 1 visita</span>'+
+  '<span style="font-size:9px;background:var(--blue-bg);color:var(--blue);padding:2px 7px;border-radius:99px;font-weight:700;">'+fmtP(mb.filter(function(r){var b=parseFloat(r.total_bookings)||0;return b>=2&&b<=5;}).length,totalM)+' · 2-5</span>'+
+  '<span style="font-size:9px;background:var(--ok-bg);color:var(--ok);padding:2px 7px;border-radius:99px;font-weight:700;">'+fmtP(mb.filter(function(r){return (parseFloat(r.total_bookings)||0)>=6;}).length,totalM)+' · 6+</span>'+
+  '<span style="font-size:9px;background:var(--err-bg);color:var(--err);padding:2px 7px;border-radius:99px;font-weight:700;">'+fmtP(mb.filter(function(r){return (r.activity_status||'').toUpperCase()==='INACTIVE';}).length,totalM)+' · inactivos</span>'+
+'</div>',
+bkc:'var(--teal)'},   {label:'Noches acumuladas promedio por miembro',val:avgN.toFixed(1),sub:'total noches históricas ÷ miembros registrados',bkc:'var(--blue)'},
     {label:'Hostels promedio visitados',val:avgP.toFixed(1),sub:'índice de fidelidad cross-hostel',bkc:'var(--purple)'},
     {label:'Miembros multi-hostel',val:fmtN(multi),sub:fmtP(multi,totalM)+' visitaron 2 o más hostels',bkc:'var(--ok)'},
   ];
@@ -1473,8 +1477,7 @@ function renderCtxRankingMini(){
   document.getElementById('ctx-ranking').innerHTML='<div class="rank-mini-row">'+
     '<div class="rank-mini-card">'+
       '<div class="rmc-title">% Reservas loyalty</div>'+
-'<div class="rmc-sub">% reservas/check-ins asociadas a miembros loyalty · meta 15%</div>'+
-      buildMini(byPct,'pct',maxPct,targetPctW,
+'<div class="rmc-sub">De cada 100 huéspedes que hicieron check-in, cuántos eran miembros activos · meta: 15% '+ib('Penetración loyalty')+'</div>'+      buildMini(byPct,'pct',maxPct,targetPctW,
         function(p){return p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';},
         function(p){return p.pct.toFixed(1)+'%';},
         function(p){return fmtN(p.cb)+'/'+fmtN(p.hu);})+
