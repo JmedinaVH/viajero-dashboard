@@ -661,35 +661,27 @@ function drillTipoError(tipo,titulo){
    TAB 1: RESUMEN EJECUTIVO
 ═══════════════════════════════════════ */
 function renderExecHeadline(afs,mb){
-  var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
-  var okN=mb.filter(function(r){return r.Error_Type==='OK';}).length;
-  var scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
-  var lkN=mb.filter(function(r){return r.Error_Type==='LEAKAGE';}).length;
+  var ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb');
   var pLoy=ci>0?cb/ci*100:0;
   var fp=getMsValues('prop'),fpa=getMsValues('pais');
   var scope=fp.length===1?fp[0]:fpa.length===1?fpa[0]:'toda la cadena';
   var isOnMeta=pLoy>=15,isGrowing=pLoy>=8&&pLoy<15;
-  var headline=isOnMeta?'Programa en meta — '+pLoy.toFixed(1)+'% de huéspedes son miembros':isGrowing?'Programa en crecimiento — '+pLoy.toFixed(1)+'% de huéspedes son miembros':'Fase inicial — '+pLoy.toFixed(1)+'% de huéspedes son miembros';
+  var headline=isOnMeta?'Programa en meta':isGrowing?'Programa en crecimiento':'Fase inicial · bajo meta';
   var kpiColor=isOnMeta?'#4ade80':isGrowing?'#fbbf24':'#f87171';
   var statusStyle=isOnMeta?'background:rgba(74,222,128,.15);color:#4ade80;border-color:rgba(74,222,128,.3)':isGrowing?'background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.3)':'background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.3)';
-  var statusTxt=isOnMeta?'✅ Meta alcanzada':isGrowing?'⚡ En crecimiento':'🔴 Bajo meta (15%)';
-  var chips=[];
-  chips.push({dot:isOnMeta?'ok':isGrowing?'warn':'err',html:'<b>'+fmtN(cb)+'</b> miembros activos de <b>'+fmtN(ci)+'</b> check-ins — '+pLoy.toFixed(1)+'% del total'});
-  if(scUnicos>0)chips.push({dot:'err',html:'<b>'+fmtN(scUnicos)+'</b> miembros únicos no recibieron su beneficio → ver Tab "Por propiedad"'});
-  if(okN>0)chips.push({dot:'ok',html:'<b>'+okN+'</b> beneficio'+(okN>1?'s':'')+' aplicado'+(okN>1?'s':'')+' correctamente'});
-  else chips.push({dot:'warn',html:'0 beneficios registrados correctamente en CB — capacitación pendiente'});
-  if(lkN>0)chips.push({dot:'err',html:'<b>'+lkN+'</b> descuento'+(lkN>1?'s':'')+' a huésped sin membresía — pérdida de ingreso'});
-  chips.push({dot:nv>0?'ok':'warn',html:'<b>'+fmtN(nv)+'</b> nuevos inscritos · '+(hu>0?(nv/hu*100).toFixed(1):0)+'% captación sobre huéspedes'});
+  var statusTxt=isOnMeta?'\u2705 Meta alcanzada':isGrowing?'\u26a1 En crecimiento':'\ud83d\udd34 Bajo meta (15%)';
   document.getElementById('exec-headline').innerHTML=
     '<div class="headline">'+
     '<div class="hl-main">'+
-    '<div class="hl-phase">📍 '+scope+'</div>'+
+    '<div class="hl-phase">\ud83d\udccd '+scope+'</div>'+
     '<div class="hl-title">'+headline+'</div>'+
-    '<div class="hl-chips">'+chips.map(function(c){return '<div class="hl-chip"><div class="hl-dot '+c.dot+'"></div><span>'+c.html+'</span></div>';}).join('')+'</div>'+
+    '<div style="font-size:11px;color:rgba(255,255,255,.45);margin-top:6px;line-height:1.6">'+
+    'Penetraci\u00f3n = % de check-ins que son miembros activos \u00b7 Meta: 15%'+
+    '</div>'+
     '</div>'+
     '<div class="hl-kpi">'+
     '<div class="hl-kpi-val" style="color:'+kpiColor+'">'+pLoy.toFixed(1)+'%</div>'+
-    '<div class="hl-kpi-label">Penetración</div>'+
+    '<div class="hl-kpi-label">Penetraci\u00f3n</div>'+
     '<div class="hl-kpi-meta">Meta: 15%</div>'+
     '<div class="hl-status" style="'+statusStyle+'">'+statusTxt+'</div>'+
     '</div>'+
@@ -702,15 +694,65 @@ function renderExecCtxKPIs(afs,mb){
   var scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
   var pRed=cb>0?okN/cb*100:0;
   var colRed=pRed>=10?'var(--ok)':pRed>=3?'#ca8a04':'var(--err)';
+  var nvRate=hu>0?(nv/hu*100):0;
+  var colNv=nvRate>=5?'var(--ok)':nvRate>=2?'#ca8a04':'var(--err)';
   var items=[
-    {label:'Nuevos inscritos',tip:'Tendencia',val:fmtN(nv),sub:fmtN(hu)+' huéspedes · '+(hu>0?(nv/hu*100).toFixed(1):0)+'% captación',kc:'var(--blue)',badge:null,footer:null},
-    {label:'Beneficios correctos',tip:'Resumen de errores',val:cb>0?pRed.toFixed(1)+'%':'—',sub:okN+' registros correctos en CB',kc:colRed,badge:null,footer:{label:'Meta futura',val:'≥30%'}},
-    {label:'Miembros sin beneficio',tip:'Sin beneficio',val:fmtN(scUnicos),sub:'personas únicas · ver Tab Por propiedad',kc:'var(--err)',badge:{cls:'b-err',txt:'Lista de trabajo'},footer:null},
+    {
+      label:'Nuevos inscritos / hu\u00e9sped',tip:'Tendencia',
+      val:nvRate.toFixed(1)+'%',
+      sub:fmtN(nv)+' nuevos de '+fmtN(hu)+' hu\u00e9spedes',
+      kc:colNv,badge:null,
+      footer:{label:'Meta futura',val:'\u22655%'}
+    },
+    {
+      label:'Beneficios correctos',tip:'Resumen de errores',
+      val:cb>0?pRed.toFixed(1)+'%':'\u2014',
+      sub:okN+' registros correctos en CB',
+      kc:colRed,badge:null,
+      footer:{label:'Meta futura',val:'\u226530%'}
+    },
+    {
+      label:'Miembros sin beneficio',tip:'Sin beneficio',
+      val:fmtN(scUnicos),
+      sub:'personas \u00fanicas \u00b7 clic en propiedad para ver la lista',
+      kc:'var(--err)',
+      badge:{cls:'b-err',txt:'Lista de trabajo'},footer:null
+    },
   ];
-  document.getElementById('exec-ctx-kpis').innerHTML=
-    '<div class="ctx-grid" style="margin-bottom:20px;">'+
-    items.map(function(it){return '<div class="ctx-kpi" style="--kc:'+it.kc+'"><div class="ck-glow"></div><div class="ck-label">'+it.label+' '+ib(it.tip)+'</div><div class="ck-val">'+it.val+'</div><div class="ck-sub">'+it.sub+'</div>'+(it.badge?'<span class="ck-badge '+it.badge.cls+'">'+it.badge.txt+'</span>':'')+(it.footer?'<div class="ck-footer"><span>'+it.footer.label+'</span><b>'+it.footer.val+'</b></div>':'')+'</div>';}).join('')+
+  var grid='<div class="ctx-grid">'+
+    items.map(function(it){
+      return '<div class="ctx-kpi" style="--kc:'+it.kc+'">'+
+        '<div class="ck-glow"></div>'+
+        '<div class="ck-label">'+it.label+' '+ib(it.tip)+'</div>'+
+        '<div class="ck-val">'+it.val+'</div>'+
+        '<div class="ck-sub">'+it.sub+'</div>'+
+        (it.badge?'<span class="ck-badge '+it.badge.cls+'">'+it.badge.txt+'</span>':'')+
+        (it.footer?'<div class="ck-footer"><span>'+it.footer.label+'</span><b>'+it.footer.val+'</b></div>':'')+
+        '</div>';
+    }).join('')+
+  '</div>';
+  var mixData=DATA.mixReservas||null;
+  var nochesData=DATA.nochesPromedio||null;
+  if(mixData&&nochesData){
+    var pctMiembro=mixData.total>0?Math.round(mixData.miembros/mixData.total*1000)/10:0;
+    grid+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">'+
+      '<div class="ctx-kpi" style="--kc:var(--teal)">'+
+        '<div class="ck-glow"></div>'+
+        '<div class="ck-label">% Reservas de miembros '+ib('Tendencia')+'</div>'+
+        '<div class="ck-val">'+pctMiembro.toFixed(1)+'%</div>'+
+        '<div class="ck-sub">'+fmtN(mixData.miembros)+' de '+fmtN(mixData.total)+' reservas son de miembros</div>'+
+        '<div class="ck-footer"><span>No-miembros</span><b>'+fmtN(mixData.no_miembros)+'</b></div>'+
+      '</div>'+
+      '<div class="ctx-kpi" style="--kc:var(--purple)">'+
+        '<div class="ck-glow"></div>'+
+        '<div class="ck-label">Noches promedio por estad\u00eda '+ib('Tendencia')+'</div>'+
+        '<div class="ck-val">'+nochesData.miembros.toFixed(1)+'</div>'+
+        '<div class="ck-sub">noches \u00b7 miembros se quedan '+((nochesData.miembros-nochesData.no_miembros)>=0?'+':'')+(nochesData.miembros-nochesData.no_miembros).toFixed(1)+' vs no-miembros</div>'+
+        '<div class="ck-footer"><span>No-miembros</span><b>'+nochesData.no_miembros.toFixed(1)+' noches</b></div>'+
+      '</div>'+
     '</div>';
+  }
+  document.getElementById('exec-ctx-kpis').innerHTML=grid;
 }
 
 /* Embudo compacto (columna derecha) */
@@ -918,48 +960,57 @@ function renderPropSemaforo(mb){
 function renderPropActions(afs,mb){
   var cont=document.getElementById('prop-actions');
   var map={};
-  afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={name:p,ci:0,cb:0,nv:0,ok:0,sc:0,lk:0,tiI:0};
+  afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={name:p,pais:r.Pais||r['Pa\u00eds']||'',ci:0,cb:0,nv:0,ok:0,sc:0,lk:0,tiI:0};
     map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
   mb.forEach(function(r){var p=r.Propiedad||'';if(!map[p])return;var et=r.Error_Type||'';
     if(et==='OK')map[p].ok++;else if(et==='SIN CANJE')map[p].sc++;else if(et==='LEAKAGE')map[p].lk++;else if(et==='TIER_INCORRECTO')map[p].tiI++;});
   var props=Object.values(map).filter(function(p){return p.ci>0||p.cb>0;});
   props.forEach(function(p){
     p.pct=p.ci>0?Math.round(p.cb/p.ci*1000)/10:0;
+    p.pctOK=(p.ok+p.sc)>0?Math.round(p.ok/(p.ok+p.sc)*1000)/10:0;
     p.status=p.pct<5||p.cb===0?'critico':p.ok===0&&p.cb>0?'atencion':p.pct<15?'atencion':'ok';
   });
   props.sort(function(a,b){var o={critico:0,atencion:1,ok:2};return(o[a.status]-o[b.status])||a.pct-b.pct;});
-  var statusIco={critico:'🔴',atencion:'🟡',ok:'🟢'};
-  var statusLabel={critico:'Crítico',atencion:'Atención',ok:'En camino'};
-  var statusBadge={critico:'b-err',atencion:'b-warn',ok:'b-ok'};
-  cont.innerHTML='<div class="prop-table-wrap">'+
+  var sIco={critico:'\ud83d\udd34',atencion:'\ud83d\udfe1',ok:'\ud83d\udfe2'};
+  var sLbl={critico:'Cr\u00edtico',atencion:'Atenci\u00f3n',ok:'En camino'};
+  var sBadge={critico:'b-err',atencion:'b-warn',ok:'b-ok'};
+  cont.innerHTML=
+    '<div class="prop-table-wrap">'+
     '<table class="prop-tbl">'+
     '<thead><tr>'+
-    '<th></th>'+
     '<th>Propiedad</th>'+
     '<th class="tc">% Miembros</th>'+
     '<th class="tc">Nuevos</th>'+
-    '<th class="tc">✅ OK</th>'+
-    '<th class="tc">❌ Sin beneficio</th>'+
-    '<th class="tc">💸 No-miembro</th>'+
+    '<th class="tc">% Benef. OK</th>'+
+    '<th class="tc">Errores clave</th>'+
     '<th class="tc">Estado</th>'+
-    '</tr></thead>'+
-    '<tbody>'+
+    '</tr></thead><tbody>'+
     props.map(function(p){
       var colPct=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';
-      return '<tr onclick="openDrawer(\''+p.name.replace(/'/g,"\\'")+'\')" title="Clic para ver diagnóstico y lista de trabajo">'+
-        '<td style="font-size:14px;padding-right:6px;">'+statusIco[p.status]+'</td>'+
-        '<td><b style="font-size:12px;">'+p.name+'</b></td>'+
-        '<td class="tc"><span style="font-weight:800;color:'+colPct+';">'+p.pct.toFixed(1)+'%</span></td>'+
-        '<td class="tc">'+fmtN(p.nv)+'</td>'+
-        '<td class="tc" style="color:'+(p.ok>0?'var(--ok)':'var(--gris)')+'">'+fmtN(p.ok)+'</td>'+
-        '<td class="tc" style="color:'+(p.sc>20?'var(--err)':p.sc>5?'#ca8a04':'var(--gris)')+'">'+fmtN(p.sc)+'</td>'+
-        '<td class="tc" style="color:'+(p.lk>0?'#ca8a04':'var(--gris)')+'">'+fmtN(p.lk)+'</td>'+
-        '<td class="tc"><span class="badge '+statusBadge[p.status]+'">'+statusLabel[p.status]+'</span></td>'+
+      var colOK=p.pctOK>=50?'var(--ok)':p.pctOK>0?'#ca8a04':'var(--gris)';
+      var nom=p.name.replace('Viajero ','').replace(' Hostel','');
+      var errHtml=[];
+      if(p.sc>0)errHtml.push('<span class="badge b-err">'+p.sc+' sin benef.</span>');
+      if(p.lk>0)errHtml.push('<span class="badge b-warn">'+p.lk+' leakage</span>');
+      if(p.tiI>0)errHtml.push('<span class="badge b-blue">'+p.tiI+' nivel</span>');
+      return '<tr onclick="openDrawer(\''+p.name+'\')">'+
+        '<td>'+
+          '<b style="font-size:12px">'+nom+'</b>'+
+          (p.pais?'<span style="display:block;font-size:10px;color:var(--gris)">'+p.pais+'</span>':'')+
+        '</td>'+
+        '<td class="tc">'+
+          '<b style="color:'+colPct+'">'+p.pct.toFixed(1)+'%</b>'+
+          '<div style="height:4px;background:var(--cd);border-radius:99px;overflow:hidden;width:52px;margin:3px auto 0">'+
+          '<div style="height:4px;background:'+colPct+';width:'+Math.min(p.pct/25*100,100)+'%;border-radius:99px"></div></div>'+
+        '</td>'+
+        '<td class="tc"><b>'+fmtN(p.nv)+'</b></td>'+
+        '<td class="tc"><b style="color:'+colOK+'">'+p.pctOK.toFixed(0)+'%</b></td>'+
+        '<td style="font-size:11px">'+( errHtml.length?errHtml.join(' '):'<span style="color:var(--gris)">&mdash;</span>')+' </td>'+
+        '<td class="tc">'+sIco[p.status]+'<span class="badge '+sBadge[p.status]+'" style="margin-left:4px">'+sLbl[p.status]+'</span></td>'+
         '</tr>';
     }).join('')+
-    '</tbody></table>'+
-    '</div>'+
-    '<div style="font-size:10px;color:var(--gris);margin-top:6px;padding:5px 9px;background:var(--cream);border-radius:6px;">🖱️ Clic en cualquier fila para ver diagnóstico detallado y lista de miembros sin beneficio de esa propiedad</div>';
+    '</tbody></table></div>'+
+    '<p style="font-size:11px;color:var(--gris);margin-top:8px;padding-left:2px">\ud83d\udd0e Clic en cualquier fila \u2192 diagn\u00f3stico detallado y lista de trabajo de esa propiedad</p>';
 }
 
 function renderSinMatchAkin(){
