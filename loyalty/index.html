@@ -757,9 +757,11 @@ function renderExecCtxKPIs(afs,mb){
   var pctOK=totalLoyalty>0?Math.round(okN/totalLoyalty*1000)/10:0;
   var pctSC=totalLoyalty>0?Math.round(scN/totalLoyalty*1000)/10:0;
   var pctTI=totalLoyalty>0?Math.round(tiI/totalLoyalty*1000)/10:0;
-  var mixData=DATA.mixReservas||null;
-  var totalRes=mixData?mixData.total:ci;
-  var loyRes=mixData?mixData.miembros:cb;
+ var fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');
+var isFiltered=fp.length||ft.length||fpa.length;
+var mixData=(!isFiltered&&DATA.mixReservas)||null;
+var totalRes=mixData?mixData.total:ci;
+var loyRes=mixData?mixData.miembros:cb;
   var pctLoy=totalRes>0?Math.round(loyRes/totalRes*1000)/10:0;
   var mbArr=DATA.memberBehavior||[];
   var nochesData=DATA.nochesPromedio||null;
