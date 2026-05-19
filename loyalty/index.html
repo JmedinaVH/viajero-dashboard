@@ -374,6 +374,25 @@ tbody tr:hover td{background:var(--cream);}
 .prt-val{font-size:26px;font-weight:800;line-height:1;margin-bottom:2px;}
 .prt-sub{font-size:11px;color:var(--gris);}
 
+/* ── UNIVERSOS EJECUTIVOS ── */
+.univ-section{margin-bottom:20px;}
+.univ-hdr{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--cm);border-radius:8px;border-left:3px solid var(--coral);margin-bottom:10px;}
+.univ-hdr.op{border-left-color:var(--orange);}
+.univ-ico{font-size:13px;}
+.univ-tit{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--dark);}
+.univ-base{font-size:10px;color:var(--gris);margin-left:auto;}
+.loyalty-eq{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;margin-bottom:0;}
+.leq-row{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--cream);}
+.leq-row:last-child{border-bottom:none;}
+.leq-ico{font-size:13px;width:22px;text-align:center;flex-shrink:0;}
+.leq-lbl{flex:1;font-size:12px;font-weight:600;}
+.leq-pct{font-size:10px;color:var(--gris);min-width:44px;text-align:right;}
+.leq-n{font-size:16px;font-weight:800;min-width:56px;text-align:right;}
+.leq-total{background:var(--cm) !important;border-top:2px solid var(--border);}
+.leq-total .leq-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;}
+.leq-total .leq-n{font-size:18px;color:var(--dark);}
+.leq-note{padding:8px 16px;font-size:10px;color:var(--gris);background:var(--cream);border-top:1px solid var(--border);line-height:1.5;}
+
 @media(max-width:900px){.exec-kpi-grid{grid-template-columns:1fr 1fr;}.exec-kpi-row2{grid-template-columns:1fr;}.beh-grid{grid-template-columns:1fr 1fr;}.exec-bottom-row{grid-template-columns:1fr;}.trend-charts-row{grid-template-columns:1fr;}.rank-mini-row{grid-template-columns:1fr;}.movers-grid{grid-template-columns:1fr;}.semaforo-grid{grid-template-columns:repeat(3,1fr);}.prop-resumen-top{grid-template-columns:1fr 1fr;}}
 @media(max-width:640px){header,.filtros,.tabs-bar{padding-left:14px;padding-right:14px;}main{padding:14px 14px 60px;}.exec-kpi-grid{grid-template-columns:1fr 1fr;}.beh-grid{grid-template-columns:1fr 1fr;}.headline{flex-direction:column;}.hl-kpi{text-align:left;}.tab-btn{font-size:11px;padding:10px 12px;}#prop-drawer{width:100%;}.semaforo-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:400px){.exec-kpi-grid{grid-template-columns:1fr;}.beh-grid{grid-template-columns:1fr;}}
@@ -428,7 +447,7 @@ tbody tr:hover td{background:var(--cream);}
 <div class="tabs-bar">
   <button class="tab-btn active" onclick="switchTab('exec',this)">📊 Resumen ejecutivo</button>
   <button class="tab-btn" onclick="switchTab('prop',this)">🏨 Por propiedad</button>
-  <button class="tab-btn" onclick="switchTab('members',this)">👥 Comportamiento</button>
+  <button class="tab-btn" onclick="switchTab('members',this)">👥 Comportamiento Historico</button>
   <button class="tab-btn" onclick="switchTab('ctx',this)">📈 Contexto del programa</button>
 </div>
 
@@ -488,8 +507,11 @@ tbody tr:hover td{background:var(--cream);}
 
 <!-- TAB 3: COMPORTAMIENTO -->
 <div id="tab-members" class="tab-content">
-  <div class="aud-label aud-members">👥 Comportamiento y fidelidad de miembros</div>
+  <div class="aud-label aud-members">👥 Fidelidad histórica del programa</div>
   <div id="members-pending-banner"></div>
+  <div class="info-box" style="border-left:3px solid var(--teal);margin-bottom:16px;">
+  📚 <b>Fuente: historial acumulado AKIN</b> — Estas métricas reflejan el comportamiento histórico de todos los miembros registrados y <b>no dependen del período seleccionado</b>. No están relacionadas con las 4.696 reservas loyalty auditadas del período.
+</div>
   <div id="members-beh-kpis"></div>
   <div class="sec">
     <div class="sec-hdr"><h2>Estado de actividad <i class="ib" onclick="openTip('Estado actividad')">i</i></h2><div class="linea"></div></div>
@@ -719,84 +741,159 @@ function renderExecHeadline(afs,mb){
 /* KPI cards — nuevas, más visuales */
 function renderExecCtxKPIs(afs,mb){
   var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
+
+  // Universo loyalty (solo OK + SIN_CANJE + TIER_INCORRECTO)
   var okN=mb.filter(function(r){return r.Error_Type==='OK';}).length;
+  var scN=mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).length;
+  var tiI=mb.filter(function(r){return r.Error_Type==='TIER_INCORRECTO';}).length;
+  var lk=mb.filter(function(r){return r.Error_Type==='LEAKAGE';}).length;
+  var ms=mb.filter(function(r){return r.Error_Type==='MISUSE';}).length;
   var scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
-  var pRed=cb>0?okN/cb*100:0;
+  var totalLoyalty=okN+scN+tiI;
+
+  // Tasas
   var nvRate=hu>0?(nv/hu*100):0;
-
   var colNv=nvRate>=5?'var(--ok)':nvRate>=2?'#ca8a04':'var(--err)';
-  var colRed=pRed>=30?'var(--ok)':pRed>=10?'#ca8a04':'var(--err)';
+  var pctOK=totalLoyalty>0?Math.round(okN/totalLoyalty*1000)/10:0;
+  var pctSC=totalLoyalty>0?Math.round(scN/totalLoyalty*1000)/10:0;
+  var pctTI=totalLoyalty>0?Math.round(tiI/totalLoyalty*1000)/10:0;
 
-  var card1={
-    label:'Nuevos inscritos / huésped',tip:'Nuevos inscritos / huésped',stripe:colNv,
-    val:nvRate.toFixed(1),unit:'%',
-    sub:fmtN(nv)+' nuevos de '+fmtN(hu)+' huéspedes totales',
-    footerLabel:'Meta futura',footerVal:'≥5%',footerCol:colNv,
-    badge:null
-  };
-  var card2={
-    label:'Beneficios correctos en CB',tip:'Beneficios correctos',stripe:colRed,
-    val:cb>0?pRed.toFixed(1):'—',unit:cb>0?'%':'',
-    sub:okN+' registros OK de '+fmtN(cb)+' miembros hospedados',
-    footerLabel:'Meta futura',footerVal:'≥30%',footerCol:colRed,
-    badge:null
-  };
-  var card3={
-    label:'Miembros sin beneficio',tip:'Sin beneficio',stripe:'var(--err)',
-    val:fmtN(scUnicos),unit:'',
-    sub:'personas únicas sin recibir su beneficio',
-    footerLabel:'Reservas afectadas',footerVal:fmtN(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).length),footerCol:'var(--err)',
-    badge:{cls:'b-err',txt:'Lista de trabajo disponible'}
-  };
+  // Penetración
+  var mixData=DATA.mixReservas||null;
+  var totalRes=mixData?mixData.total:ci;
+  var loyRes=mixData?mixData.miembros:cb;
+  var pctLoy=totalRes>0?Math.round(loyRes/totalRes*1000)/10:0;
 
-  var cards=[card1,card2,card3];
-  var html='<div class="exec-kpi-grid">'+cards.map(function(c){
-    return '<div class="exec-kpi-card">'+
-      '<div class="ekc-top">'+
-        '<div class="ekc-label">'+c.label+' '+ib(c.tip)+'</div>'+
-        '<div class="ekc-metric">'+
-          '<div class="ekc-val" style="color:'+c.stripe+'">'+c.val+'</div>'+
-          (c.unit?'<div class="ekc-unit" style="color:'+c.stripe+'">'+c.unit+'</div>':'')+
+  // Noches: calcular desde memberBehavior (no desde nochesPromedio pre-calculado)
+  var mbArr=DATA.memberBehavior||[];
+  var nochesData=DATA.nochesPromedio||null;
+  if(mbArr.length>0){
+    var avgMb=Math.round(mbArr.reduce(function(s,r){return s+(parseFloat(r.total_nights)||0);},0)/mbArr.length*10)/10;
+    nochesData={miembros:avgMb,no_miembros:nochesData?nochesData.no_miembros:0};
+  }
+
+  var html='';
+
+  // ── UNIVERSO 1: Adquisición ──
+  html+='<div class="univ-section">'+
+    '<div class="univ-hdr">'+
+      '<span class="univ-ico">👥</span>'+
+      '<span class="univ-tit">Adquisición</span>'+
+      '<span class="univ-base">base: '+fmtN(hu)+' huéspedes totales</span>'+
+    '</div>'+
+    '<div class="exec-kpi-grid" style="margin-bottom:0">'+
+      '<div class="exec-kpi-card">'+
+        '<div class="ekc-top">'+
+          '<div class="ekc-label">Nuevos afiliados / huésped '+ib('Nuevos inscritos / huésped')+'</div>'+
+          '<div class="ekc-metric"><div class="ekc-val" style="color:'+colNv+'">'+nvRate.toFixed(1)+'</div><div class="ekc-unit" style="color:'+colNv+'">%</div></div>'+
+          '<div class="ekc-desc">'+fmtN(nv)+' nuevos de '+fmtN(hu)+' huéspedes totales</div>'+
         '</div>'+
-        '<div class="ekc-desc">'+c.sub+'</div>'+
-        (c.badge?'<span class="ekc-tag '+c.badge.cls+'">'+c.badge.txt+'</span>':'')+
+        '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta futura</span><span class="ekc-bottom-val" style="color:'+colNv+'">≥5%</span></div>'+
       '</div>'+
-      '<div class="ekc-bottom">'+
-        '<span class="ekc-bottom-lbl">'+c.footerLabel+'</span>'+
-        '<span class="ekc-bottom-val" style="color:'+c.footerCol+'">'+c.footerVal+'</span>'+
+      (nochesData&&nochesData.miembros>0?
+        '<div class="exec-kpi-card">'+
+          '<div class="ekc-top">'+
+            '<div class="ekc-label">Noches promedio por estadía · miembros '+ib('Noches promedio')+'</div>'+
+            '<div class="ekc-metric"><div class="ekc-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div><div class="ekc-unit" style="color:var(--gris)">noches</div></div>'+
+            '<div class="ekc-desc">'+(nochesData.no_miembros>0?(Math.abs(nochesData.miembros-nochesData.no_miembros)<0.2?'Sin diferencia vs no-miembros ('+nochesData.no_miembros.toFixed(1)+')':(nochesData.miembros>nochesData.no_miembros?'+'+(nochesData.miembros-nochesData.no_miembros).toFixed(1)+' noches más que no-miembros ('+nochesData.no_miembros.toFixed(1)+')':(nochesData.no_miembros-nochesData.miembros).toFixed(1)+' noches menos que no-miembros ('+nochesData.no_miembros.toFixed(1)+')')):'Promedio por estadía de miembro')+'</div>'+
+          '</div>'+
+          '<div class="ekc-bottom"><span class="ekc-bottom-lbl">No-miembros</span><span class="ekc-bottom-val" style="color:var(--gris)">'+(nochesData.no_miembros>0?nochesData.no_miembros.toFixed(1)+' noches':'—')+'</span></div>'+
+        '</div>'
+      :'')+
+    '</div>'+
+  '</div>';
+
+  // ── UNIVERSO 2: Penetración ──
+  if(mixData){
+    html+='<div class="univ-section">'+
+      '<div class="univ-hdr">'+
+        '<span class="univ-ico">🛏️</span>'+
+        '<span class="univ-tit">Penetración</span>'+
+        '<span class="univ-base">base: '+fmtN(totalRes)+' reservas / check-ins</span>'+
+      '</div>'+
+      '<div class="exec-kpi-grid" style="margin-bottom:0">'+
+        '<div class="exec-kpi-card">'+
+          '<div class="ekc-top">'+
+            '<div class="ekc-label">Reservas loyalty detectadas '+ib('Reservas miembros')+'</div>'+
+            '<div class="ekc-metric"><div class="ekc-val" style="color:var(--teal)">'+pctLoy.toFixed(1)+'</div><div class="ekc-unit" style="color:var(--teal)">%</div></div>'+
+            '<div class="ekc-desc">'+fmtN(loyRes)+' de '+fmtN(totalRes)+' reservas totales son de miembros</div>'+
+          '</div>'+
+          '<div class="ekc-bottom"><span class="ekc-bottom-lbl">No-miembros</span><span class="ekc-bottom-val" style="color:var(--gris)">'+fmtN(mixData.no_miembros)+'</span></div>'+
+        '</div>'+
       '</div>'+
     '</div>';
-  }).join('')+'</div>';
+  }
 
-  /* Fila secundaria: mix reservas + noches promedio */
-  var mixData=DATA.mixReservas||null;
-  var nochesData=DATA.nochesPromedio||null;
-  if(mixData&&nochesData){
-    var pctMiembro=mixData.total>0?Math.round(mixData.miembros/mixData.total*1000)/10:0;
-    var diffNoches=Math.round((nochesData.miembros-nochesData.no_miembros)*10)/10;
-    var sameNoches=Math.abs(diffNoches)<0.1;
-    html+='<div class="exec-kpi-row2">'+
-      '<div class="ekr2-card">'+
-        '<div class="ekr2-top">'+
-          '<div class="ekr2-label">% Reservas de miembros '+ib('Reservas miembros')+'</div>'+
-          '<div class="ekr2-metric"><div class="ekr2-val" style="color:var(--teal)">'+pctMiembro.toFixed(1)+'%</div></div>'+
-          '<div class="ekr2-desc">de '+fmtN(mixData.total)+' reservas totales son de miembros activos</div>'+
-        '</div>'+
-        '<div class="ekr2-compare">'+
-          '<div class="ekr2-col"><div class="ekr2-col-lbl">Miembros</div><div class="ekr2-col-val" style="color:var(--teal)">'+fmtN(mixData.miembros)+'</div></div>'+
-          '<div class="ekr2-col"><div class="ekr2-col-lbl">No-miembros</div><div class="ekr2-col-val" style="color:var(--gris)">'+fmtN(mixData.no_miembros)+'</div></div>'+
-        '</div>'+
+  // ── UNIVERSO 3: Ejecución loyalty (ecuación visible) ──
+  if(totalLoyalty>0){
+    html+='<div class="univ-section">'+
+      '<div class="univ-hdr">'+
+        '<span class="univ-ico">🎁</span>'+
+        '<span class="univ-tit">Ejecución loyalty</span>'+
+        '<span class="univ-base">base: '+fmtN(totalLoyalty)+' reservas loyalty</span>'+
       '</div>'+
-      '<div class="ekr2-card">'+
-        '<div class="ekr2-top">'+
-          '<div class="ekr2-label">Noches promedio por estadía '+ib('Noches promedio')+'</div>'+
-          '<div class="ekr2-metric"><div class="ekr2-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div><div style="font-size:13px;font-weight:600;color:var(--gris);line-height:1;padding-bottom:3px;">noches · miembros</div></div>'+
-          '<div class="ekr2-desc">'+(sameNoches?'Estadía igual entre miembros y no-miembros en este período':(diffNoches>0?'Miembros se quedan <b>+'+diffNoches.toFixed(1)+' noches más</b> que no-miembros':'No-miembros se quedan <b>'+Math.abs(diffNoches).toFixed(1)+' noches más</b> que miembros'))+'</div>'+
+      '<div class="loyalty-eq">'+
+        '<div class="leq-row">'+
+          '<div class="leq-ico">✅</div>'+
+          '<div class="leq-lbl">Beneficio aplicado correctamente</div>'+
+          '<div class="leq-pct">'+pctOK.toFixed(1)+'%</div>'+
+          '<div class="leq-n" style="color:var(--ok)">'+fmtN(okN)+'</div>'+
         '</div>'+
-        '<div class="ekr2-compare">'+
-          '<div class="ekr2-col"><div class="ekr2-col-lbl">Miembros</div><div class="ekr2-col-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div></div>'+
-          '<div class="ekr2-col"><div class="ekr2-col-lbl">No-miembros</div><div class="ekr2-col-val" style="color:var(--gris)">'+nochesData.no_miembros.toFixed(1)+'</div></div>'+
+        '<div class="leq-row">'+
+          '<div class="leq-ico">❌</div>'+
+          '<div class="leq-lbl">Sin beneficio · <span style="font-size:10px;color:var(--gris);font-weight:400">'+fmtN(scUnicos)+' personas únicas</span></div>'+
+          '<div class="leq-pct">'+pctSC.toFixed(1)+'%</div>'+
+          '<div class="leq-n" style="color:var(--err)">'+fmtN(scN)+'</div>'+
         '</div>'+
+        (tiI>0?
+          '<div class="leq-row">'+
+            '<div class="leq-ico">⚠️</div>'+
+            '<div class="leq-lbl">Tier incorrecto en CB</div>'+
+            '<div class="leq-pct">'+pctTI.toFixed(1)+'%</div>'+
+            '<div class="leq-n" style="color:var(--warn)">'+fmtN(tiI)+'</div>'+
+          '</div>'
+        :'')+
+        '<div class="leq-row leq-total">'+
+          '<div class="leq-ico"></div>'+
+          '<div class="leq-lbl">Total reservas loyalty</div>'+
+          '<div class="leq-pct">100%</div>'+
+          '<div class="leq-n">'+fmtN(totalLoyalty)+'</div>'+
+        '</div>'+
+        '<div class="leq-note">Una persona puede tener múltiples reservas · Beneficios considerados: descuento loyalty, toalla y desayuno</div>'+
+      '</div>'+
+    '</div>';
+  }
+
+  // ── UNIVERSO 4: Errores operacionales (separado) ──
+  if(lk>0||ms>0){
+    html+='<div class="univ-section">'+
+      '<div class="univ-hdr op">'+
+        '<span class="univ-ico">⚠️</span>'+
+        '<span class="univ-tit">Errores operacionales</span>'+
+        '<span class="univ-base" style="color:var(--orange);font-weight:700">fuera del universo loyalty</span>'+
+      '</div>'+
+      '<div class="exec-kpi-grid" style="margin-bottom:0">'+
+        (lk>0?
+          '<div class="exec-kpi-card">'+
+            '<div class="ekc-top">'+
+              '<div class="ekc-label">Beneficios a no afiliados '+ib('Resumen de errores')+'</div>'+
+              '<div class="ekc-metric"><div class="ekc-val" style="color:var(--orange)">'+fmtN(lk)+'</div></div>'+
+              '<div class="ekc-desc">Descuento loyalty entregado sin membresía vigente — pérdida de ingreso</div>'+
+              '<span class="ekc-tag b-err">Acción urgente</span>'+
+            '</div>'+
+            '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Universo</span><span class="ekc-bottom-val" style="color:var(--orange)">Separado loyalty</span></div>'+
+          '</div>'
+        :'')+
+        (ms>0?
+          '<div class="exec-kpi-card">'+
+            '<div class="ekc-top">'+
+              '<div class="ekc-label">Tarifa loyalty mal aplicada '+ib('Resumen de errores')+'</div>'+
+              '<div class="ekc-metric"><div class="ekc-val" style="color:var(--err)">'+fmtN(ms)+'</div></div>'+
+              '<div class="ekc-desc">Aplicación fuera del proceso loyalty estándar</div>'+
+            '</div>'+
+            '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Universo</span><span class="ekc-bottom-val" style="color:var(--err)">Separado loyalty</span></div>'+
+          '</div>'
+        :'')+
       '</div>'+
     '</div>';
   }
@@ -877,12 +974,12 @@ function renderExecPaisPenetracion(afsAll){
 function renderExecFunnelCompact(afs){
   var el=document.getElementById('exec-funnel');if(!el)return;
   var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
-  /* Huéspedes y check-ins son datos independientes, NO conversión entre sí.
-     Miembros = % de check-ins. Nuevos = % de huéspedes (captación). */
+  /* Usa mixReservas para mostrar 4.696 (reservas) en vez de 4.514 (personas) */
+  var loyResF=(DATA.mixReservas&&DATA.mixReservas.miembros)||cb;
   var items=[
     {ico:'🏠',lbl:'Total huéspedes',sub:'base del período',n:hu,col:'#94a3b8',conv:null},
     {ico:'🔑',lbl:'Check-ins en CB',sub:'registros en CloudBeds',n:ci,col:'var(--coral)',conv:null},
-    {ico:'💳',lbl:'Son miembros',sub:'de los check-ins',n:cb,col:'var(--blue)',conv:ci>0?(cb/ci*100).toFixed(1)+'%':null},
+    {ico:'🎯',lbl:'Reservas loyalty',sub:'identificadas en el período',n:loyResF,col:'var(--teal)',conv:ci>0?(loyResF/ci*100).toFixed(1)+'%':null},
     {ico:'✨',lbl:'Nuevos inscritos',sub:'de los huéspedes totales',n:nv,col:'var(--ok)',conv:hu>0?(nv/hu*100).toFixed(1)+'%':null},
   ];
   var maxN=Math.max.apply(null,items.map(function(i){return i.n;}))||1;
