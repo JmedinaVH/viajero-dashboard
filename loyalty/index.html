@@ -1213,13 +1213,8 @@ function renderPropSemaforo(mb){
   '</div>';
 
   /* Separador operacional */
-  var opHeader='<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--orange);padding:10px 2px 6px;margin-top:4px;">💸 Riesgos operacionales — fuera del universo loyalty</div>';
-
-  document.getElementById('prop-semaforo').innerHTML=
-    closureHtml+
-    '<div class="semaforo-grid">'+buildItems(loyItems)+'</div>'+
-    opHeader+
-    '<div class="semaforo-grid">'+buildItems(opItems)+'</div>';
+    var opHeader='<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--orange);padding:10px 2px 6px;margin-top:4px;">💸 Riesgos operacionales — fuera del universo loyalty</div>';
+  document.getElementById('prop-semaforo').innerHTML=closureHtml+'<div class="semaforo-grid">'+buildItems(loyItems)+'</div>'+opHeader+'<div class="semaforo-grid">'+buildItems(opItems)+'</div>';
 }
 
 /* Tabla compacta de propiedades con drawer */
