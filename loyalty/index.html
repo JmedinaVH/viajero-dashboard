@@ -102,22 +102,66 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .hl-kpi-meta{font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;}
 .hl-status{display:inline-flex;font-size:10px;font-weight:700;border-radius:99px;padding:3px 10px;border:1px solid;margin-top:6px;}
 
-/* EXEC BOTTOM ROW: funnel right + country left */
-.exec-bottom-row{display:grid;grid-template-columns:1fr 320px;gap:16px;margin-bottom:20px;align-items:start;}.exec-bottom-row>div{display:flex;flex-direction:column;}.exec-bottom-row>div>*{flex:1;}
-.exec-bottom-row .funnel-outer{margin-bottom:0;}
+/* KPI CARDS — RESUMEN EJECUTIVO (nuevas, más visuales) */
+.exec-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;}
+.exec-kpi-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:0;overflow:hidden;position:relative;transition:box-shadow .18s;cursor:default;}
+.exec-kpi-card:hover{box-shadow:var(--shm);}
+.ekc-stripe{height:4px;width:100%;}
+.ekc-body{padding:16px 18px 14px;}
+.ekc-label{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;display:flex;align-items:center;gap:4px;}
+.ekc-main{display:flex;align-items:flex-end;gap:10px;margin-bottom:6px;}
+.ekc-val{font-size:32px;font-weight:800;line-height:1;}
+.ekc-unit{font-size:13px;font-weight:700;color:var(--gris);margin-bottom:4px;}
+.ekc-sub{font-size:11px;color:var(--gris);line-height:1.45;margin-bottom:8px;}
+.ekc-footer{display:flex;align-items:center;justify-content:space-between;padding:8px 18px 10px;background:var(--cream);border-top:1px solid var(--border);}
+.ekc-footer-label{font-size:10px;color:var(--gris);font-weight:600;}
+.ekc-footer-val{font-size:11px;font-weight:800;}
+.ekc-badge{display:inline-flex;font-size:9px;font-weight:700;padding:3px 9px;border-radius:99px;margin-top:2px;}
 
-/* CONTEXT KPIs */
-.ctx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
-.ctx-kpi{background:var(--surface);border-radius:var(--r);padding:18px 16px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .18s;}
-.ctx-kpi:hover{box-shadow:var(--shm);}
-.ctx-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--kc,var(--coral));border-radius:var(--r) var(--r) 0 0;}
-.ck-glow{position:absolute;bottom:-14px;right:-14px;width:54px;height:54px;border-radius:50%;background:var(--kc,var(--coral));opacity:.06;}
-.ck-label{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
-.ck-val{font-size:26px;font-weight:800;line-height:1;color:var(--kc,var(--dark));margin-bottom:3px;}
-.ck-sub{font-size:11px;color:var(--gris);line-height:1.4;}
-.ck-badge{display:inline-flex;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;margin-top:6px;}
-.ck-footer{margin-top:9px;padding-top:8px;border-top:1px solid var(--cd);display:flex;justify-content:space-between;font-size:11px;color:var(--gris);}
-.ck-footer b{font-size:13px;font-weight:800;}
+/* KPI ROW SECUNDARIA (mix reservas + noches) */
+.exec-kpi-row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.ekr2-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
+.ekr2-stripe{height:4px;}
+.ekr2-body{padding:14px 18px 10px;}
+.ekr2-label{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;}
+.ekr2-val{font-size:28px;font-weight:800;line-height:1;margin-bottom:3px;}
+.ekr2-sub{font-size:11px;color:var(--gris);}
+.ekr2-compare{display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+.ekr2-compare-item{flex:1;text-align:center;}
+.ekr2-compare-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--gris);}
+.ekr2-compare-n{font-size:14px;font-weight:800;margin-top:2px;}
+.ekr2-compare-sep{width:1px;background:var(--border);align-self:stretch;}
+
+/* EXEC BOTTOM ROW: pais left + funnel right — same height */
+.exec-bottom-row{display:grid;grid-template-columns:1fr 340px;gap:16px;margin-bottom:20px;align-items:stretch;}
+.pais-chart-outer{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:14px 16px;display:flex;flex-direction:column;}
+.funnel-outer{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:14px 16px;display:flex;flex-direction:column;}
+.funnel-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:10px;}
+
+/* Funnel rows */
+.fn-row{display:flex;align-items:center;gap:10px;padding:8px 0;}
+.fn-row+.fn-row{border-top:1px solid var(--cream);}
+.fn-ico{font-size:16px;flex-shrink:0;width:24px;text-align:center;}
+.fn-lbl{font-size:11px;font-weight:700;flex:1;line-height:1.3;}
+.fn-sub{font-size:9px;color:var(--gris);font-weight:400;}
+.fn-bar-track{width:70px;height:6px;background:var(--cd);border-radius:99px;overflow:hidden;flex-shrink:0;}
+.fn-bar-fill{height:100%;border-radius:99px;}
+.fn-val{font-size:13px;font-weight:800;min-width:50px;text-align:right;flex-shrink:0;}
+.fn-conv{font-size:9px;color:var(--gris);min-width:32px;text-align:right;flex-shrink:0;}
+
+/* MOVERS */
+.movers-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.mover-card{background:var(--surface);border-radius:var(--r);border:1.5px solid;overflow:hidden;}
+.mover-head{padding:8px 14px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid;}
+.mover-row{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);gap:10px;}
+.mover-row:last-child{border-bottom:none;}
+
+/* TREND CHARTS */
+.trend-charts-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:0;}
+.trend-chart-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:16px 18px;}
+.tcc-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:2px;}
+.tcc-sublabel{font-size:10px;color:var(--gris);margin-bottom:10px;line-height:1.4;}
+.tcc-canvas{position:relative;height:110px;}
 
 /* SEC */
 .sec{margin-bottom:22px;}
@@ -140,41 +184,40 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .b-blue{background:var(--blue-bg);color:var(--blue);}
 .b-teal{background:var(--teal-bg);color:var(--teal);}
 
-/* SEMAFORO */
-.semaforo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px;margin-bottom:16px;}
-.s-item{background:var(--surface);border-radius:var(--r);padding:14px 12px;border:1.5px solid var(--border);text-align:center;transition:.16s;position:relative;overflow:hidden;}
+/* SEMAFORO — más cómodo */
+.semaforo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
+.s-item{background:var(--surface);border-radius:var(--r);padding:16px 14px;border:1.5px solid var(--border);text-align:center;transition:.16s;position:relative;overflow:hidden;}
 .s-item.clickable{cursor:pointer;}
 .s-item:hover.clickable{box-shadow:var(--shm);}
-.s-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0;}
+.s-item::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--r) var(--r) 0 0;}
 .s-verde::before{background:var(--ok);}
 .s-amarillo::before{background:#eab308;}
 .s-rojo::before{background:var(--err);}
-.s-val{font-size:26px;font-weight:800;line-height:1;}
+.s-val{font-size:30px;font-weight:800;line-height:1;margin-bottom:4px;}
 .s-verde .s-val{color:var(--ok);}
 .s-amarillo .s-val{color:var(--warn);}
 .s-rojo .s-val{color:var(--err);}
-.s-lbl{font-size:9px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.4px;margin-top:5px;}
-.s-sub{font-size:9px;color:var(--gris);margin-top:2px;}
-.s-tipo{font-size:9px;font-weight:600;padding:2px 7px;border-radius:99px;display:inline-block;margin-top:5px;}
+.s-lbl{font-size:10px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.4px;}
+.s-sub{font-size:9px;color:var(--gris);margin-top:3px;line-height:1.4;}
+.s-tipo{font-size:9px;font-weight:600;padding:3px 8px;border-radius:99px;display:inline-block;margin-top:6px;}
 .s-verde .s-tipo{background:var(--ok-bg);color:var(--ok);}
 .s-amarillo .s-tipo{background:var(--warn-bg);color:var(--warn);}
 .s-rojo .s-tipo{background:var(--err-bg);color:var(--err);}
 
-/* PROP TABLE */
+/* PROP TABLE — mejorada */
 .prop-table-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
 .prop-tbl{width:100%;border-collapse:collapse;font-size:12px;}
-.prop-tbl thead th{background:var(--cm);color:var(--mid);padding:9px 13px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;white-space:nowrap;}
+.prop-tbl thead th{background:var(--cm);color:var(--mid);padding:10px 14px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;white-space:nowrap;}
 .prop-tbl thead th.tc{text-align:center;}
-.prop-tbl tbody td{padding:10px 13px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.prop-tbl tbody td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
 .prop-tbl tbody tr:last-child td{border-bottom:none;}
 .prop-tbl tbody tr{cursor:pointer;transition:.13s;}
 .prop-tbl tbody tr:hover td{background:var(--coral-soft);}
-.pct-ok{color:var(--ok);font-weight:700;}
-.pct-warn{color:var(--warn);font-weight:700;}
-.pct-err{color:var(--err);font-weight:700;}
+.prop-status-col{display:flex;align-items:center;gap:6px;justify-content:center;}
+.prop-mini-bar{height:5px;border-radius:99px;background:var(--cd);overflow:hidden;width:56px;margin:3px auto 0;}
 
 /* DRAWER */
-#prop-drawer{position:fixed;top:0;right:0;bottom:0;width:500px;max-width:95vw;background:#fff;box-shadow:-8px 0 40px rgba(30,16,10,.18);z-index:8000;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;}
+#prop-drawer{position:fixed;top:0;right:0;bottom:0;width:520px;max-width:95vw;background:#fff;box-shadow:-8px 0 40px rgba(30,16,10,.18);z-index:8000;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;}
 #prop-drawer.open{transform:translateX(0);}
 #prop-drawer-overlay{display:none;position:fixed;inset:0;background:rgba(30,16,10,.4);z-index:7999;backdrop-filter:blur(2px);}
 #prop-drawer-overlay.show{display:block;}
@@ -184,7 +227,7 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .dw-close{font-size:22px;background:none;border:none;cursor:pointer;color:var(--gris);flex-shrink:0;margin-left:10px;line-height:1;padding:0;}
 .dw-body{padding:18px 22px;flex:1;}
 .dw-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:8px;display:block;}
-.dw-action-item{display:flex;gap:9px;padding:8px 0;border-bottom:1px solid var(--cream);align-items:flex-start;}
+.dw-action-item{display:flex;gap:9px;padding:9px 10px;border-bottom:1px solid var(--cream);align-items:flex-start;border-radius:8px;margin-bottom:2px;background:var(--cream);}
 .dw-action-item:last-child{border-bottom:none;}
 .dw-action-label{font-size:11px;font-weight:700;color:var(--dark);}
 .dw-action-detail{font-size:10px;color:var(--gris);margin-top:1px;}
@@ -193,14 +236,7 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .dw-search:focus{outline:none;border-color:var(--coral);background:#fff;}
 .dw-sc-wrap{overflow-y:auto;max-height:340px;border-radius:8px;border:1.5px solid var(--border);}
 
-/* TREND CHARTS (exec tab) */
-.trend-charts-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:0;}
-.trend-chart-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:16px 18px;}
-.tcc-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:2px;}
-.tcc-sublabel{font-size:10px;color:var(--gris);margin-bottom:10px;line-height:1.4;}
-.tcc-canvas{position:relative;height:110px;}
-
-/* RANKING MINI CHARTS (ctx tab) */
+/* RANKING MINI CHARTS */
 .rank-mini-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 .rank-mini-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:16px 18px;}
 .rmc-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gris);margin-bottom:2px;}
@@ -211,25 +247,6 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .rmc-bar-fill{height:100%;border-radius:99px;}
 .rmc-bar-target{position:absolute;top:0;bottom:0;width:1.5px;background:rgba(30,16,10,.25);}
 .rmc-val{font-size:10px;font-weight:700;min-width:36px;text-align:right;}
-
-/* FUNNEL (compact) */
-.funnel-compact{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:16px;}
-.fn-compact-row{display:flex;align-items:center;gap:10px;padding:7px 0;}
-.fn-compact-row+.fn-compact-row{border-top:1px solid var(--cream);}
-.fn-compact-ico{font-size:14px;flex-shrink:0;width:20px;text-align:center;}
-.fn-compact-lbl{font-size:10px;font-weight:700;flex:1;line-height:1.3;}
-.fn-compact-sub{font-size:9px;color:var(--gris);}
-.fn-compact-bar-track{width:60px;height:5px;background:var(--cd);border-radius:99px;overflow:hidden;flex-shrink:0;}
-.fn-compact-bar-fill{height:100%;border-radius:99px;}
-.fn-compact-val{font-size:12px;font-weight:800;min-width:42px;text-align:right;flex-shrink:0;}
-.fn-compact-conv{font-size:9px;color:var(--gris);min-width:38px;text-align:center;flex-shrink:0;}
-
-/* MOVERS */
-.movers-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.mover-card{background:var(--surface);border-radius:var(--r);border:1.5px solid;overflow:hidden;}
-.mover-head{padding:8px 14px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid;}
-.mover-row{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);gap:10px;}
-.mover-row:last-child{border-bottom:none;}
 
 /* TIERS */
 .tiers-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;}
@@ -251,7 +268,7 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .tier-donut-lbl{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
 .tier-donut-list{flex:1;}
 .tier-donut-title{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:9px;}
-.tier-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer;border-radius:6px;padding:3px 5px;transition:.14s;}
+.tier-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer;border-radius:6px;padding:3px 5px;transition:.14px;}
 .tier-row:hover{background:var(--cream);}
 .tier-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .tier-row-name{font-size:12px;font-weight:600;flex:1;}
@@ -346,9 +363,18 @@ tbody tr:hover td{background:var(--cream);}
 .detail-sheet-btn{display:inline-flex;align-items:center;gap:7px;background:var(--dark);color:#fff;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;text-decoration:none;transition:.15s;margin-bottom:16px;}
 .detail-sheet-btn:hover{background:var(--coral);}
 
-@media(max-width:900px){.ctx-grid{grid-template-columns:1fr 1fr;}.beh-grid{grid-template-columns:1fr 1fr;}.exec-bottom-row{grid-template-columns:1fr;}.trend-charts-row{grid-template-columns:1fr;}.rank-mini-row{grid-template-columns:1fr;}.movers-grid{grid-template-columns:1fr;}}
-@media(max-width:640px){header,.filtros,.tabs-bar{padding-left:14px;padding-right:14px;}main{padding:14px 14px 60px;}.ctx-grid{grid-template-columns:1fr 1fr;}.beh-grid{grid-template-columns:1fr 1fr;}.headline{flex-direction:column;}.hl-kpi{text-align:left;}.tab-btn{font-size:11px;padding:10px 12px;}#prop-drawer{width:100%;}}
-@media(max-width:400px){.ctx-grid{grid-template-columns:1fr;}.beh-grid{grid-template-columns:1fr;}}
+/* POR PROPIEDAD — resumen superior de 3 cards */
+.prop-resumen-top{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;}
+.prt-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
+.prt-stripe{height:3px;}
+.prt-body{padding:14px 16px 10px;}
+.prt-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gris);margin-bottom:4px;}
+.prt-val{font-size:26px;font-weight:800;line-height:1;margin-bottom:2px;}
+.prt-sub{font-size:11px;color:var(--gris);}
+
+@media(max-width:900px){.exec-kpi-grid{grid-template-columns:1fr 1fr;}.exec-kpi-row2{grid-template-columns:1fr;}.beh-grid{grid-template-columns:1fr 1fr;}.exec-bottom-row{grid-template-columns:1fr;}.trend-charts-row{grid-template-columns:1fr;}.rank-mini-row{grid-template-columns:1fr;}.movers-grid{grid-template-columns:1fr;}.semaforo-grid{grid-template-columns:repeat(3,1fr);}.prop-resumen-top{grid-template-columns:1fr 1fr;}}
+@media(max-width:640px){header,.filtros,.tabs-bar{padding-left:14px;padding-right:14px;}main{padding:14px 14px 60px;}.exec-kpi-grid{grid-template-columns:1fr 1fr;}.beh-grid{grid-template-columns:1fr 1fr;}.headline{flex-direction:column;}.hl-kpi{text-align:left;}.tab-btn{font-size:11px;padding:10px 12px;}#prop-drawer{width:100%;}.semaforo-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:400px){.exec-kpi-grid{grid-template-columns:1fr;}.beh-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -366,7 +392,7 @@ tbody tr:hover td{background:var(--cream);}
     <button class="dw-close" onclick="closeDrawer()">×</button>
   </div>
   <div class="dw-body">
-    <span class="dw-section-label">Diagnóstico</span>
+    <span class="dw-section-label">Diagnóstico y acciones</span>
     <div id="dw-actions" style="margin-bottom:18px;"></div>
     <span class="dw-section-label" style="margin-top:4px;">Lista de trabajo — sin beneficio</span>
     <div style="font-size:10px;color:var(--gris);margin-bottom:8px;">Miembros de esta propiedad que no recibieron su beneficio</div>
@@ -412,23 +438,20 @@ tbody tr:hover td{background:var(--cream);}
   <div id="exec-headline"></div>
   <div id="exec-ctx-kpis"></div>
 
-  <!-- Embudo compacto + País en la misma fila -->
   <div class="sec">
-    <div class="sec-hdr"><h2>Embudo de inscripción <i class="ib" onclick="openTip('Embudo')">i</i></h2><div class="linea"></div></div>
+    <div class="sec-hdr"><h2>Inscripción y penetración <i class="ib" onclick="openTip('Embudo')">i</i></h2><div class="linea"></div></div>
     <div class="exec-bottom-row">
-      <div id="exec-pais"></div>
-      <div id="exec-funnel"></div>
+      <div id="exec-pais" class="pais-chart-outer"></div>
+      <div id="exec-funnel" class="funnel-outer"></div>
     </div>
   </div>
 
-  <!-- Movimiento -->
   <div class="sec">
     <div class="sec-hdr"><h2>Cambio vs período anterior <i class="ib" onclick="openTip('Movimiento')">i</i></h2><div class="linea"></div></div>
     <div style="font-size:11px;color:var(--gris);margin-bottom:10px;">Variación en puntos porcentuales de penetración (% miembros) respecto al período inmediatamente anterior.</div>
     <div id="exec-movers"></div>
   </div>
 
-  <!-- Tendencia: 3 gráficas de línea -->
   <div class="sec">
     <div class="sec-hdr"><h2>Tendencia mensual <i class="ib" onclick="openTip('Tendencia')">i</i></h2><div class="linea"></div></div>
     <div id="exec-trend-charts"></div>
@@ -440,18 +463,17 @@ tbody tr:hover td{background:var(--cream);}
   <div class="aud-label aud-ops">🏨 Vista operativa — detalle por propiedad</div>
   <div id="detail-sheet-wrapper" style="margin-bottom:8px;"></div>
 
-  <!-- Tabla compacta de propiedades -->
+  <!-- Resumen global rápido -->
   <div class="sec">
-    <div class="sec-hdr"><h2>Diagnóstico por propiedad <i class="ib" onclick="openTip('Acción por propiedad')">i</i></h2><div class="linea"></div></div>
-    <div style="font-size:11px;color:var(--gris);margin-bottom:10px;">Haz clic en cualquier fila → diagnóstico detallado y lista de trabajo de esa propiedad.</div>
-    <div id="prop-actions"></div>
+    <div class="sec-hdr"><h2>Estado global del programa <i class="ib" onclick="openTip('Resumen de errores')">i</i></h2><div class="linea"></div></div>
+    <div style="font-size:11px;color:var(--gris);margin-bottom:10px;" id="prop-sem-total"></div>
+    <div class="semaforo-grid" id="prop-semaforo"></div>
   </div>
 
-  <!-- Semáforo -->
+  <!-- Tabla de propiedades -->
   <div class="sec">
-    <div class="sec-hdr"><h2>Resumen de errores <i class="ib" onclick="openTip('Resumen de errores')">i</i></h2><div class="linea"></div></div>
-    <div style="font-size:11px;color:var(--gris);margin-bottom:9px;" id="prop-sem-total"></div>
-    <div class="semaforo-grid" id="prop-semaforo"></div>
+    <div class="sec-hdr"><h2>Diagnóstico por propiedad <i class="ib" onclick="openTip('Acción por propiedad')">i</i></h2><div class="linea"></div></div>
+    <div id="prop-actions"></div>
   </div>
 
   <!-- Problemas técnicos -->
@@ -506,18 +528,18 @@ var _drawerProp=null,_drawerSCData=[];
 /* ── TIPS ─────────────────────────────── */
 var TIPS={
 'Estado por propiedad':{t:'Estado por propiedad',b:'Vista ejecutiva por propiedad:\n\n• % Miembros: de cada 100 check-ins, cuántos son miembros (meta ≥15%)\n• Beneficios aplicados: ¿hay al menos un registro correcto?\n• Errores: principales problemas detectados\n\n🟢 Meta · 🟡 En proceso · 🔴 Necesita atención'},
-'Tendencia':{t:'Tendencia mensual',b:'Tres métricas en el tiempo:\n\n1. % Miembros: penetración del programa (meta ≥15%)\n2. % Beneficios OK: de los que se hospedan, cuántos reciben su beneficio\n3. Nuevos inscritos: crecimiento de la base de miembros\n\nSe necesitan al menos 2 períodos para ver tendencia.'},
+'Tendencia':{t:'Tendencia mensual',b:'Tres métricas en el tiempo:\n\n1. % Miembros: de cada 100 huéspedes, cuántos son miembros (meta ≥15%)\n2. % Beneficios OK: de los miembros hospedados, cuántos recibieron su beneficio en CB\n3. Nuevos inscritos: personas que se unieron al programa en cada período\n\nSe necesitan al menos 2 períodos para ver tendencia.'},
 'Acción por propiedad':{t:'Diagnóstico por propiedad',b:'Tabla compacta de todas las propiedades.\n\nHaz clic en cualquier fila para ver:\n• Diagnóstico detallado con acciones concretas\n• Lista de trabajo: miembros sin beneficio de esa propiedad\n\n🔴 Crítico: acción esta semana\n🟡 Atención: refuerzo del proceso\n🟢 En camino: mantener y documentar'},
-'Resumen de errores':{t:'Estado del programa',b:'✅ Correctos: beneficio bien registrado en CB.\n\n❌ Sin beneficio: miembros hospedados sin recibir nada.\n\n💸 Descuento a no-miembro: aplicado a quien NO es miembro. Pérdida de ingreso.\n\n⚠️ Nivel incorrecto: el nivel en CB no coincide con Akin.\n\n🚫 Mal aplicado: fuera del proceso.\n\nHaz clic en las tarjetas para ver el listado individual.'},
-'Sin beneficio':{t:'Lista de trabajo — Sin beneficio',b:'Miembros que se hospedaron y no recibieron su beneficio.\n\nAccesible desde el drawer de cada propiedad — así el equipo puede filtrar solo su hostel.'},
-'Problemas técnicos':{t:'Problemas técnicos',b:'Reservas reconocidas en Akin pero CloudBeds no las encuentra.\n\nCausa: número de reserva o correo diferente entre sistemas.\n\n→ NO es error del equipo de recepción.\n→ Buscar al huésped por nombre en CB. Si persiste → escalar a Akin.'},
-'Estado actividad':{t:'Estado de actividad de miembros',b:'• Activo: reservas en los últimos 90 días\n• Ocasional: última reserva hace 91-180 días\n• Dormido: última reserva hace 181-365 días\n• Inactivo: sin reservas en más de 365 días o nunca'},
-'Directorio miembros':{t:'Directorio de miembros',b:'Lista completa de miembros con su historial.\n\nColumnas clave:\n• Estadías: número de reservas/noches\n• Propiedades: cuántos hostels distintos ha visitado\n• Últ. estadía: días desde la última visita\n• Estado: clasificación de actividad'},
-'Miembros del programa':{t:'Distribución por nivel',b:'Total de personas inscritas en Viajero Go según Akin, por nivel.\n\nHaz clic en cada nivel para ver la lista de miembros.\n\n⚠️ Este número no cambia con el filtro de período — muestra el estado actual del programa.'},
-'Ranking':{t:'Ranking de propiedades',b:'Tres mini-gráficas:\n\n1. % Miembros: penetración (meta ≥15%) — la línea vertical es la meta\n2. Nuevos inscritos: captación del período\n3. % Beneficios OK: proporción correctamente aplicada\n\nOrdenadas de mayor a menor en cada métrica.'},
-'Embudo':{t:'Embudo de inscripción',b:'Flujo desde el total de huéspedes hasta los nuevos inscritos.\n\nCada barra es proporcional al total de huéspedes.\n\nLa conversión entre pasos muestra dónde se pierden oportunidades.'},
-'Movimiento':{t:'Cambio vs período anterior',b:'Variación en puntos porcentuales (pp) de penetración entre el período más reciente y el anterior.\n\nEjemplo: si en marzo fue 10% y en abril 13%, el cambio es +3pp.\n\n↑ Verde: mejora\n↓ Rojo: caída\n\nNota: con pocos períodos es orientativo, no concluyente.'},
-'Detalle por nivel':{t:'Cómo leer estas tarjetas',b:'Cada nivel tiene beneficios distintos. Los números muestran cuántas transacciones de ese nivel quedaron con cada resultado:\n\n✅ Correctos = el beneficio fue bien registrado\n❌ Sin beneficio = el miembro se hospedó y no recibió nada\n💸 A no-miembro = se aplicó sin membresía\n⚠️ Nivel incorrecto = beneficio con nivel equivocado'},
+'Resumen de errores':{t:'Estado global del programa',b:'Resumen de todas las transacciones del período:\n\n✅ Correctos: beneficio bien registrado en CloudBeds.\n\n❌ Sin beneficio: miembros únicos que se hospedaron sin recibir nada.\n\n💸 Descuento a no-miembro: se aplicó beneficio a alguien que NO es miembro. Pérdida de ingreso.\n\n⚠️ Nivel incorrecto: el nivel registrado en CB no coincide con el nivel real en Akin.\n\n🚫 Mal aplicado: fuera del proceso establecido.\n\nHaz clic en las tarjetas (excepto "Correctos") para ver el listado individual.'},
+'Sin beneficio':{t:'Lista de trabajo — Sin beneficio',b:'Miembros que se hospedaron y no recibieron su beneficio.\n\nAccesible desde el panel de cada propiedad — el equipo puede filtrar solo su hostel y trabajar la lista directamente.'},
+'Problemas técnicos':{t:'Problemas técnicos de sincronización',b:'Reservas reconocidas en Akin pero que CloudBeds no puede encontrar.\n\nCausa: número de reserva o correo difiere entre sistemas. No es un error del equipo de recepción.\n\n→ Buscar al huésped por nombre en CB.\n→ Si no aparece: escalar a Akin con número de reserva.'},
+'Estado actividad':{t:'Estado de actividad de miembros',b:'Clasificación según su última reserva:\n\n• Activo: reservas en los últimos 90 días\n• Ocasional: última reserva hace 91–180 días\n• Dormido: última reserva hace 181–365 días\n• Inactivo: sin reservas en más de 365 días, o nunca registró una estadía'},
+'Directorio miembros':{t:'Directorio de miembros',b:'Lista completa de miembros con su historial de visitas.\n\nColumnas clave:\n• Estadías: número total de reservas registradas\n• Noches: total de noches acumuladas\n• Propiedades: cuántos hostels distintos ha visitado\n• Últ. estadía: días desde la última visita\n• Estado: clasificación de actividad según frecuencia'},
+'Miembros del programa':{t:'Distribución de miembros por nivel',b:'Total de personas inscritas en Viajero Go según Akin, desglosado por nivel.\n\nHaz clic en cada nivel para ver la lista completa de miembros.\n\n⚠️ Este número refleja el estado actual del programa y no cambia con el filtro de período — es el total acumulado en Akin.'},
+'Ranking':{t:'Ranking de propiedades',b:'Tres mini-gráficas ordenadas de mayor a menor:\n\n1. % Miembros: de cada 100 huéspedes, cuántos son miembros (meta ≥15%). La línea vertical es la meta.\n2. Nuevos inscritos: captación en el período\n3. % Beneficios OK: proporción de aplicaciones correctamente registradas en CB'},
+'Embudo':{t:'Inscripción y penetración',b:'Dos vistas complementarias:\n\n📊 Penetración por país: % de check-ins que son miembros, por país. Verde ≥15%, amarillo 8-14%, rojo <8%.\n\n🔽 Embudo de inscripción: flujo desde total de huéspedes hasta nuevos inscritos. Cada barra es proporcional al total de huéspedes. La tasa de conversión entre pasos muestra dónde se pierden oportunidades.'},
+'Movimiento':{t:'Cambio vs período anterior',b:'Variación en puntos porcentuales (pp) de penetración entre el período más reciente y el anterior.\n\nEjemplo: si en marzo fue 10% y en abril 13%, el cambio es +3pp.\n\n↑ Verde: la propiedad mejoró su penetración\n↓ Rojo: la propiedad bajó su penetración\n\nNota: con pocos períodos es orientativo, no concluyente.'},
+'Detalle por nivel':{t:'Cómo leer estas tarjetas',b:'Cada nivel del programa tiene beneficios distintos. Los números muestran el resultado de cada transacción de ese nivel:\n\n✅ Correctos: beneficio bien registrado en CB\n❌ Sin beneficio: el miembro se hospedó y no recibió nada\n💸 A no-miembro: se aplicó sin membresía activa\n⚠️ Nivel incorrecto: el beneficio fue registrado con el nivel equivocado'},
 };
 
 function openTip(k){var t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
@@ -559,7 +581,7 @@ function openDrawer(propName){
   if(lk>0)actions.push({ico:'💸',label:lk+' descuento'+(lk>1?'s':'')+' a huésped sin membresía',detail:'Pérdida de ingreso. Siempre verificar en Akin antes de aplicar cualquier beneficio.',urgent:true});
   if(tiI>0)actions.push({ico:'⚠️',label:tiI+' beneficio'+(tiI>1?'s':'')+' con nivel incorrecto',detail:'El nivel en CB no coincide con el nivel real en Akin.',urgent:false});
   document.getElementById('dw-actions').innerHTML=actions.map(function(a){
-    return '<div class="dw-action-item"><span style="font-size:14px;flex-shrink:0;margin-top:1px;">'+a.ico+'</span>'+
+    return '<div class="dw-action-item"><span style="font-size:16px;flex-shrink:0;margin-top:1px;">'+a.ico+'</span>'+
     '<div><div class="dw-action-label">'+a.label+'</div>'+
     '<div class="dw-action-detail">'+a.detail+'</div>'+
     (a.urgent?'<span class="dw-urgent">Acción urgente esta semana</span>':'')+
@@ -688,100 +710,116 @@ function renderExecHeadline(afs,mb){
     '</div>';
 }
 
+/* KPI cards — nuevas, más visuales */
 function renderExecCtxKPIs(afs,mb){
   var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
   var okN=mb.filter(function(r){return r.Error_Type==='OK';}).length;
   var scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
   var pRed=cb>0?okN/cb*100:0;
-  var colRed=pRed>=10?'var(--ok)':pRed>=3?'#ca8a04':'var(--err)';
   var nvRate=hu>0?(nv/hu*100):0;
+
   var colNv=nvRate>=5?'var(--ok)':nvRate>=2?'#ca8a04':'var(--err)';
-  var items=[
-    {
-      label:'Nuevos inscritos / hu\u00e9sped',tip:'Tendencia',
-      val:nvRate.toFixed(1)+'%',
-      sub:fmtN(nv)+' nuevos de '+fmtN(hu)+' hu\u00e9spedes',
-      kc:colNv,badge:null,
-      footer:{label:'Meta futura',val:'\u22655%'}
-    },
-    {
-      label:'Beneficios correctos',tip:'Resumen de errores',
-      val:cb>0?pRed.toFixed(1)+'%':'\u2014',
-      sub:okN+' registros correctos en CB',
-      kc:colRed,badge:null,
-      footer:{label:'Meta futura',val:'\u226530%'}
-    },
-    {
-      label:'Miembros sin beneficio',tip:'Sin beneficio',
-      val:fmtN(scUnicos),
-      sub:'personas \u00fanicas \u00b7 clic en propiedad para ver la lista',
-      kc:'var(--err)',
-      badge:{cls:'b-err',txt:'Lista de trabajo'},footer:null
-    },
-  ];
-  var grid='<div class="ctx-grid">'+
-    items.map(function(it){
-      return '<div class="ctx-kpi" style="--kc:'+it.kc+'">'+
-        '<div class="ck-glow"></div>'+
-        '<div class="ck-label">'+it.label+' '+ib(it.tip)+'</div>'+
-        '<div class="ck-val">'+it.val+'</div>'+
-        '<div class="ck-sub">'+it.sub+'</div>'+
-        (it.badge?'<span class="ck-badge '+it.badge.cls+'">'+it.badge.txt+'</span>':'')+
-        (it.footer?'<div class="ck-footer"><span>'+it.footer.label+'</span><b>'+it.footer.val+'</b></div>':'')+
-        '</div>';
-    }).join('')+
-  '</div>';
+  var colRed=pRed>=30?'var(--ok)':pRed>=10?'#ca8a04':'var(--err)';
+
+  var card1={
+    label:'Nuevos inscritos / huésped',tip:'Tendencia',stripe:colNv,
+    val:nvRate.toFixed(1),unit:'%',
+    sub:fmtN(nv)+' nuevos de '+fmtN(hu)+' huéspedes totales',
+    footerLabel:'Meta futura',footerVal:'≥5%',footerCol:colNv,
+    badge:null
+  };
+  var card2={
+    label:'Beneficios correctos en CB',tip:'Resumen de errores',stripe:colRed,
+    val:cb>0?pRed.toFixed(1):'—',unit:cb>0?'%':'',
+    sub:okN+' registros OK de '+fmtN(cb)+' miembros hospedados',
+    footerLabel:'Meta futura',footerVal:'≥30%',footerCol:colRed,
+    badge:null
+  };
+  var card3={
+    label:'Miembros sin beneficio',tip:'Sin beneficio',stripe:'var(--err)',
+    val:fmtN(scUnicos),unit:'',
+    sub:'personas únicas sin recibir su beneficio',
+    footerLabel:'Reservas afectadas',footerVal:fmtN(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).length),footerCol:'var(--err)',
+    badge:{cls:'b-err',txt:'Lista de trabajo disponible'}
+  };
+
+  var cards=[card1,card2,card3];
+  var html='<div class="exec-kpi-grid">'+cards.map(function(c){
+    return '<div class="exec-kpi-card">'+
+      '<div class="ekc-stripe" style="background:'+c.stripe+'"></div>'+
+      '<div class="ekc-body">'+
+        '<div class="ekc-label">'+c.label+' '+ib(c.tip)+'</div>'+
+        '<div class="ekc-main">'+
+          '<div class="ekc-val" style="color:'+c.stripe+'">'+c.val+'</div>'+
+          (c.unit?'<div class="ekc-unit">'+c.unit+'</div>':'')+
+        '</div>'+
+        '<div class="ekc-sub">'+c.sub+'</div>'+
+        (c.badge?'<span class="ekc-badge '+c.badge.cls+'">'+c.badge.txt+'</span>':'')+
+      '</div>'+
+      '<div class="ekc-footer">'+
+        '<span class="ekc-footer-label">'+c.footerLabel+'</span>'+
+        '<span class="ekc-footer-val" style="color:'+c.footerCol+'">'+c.footerVal+'</span>'+
+      '</div>'+
+    '</div>';
+  }).join('')+'</div>';
+
+  /* Fila secundaria: mix reservas + noches promedio */
   var mixData=DATA.mixReservas||null;
   var nochesData=DATA.nochesPromedio||null;
   if(mixData&&nochesData){
     var pctMiembro=mixData.total>0?Math.round(mixData.miembros/mixData.total*1000)/10:0;
-    grid+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">'+
-      '<div class="ctx-kpi" style="--kc:var(--teal)">'+
-        '<div class="ck-glow"></div>'+
-        '<div class="ck-label">% Reservas de miembros '+ib('Tendencia')+'</div>'+
-        '<div class="ck-val">'+pctMiembro.toFixed(1)+'%</div>'+
-        '<div class="ck-sub">'+fmtN(mixData.miembros)+' de '+fmtN(mixData.total)+' reservas son de miembros</div>'+
-        '<div class="ck-footer"><span>No-miembros</span><b>'+fmtN(mixData.no_miembros)+'</b></div>'+
+    var diffNoches=nochesData.miembros-nochesData.no_miembros;
+    var diffTxt='';
+    /* Solo mostrar diferencia si es significativa (≥0.1 noches) */
+    if(Math.abs(diffNoches)>=0.1){
+      diffTxt=' · '+(diffNoches>0?'+':'')+diffNoches.toFixed(1)+' vs no-miembros';
+    }
+    html+='<div class="exec-kpi-row2">'+
+      '<div class="ekr2-card">'+
+        '<div class="ekr2-stripe" style="background:var(--teal)"></div>'+
+        '<div class="ekr2-body">'+
+          '<div class="ekr2-label">% Reservas de miembros '+ib('Tendencia')+'</div>'+
+          '<div class="ekr2-val" style="color:var(--teal)">'+pctMiembro.toFixed(1)+'%</div>'+
+          '<div class="ekr2-sub">de '+fmtN(mixData.total)+' reservas totales son de miembros</div>'+
+          '<div class="ekr2-compare">'+
+            '<div class="ekr2-compare-item">'+
+              '<div class="ekr2-compare-lbl">Miembros</div>'+
+              '<div class="ekr2-compare-n" style="color:var(--teal)">'+fmtN(mixData.miembros)+'</div>'+
+            '</div>'+
+            '<div class="ekr2-compare-sep"></div>'+
+            '<div class="ekr2-compare-item">'+
+              '<div class="ekr2-compare-lbl">No-miembros</div>'+
+              '<div class="ekr2-compare-n" style="color:var(--gris)">'+fmtN(mixData.no_miembros)+'</div>'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
       '</div>'+
-      '<div class="ctx-kpi" style="--kc:var(--purple)">'+
-        '<div class="ck-glow"></div>'+
-        '<div class="ck-label">Noches promedio por estad\u00eda '+ib('Tendencia')+'</div>'+
-        '<div class="ck-val">'+nochesData.miembros.toFixed(1)+'</div>'+
-        '<div class="ck-sub">noches \u00b7 miembros se quedan '+((nochesData.miembros-nochesData.no_miembros)>=0?'+':'')+(nochesData.miembros-nochesData.no_miembros).toFixed(1)+' vs no-miembros</div>':'')+
-        (Math.abs(nochesData.miembros-nochesData.no_miembros)<0.2?'<div class="ck-footer"><span>No-miembros</span><b>'+nochesData.no_miembros.toFixed(1)+' noches (sin diferencia significativa)</b></div>':'<div class="ck-footer"><span>No-miembros</span><b>'+nochesData.no_miembros.toFixed(1)+' noches</b></div>')+
+      '<div class="ekr2-card">'+
+        '<div class="ekr2-stripe" style="background:var(--purple)"></div>'+
+        '<div class="ekr2-body">'+
+          '<div class="ekr2-label">Noches promedio por estadía '+ib('Tendencia')+'</div>'+
+          '<div class="ekr2-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div>'+
+          '<div class="ekr2-sub">noches promedio · miembros'+(diffTxt||' · comparado con no-miembros abajo')+'</div>'+
+          '<div class="ekr2-compare">'+
+            '<div class="ekr2-compare-item">'+
+              '<div class="ekr2-compare-lbl">Miembros</div>'+
+              '<div class="ekr2-compare-n" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div>'+
+            '</div>'+
+            '<div class="ekr2-compare-sep"></div>'+
+            '<div class="ekr2-compare-item">'+
+              '<div class="ekr2-compare-lbl">No-miembros</div>'+
+              '<div class="ekr2-compare-n" style="color:var(--gris)">'+nochesData.no_miembros.toFixed(1)+'</div>'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
       '</div>'+
     '</div>';
   }
-  document.getElementById('exec-ctx-kpis').innerHTML=grid;
+
+  document.getElementById('exec-ctx-kpis').innerHTML=html;
 }
 
-/* Embudo compacto (columna derecha) */
-function renderExecFunnelCompact(afs){
-  var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
-  var items=[
-    {ico:'🏠',lbl:'Total huéspedes',n:hu,col:'#94a3b8'},
-    {ico:'🔑',lbl:'Check-ins en CB',n:ci,col:'var(--coral)'},
-    {ico:'💳',lbl:'Son miembros',n:cb,col:'var(--blue)'},
-    {ico:'✨',lbl:'Nuevos inscritos',n:nv,col:'var(--ok)'},
-  ];
-  var maxN=Math.max.apply(null,items.map(function(i){return i.n;}))||1;
-  document.getElementById('exec-funnel').innerHTML=
-    '<div style="margin-bottom:6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);">Embudo de inscripción '+ib('Embudo')+'</div>'+
-    '<div class="funnel-compact">'+
-    items.map(function(it,idx){
-      var bpct=Math.round(it.n/maxN*100);
-      return '<div class="fn-compact-row">'+
-        '<div class="fn-compact-ico">'+it.ico+'</div>'+
-        '<div style="flex:1;min-width:0"><div class="fn-compact-lbl">'+it.lbl+'</div></div>'+
-        '<!-- no conv -->'+
-        '<div class="fn-compact-bar-track"><div class="fn-compact-bar-fill" style="width:'+bpct+'%;background:'+it.col+'"></div></div>'+
-        '<div class="fn-compact-val">'+fmtN(it.n)+'</div>'+
-        '</div>';
-    }).join('')+
-    '</div>';
-}
-
-/* Penetración por país (columna izquierda) */
+/* Penetración por país — columna izquierda, altura flexible */
 function renderExecPaisPenetracion(afsAll){
   var el=document.getElementById('exec-pais');if(!el)return;
   var map={};
@@ -798,21 +836,20 @@ function renderExecPaisPenetracion(afsAll){
     return {pa:pa,ci:v.ci,cb:v.cb,nv:v.nv,pct:pct,props:v.props.size};
   }).filter(function(p){return p.ci>0;}).sort(function(a,b){return b.pct-a.pct;});
   if(!paises.length){
-    el.innerHTML='<div class="rmc-card"><p style="color:var(--gris);font-size:11px">Sin datos por país.</p></div>';
+    el.innerHTML='<p style="color:var(--gris);font-size:11px">Sin datos por país.</p>';
     return;
   }
-  var chartH=Math.max(80,paises.length*40);
   var bgColors=paises.map(function(p){return p.pct>=15?'rgba(21,128,61,.8)':p.pct>=8?'rgba(202,138,4,.8)':'rgba(220,38,38,.8)';});
+  /* título y leyenda dentro del contenedor flex */
   el.innerHTML=
-    '<div style="background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:14px 16px">'+
-    '<div style="margin-bottom:6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris)">Penetración por país · % check-ins que son miembros</div>'+
-    '<div style="font-size:9px;color:var(--gris);margin-bottom:10px">'+
-    '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(21,128,61,.8);vertical-align:middle"></span> ≥15% &nbsp;'+
-    '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(202,138,4,.8);vertical-align:middle"></span> 8–14% &nbsp;'+
-    '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(220,38,38,.8);vertical-align:middle"></span> &lt;8%'+
+    '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:6px;">Penetración por país</div>'+
+    '<div style="font-size:9px;color:var(--gris);margin-bottom:10px;">% check-ins que son miembros activos</div>'+
+    '<div style="font-size:9px;color:var(--gris);margin-bottom:10px;">'+
+    '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(21,128,61,.8);vertical-align:middle;margin-right:3px;"></span>≥15%&nbsp;&nbsp;'+
+    '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(202,138,4,.8);vertical-align:middle;margin-right:3px;"></span>8–14%&nbsp;&nbsp;'+
+    '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(220,38,38,.8);vertical-align:middle;margin-right:3px;"></span>&lt;8%'+
     '</div>'+
-    '<div style="position:relative;height:'+chartH+'px"><canvas id="pais-bar-canvas"></canvas></div>'+
-    '</div>';
+    '<div style="flex:1;position:relative;min-height:100px;"><canvas id="pais-bar-canvas"></canvas></div>';
   requestAnimationFrame(function(){
     var canvas=document.getElementById('pais-bar-canvas');
     if(!canvas||!window.Chart)return;
@@ -825,7 +862,7 @@ function renderExecPaisPenetracion(afsAll){
           data:paises.map(function(p){return p.pct;}),
           backgroundColor:bgColors,
           borderRadius:4,
-          barPercentage:0.6
+          barPercentage:0.55
         }]
       },
       options:{
@@ -849,6 +886,36 @@ function renderExecPaisPenetracion(afsAll){
       }
     });
   });
+}
+
+/* Embudo compacto — columna derecha con título dentro */
+function renderExecFunnelCompact(afs){
+  var el=document.getElementById('exec-funnel');if(!el)return;
+  var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
+  var items=[
+    {ico:'🏠',lbl:'Total huéspedes',sub:'base del período',n:hu,col:'#94a3b8',conv:null},
+    {ico:'🔑',lbl:'Check-ins registrados',sub:'en CloudBeds',n:ci,col:'var(--coral)',conv:hu>0?Math.round(ci/hu*100)+'%':null},
+    {ico:'💳',lbl:'Son miembros',sub:'Viajero Go activos',n:cb,col:'var(--blue)',conv:ci>0?Math.round(cb/ci*100)+'%':null},
+    {ico:'✨',lbl:'Nuevos inscritos',sub:'se unieron en el período',n:nv,col:'var(--ok)',conv:cb>0?Math.round(nv/cb*100)+'%':null},
+  ];
+  var maxN=Math.max.apply(null,items.map(function(i){return i.n;}))||1;
+  el.innerHTML=
+    '<div class="funnel-title">Embudo de inscripción '+ib('Embudo')+'</div>'+
+    '<div style="flex:1;display:flex;flex-direction:column;justify-content:space-around;">'+
+    items.map(function(it,idx){
+      var bpct=Math.round(it.n/maxN*100);
+      return '<div class="fn-row">'+
+        '<div class="fn-ico">'+it.ico+'</div>'+
+        '<div style="flex:1;min-width:0">'+
+          '<div class="fn-lbl">'+it.lbl+'</div>'+
+          '<div class="fn-sub">'+it.sub+'</div>'+
+        '</div>'+
+        '<div class="fn-bar-track"><div class="fn-bar-fill" style="width:'+bpct+'%;background:'+it.col+'"></div></div>'+
+        '<div class="fn-val" style="color:'+it.col+'">'+fmtN(it.n)+'</div>'+
+        (it.conv?'<div class="fn-conv">'+it.conv+'</div>':'<div class="fn-conv"></div>')+
+        '</div>';
+    }).join('')+
+    '</div>';
 }
 
 /* Movimiento del período */
@@ -926,16 +993,17 @@ function renderExecTrendCharts(afsAll,mbAll){
   });
   var labels=Object.keys(perMap).sort();
   if(labels.length<2){el.innerHTML='<div class="empty">Se necesitan al menos 2 períodos para mostrar tendencias.</div>';return;}
+  /* % miembros = cb / hu (huéspedes totales, no solo check-ins) */
   var alcance=labels.map(function(p){return perMap[p].hu>0?Math.round(perMap[p].cb/perMap[p].hu*1000)/10:0;});
   var beneficios=labels.map(function(p){return perMap[p].tot>0?Math.round(perMap[p].ok/perMap[p].tot*1000)/10:0;});
   var nuevos=labels.map(function(p){return perMap[p].nv||0;});
-  // destroy old charts
+  var nuevosRate=labels.map(function(p){return perMap[p].hu>0?Math.round(perMap[p].nv/perMap[p].hu*1000)/10:0;});
   Object.values(_trendCharts).forEach(function(c){if(c&&c.destroy)c.destroy();});_trendCharts={};
   var note=labels.length<4?'<div class="ctx-note" style="margin-bottom:12px;">ℹ️ Con '+labels.length+' período'+(labels.length>1?'s':'')+' la tendencia es orientativa. Será más clara a partir del 4to período.</div>':'';
   el.innerHTML=note+'<div class="trend-charts-row">'+
-    '<div class="trend-chart-card"><div class="tcc-label">% Miembros del total de check-ins</div><div class="tcc-sublabel">Cuántos huéspedes son miembros activos — meta: 15%</div><div class="tcc-canvas"><canvas id="tc-alcance"></canvas></div></div>'+
+    '<div class="trend-chart-card"><div class="tcc-label">% Miembros del total de huéspedes</div><div class="tcc-sublabel">De cada 100 huéspedes, cuántos son miembros activos — meta: 15%</div><div class="tcc-canvas"><canvas id="tc-alcance"></canvas></div></div>'+
     '<div class="trend-chart-card"><div class="tcc-label">% Beneficios aplicados correctamente</div><div class="tcc-sublabel">De los miembros hospedados, cuántos recibieron su beneficio en CB</div><div class="tcc-canvas"><canvas id="tc-beneficios"></canvas></div></div>'+
-    '<div class="trend-chart-card"><div class="tcc-label">Nuevos inscritos por período</div><div class="tcc-sublabel">Personas que se registraron en Viajero Go durante el período</div><div class="tcc-canvas"><canvas id="tc-nuevos"></canvas></div></div>'+
+    '<div class="trend-chart-card"><div class="tcc-label">Tasa de captación de nuevos inscritos</div><div class="tcc-sublabel">% de huéspedes totales que se unieron al programa en el período</div><div class="tcc-canvas"><canvas id="tc-nuevos"></canvas></div></div>'+
     '</div>';
   function mkChart(id,data,color,isCount,targetLine){
     var canvas=document.getElementById(id);if(!canvas||!window.Chart)return;
@@ -946,7 +1014,8 @@ function renderExecTrendCharts(afsAll,mbAll){
   requestAnimationFrame(function(){
     _trendCharts.alcance=mkChart('tc-alcance',alcance,'#F04B24',false,15);
     _trendCharts.beneficios=mkChart('tc-beneficios',beneficios,'#15803d',false,null);
-    _trendCharts.nuevos=mkChart('tc-nuevos',nuevos,'#0369a1',true,null);
+    /* Ahora mostramos % (nuevos/huéspedes) en lugar de conteo absoluto */
+    _trendCharts.nuevos=mkChart('tc-nuevos',nuevosRate,'#0369a1',false,5);
   });
 }
 
@@ -967,11 +1036,11 @@ function renderPropSemaforo(mb){
     scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
   }
   var tot=Object.values(t).reduce(function(a,b){return a+b;},0)||1;
-  document.getElementById('prop-sem-total').innerHTML='<b>'+fmtN(tot)+'</b> transacciones · <span style="color:var(--mid);font-size:10px">Fuente: CloudBeds + Akin</span>';
+  document.getElementById('prop-sem-total').innerHTML='<b>'+fmtN(tot)+'</b> transacciones analizadas · <span style="color:var(--mid);font-size:10px">Fuente: CloudBeds + Akin · Clic en tarjeta para ver detalle</span>';
   var items=[
-    {k:'OK',label:'Correctos',sub:'Bien registrado en CB',val:t['OK'],cls:'s-verde',drill:false},
+    {k:'OK',label:'Correctos',sub:'Bien registrados en CB',val:t['OK'],cls:'s-verde',drill:false},
     {k:'SIN CANJE',label:'Sin beneficio',sub:scUnicos+' personas · '+t['SIN CANJE']+' reservas',val:scUnicos,cls:t['SIN CANJE']===0?'s-verde':t['SIN CANJE']<20?'s-amarillo':'s-rojo',drill:'SIN CANJE'},
-    {k:'LEAKAGE',label:'Descuento a no-miembro',sub:'Pérdida de ingreso',val:t['LEAKAGE'],cls:t['LEAKAGE']===0?'s-verde':t['LEAKAGE']<10?'s-amarillo':'s-rojo',drill:'LEAKAGE'},
+    {k:'LEAKAGE',label:'A no-miembro',sub:'Pérdida de ingreso',val:t['LEAKAGE'],cls:t['LEAKAGE']===0?'s-verde':t['LEAKAGE']<10?'s-amarillo':'s-rojo',drill:'LEAKAGE'},
     {k:'TIER_INCORRECTO',label:'Nivel incorrecto',sub:'CB ≠ Akin',val:t['TIER_INCORRECTO'],cls:t['TIER_INCORRECTO']===0?'s-verde':t['TIER_INCORRECTO']<5?'s-amarillo':'s-rojo',drill:'TIER_INCORRECTO'},
     {k:'MISUSE',label:'Mal aplicado',sub:'Fuera del proceso',val:t['MISUSE'],cls:t['MISUSE']===0?'s-verde':'s-rojo',drill:'MISUSE'},
   ];
@@ -1009,10 +1078,10 @@ function renderPropActions(afs,mb){
     '<table class="prop-tbl">'+
     '<thead><tr>'+
     '<th>Propiedad</th>'+
-    '<th class="tc">% Miembros</th>'+
+    '<th class="tc">% Miembros <span style="font-weight:400;color:var(--gris);font-size:8px">(meta 15%)</span></th>'+
     '<th class="tc">Nuevos</th>'+
-    '<th class="tc">% Benef. OK</th>'+
-    '<th class="tc">Errores clave</th>'+
+    '<th class="tc">Benef. OK</th>'+
+    '<th>Errores</th>'+
     '<th class="tc">Estado</th>'+
     '</tr></thead><tbody>'+
     props.map(function(p){
@@ -1025,17 +1094,21 @@ function renderPropActions(afs,mb){
       if(p.tiI>0)errHtml.push('<span class="badge b-blue">'+p.tiI+' nivel</span>');
       return '<tr onclick="openDrawer(\''+p.name+'\')">'+
         '<td>'+
-          '<b style="font-size:12px">'+nom+'</b>'+
-          (p.pais?'<span style="display:block;font-size:10px;color:var(--gris)">'+p.pais+'</span>':'')+
+          '<div style="display:flex;align-items:center;gap:8px;">'+
+            '<div style="width:3px;height:32px;border-radius:2px;flex-shrink:0;background:'+(p.status==='critico'?'var(--err)':p.status==='atencion'?'#ca8a04':'var(--ok)')+'"></div>'+
+            '<div>'+
+              '<b style="font-size:12px">'+nom+'</b>'+
+              (p.pais?'<span style="display:block;font-size:10px;color:var(--gris)">'+p.pais+'</span>':'')+
+            '</div>'+
+          '</div>'+
         '</td>'+
         '<td class="tc">'+
           '<b style="color:'+colPct+'">'+p.pct.toFixed(1)+'%</b>'+
-          '<div style="height:4px;background:var(--cd);border-radius:99px;overflow:hidden;width:52px;margin:3px auto 0">'+
-          '<div style="height:4px;background:'+colPct+';width:'+Math.min(p.pct/25*100,100)+'%;border-radius:99px"></div></div>'+
+          '<div class="prop-mini-bar"><div style="height:5px;background:'+colPct+';width:'+Math.min(p.pct/25*100,100)+'%;border-radius:99px"></div></div>'+
         '</td>'+
         '<td class="tc"><b>'+fmtN(p.nv)+'</b></td>'+
         '<td class="tc"><b style="color:'+colOK+'">'+p.pctOK.toFixed(0)+'%</b></td>'+
-        '<td style="font-size:11px">'+( errHtml.length?errHtml.join(' '):'<span style="color:var(--gris)">&mdash;</span>')+' </td>'+
+        '<td style="font-size:11px">'+(errHtml.length?errHtml.join(' '):'<span style="color:var(--gris)">&mdash;</span>')+' </td>'+
         '<td class="tc">'+sIco[p.status]+'<span class="badge '+sBadge[p.status]+'" style="margin-left:4px">'+sLbl[p.status]+'</span></td>'+
         '</tr>';
     }).join('')+
@@ -1081,9 +1154,9 @@ function renderMembersTab(){
   var multi=mb.filter(function(r){return (parseFloat(r.properties_visited)||0)>1;}).length;
   var kpis=[
     {label:'Estadías promedio por miembro',val:avgB.toFixed(1),sub:'total reservas ÷ miembros',bkc:'var(--teal)'},
-    {label:'Noches promedio por miembro',val:avgN.toFixed(1),sub:'total noches ÷ miembros',bkc:'var(--blue)'},
+    {label:'Noches promedio por miembro',val:avgN.toFixed(1),sub:'total noches acumuladas ÷ miembros',bkc:'var(--blue)'},
     {label:'Propiedades promedio visitadas',val:avgP.toFixed(1),sub:'índice de fidelidad a la cadena',bkc:'var(--purple)'},
-    {label:'Miembros multi-propiedad',val:fmtN(multi),sub:fmtP(multi,totalM)+' visitaron 2+ hostels',bkc:'var(--ok)'},
+    {label:'Miembros multi-propiedad',val:fmtN(multi),sub:fmtP(multi,totalM)+' visitaron 2 o más hostels',bkc:'var(--ok)'},
   ];
   document.getElementById('members-beh-kpis').innerHTML=
     '<div class="beh-grid">'+
@@ -1149,26 +1222,32 @@ function renderCtxTierDonut(){
   var TIER_ORDER=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
   if(raw.length>0&&raw[0].Viajero!==undefined){
     var grouped={};
-    raw.forEach(function(m){var tier=m.Viajero||'Sin nivel';if(!grouped[tier])grouped[tier]={name:tier,count:0,members:[]};grouped[tier].count++;grouped[tier].members.push({name:m.Name||m.nombre||'',email:m.Email||m.email||'',loyalty_number:m['Loyalty #']||m.loyalty_number||''});});
-    tiers=Object.values(grouped).sort(function(a,b){var ia=TIER_ORDER.indexOf(a.name),ib=TIER_ORDER.indexOf(b.name);return(ia<0?99:ia)-(ib<0?99:ib);});
+    raw.forEach(function(m){
+      /* El nombre del nivel está en el campo "Viajero" — puede ser null/undefined */
+      var tier=m.Viajero||m['Loyalty Level']||m.nivel||m.Tier||'Sin nivel';
+      /* Ignorar filas donde tier sea vacío o sea el header */
+      if(!tier||tier==='Viajero'||tier==='nivel'||tier==='Tier')return;
+      if(!grouped[tier])grouped[tier]={name:tier,count:0,members:[]};
+      grouped[tier].count++;
+      grouped[tier].members.push({name:m.Name||m.nombre||'',email:m.Email||m.email||'',loyalty_number:m['Loyalty #']||m.loyalty_number||''});
+    });
+    tiers=Object.values(grouped).filter(function(t){return t.count>0;}).sort(function(a,b){var ia=TIER_ORDER.indexOf(a.name),ib=TIER_ORDER.indexOf(b.name);return(ia<0?99:ia)-(ib<0?99:ib);});
   } else {
-    tiers=raw.map(function(t){return {name:t.name||t.tier||t.nivel||t.Tier||t.Nivel||'?',count:parseInt(t.count||t.total||t.miembros||0)||0,members:t.members||[]};});
+    tiers=raw.map(function(t){return {name:t.name||t.tier||t.nivel||t.Tier||t.Nivel||'?',count:parseInt(t.count||t.total||t.miembros||0)||0,members:t.members||[]};}).filter(function(t){return t.count>0;});
   }
   var TIER_COLORS={'Tourist':'#f97316','Backpacker':'#ef4444','Explorer':'#8b5cf6','Nomad':'#0ea5e9','Viajero':'#14b8a6'};
   var total=tiers.reduce(function(s,t){return s+(parseInt(t.count)||0);},0);
-  tiers=tiers.filter(function(t){return(parseInt(t.count)||0)>0;});
-  var total2=tiers.reduce(function(s,t){return s+(parseInt(t.count)||0);},0);
-  if(!tiers.length||total2===0){
-    document.getElementById('ctx-tier-donut').innerHTML='<div style="background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:32px 24px;text-align:center"><div style="font-size:28px;margin-bottom:10px">👥</div><div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:5px">Sin datos de niveles</div><div style="font-size:11px;color:var(--gris)">Agrega la key <code>akinTiers</code> en el JSON para ver la distribución.</div></div>';
+  if(_donutChart){_donutChart.destroy();_donutChart=null;}
+  if(!tiers.length||total===0){
+    document.getElementById('ctx-tier-donut').innerHTML='<div class="empty">Sin datos de niveles disponibles. Verifica que <code>akinTiers</code> tenga datos con el campo de nivel correcto.</div>';
     return;
   }
-  if(_donutChart){_donutChart.destroy();_donutChart=null;}
-  var donutHtml='<div class="tier-donut-card"><div class="tier-donut-wrap"><canvas id="donut-canvas" width="110" height="110"></canvas><div class="tier-donut-center"><div class="tier-donut-n">'+total2+'</div><div class="tier-donut-lbl">Miembros</div></div></div><div class="tier-donut-list"><div class="tier-donut-title">Distribución actual del programa</div>'+tiers.map(function(t){var pct=total2>0?Math.round((parseInt(t.count)||0)/total2*1000)/10:0;var col=TIER_COLORS[t.name]||'#94a3b8';return '<div class="tier-row" onclick="drillTierMembers(\''+t.name+'\')" style="cursor:pointer"><div class="tier-dot" style="background:'+col+'"></div><div class="tier-row-name">'+t.name+'</div><div class="tier-row-n">'+fmtN(parseInt(t.count)||0)+'</div><div class="tier-row-pct">'+pct+'%</div></div>';}).join('')+'</div></div>';
+  var donutHtml='<div class="tier-donut-card"><div class="tier-donut-wrap"><canvas id="donut-canvas" width="110" height="110"></canvas><div class="tier-donut-center"><div class="tier-donut-n">'+total+'</div><div class="tier-donut-lbl">Miembros</div></div></div><div class="tier-donut-list"><div class="tier-donut-title">Distribución actual del programa</div>'+tiers.map(function(t){var pct=total>0?Math.round((parseInt(t.count)||0)/total*1000)/10:0;var col=TIER_COLORS[t.name]||'#94a3b8';return '<div class="tier-row" onclick="drillTierMembers(\''+t.name+'\')" style="cursor:pointer"><div class="tier-dot" style="background:'+col+'"></div><div class="tier-row-name">'+t.name+'</div><div class="tier-row-n">'+fmtN(t.count)+'</div><div class="tier-row-pct">'+pct+'%</div></div>';}).join('')+'</div></div>';
   document.getElementById('ctx-tier-donut').innerHTML=donutHtml;
   requestAnimationFrame(function(){
     var canvas=document.getElementById('donut-canvas');
     if(!canvas||!window.Chart)return;
-    _donutChart=new Chart(canvas,{type:'doughnut',data:{labels:tiers.map(function(t){return t.name;}),datasets:[{data:tiers.map(function(t){return parseInt(t.count)||0;}),backgroundColor:tiers.map(function(t){return TIER_COLORS[t.name]||'#94a3b8';}),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){var sp=total2>0&&!isNaN(ctx.raw)?Math.round(ctx.raw/total2*1000)/10:0;return ctx.label+': '+ctx.raw+' ('+sp+'%)';}}}},animation:{duration:600}}});
+    _donutChart=new Chart(canvas,{type:'doughnut',data:{labels:tiers.map(function(t){return t.name;}),datasets:[{data:tiers.map(function(t){return parseInt(t.count)||0;}),backgroundColor:tiers.map(function(t){return TIER_COLORS[t.name]||'#94a3b8';}),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){var sp=total>0&&!isNaN(ctx.raw)?Math.round(ctx.raw/total*1000)/10:0;return ctx.label+': '+ctx.raw+' ('+sp+'%)';}}}},animation:{duration:600}}});
   });
 }
 
@@ -1176,7 +1255,7 @@ function drillTierMembers(tier){
   var raw=DATA.akinTiers||[];
   var rows;
   if(raw.length&&raw[0].Viajero!==undefined){
-    rows=raw.filter(function(m){return m.Viajero===tier;}).map(function(m){return {name:m.Name||m.nombre||'—',email:m.Email||m.email||'—',propiedad:m.Propiedad||'—',joined:m['Joined date']||''};});
+    rows=raw.filter(function(m){return (m.Viajero||m['Loyalty Level']||m.nivel||m.Tier||'Sin nivel')===tier;}).map(function(m){return {name:m.Name||m.nombre||'—',email:m.Email||m.email||'—',propiedad:m.Propiedad||'—',joined:m['Joined date']||''};});
   } else {
     var t=(raw||[]).find(function(t){return t.name===tier;});
     rows=t&&t.members?t.members:[];
@@ -1188,7 +1267,7 @@ function drillTierMembers(tier){
   document.getElementById('drill-overlay').classList.add('show');
 }
 
-/* Ranking: 3 mini gráficas de barras horizontales */
+/* Ranking: 3 mini gráficas de barras */
 function renderCtxRankingMini(){
   var afs=filtrar(DATA.afiliados||[]);
   var mb=filtrar(DATA.tiersDetalle||[]);
@@ -1198,8 +1277,11 @@ function renderCtxRankingMini(){
   mb.forEach(function(r){var p=r.Propiedad||'';if(!map[p])return;if(r.Error_Type==='OK')map[p].ok++;else if(r.Error_Type==='SIN CANJE')map[p].sc++;});
   var props=Object.values(map).filter(function(p){return p.hu>0||p.cb>0;});
   props.forEach(function(p){
+    /* % miembros sobre huéspedes totales */
     p.pct=p.hu>0?Math.round(p.cb/p.hu*1000)/10:0;
     p.pctOK=(p.ok+p.sc)>0?Math.round(p.ok/(p.ok+p.sc)*1000)/10:0;
+    /* tasa de captación nuevos / huéspedes */
+    p.captRate=p.hu>0?Math.round(p.nv/p.hu*1000)/10:0;
   });
   function shortName(n){return n.replace('Viajero ','').replace(' Hostel','').replace(' & Ecohabs','').replace(' & Lake Club','');}
   function buildMini(sorted,metric,maxVal,targetPct,colorFn,valFn,subFn){
@@ -1218,29 +1300,27 @@ function renderCtxRankingMini(){
     }).join('');
   }
   var byPct=[].concat(props).sort(function(a,b){return b.pct-a.pct;});
-  props.forEach(function(p){p.captacion=p.hu>0?Math.round(p.nv/p.hu*1000)/10:0;});
-  var byNv=[].concat(props).sort(function(a,b){return b.captacion-a.captacion;});
-  var maxCap=Math.max(5,Math.max.apply(null,props.map(function(p){return p.captacion;}))||5);
+  var byCapt=[].concat(props).sort(function(a,b){return b.captRate-a.captRate;});
   var byOK=[].concat(props).sort(function(a,b){return b.pctOK-a.pctOK;});
   var maxPct=Math.max(25,Math.max.apply(null,props.map(function(p){return p.pct;}))||25);
-  var maxNv=Math.max.apply(null,props.map(function(p){return p.nv;}))||1;
+  var maxCapt=Math.max(10,Math.max.apply(null,props.map(function(p){return p.captRate;}))||10);
   var targetPctW=Math.round(15/maxPct*100);
   document.getElementById('ctx-ranking').innerHTML='<div class="rank-mini-row">'+
     '<div class="rank-mini-card">'+
       '<div class="rmc-title">% Miembros</div>'+
-      '<div class="rmc-sub">Check-ins que son miembros · meta 15%</div>'+
+      '<div class="rmc-sub">% huéspedes que son miembros · meta 15%</div>'+
       buildMini(byPct,'pct',maxPct,targetPctW,
         function(p){return p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';},
         function(p){return p.pct.toFixed(1)+'%';},
-        function(p){return fmtN(p.cb)+'/'+fmtN(p.ci);})+
+        function(p){return fmtN(p.cb)+'/'+fmtN(p.hu);})+
     '</div>'+
     '<div class="rank-mini-card">'+
-      '<div class="rmc-title">Captación de nuevos</div>'+
-      '<div class="rmc-sub">Nuevos inscritos ÷ total huéspedes · meta ≥5%</div>'+
-      buildMini(byNv,'captacion',maxCap,null,
-        function(p){return p.captacion>=5?'var(--ok)':p.captacion>=2?'#ca8a04':'var(--coral)';},
-        function(p){return p.captacion.toFixed(1)+'%';},
-        function(p){return fmtN(p.nv)+' nuevos de '+fmtN(p.hu)+' huéspedes';})+
+      '<div class="rmc-title">Captación</div>'+
+      '<div class="rmc-sub">% de huéspedes que se unieron al programa</div>'+
+      buildMini(byCapt,'captRate',maxCapt,null,
+        function(){return 'var(--coral)';},
+        function(p){return p.captRate.toFixed(1)+'%';},
+        function(p){return fmtN(p.nv)+' de '+fmtN(p.hu);})+
     '</div>'+
     '<div class="rank-mini-card">'+
       '<div class="rmc-title">% Beneficios OK</div>'+
@@ -1303,7 +1383,6 @@ function render(){
   var afs=filtrar(DATA.afiliados||[]);
   var mb=filtrar(DATA.tiersDetalle||[]);
 
-  // Tab 1
   renderExecHeadline(afs,mb);
   renderExecCtxKPIs(afs,mb);
   renderExecPaisPenetracion(DATA.afiliados||[]);
@@ -1311,13 +1390,11 @@ function render(){
   renderExecMovers(DATA.afiliados||[]);
   renderExecTrendCharts(DATA.afiliados||[],DATA.tiersDetalle||[]);
 
-  // Tab 2
   renderDetailSheetBtn();
   renderPropSemaforo(mb);
   renderPropActions(afs,mb);
   renderSinMatchAkin();
 
-  // Tab 4 lazy
   if(_ctxRendered){_ctxRendered=false;renderCtxTab();_ctxRendered=true;}
 }
 
