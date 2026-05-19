@@ -906,8 +906,9 @@ function renderExecPaisPenetracion(afsAll){
   var el=document.getElementById('exec-pais');if(!el)return;
   var map={};
   afsAll.forEach(function(r){
-var pa=r['Pais']||r['País']||r['pais']||r['PAIS']||r['pais_hostel']||r['country']||'';
-if(!pa)return;    if(!map[pa])map[pa]={ci:0,cb:0,nv:0,props:new Set()};
+    var pa=r['Pais']||r['País']||r['pais']||r['PAIS']||r['pais_hostel']||r['country']||'';
+    if(!pa)return;
+    if(!map[pa])map[pa]={ci:0,cb:0,nv:0,props:new Set()};
     map[pa].ci+=parseFloat(r._check_ins)||0;
     map[pa].cb+=parseFloat(r._afiliados_cb)||0;
     map[pa].nv+=parseFloat(r._nuevos)||0;
@@ -922,16 +923,18 @@ if(!pa)return;    if(!map[pa])map[pa]={ci:0,cb:0,nv:0,props:new Set()};
     return;
   }
   var bgColors=paises.map(function(p){return p.pct>=15?'rgba(21,128,61,.8)':p.pct>=8?'rgba(202,138,4,.8)':'rgba(220,38,38,.8)';});
-  /* título y leyenda dentro del contenedor flex */
   el.innerHTML=
     '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:6px;">Penetración por país</div>'+
-'<div style="font-size:9px;color:var(--gris);margin-bottom:10px;">% de reservas/check-ins asociadas a miembros loyalty</div>'+    '<div style="font-size:9px;color:var(--gris);margin-bottom:10px;">'+
+    '<div style="font-size:9px;color:var(--gris);margin-bottom:10px;">% de reservas/check-ins asociadas a miembros loyalty</div>'+
+    '<div style="font-size:9px;color:var(--gris);margin-bottom:10px;">'+
     '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(21,128,61,.8);vertical-align:middle;margin-right:3px;"></span>≥15%&nbsp;&nbsp;'+
     '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(202,138,4,.8);vertical-align:middle;margin-right:3px;"></span>8–14%&nbsp;&nbsp;'+
     '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(220,38,38,.8);vertical-align:middle;margin-right:3px;"></span>&lt;8%'+
     '</div>'+
-    '<div style="flex:1;position:relative;min-height:100px;"><canvas id="pais-bar-canvas"></canvas></div>';
+    '<div style="flex:1;position:relative;" id="pais-chart-wrap"><canvas id="pais-bar-canvas"></canvas></div>';
   requestAnimationFrame(function(){
+    var wrap=document.getElementById('pais-chart-wrap');
+    if(wrap) wrap.style.height=Math.max(140, paises.length*30)+'px';
     var canvas=document.getElementById('pais-bar-canvas');
     if(!canvas||!window.Chart)return;
     if(canvas._chart){canvas._chart.destroy();}
@@ -954,7 +957,7 @@ if(!pa)return;    if(!map[pa])map[pa]={ci:0,cb:0,nv:0,props:new Set()};
           legend:{display:false},
           tooltip:{callbacks:{label:function(ctx){
             var p=paises[ctx.dataIndex];
-            return [ctx.raw.toFixed(1)+'% de check-ins son miembros',fmtN(p.cb)+' de '+fmtN(p.ci)+' check-ins · '+fmtN(p.nv)+' nuevos'];
+            return [ctx.raw.toFixed(1)+'% de reservas/check-ins son loyalty',fmtN(p.cb)+' de '+fmtN(p.ci)+' check-ins · '+fmtN(p.nv)+' nuevos'];
           }}}
         },
         scales:{
@@ -968,7 +971,6 @@ if(!pa)return;    if(!map[pa])map[pa]={ci:0,cb:0,nv:0,props:new Set()};
     });
   });
 }
-
 /* Embudo compacto — columna derecha con título dentro */
 function renderExecFunnelCompact(afs){
   var el=document.getElementById('exec-funnel');if(!el)return;
