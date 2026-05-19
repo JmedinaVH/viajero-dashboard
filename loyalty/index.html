@@ -517,18 +517,12 @@ tbody tr:hover td{background:var(--cream);}
     <div class="sec-hdr"><h2>Estado de actividad <i class="ib" onclick="openTip('Estado actividad')">i</i></h2><div class="linea"></div></div>
     <div id="members-activity-pills"></div>
   </div>
- <div class="sec-hdr" style="cursor:pointer;" onclick="toggleDir(this)">
-  <h2>Directorio de miembros</h2>
-  <span id="dir-toggle-ico" style="font-size:11px;color:var(--gris);margin-left:8px;margin-right:8px;">▼ expandir</span>
-  <div class="linea"></div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Directorio de miembros <i class="ib" onclick="openTip('Directorio miembros')">i</i></h2><div class="linea"></div></div>
+    <input class="member-search" id="member-q" type="text" placeholder="🔍 Buscar por nombre, correo, estado de actividad..." oninput="filtrarMembers()"/>
+    <div class="member-wrap" id="member-tabla"></div>
+  </div>
 </div>
-function toggleDir(hdr){
-  var body=document.getElementById('dir-body');
-  var ico=document.getElementById('dir-toggle-ico');
-  var open=body.style.display!=='none';
-  body.style.display=open?'none':'block';
-  ico.textContent=open?'▼ expandir':'▲ colapsar';
-}
 
 <!-- TAB 4: CONTEXTO -->
 <div id="tab-ctx" class="tab-content">
@@ -1192,6 +1186,34 @@ function renderPropSemaforo(mb){
     '<div class="semaforo-grid">'+buildItems(loyItems)+'</div>'+
     opHeader+
     '<div class="semaforo-grid">'+buildItems(opItems)+'</div>';
+}
+
+  /* Cierre visual del universo loyalty */
+  var closureHtml='<div style="background:var(--blue-bg);border:1.5px solid var(--blue);border-radius:var(--r);padding:12px 18px;margin-bottom:8px;">'+
+    '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--blue);margin-bottom:8px;">🎁 Universo loyalty — '+fmtN(loyTotal)+' reservas evaluadas</div>'+
+    '<div style="display:flex;gap:0;font-size:11px;">'+
+      '<div style="flex:1;text-align:center;padding:6px 10px;border-right:1px solid rgba(3,105,161,.15);">'+
+        '<div style="font-weight:800;font-size:18px;color:var(--ok)">'+fmtN(t['OK'])+'</div>'+
+        '<div style="color:var(--gris);font-size:9px;margin-top:2px;">✅ Correctas</div>'+
+      '</div>'+
+      '<div style="flex:1;text-align:center;padding:6px 10px;border-right:1px solid rgba(3,105,161,.15);">'+
+        '<div style="font-weight:800;font-size:18px;color:var(--err)">'+fmtN(t['SIN CANJE']||0)+'</div>'+
+        '<div style="color:var(--gris);font-size:9px;margin-top:2px;">❌ Sin beneficio</div>'+
+      '</div>'+
+      '<div style="flex:1;text-align:center;padding:6px 10px;border-right:1px solid rgba(3,105,161,.15);">'+
+        '<div style="font-weight:800;font-size:18px;color:var(--warn)">'+fmtN(t['TIER_INCORRECTO']||0)+'</div>'+
+        '<div style="color:var(--gris);font-size:9px;margin-top:2px;">⚠️ Nivel incorrecto</div>'+
+      '</div>'+
+      '<div style="flex:1;text-align:center;padding:6px 10px;">'+
+        '<div style="font-weight:800;font-size:18px;color:var(--blue)">'+fmtN(loyTotal)+'</div>'+
+        '<div style="color:var(--gris);font-size:9px;margin-top:2px;">= Total loyalty</div>'+
+      '</div>'+
+    '</div>'+
+  '</div>';
+
+  /* Separador operacional */
+    var opHeader='<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--orange);padding:10px 2px 6px;margin-top:4px;">💸 Riesgos operacionales — fuera del universo loyalty</div>';
+  document.getElementById('prop-semaforo').innerHTML=closureHtml+'<div class="semaforo-grid">'+buildItems(loyItems)+'</div>'+opHeader+'<div class="semaforo-grid">'+buildItems(opItems)+'</div>';
 }
 
 /* Tabla compacta de propiedades con drawer */
