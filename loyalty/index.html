@@ -487,8 +487,8 @@ tbody tr:hover td{background:var(--cream);}
   <!-- Resumen global rápido -->
   <div class="sec">
     <div class="sec-hdr"><h2>Estado global del programa <i class="ib" onclick="openTip('Resumen de errores')">i</i></h2><div class="linea"></div></div>
- <div id="prop-semaforo"></div>
-<div id="prop-sem-total"></div>
+    <div style="font-size:11px;color:var(--gris);margin-bottom:10px;" id="prop-sem-total"></div>
+    <div id="prop-semaforo"></div>
   </div>
 
   <!-- Tabla de propiedades -->
@@ -1130,19 +1130,29 @@ function renderPropSemaforo(mb){
   var tot=Object.values(t).reduce(function(a,b){return a+b;},0)||1;
   var loyTot=t['OK']+(t['SIN CANJE']||0)+(t['TIER_INCORRECTO']||0);
   var opTot=(t['LEAKAGE']||0)+(t['MISUSE']||0);
+  document.getElementById('prop-sem-total').innerHTML=
+    '<b>'+fmtN(tot)+'</b> reservas evaluadas · <span style="color:var(--mid);font-size:10px">Unidad: reservas · Fuente: CloudBeds + Akin · Clic en tarjeta para ver detalle</span>'+
+    '<div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;">'+
+      '<span style="font-size:10px;background:var(--blue-bg);color:var(--blue);padding:2px 9px;border-radius:99px;font-weight:700;">🎁 Universo loyalty · '+fmtN(loyTot)+' reservas</span>'+
+'<span style="font-size:10px;background:var(--orange-bg);color:var(--orange);padding:2px 9px;border-radius:99px;font-weight:700;">⚠️ Riesgos operacionales · '+fmtN(opTot)+' casos</span>'+
+      '<span style="font-size:10px;background:var(--cm);color:var(--mid);padding:2px 9px;border-radius:99px;font-weight:600;">'+fmtN(loyTot)+' + '+fmtN(opTot)+' = '+fmtN(tot)+' total</span>'+
+    '</div>'+
+    '<div style="margin-top:5px;font-size:10px;color:var(--gris);">ℹ️ Beneficios considerados: desayuno, toalla y descuento loyalty · Una persona puede tener múltiples reservas</div>';
   var loyTotal=t['OK']+(t['SIN CANJE']||0)+(t['TIER_INCORRECTO']||0);
   var pctOK=loyTotal>0?Math.round(t['OK']/loyTotal*1000)/10:0;
   var pctSC=loyTotal>0?Math.round((t['SIN CANJE']||0)/loyTotal*1000)/10:0;
   var pctTI=loyTotal>0?Math.round((t['TIER_INCORRECTO']||0)/loyTotal*1000)/10:0;
 
+  /* Sección 1: Ejecución loyalty */
   var loyItems=[
-    {k:'OK',label:'Reservas loyalty correctamente ejecutadas',sub:pctOK.toFixed(1)+'% de '+fmtN(loyTotal)+' reservas loyalty',val:t['OK'],cls:'s-verde'},
-    {k:'SIN CANJE',label:'Reservas loyalty sin beneficios',sub:fmtN(scUnicos)+' afiliados afectados · '+pctSC.toFixed(1)+'% de '+fmtN(loyTotal)+' reservas loyalty',val:t['SIN CANJE']||0,cls:(t['SIN CANJE']||0)===0?'s-verde':(t['SIN CANJE']||0)<20?'s-amarillo':'s-rojo'},
-    {k:'TIER_INCORRECTO',label:'Reservas loyalty con nivel incorrecto',sub:pctTI.toFixed(1)+'% de '+fmtN(loyTotal)+' reservas loyalty · CB ≠ Akin',val:t['TIER_INCORRECTO']||0,cls:(t['TIER_INCORRECTO']||0)===0?'s-verde':(t['TIER_INCORRECTO']||0)<5?'s-amarillo':'s-rojo'},
+    {k:'OK',label:'Reservas loyalty correctamente ejecutadas',sub:pctOK.toFixed(1)+'% de '+fmtN(loyTotal)+' reservas loyalty',val:t['OK'],cls:'s-verde',drill:false},
+    {k:'SIN CANJE',label:'Reservas loyalty sin beneficios',sub:fmtN(scUnicos)+' afiliados afectados · '+pctSC.toFixed(1)+'% de '+fmtN(loyTotal)+' reservas loyalty',val:t['SIN CANJE']||0,cls:(t['SIN CANJE']||0)===0?'s-verde':(t['SIN CANJE']||0)<20?'s-amarillo':'s-rojo',drill:'SIN CANJE'},
+    {k:'TIER_INCORRECTO',label:'Reservas loyalty con nivel incorrecto',sub:pctTI.toFixed(1)+'% de '+fmtN(loyTotal)+' reservas loyalty · CB ≠ Akin',val:t['TIER_INCORRECTO']||0,cls:(t['TIER_INCORRECTO']||0)===0?'s-verde':(t['TIER_INCORRECTO']||0)<5?'s-amarillo':'s-rojo',drill:'TIER_INCORRECTO'},
   ];
+  /* Sección 2: Riesgos operacionales */
   var opItems=[
-    {k:'LEAKAGE',label:'Beneficios entregados a no afiliados',sub:'Pérdida de ingreso directo · no pertenecen al universo loyalty',val:t['LEAKAGE']||0,cls:(t['LEAKAGE']||0)===0?'s-verde':(t['LEAKAGE']||0)<10?'s-amarillo':'s-rojo'},
-    {k:'MISUSE',label:'Tarifa loyalty aplicada incorrectamente',sub:'Aplicación fuera del proceso establecido',val:t['MISUSE']||0,cls:(t['MISUSE']||0)===0?'s-verde':'s-rojo'},
+    {k:'LEAKAGE',label:'Beneficios entregados a no afiliados',sub:'Pérdida de ingreso directo · no pertenecen al universo loyalty',val:t['LEAKAGE']||0,cls:(t['LEAKAGE']||0)===0?'s-verde':(t['LEAKAGE']||0)<10?'s-amarillo':'s-rojo',drill:'LEAKAGE'},
+    {k:'MISUSE',label:'Tarifa loyalty aplicada incorrectamente',sub:'Aplicación fuera del proceso establecido',val:t['MISUSE']||0,cls:(t['MISUSE']||0)===0?'s-verde':'s-rojo',drill:'MISUSE'},
   ];
   var icoMap={OK:'✅','SIN CANJE':'❌',LEAKAGE:'💸',TIER_INCORRECTO:'⚠️',MISUSE:'🚫'};
   var buildItems=function(arr){return arr.map(function(i){
@@ -1156,6 +1166,7 @@ function renderPropSemaforo(mb){
     '</div>';
   }).join('');};
 
+  /* Cierre visual del universo loyalty */
   var closureHtml='<div style="background:var(--blue-bg);border:1.5px solid var(--blue);border-radius:var(--r);padding:12px 18px;margin-bottom:8px;">'+
     '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--blue);margin-bottom:8px;">🎁 Universo loyalty — '+fmtN(loyTotal)+' reservas evaluadas</div>'+
     '<div style="display:flex;gap:0;font-size:11px;">'+
@@ -1178,93 +1189,92 @@ function renderPropSemaforo(mb){
     '</div>'+
   '</div>';
 
-  var opHeader='<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--orange);padding:10px 2px 6px;margin-top:4px;">⚠️ Riesgos operacionales — fuera del universo loyalty</div>';
-
-  document.getElementById('prop-semaforo').innerHTML=
-    closureHtml+
-    '<div class="semaforo-grid">'+buildItems(loyItems)+'</div>'+
-    opHeader+
-    '<div class="semaforo-grid">'+buildItems(opItems)+'</div>';
-
+   var opHeader='<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--orange);padding:10px 2px 6px;margin-top:4px;">Riesgos operacionales - fuera del universo loyalty</div>';
+  document.getElementById('prop-semaforo').innerHTML=closureHtml+'<div class="semaforo-grid">'+buildItems(loyItems)+'</div>'+opHeader+'<div class="semaforo-grid">'+buildItems(opItems)+'</div>';
   document.getElementById('prop-sem-total').innerHTML=
-    '<div style="margin-top:14px;padding-top:12px;border-top:1.5px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap;">'+
-      '<span style="font-size:12px;font-weight:700;color:var(--mid);">🏨 Diagnóstico por propiedad</span>'+
-      (DATA.sheetUrl?'<a href="'+DATA.sheetUrl+'" target="_blank" style="font-size:10px;color:var(--blue);text-decoration:none;background:var(--blue-bg);padding:3px 10px;border-radius:99px;font-weight:600;">Ver detalle reserva por reserva →</a>':'')+
-      '<span style="font-size:10px;color:var(--gris);margin-left:auto;">'+fmtN(tot)+' reservas evaluadas · CloudBeds + Akin</span>'+
+    '<div style="margin-top:16px;padding-top:14px;border-top:1.5px solid var(--border);">'+
+    '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;">'+
+      '<span style="font-size:13px;font-weight:700;color:var(--mid);">🏨 Vista operativa — detalle por propiedad</span>'+
+      '<a href="https://docs.google.com/spreadsheets/d/1NOvBphsUK4A2gaxMqazjil_0JMPl-TA0njZKfcDlfcM/edit" target="_blank" style="font-size:10px;color:var(--blue);text-decoration:none;background:var(--blue-bg);padding:3px 10px;border-radius:99px;font-weight:600;">Ver detalle reserva por reserva →</a>'+
+    '</div>'+
+    '<div style="font-size:11px;color:var(--gris);">'+
+      '<b>'+fmtN(tot)+'</b> reservas evaluadas · Fuente: CloudBeds + Akin · Clic en fila para ver detalle'+
+      '<div style="margin-top:5px;display:flex;gap:8px;flex-wrap:wrap;">'+
+        '<span style="font-size:10px;background:var(--blue-bg);color:var(--blue);padding:2px 9px;border-radius:99px;font-weight:700;">🎁 Universo loyalty · '+fmtN(loyTot)+' reservas</span>'+
+        '<span style="font-size:10px;background:var(--orange-bg);color:var(--orange);padding:2px 9px;border-radius:99px;font-weight:700;">⚠️ Riesgos operacionales · '+fmtN(opTot)+' casos</span>'+
+      '</div>'+
+      '<div style="margin-top:4px;font-size:10px;color:var(--gris);">ℹ️ Beneficios considerados: desayuno, toalla y descuento loyalty · Una persona puede tener múltiples reservas</div>'+
+    '</div>'+
     '</div>';
 }
+
+
+/* Tabla compacta de propiedades con drawer */
 function renderPropActions(afs,mb){
-  var el=document.getElementById('prop-actions-table');if(!el)return;
-  var fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');
+  var cont=document.getElementById('prop-actions');
   var map={};
-  afs.forEach(function(r){
-    var p=r.Propiedad||'';if(!p)return;
-    if(fp.length&&!fp.includes(p))return;
-    if(ft.length&&!ft.includes(getPer(r)))return;
-    if(fpa.length&&!fpa.includes(r['País']||r['Pais']||''))return;
-    if(!map[p])map[p]={p:p,hu:0,ci:0,cb:0,nv:0,ok:0,sc:0,lk:0,ti:0,ms:0};
-    map[p].hu+=parseFloat(r._huespedes)||0;
-    map[p].ci+=parseFloat(r._check_ins)||0;
-    map[p].cb+=parseFloat(r._afiliados_cb)||0;
-    map[p].nv+=parseFloat(r._nuevos)||0;
-  });
-  mb.forEach(function(r){
-    var p=r.Propiedad||'';if(!map[p])return;
-    if(fp.length&&!fp.includes(p))return;
-    if(ft.length&&!ft.includes(getPer(r)))return;
-    if(fpa.length&&!fpa.includes(r['País']||r['Pais']||''))return;
-    var k=r.Error_Type||'';
-    if(k==='OK')map[p].ok++;
-    else if(k==='SIN CANJE')map[p].sc++;
-    else if(k==='LEAKAGE')map[p].lk++;
-    else if(k==='TIER_INCORRECTO')map[p].ti++;
-    else if(k==='MISUSE')map[p].ms++;
-  });
-  var props=Object.values(map).filter(function(p){return p.hu>0||p.cb>0;});
+  afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={name:p,pais:r.Pais||r['Pa\u00eds']||'',ci:0,cb:0,nv:0,ok:0,sc:0,lk:0,tiI:0};
+    map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
+  mb.forEach(function(r){var p=r.Propiedad||'';if(!map[p])return;var et=r.Error_Type||'';
+    if(et==='OK')map[p].ok++;else if(et==='SIN CANJE')map[p].sc++;else if(et==='LEAKAGE')map[p].lk++;else if(et==='TIER_INCORRECTO')map[p].tiI++;});
+  var props=Object.values(map).filter(function(p){return p.ci>0||p.cb>0;});
   props.forEach(function(p){
-    var loyTot=p.ok+p.sc+p.ti;
-    p.pctLoy=p.ci>0?Math.round(p.cb/p.ci*1000)/10:0;
-    p.pctOK=loyTot>0?Math.round(p.ok/loyTot*1000)/10:0;
-    p.pctSC=loyTot>0?Math.round(p.sc/loyTot*1000)/10:0;
-    p.riesgo=p.lk+p.ms;
-    p.loyTot=loyTot;
+    p.pct=p.ci>0?Math.round(p.cb/p.ci*1000)/10:0;
+    p.pctOK=(p.ok+p.sc)>0?Math.round(p.ok/(p.ok+p.sc)*1000)/10:0;
+    p.status=p.pct<5||p.cb===0?'critico':p.ok===0&&p.cb>0?'atencion':p.pct<15?'atencion':'ok';
   });
-  props.sort(function(a,b){return b.sc-a.sc;});
-  if(!props.length){el.innerHTML='<div class="empty">Sin datos para los filtros seleccionados.</div>';return;}
-  el.innerHTML='<div class="prop-table-wrap">'+
+  props.sort(function(a,b){var o={critico:0,atencion:1,ok:2};return(o[a.status]-o[b.status])||a.pct-b.pct;});
+  var sIco={critico:'\ud83d\udd34',atencion:'\ud83d\udfe1',ok:'\ud83d\udfe2'};
+  var sLbl={critico:'Cr\u00edtico',atencion:'Atenci\u00f3n',ok:'En camino'};
+  var sBadge={critico:'b-err',atencion:'b-warn',ok:'b-ok'};
+  var showSC=props.some(function(p){return p.sc>0;});
+  var showTI=props.some(function(p){return p.tiI>0;});
+  var showLK=props.filter(function(p){return p.lk>0;}).length/Math.max(props.length,1)>0.1;
+  cont.innerHTML=
+    '<div class="prop-table-wrap">'+
     '<table class="prop-tbl">'+
-      '<thead><tr>'+
-        '<th>Propiedad</th>'+
-        '<th class="tc">Huéspedes</th>'+
-        '<th class="tc">% Penetración</th>'+
-        '<th class="tc">✅ Correctos</th>'+
-        '<th class="tc">❌ Sin beneficio</th>'+
-        '<th class="tc">⚠️ Riesgo</th>'+
-        '<th class="tc">Estado</th>'+
-      '</tr></thead>'+
-      '<tbody>'+
-      props.map(function(p){
-        var statusCls=p.pctSC>50?'b-err':p.pctSC>20?'b-warn':'b-ok';
-        var statusTxt=p.pctSC>50?'Crítico':p.pctSC>20?'Atención':'OK';
-        var barW=Math.min(100,p.pctLoy);
-        var barCol=p.pctLoy>=15?'var(--ok)':p.pctLoy>=8?'#ca8a04':'var(--err)';
-        return '<tr onclick="openPropDrawer(\''+p.p+'\')">'+
-          '<td><b>'+p.p+'</b></td>'+
-          '<td class="tc">'+fmtN(p.ci)+'</td>'+
-          '<td class="tc">'+
-            '<div>'+p.pctLoy.toFixed(1)+'%</div>'+
-            '<div class="prop-mini-bar"><div style="width:'+barW+'%;height:100%;background:'+barCol+';border-radius:99px;"></div></div>'+
-          '</td>'+
-          '<td class="tc" style="color:var(--ok);font-weight:700;">'+fmtN(p.ok)+'</td>'+
-          '<td class="tc" style="color:'+(p.sc>0?'var(--err)':'var(--ok)')+';font-weight:700;">'+fmtN(p.sc)+'</td>'+
-          '<td class="tc" style="color:'+(p.riesgo>0?'var(--warn)':'var(--gris)')+';font-weight:700;">'+fmtN(p.riesgo)+'</td>'+
-          '<td class="tc"><span class="badge '+statusCls+'">'+statusTxt+'</span></td>'+
+    '<thead><tr>'+
+    '<th>Propiedad</th>'+
+    '<th class="tc">% Reservas loyalty<br><span style="font-weight:400;color:var(--gris);font-size:8px">base: check-ins · meta 15%</span></th>'+
+    '<th class="tc">Nuevos<br><span style="font-weight:400;color:var(--gris);font-size:8px">base: huéspedes</span></th>'+
+    '<th class="tc">Ejecución OK<br><span style="font-weight:400;color:var(--gris);font-size:8px">OK / reservas loyalty</span></th>'+
+    (showSC?'<th class="tc">Sin beneficios</th>':'')+
+    (showLK?'<th class="tc">Leakage</th>':'')+
+    '<th class="tc" title="El estado considera penetración, ejecución loyalty y riesgos operacionales">Estado ℹ️</th>'+
+    '</tr></thead><tbody>'+
+    props.map(function(p){
+      var colPct=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';
+      var colOK=p.pctOK>=50?'var(--ok)':p.pctOK>0?'#ca8a04':'var(--gris)';
+      var nom=p.name.replace('Viajero ','').replace(' Hostel','');
+      var loyTotProp=p.ok+p.sc;
+      return '<tr onclick="openDrawer(\''+p.name+'\')">'+
+        '<td>'+
+          '<div style="display:flex;align-items:center;gap:8px;">'+
+            '<div style="width:3px;height:32px;border-radius:2px;flex-shrink:0;background:'+(p.status==='critico'?'var(--err)':p.status==='atencion'?'#ca8a04':'var(--ok)')+'"></div>'+
+            '<div>'+
+              '<b style="font-size:12px">'+nom+'</b>'+
+              (p.pais?'<span style="display:block;font-size:10px;color:var(--gris)">'+p.pais+'</span>':'')+
+            '</div>'+
+          '</div>'+
+        '</td>'+
+        '<td class="tc">'+
+          '<b style="color:'+colPct+'">'+p.pct.toFixed(1)+'%</b>'+
+          '<div class="prop-mini-bar"><div style="height:5px;background:'+colPct+';width:'+Math.min(p.pct/25*100,100)+'%;border-radius:99px"></div></div>'+
+        '</td>'+
+        '<td class="tc"><b>'+fmtN(p.nv)+'</b></td>'+
+        '<td class="tc">'+
+          '<b style="color:'+colOK+'">'+p.pctOK.toFixed(1)+'%</b>'+
+          (loyTotProp>0?'<div style="font-size:9px;color:var(--gris);margin-top:1px;">('+fmtN(p.ok)+'/'+fmtN(loyTotProp)+')</div>':'')+
+        '</td>'+
+        (showSC?'<td class="tc">'+(p.sc>0?'<b style="color:var(--err)">'+fmtN(p.sc)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>':'')+
+        (showLK?'<td class="tc">'+(p.lk>0?'<b style="color:var(--orange)">'+fmtN(p.lk)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>':'')+
+        '<td class="tc">'+sIco[p.status]+'<span class="badge '+sBadge[p.status]+'" style="margin-left:4px">'+sLbl[p.status]+'</span></td>'+
         '</tr>';
-      }).join('')+
-      '</tbody>'+
-    '</table>'+
-  '</div>';
+    }).join('')+
+    '</tbody></table></div>'+
+    '<p style="font-size:11px;color:var(--gris);margin-top:8px;padding-left:2px">\ud83d\udd0e Clic en cualquier fila \u2192 diagn\u00f3stico detallado y lista de trabajo de esa propiedad</p>';
 }
+
 function renderSinMatchAkin(){
 var cont=document.getElementById('prop-sinmatch');
 var raw=DATA.sinMatchAkin||[],fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');
