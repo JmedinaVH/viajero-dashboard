@@ -556,6 +556,7 @@ var TIPS={
 'Tendencia':{t:'Tendencia mensual',b:'Tres métricas clave en el tiempo:\n\n1. % Miembros / huéspedes\nDe cada 100 huéspedes del período, cuántos son miembros activos de Viajero Go. Meta: ≥15%.\n\n2. % Beneficios OK\nDe los miembros que se hospedaron (check-in en CB), cuántos recibieron su beneficio correctamente registrado. Meta futura: ≥30%.\n\n3. Tasa de captación\n% de huéspedes totales que se unieron al programa en ese período. Meta futura: ≥5%.\n\nNota: se necesitan al menos 4 períodos para leer tendencias con confianza.'},
 'Nuevos inscritos / huésped':{t:'Nuevos inscritos / huésped',b:'Cuántos de cada 100 huéspedes se unieron por primera vez al programa Viajero Go en este período.\n\nFórmula: (nuevos inscritos ÷ total huéspedes) × 100\n\nNo confundir con penetración — un miembro ya inscrito que vuelve no cuenta aquí.\n\nMeta futura: ≥5%.'},
 'Beneficios correctos':{t:'Beneficios correctos en CB',b:'De los miembros que hicieron check-in, cuántos tuvieron su beneficio correctamente registrado en CloudBeds.\n\nFórmula: (registros OK ÷ total check-ins de miembros) × 100\n\nSi este % es bajo, el problema es de ejecución en recepción — el equipo no está marcando el beneficio en CB aunque el huésped sí sea miembro.\n\nMeta futura: ≥30%.'},
+'Ejecución loyalty':{t:'¿Qué mide Ejecución loyalty?',b:'Esta sección muestra qué pasó con las 4.696 reservas donde el huésped SÍ era miembro activo de Viajero Go.\n\n✅ Correctamente ejecutadas\nEl beneficio (descuento, toalla o desayuno) fue registrado en CloudBeds. El proceso funcionó.\n\n❌ Sin beneficio\nEl miembro se hospedó pero nadie registró el beneficio en CB. Error operativo de recepción — el huésped tenía derecho y no lo recibió. Afecta a personas únicas, no solo reservas.\n\n⚠️ Nivel incorrecto\nEl beneficio fue marcado en CB pero con un nivel diferente al real en Akin. El huésped pudo recibir más o menos de lo que le correspondía.\n\nBase: solo reservas loyalty (excluye no-miembros). Una persona puede tener varias reservas en el período.'},
 'Sin beneficio':{t:'Miembros sin beneficio',b:'Número de personas únicas que siendo miembros activos de Viajero Go, se hospedaron y no recibieron su beneficio en CloudBeds.\n\nEstas personas tienen membresía válida — el error fue operativo en recepción.\n\nHaz clic en cualquier propiedad en el tab "Por propiedad" para ver la lista individual y actuar propiedad por propiedad.'},
 'Acción por propiedad':{t:'Diagnóstico por propiedad',b:'Tabla de todas las propiedades con sus métricas del período.\n\nColumnas:\n• % Miembros: de los check-ins en CB, cuántos son miembros (meta ≥15%)\n• Nuevos: personas que se unieron al programa en el período\n• Benef. OK: % de miembros hospedados que recibieron su beneficio\n• Errores: sin beneficio, leakage y nivel incorrecto\n\n🔴 Crítico → acción esta semana\n🟡 Atención → refuerzo del proceso\n🟢 En camino → mantener\n\nClic en cualquier fila para ver el diagnóstico completo y lista de trabajo.'},
 'Resumen de errores':{t:'Estado global del programa',b:'Resumen de todas las interacciones de miembros en el período:\n\n✅ Correctos\nBeneficio aplicado y registrado correctamente en CloudBeds.\n\n❌ Sin beneficio\nMiembros únicos hospedados sin recibir su beneficio. Error operativo en recepción.\n\n💸 A no-miembro\nSe aplicó un descuento a un huésped que NO tiene membresía activa. Pérdida directa de ingreso.\n\n⚠️ Nivel incorrecto\nEl beneficio fue registrado con un nivel diferente al real en Akin.\n\n🚫 Mal aplicado\nAplicación fuera del proceso establecido.\n\nClic en cada categoría (excepto Correctos) para ver el listado individual.'},
@@ -824,44 +825,53 @@ function renderExecCtxKPIs(afs,mb){
   /* ── UNIVERSO 2: Penetración — ELIMINADO (ya está en el banner hero) ── */
 
   /* ── UNIVERSO 3: Ejecución loyalty ── */
-  if(totalLoyalty>0){
-    html+='<div class="univ-section">'+
-      '<div class="univ-hdr">'+
-        '<span class="univ-ico">🎁</span>'+
-        '<span class="univ-tit">Ejecución loyalty</span>'+
-        '<span class="univ-base">base: '+fmtN(totalLoyalty)+' reservas loyalty</span>'+
+if(totalLoyalty>0){
+  var nombresOK=new Set(mb.filter(function(r){return r.Error_Type==='OK';}).map(function(r){return r.Nombre;}).filter(Boolean));
+  var nombresLoyalty=new Set(mb.filter(function(r){return r.Error_Type==='OK'||r.Error_Type==='SIN CANJE'||r.Error_Type==='TIER_INCORRECTO';}).map(function(r){return r.Nombre;}).filter(Boolean));
+  var personasOK=nombresOK.size;
+  var personasLoyalty=nombresLoyalty.size||1;
+  var pctPersonasOK=Math.round(personasOK/personasLoyalty*1000)/10;
+  var colPersonasOK=pctPersonasOK>=50?'var(--ok)':pctPersonasOK>=20?'#ca8a04':'var(--err)';
+
+  html+='<div class="univ-section">'+
+    '<div class="univ-hdr">'+
+      '<span class="univ-ico">🎁</span>'+
+      '<span class="univ-tit">Ejecución loyalty '+ib('Ejecución loyalty')+'</span>'+
+      '<span class="univ-base">base: '+fmtN(totalLoyalty)+' reservas loyalty</span>'+
+    '</div>'+
+    '<div class="loyalty-eq">'+
+      '<div class="leq-row">'+
+        '<div class="leq-ico">✅</div>'+
+        '<div class="leq-lbl">Beneficio aplicado correctamente</div>'+
+        '<div class="leq-pct">'+pctOK.toFixed(1)+'%</div>'+
+        '<div class="leq-n" style="color:var(--ok)">'+fmtN(okN)+'</div>'+
       '</div>'+
-      '<div class="loyalty-eq">'+
-        '<div class="leq-row">'+
-          '<div class="leq-ico">✅</div>'+
-          '<div class="leq-lbl">Beneficio aplicado correctamente</div>'+
-          '<div class="leq-pct">'+pctOK.toFixed(1)+'%</div>'+
-          '<div class="leq-n" style="color:var(--ok)">'+fmtN(okN)+'</div>'+
-        '</div>'+
-        '<div class="leq-row">'+
-          '<div class="leq-ico">❌</div>'+
-          '<div class="leq-lbl">Reservas loyalty sin beneficios<br><span style="font-size:10px;color:var(--gris);font-weight:400">afectando a '+fmtN(scUnicos)+' afiliados</span></div>'+
-          '<div class="leq-pct">'+pctSC.toFixed(1)+'%</div>'+
-          '<div class="leq-n" style="color:var(--err)">'+fmtN(scN)+'</div>'+
-        '</div>'+
-        (tiI>0?
-          '<div class="leq-row">'+
-            '<div class="leq-ico">⚠️</div>'+
-            '<div class="leq-lbl">Tier incorrecto en CB</div>'+
-            '<div class="leq-pct">'+pctTI.toFixed(1)+'%</div>'+
-            '<div class="leq-n" style="color:var(--warn)">'+fmtN(tiI)+'</div>'+
-          '</div>'
-        :'')+
-        '<div class="leq-row leq-total">'+
-          '<div class="leq-ico"></div>'+
-          '<div class="leq-lbl">Total reservas loyalty</div>'+
-          '<div class="leq-pct">100%</div>'+
-          '<div class="leq-n">'+fmtN(totalLoyalty)+'</div>'+
-        '</div>'+
-        '<div class="leq-note">Una persona puede tener múltiples reservas · Beneficios considerados: descuento loyalty, toalla y desayuno</div>'+
+      '<div class="leq-row">'+
+        '<div class="leq-ico">❌</div>'+
+        '<div class="leq-lbl">Reservas loyalty sin beneficios<br><span style="font-size:10px;color:var(--gris);font-weight:400">afectando a '+fmtN(scUnicos)+' afiliados</span></div>'+
+        '<div class="leq-pct">'+pctSC.toFixed(1)+'%</div>'+
+        '<div class="leq-n" style="color:var(--err)">'+fmtN(scN)+'</div>'+
       '</div>'+
-    '</div>';
-  }
+      (tiI>0?
+        '<div class="leq-row">'+
+          '<div class="leq-ico">⚠️</div>'+
+          '<div class="leq-lbl">Tier incorrecto en CB</div>'+
+          '<div class="leq-pct">'+pctTI.toFixed(1)+'%</div>'+
+          '<div class="leq-n" style="color:var(--warn)">'+fmtN(tiI)+'</div>'+
+        '</div>'
+      :'')+
+      '<div class="leq-row leq-total">'+
+        '<div class="leq-ico"></div>'+
+        '<div class="leq-lbl">Total reservas loyalty<br>'+
+          '<span style="font-size:9px;font-weight:400;color:var(--gris);">'+fmtN(personasOK)+' de '+fmtN(personasLoyalty)+' personas únicas recibieron su beneficio ('+pctPersonasOK.toFixed(1)+'%)</span>'+
+        '</div>'+
+        '<div class="leq-pct">100%</div>'+
+        '<div class="leq-n">'+fmtN(totalLoyalty)+'</div>'+
+      '</div>'+
+      '<div class="leq-note">Una persona puede tener múltiples reservas · Beneficios considerados: descuento loyalty, toalla y desayuno</div>'+
+    '</div>'+
+  '</div>';
+}
 
   /* ── UNIVERSO 4: Errores operacionales ── */
   if(lk>0||ms>0){
