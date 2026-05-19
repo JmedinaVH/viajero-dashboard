@@ -1256,13 +1256,22 @@ function renderPropActions(afs,mb){
 }
 
 function renderSinMatchAkin(){
-  var cont=document.getElementById('prop-sinmatch');
-  var raw=DATA.sinMatchAkin||[],fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');
-  var data=raw.filter(function(r){return (!fp.length||fp.includes(r.Propiedad||''))&&(!ft.length||ft.includes(getPer(r)))&&(!fpa.length||fpa.includes(r['País']||r.Pais||''));});
-  var limpia=data.filter(function(r){return !/(demo|test|wizard)/i.test(r.Nombre||'');});
-  document.getElementById('match-cnt').textContent=limpia.length;
-  if(!limpia.length){cont.innerHTML='<div style="background:var(--ok-bg);border:1.5px solid var(--ok-light);border-radius:var(--r);padding:14px 18px;font-size:12px;color:var(--ok);">✅ Sin problemas técnicos de sincronización para este filtro.</div>';return;}
-  cont.innerHTML='<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">🔗</span><div>'<div class="ac-tit">'+limpia.length+' reservas sin asociación AKIN</div><div class="ac-sub">Problema de plataforma, no del equipo de recepción</div></div></div><div style="display:flex;align-items:center;gap:7px;"><span class="badge b-warn">Escalar a Akin</span></div><span class="ac-arr">▼</span></div><div class="ac-body"><div class="match-banner">🔧 <b>El equipo de recepción no tiene nada que hacer aquí.</b> Causa: número de reserva o correo difiere entre Akin y CB. <b>Paso 1:</b> Buscar por nombre en CB. <b>Paso 2:</b> Si no aparece → escalar a Akin.</div><div class="sc-wrap"><table><thead><tr><th>Nombre</th><th># Reserva Akin</th><th>Fecha llegada</th><th>Propiedad</th><th>Período</th><th>Nivel</th></tr></thead><tbody>'+limpia.map(function(r){return '<tr><td><b>'+(r.Nombre||'—')+'</b></td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Periodo||r['Período']||'—')+'</td><td>'+(r.Tier_AKIN||'—')+'</td></tr>';}).join('')+'</tbody></table></div></div></div>';
+var cont=document.getElementById('prop-sinmatch');
+var raw=DATA.sinMatchAkin||[],fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');
+var data=raw.filter(function(r){return (!fp.length||fp.includes(r.Propiedad||''))&&(!ft.length||ft.includes(getPer(r)))&&(!fpa.length||fpa.includes(r['País']||r.Pais||''));});
+var limpia=data.filter(function(r){return !/(demo|test|wizard)/i.test(r.Nombre||'');});
+document.getElementById('match-cnt').textContent=limpia.length;
+if(!limpia.length){cont.innerHTML='<div style="background:var(--ok-bg);border:1.5px solid var(--ok-light);border-radius:var(--r);padding:14px 18px;font-size:12px;color:var(--ok);"> Sin problemas técnicos de sincronización para este filtro.</div>';return;}
+cont.innerHTML='<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico"></span><div>'+
+'<div class="ac-tit">'+limpia.length+' reservas sin asociación AKIN</div>'+
+'<div class="ac-sub">Problema de plataforma, no del equipo de recepción</div>'+
+'</div></div>'+
+'<div style="display:flex;align-items:center;gap:7px;"><span class="badge b-warn">Escalar a Akin</span></div>'+
+'<span class="ac-arr">▼</span></div>'+
+'<div class="ac-body"><div class="match-banner"> <b>El equipo de recepción no tiene nada que hacer aquí.</b> Causa: número de reserva o correo difiere entre Akin y CB. <b>Paso 1:</b> Buscar por nombre en CB. <b>Paso 2:</b> Si no aparece → escalar a Akin.</div>'+
+'<div class="sc-wrap"><table><thead><tr><th>Nombre</th><th># Reserva Akin</th><th>Fecha llegada</th><th>Propiedad</th><th>Período</th><th>Nivel</th></tr></thead><tbody>'+
+limpia.map(function(r){return '<tr><td><b>'+(r.Nombre||'—')+'</b></td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Periodo||r['Período']||'—')+'</td><td>'+(r.Tier_AKIN||'—')+'</td></tr>';}).join('')+
+'</tbody></table></div></div></div>';
 }
 
 /* ═══════════════════════════════════════
