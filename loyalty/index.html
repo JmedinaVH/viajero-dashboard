@@ -1193,6 +1193,78 @@ function renderPropSemaforo(mb){
       '<span style="font-size:10px;color:var(--gris);margin-left:auto;">'+fmtN(tot)+' reservas evaluadas · CloudBeds + Akin</span>'+
     '</div>';
 }
+function renderPropActions(afs,mb){
+  var el=document.getElementById('prop-actions-table');if(!el)return;
+  var fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');
+  var map={};
+  afs.forEach(function(r){
+    var p=r.Propiedad||'';if(!p)return;
+    if(fp.length&&!fp.includes(p))return;
+    if(ft.length&&!ft.includes(getPer(r)))return;
+    if(fpa.length&&!fpa.includes(r['País']||r['Pais']||''))return;
+    if(!map[p])map[p]={p:p,hu:0,ci:0,cb:0,nv:0,ok:0,sc:0,lk:0,ti:0,ms:0};
+    map[p].hu+=parseFloat(r._huespedes)||0;
+    map[p].ci+=parseFloat(r._check_ins)||0;
+    map[p].cb+=parseFloat(r._afiliados_cb)||0;
+    map[p].nv+=parseFloat(r._nuevos)||0;
+  });
+  mb.forEach(function(r){
+    var p=r.Propiedad||'';if(!map[p])return;
+    if(fp.length&&!fp.includes(p))return;
+    if(ft.length&&!ft.includes(getPer(r)))return;
+    if(fpa.length&&!fpa.includes(r['País']||r['Pais']||''))return;
+    var k=r.Error_Type||'';
+    if(k==='OK')map[p].ok++;
+    else if(k==='SIN CANJE')map[p].sc++;
+    else if(k==='LEAKAGE')map[p].lk++;
+    else if(k==='TIER_INCORRECTO')map[p].ti++;
+    else if(k==='MISUSE')map[p].ms++;
+  });
+  var props=Object.values(map).filter(function(p){return p.hu>0||p.cb>0;});
+  props.forEach(function(p){
+    var loyTot=p.ok+p.sc+p.ti;
+    p.pctLoy=p.ci>0?Math.round(p.cb/p.ci*1000)/10:0;
+    p.pctOK=loyTot>0?Math.round(p.ok/loyTot*1000)/10:0;
+    p.pctSC=loyTot>0?Math.round(p.sc/loyTot*1000)/10:0;
+    p.riesgo=p.lk+p.ms;
+    p.loyTot=loyTot;
+  });
+  props.sort(function(a,b){return b.sc-a.sc;});
+  if(!props.length){el.innerHTML='<div class="empty">Sin datos para los filtros seleccionados.</div>';return;}
+  el.innerHTML='<div class="prop-table-wrap">'+
+    '<table class="prop-tbl">'+
+      '<thead><tr>'+
+        '<th>Propiedad</th>'+
+        '<th class="tc">Huéspedes</th>'+
+        '<th class="tc">% Penetración</th>'+
+        '<th class="tc">✅ Correctos</th>'+
+        '<th class="tc">❌ Sin beneficio</th>'+
+        '<th class="tc">⚠️ Riesgo</th>'+
+        '<th class="tc">Estado</th>'+
+      '</tr></thead>'+
+      '<tbody>'+
+      props.map(function(p){
+        var statusCls=p.pctSC>50?'b-err':p.pctSC>20?'b-warn':'b-ok';
+        var statusTxt=p.pctSC>50?'Crítico':p.pctSC>20?'Atención':'OK';
+        var barW=Math.min(100,p.pctLoy);
+        var barCol=p.pctLoy>=15?'var(--ok)':p.pctLoy>=8?'#ca8a04':'var(--err)';
+        return '<tr onclick="openPropDrawer(\''+p.p+'\')">'+
+          '<td><b>'+p.p+'</b></td>'+
+          '<td class="tc">'+fmtN(p.ci)+'</td>'+
+          '<td class="tc">'+
+            '<div>'+p.pctLoy.toFixed(1)+'%</div>'+
+            '<div class="prop-mini-bar"><div style="width:'+barW+'%;height:100%;background:'+barCol+';border-radius:99px;"></div></div>'+
+          '</td>'+
+          '<td class="tc" style="color:var(--ok);font-weight:700;">'+fmtN(p.ok)+'</td>'+
+          '<td class="tc" style="color:'+(p.sc>0?'var(--err)':'var(--ok)')+';font-weight:700;">'+fmtN(p.sc)+'</td>'+
+          '<td class="tc" style="color:'+(p.riesgo>0?'var(--warn)':'var(--gris)')+';font-weight:700;">'+fmtN(p.riesgo)+'</td>'+
+          '<td class="tc"><span class="badge '+statusCls+'">'+statusTxt+'</span></td>'+
+        '</tr>';
+      }).join('')+
+      '</tbody>'+
+    '</table>'+
+  '</div>';
+}
 function renderSinMatchAkin(){
 var cont=document.getElementById('prop-sinmatch');
 var raw=DATA.sinMatchAkin||[],fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');
