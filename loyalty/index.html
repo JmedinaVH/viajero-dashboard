@@ -905,8 +905,8 @@ function renderExecPaisPenetracion(afsAll){
   var el=document.getElementById('exec-pais');if(!el)return;
   var map={};
   afsAll.forEach(function(r){
-    var pa=r['Pais']||r['País']||r['pais']||'Sin país';if(!pa)return;
-    if(!map[pa])map[pa]={ci:0,cb:0,nv:0,props:new Set()};
+var pa=r['Pais']||r['País']||r['pais']||r['PAIS']||r['pais_hostel']||r['country']||'';
+if(!pa)return;    if(!map[pa])map[pa]={ci:0,cb:0,nv:0,props:new Set()};
     map[pa].ci+=parseFloat(r._check_ins)||0;
     map[pa].cb+=parseFloat(r._afiliados_cb)||0;
     map[pa].nv+=parseFloat(r._nuevos)||0;
@@ -915,7 +915,7 @@ function renderExecPaisPenetracion(afsAll){
   var paises=Object.entries(map).map(function(e){
     var pa=e[0],v=e[1],pct=v.ci>0?Math.round(v.cb/v.ci*1000)/10:0;
     return {pa:pa,ci:v.ci,cb:v.cb,nv:v.nv,pct:pct,props:v.props.size};
-  }).filter(function(p){return p.ci>0;}).sort(function(a,b){return b.pct-a.pct;});
+  }).filter(function(p){return p.ci>0||p.cb>0;}).sort(function(a,b){return b.pct-a.pct;});
   if(!paises.length){
     el.innerHTML='<p style="color:var(--gris);font-size:11px">Sin datos por país.</p>';
     return;
@@ -924,8 +924,7 @@ function renderExecPaisPenetracion(afsAll){
   /* título y leyenda dentro del contenedor flex */
   el.innerHTML=
     '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:6px;">Penetración por país</div>'+
-    '<div style="font-size:9px;color:var(--gris);margin-bottom:10px;">% check-ins que son miembros activos</div>'+
-    '<div style="font-size:9px;color:var(--gris);margin-bottom:10px;">'+
+'<div style="font-size:9px;color:var(--gris);margin-bottom:10px;">% de reservas/check-ins asociadas a miembros loyalty</div>'+    '<div style="font-size:9px;color:var(--gris);margin-bottom:10px;">'+
     '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(21,128,61,.8);vertical-align:middle;margin-right:3px;"></span>≥15%&nbsp;&nbsp;'+
     '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(202,138,4,.8);vertical-align:middle;margin-right:3px;"></span>8–14%&nbsp;&nbsp;'+
     '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(220,38,38,.8);vertical-align:middle;margin-right:3px;"></span>&lt;8%'+
@@ -1124,8 +1123,8 @@ function renderPropSemaforo(mb){
   document.getElementById('prop-sem-total').innerHTML=
     '<b>'+fmtN(tot)+'</b> reservas evaluadas · <span style="color:var(--mid);font-size:10px">Unidad: reservas · Fuente: CloudBeds + Akin · Clic en tarjeta para ver detalle</span>'+
     '<div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;">'+
-      '<span style="font-size:10px;background:var(--blue-bg);color:var(--blue);padding:2px 9px;border-radius:99px;font-weight:700;">🎁 '+fmtN(loyTot)+' reservas loyalty</span>'+
-      '<span style="font-size:10px;background:var(--orange-bg);color:var(--orange);padding:2px 9px;border-radius:99px;font-weight:700;">⚠️ '+fmtN(opTot)+' errores operacionales</span>'+
+      '<span style="font-size:10px;background:var(--blue-bg);color:var(--blue);padding:2px 9px;border-radius:99px;font-weight:700;">🎁 Universo loyalty · '+fmtN(loyTot)+' reservas</span>'+
+'<span style="font-size:10px;background:var(--orange-bg);color:var(--orange);padding:2px 9px;border-radius:99px;font-weight:700;">⚠️ Riesgos operacionales · '+fmtN(opTot)+' casos</span>'+
       '<span style="font-size:10px;background:var(--cm);color:var(--mid);padding:2px 9px;border-radius:99px;font-weight:600;">'+fmtN(loyTot)+' + '+fmtN(opTot)+' = '+fmtN(tot)+' total</span>'+
     '</div>'+
     '<div style="margin-top:5px;font-size:10px;color:var(--gris);">ℹ️ Beneficios considerados: desayuno, toalla y descuento loyalty · Una persona puede tener múltiples reservas</div>';
@@ -1137,7 +1136,7 @@ function renderPropSemaforo(mb){
   /* Sección 1: Ejecución loyalty */
   var loyItems=[
     {k:'OK',label:'Reservas loyalty correctamente ejecutadas',sub:pctOK.toFixed(1)+'% de '+fmtN(loyTotal)+' reservas loyalty',val:t['OK'],cls:'s-verde',drill:false},
-    {k:'SIN CANJE',label:'Reservas loyalty sin beneficios',sub:scUnicos+' personas únicas · '+pctSC.toFixed(1)+'% de '+fmtN(loyTotal)+' reservas loyalty',val:t['SIN CANJE']||0,cls:(t['SIN CANJE']||0)===0?'s-verde':(t['SIN CANJE']||0)<20?'s-amarillo':'s-rojo',drill:'SIN CANJE'},
+    {k:'SIN CANJE',label:'Reservas loyalty sin beneficios',sub:fmtN(scUnicos)+' afiliados afectados · '+pctSC.toFixed(1)+'% de '+fmtN(loyTotal)+' reservas loyalty',val:t['SIN CANJE']||0,cls:(t['SIN CANJE']||0)===0?'s-verde':(t['SIN CANJE']||0)<20?'s-amarillo':'s-rojo',drill:'SIN CANJE'},
     {k:'TIER_INCORRECTO',label:'Reservas loyalty con nivel incorrecto',sub:pctTI.toFixed(1)+'% de '+fmtN(loyTotal)+' reservas loyalty · CB ≠ Akin',val:t['TIER_INCORRECTO']||0,cls:(t['TIER_INCORRECTO']||0)===0?'s-verde':(t['TIER_INCORRECTO']||0)<5?'s-amarillo':'s-rojo',drill:'TIER_INCORRECTO'},
   ];
   /* Sección 2: Riesgos operacionales */
@@ -1156,7 +1155,7 @@ function renderPropSemaforo(mb){
         '<div class="s-sub">'+i.sub+'</div>'+
       '</div>'+
       '<div class="s-right">'+
-        (hasDrill?'<span class="s-tipo">Ver lista →</span>':'<span class="s-tipo" style="background:var(--ok-bg);color:var(--ok)">✓ Sin problemas</span>')+
+        (hasDrill?'<span class="s-tipo">'+({'SIN CANJE':'Ver reservas afectadas →','TIER_INCORRECTO':'Ver diferencias CB vs AKIN →','LEAKAGE':'Ver reservas con beneficios indebidos →','MISUSE':'Ver tarifas mal aplicadas →'}[i.drill]||'Ver lista →')+'</span>':'<span class="s-tipo" style="background:var(--ok-bg);color:var(--ok)">✓ Sin problemas</span>')+
       '</div>'+
       '</div>';
   }).join('');};
@@ -1219,11 +1218,9 @@ function renderPropActions(afs,mb){
     '<th>Propiedad</th>'+
     '<th class="tc">% Reservas loyalty<br><span style="font-weight:400;color:var(--gris);font-size:8px">base: check-ins · meta 15%</span></th>'+
     '<th class="tc">Nuevos<br><span style="font-weight:400;color:var(--gris);font-size:8px">base: huéspedes</span></th>'+
-    '<th class="tc">Benef. OK<br><span style="font-weight:400;color:var(--gris);font-size:8px">OK / reservas loyalty</span></th>'+
-    '<th class="tc">Sin benef.</th>'+
+'<th class="tc">Ejecución OK<br><span style="font-weight:400;color:var(--gris);font-size:8px">OK / reservas loyalty</span></th>'+    '<th class="tc">Sin beneficios.</th>'+
     '<th class="tc">Nivel ✗</th>'+
-    '<th class="tc">Leakage</th>'+
-    '<th class="tc">Estado</th>'+
+(props.filter(function(p){return p.lk>0;}).length/Math.max(props.length,1)>0.1?'<th class="tc">Leakage</th>':'')+    '<th class="tc" title="El estado considera penetración, ejecución loyalty y riesgos operacionales">Estado ℹ️</th>'+
     '</tr></thead><tbody>'+
     props.map(function(p){
       var colPct=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';
@@ -1246,13 +1243,12 @@ function renderPropActions(afs,mb){
         '</td>'+
         '<td class="tc"><b>'+fmtN(p.nv)+'</b></td>'+
         '<td class="tc">'+
-          '<b style="color:'+colOK+'">'+p.pctOK.toFixed(0)+'%</b>'+
-          (loyTotProp>0?'<div style="font-size:9px;color:var(--gris);margin-top:1px;">'+fmtN(p.ok)+' de '+fmtN(loyTotProp)+'</div>':'')+
+          '<b style="color:'+colOK+'">'+p.pctOK.toFixed(1)+'%</b>'+
+(loyTotProp>0?'<div style="font-size:9px;color:var(--gris);margin-top:1px;">('+fmtN(p.ok)+'/'+fmtN(loyTotProp)+')</div>':'')
         '</td>'+
         '<td class="tc">'+(p.sc>0?'<b style="color:var(--err)">'+fmtN(p.sc)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>'+
         '<td class="tc">'+(p.tiI>0?'<b style="color:var(--warn)">'+fmtN(p.tiI)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>'+
-        '<td class="tc">'+(p.lk>0?'<b style="color:var(--orange)">'+fmtN(p.lk)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>'+
-        '<td class="tc">'+sIco[p.status]+'<span class="badge '+sBadge[p.status]+'" style="margin-left:4px">'+sLbl[p.status]+'</span></td>'+
+(props.filter(function(p){return p.lk>0;}).length/Math.max(props.length,1)>0.1?'<td class="tc">'+(p.lk>0?'<b style="color:var(--orange)">'+fmtN(p.lk)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>':'')+        '<td class="tc">'+sIco[p.status]+'<span class="badge '+sBadge[p.status]+'" style="margin-left:4px">'+sLbl[p.status]+'</span></td>'+
         '</tr>';
     }).join('')+
     '</tbody></table></div>'+
@@ -1266,7 +1262,7 @@ function renderSinMatchAkin(){
   var limpia=data.filter(function(r){return !/(demo|test|wizard)/i.test(r.Nombre||'');});
   document.getElementById('match-cnt').textContent=limpia.length;
   if(!limpia.length){cont.innerHTML='<div style="background:var(--ok-bg);border:1.5px solid var(--ok-light);border-radius:var(--r);padding:14px 18px;font-size:12px;color:var(--ok);">✅ Sin problemas técnicos de sincronización para este filtro.</div>';return;}
-  cont.innerHTML='<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">🔗</span><div><div class="ac-tit">'+limpia.length+' reservas sin sincronización Akin/CB</div><div class="ac-sub">Problema de plataforma, no del equipo de recepción</div></div></div><div style="display:flex;align-items:center;gap:7px;"><span class="badge b-warn">Escalar a Akin</span></div><span class="ac-arr">▼</span></div><div class="ac-body"><div class="match-banner">🔧 <b>El equipo de recepción no tiene nada que hacer aquí.</b> Causa: número de reserva o correo difiere entre Akin y CB. <b>Paso 1:</b> Buscar por nombre en CB. <b>Paso 2:</b> Si no aparece → escalar a Akin.</div><div class="sc-wrap"><table><thead><tr><th>Nombre</th><th># Reserva Akin</th><th>Fecha llegada</th><th>Propiedad</th><th>Período</th><th>Nivel</th></tr></thead><tbody>'+limpia.map(function(r){return '<tr><td><b>'+(r.Nombre||'—')+'</b></td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Periodo||r['Período']||'—')+'</td><td>'+(r.Tier_AKIN||'—')+'</td></tr>';}).join('')+'</tbody></table></div></div></div>';
+  cont.innerHTML='<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">🔗</span><div>'<div class="ac-tit">'+limpia.length+' reservas sin asociación AKIN</div><div class="ac-sub">Problema de plataforma, no del equipo de recepción</div></div></div><div style="display:flex;align-items:center;gap:7px;"><span class="badge b-warn">Escalar a Akin</span></div><span class="ac-arr">▼</span></div><div class="ac-body"><div class="match-banner">🔧 <b>El equipo de recepción no tiene nada que hacer aquí.</b> Causa: número de reserva o correo difiere entre Akin y CB. <b>Paso 1:</b> Buscar por nombre en CB. <b>Paso 2:</b> Si no aparece → escalar a Akin.</div><div class="sc-wrap"><table><thead><tr><th>Nombre</th><th># Reserva Akin</th><th>Fecha llegada</th><th>Propiedad</th><th>Período</th><th>Nivel</th></tr></thead><tbody>'+limpia.map(function(r){return '<tr><td><b>'+(r.Nombre||'—')+'</b></td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Periodo||r['Período']||'—')+'</td><td>'+(r.Tier_AKIN||'—')+'</td></tr>';}).join('')+'</tbody></table></div></div></div>';
 }
 
 /* ═══════════════════════════════════════
