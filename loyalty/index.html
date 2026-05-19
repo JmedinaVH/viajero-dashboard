@@ -517,12 +517,18 @@ tbody tr:hover td{background:var(--cream);}
     <div class="sec-hdr"><h2>Estado de actividad <i class="ib" onclick="openTip('Estado actividad')">i</i></h2><div class="linea"></div></div>
     <div id="members-activity-pills"></div>
   </div>
-  <div class="sec">
-    <div class="sec-hdr"><h2>Directorio de miembros <i class="ib" onclick="openTip('Directorio miembros')">i</i></h2><div class="linea"></div></div>
-    <input class="member-search" id="member-q" type="text" placeholder="🔍 Buscar por nombre, correo, estado de actividad..." oninput="filtrarMembers()"/>
-    <div class="member-wrap" id="member-tabla"></div>
-  </div>
+ <div class="sec-hdr" style="cursor:pointer;" onclick="toggleDir(this)">
+  <h2>Directorio de miembros</h2>
+  <span id="dir-toggle-ico" style="font-size:11px;color:var(--gris);margin-left:8px;margin-right:8px;">▼ expandir</span>
+  <div class="linea"></div>
 </div>
+function toggleDir(hdr){
+  var body=document.getElementById('dir-body');
+  var ico=document.getElementById('dir-toggle-ico');
+  var open=body.style.display!=='none';
+  body.style.display=open?'none':'block';
+  ico.textContent=open?'▼ expandir':'▲ colapsar';
+}
 
 <!-- TAB 4: CONTEXTO -->
 <div id="tab-ctx" class="tab-content">
@@ -744,8 +750,6 @@ function renderExecHeadline(afs,mb){
 /* KPI cards — nuevas, más visuales */
 function renderExecCtxKPIs(afs,mb){
   var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
-
-  // Universo loyalty (solo OK + SIN_CANJE + TIER_INCORRECTO)
   var okN=mb.filter(function(r){return r.Error_Type==='OK';}).length;
   var scN=mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).length;
   var tiI=mb.filter(function(r){return r.Error_Type==='TIER_INCORRECTO';}).length;
@@ -753,21 +757,15 @@ function renderExecCtxKPIs(afs,mb){
   var ms=mb.filter(function(r){return r.Error_Type==='MISUSE';}).length;
   var scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
   var totalLoyalty=okN+scN+tiI;
-
-  // Tasas
   var nvRate=hu>0?(nv/hu*100):0;
   var colNv=nvRate>=5?'var(--ok)':nvRate>=2?'#ca8a04':'var(--err)';
   var pctOK=totalLoyalty>0?Math.round(okN/totalLoyalty*1000)/10:0;
   var pctSC=totalLoyalty>0?Math.round(scN/totalLoyalty*1000)/10:0;
   var pctTI=totalLoyalty>0?Math.round(tiI/totalLoyalty*1000)/10:0;
-
-  // Penetración
   var mixData=DATA.mixReservas||null;
   var totalRes=mixData?mixData.total:ci;
   var loyRes=mixData?mixData.miembros:cb;
   var pctLoy=totalRes>0?Math.round(loyRes/totalRes*1000)/10:0;
-
-  // Noches: calcular desde memberBehavior (no desde nochesPromedio pre-calculado)
   var mbArr=DATA.memberBehavior||[];
   var nochesData=DATA.nochesPromedio||null;
   if(mbArr.length>0){
@@ -775,9 +773,21 @@ function renderExecCtxKPIs(afs,mb){
     nochesData={miembros:avgMb,no_miembros:nochesData?nochesData.no_miembros:0};
   }
 
+  /* Propiedades sobre meta — calculado desde afiliados */
+  var propMap={};
+  afs.forEach(function(r){
+    var p=r.Propiedad||'';if(!p)return;
+    if(!propMap[p])propMap[p]={ci:0,cb:0};
+    propMap[p].ci+=parseFloat(r._check_ins)||0;
+    propMap[p].cb+=parseFloat(r._afiliados_cb)||0;
+  });
+  var totalProps=Object.keys(propMap).length;
+  var propsOnMeta=Object.values(propMap).filter(function(v){return v.ci>0&&(v.cb/v.ci*100)>=15;}).length;
+  var colProps=propsOnMeta>=totalProps*0.5?'var(--ok)':propsOnMeta>0?'#ca8a04':'var(--err)';
+
   var html='';
 
-  // ── UNIVERSO 1: Adquisición ──
+  /* ── UNIVERSO 1: Adquisición (3 cards) ── */
   html+='<div class="univ-section">'+
     '<div class="univ-hdr">'+
       '<span class="univ-ico">👥</span>'+
@@ -785,6 +795,7 @@ function renderExecCtxKPIs(afs,mb){
       '<span class="univ-base">base: '+fmtN(hu)+' huéspedes totales</span>'+
     '</div>'+
     '<div class="exec-kpi-grid" style="margin-bottom:0">'+
+      /* Card 1: Captación */
       '<div class="exec-kpi-card">'+
         '<div class="ekc-top">'+
           '<div class="ekc-label">Nuevos afiliados / huésped '+ib('Nuevos inscritos / huésped')+'</div>'+
@@ -793,39 +804,32 @@ function renderExecCtxKPIs(afs,mb){
         '</div>'+
         '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta futura</span><span class="ekc-bottom-val" style="color:'+colNv+'">≥5%</span></div>'+
       '</div>'+
+      /* Card 2: Propiedades sobre meta */
+      '<div class="exec-kpi-card">'+
+        '<div class="ekc-top">'+
+          '<div class="ekc-label">Propiedades sobre meta '+ib('Propiedades con penetración ≥15%')+'</div>'+
+          '<div class="ekc-metric"><div class="ekc-val" style="color:'+colProps+'">'+propsOnMeta+'</div><div class="ekc-unit" style="color:var(--gris)"> / '+totalProps+'</div></div>'+
+          '<div class="ekc-desc">'+propsOnMeta+' de '+totalProps+' propiedades superan el 15% de penetración</div>'+
+        '</div>'+
+        '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta</span><span class="ekc-bottom-val" style="color:var(--gris)">≥15% penetración</span></div>'+
+      '</div>'+
+      /* Card 3: Noches (solo si hay dato) */
       (nochesData&&nochesData.miembros>0?
         '<div class="exec-kpi-card">'+
           '<div class="ekc-top">'+
-'<div class="ekc-label">Noches promedio por reserva · miembros '+ib('Noches promedio')+'</div>'+            '<div class="ekc-metric"><div class="ekc-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div><div class="ekc-unit" style="color:var(--gris)">noches</div></div>'+
-'<div class="ekc-desc">Métrica histórica acumulada · AKIN</div>'+          '</div>'+
+            '<div class="ekc-label">Noches promedio por reserva · miembros '+ib('Noches promedio')+'</div>'+
+            '<div class="ekc-metric"><div class="ekc-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div><div class="ekc-unit" style="color:var(--gris)">noches</div></div>'+
+            '<div class="ekc-desc">Métrica histórica acumulada · AKIN</div>'+
+          '</div>'+
           '<div class="ekc-bottom"><span class="ekc-bottom-lbl">No-miembros</span><span class="ekc-bottom-val" style="color:var(--gris)">'+(nochesData.no_miembros>0?nochesData.no_miembros.toFixed(1)+' noches':'—')+'</span></div>'+
         '</div>'
       :'')+
     '</div>'+
   '</div>';
 
-  // ── UNIVERSO 2: Penetración ──
-  if(mixData){
-    html+='<div class="univ-section">'+
-      '<div class="univ-hdr">'+
-        '<span class="univ-ico">🛏️</span>'+
-        '<span class="univ-tit">Penetración</span>'+
-        '<span class="univ-base">base: '+fmtN(totalRes)+' reservas / check-ins</span>'+
-      '</div>'+
-      '<div class="exec-kpi-grid" style="margin-bottom:0">'+
-        '<div class="exec-kpi-card">'+
-          '<div class="ekc-top">'+
-            '<div class="ekc-label">Reservas loyalty detectadas '+ib('Reservas miembros')+'</div>'+
-            '<div class="ekc-metric"><div class="ekc-val" style="color:var(--teal)">'+pctLoy.toFixed(1)+'</div><div class="ekc-unit" style="color:var(--teal)">%</div></div>'+
-            '<div class="ekc-desc">'+fmtN(loyRes)+' de '+fmtN(totalRes)+' reservas totales son de miembros</div>'+
-          '</div>'+
-          '<div class="ekc-bottom"><span class="ekc-bottom-lbl">No-miembros</span><span class="ekc-bottom-val" style="color:var(--gris)">'+fmtN(mixData.no_miembros)+'</span></div>'+
-        '</div>'+
-      '</div>'+
-    '</div>';
-  }
+  /* ── UNIVERSO 2: Penetración — ELIMINADO (ya está en el banner hero) ── */
 
-  // ── UNIVERSO 3: Ejecución loyalty (ecuación visible) ──
+  /* ── UNIVERSO 3: Ejecución loyalty ── */
   if(totalLoyalty>0){
     html+='<div class="univ-section">'+
       '<div class="univ-hdr">'+
@@ -842,7 +846,8 @@ function renderExecCtxKPIs(afs,mb){
         '</div>'+
         '<div class="leq-row">'+
           '<div class="leq-ico">❌</div>'+
-'<div class="leq-lbl">Reservas loyalty sin beneficios<br><span style="font-size:10px;color:var(--gris);font-weight:400">afectando a '+fmtN(scUnicos)+' afiliados</span></div>'+          '<div class="leq-pct">'+pctSC.toFixed(1)+'%</div>'+
+          '<div class="leq-lbl">Reservas loyalty sin beneficios<br><span style="font-size:10px;color:var(--gris);font-weight:400">afectando a '+fmtN(scUnicos)+' afiliados</span></div>'+
+          '<div class="leq-pct">'+pctSC.toFixed(1)+'%</div>'+
           '<div class="leq-n" style="color:var(--err)">'+fmtN(scN)+'</div>'+
         '</div>'+
         (tiI>0?
@@ -864,7 +869,7 @@ function renderExecCtxKPIs(afs,mb){
     '</div>';
   }
 
-  // ── UNIVERSO 4: Errores operacionales (separado) ──
+  /* ── UNIVERSO 4: Errores operacionales ── */
   if(lk>0||ms>0){
     html+='<div class="univ-section">'+
       '<div class="univ-hdr op">'+
