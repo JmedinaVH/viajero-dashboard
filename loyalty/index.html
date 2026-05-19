@@ -712,7 +712,10 @@ function drillTipoError(tipo,titulo){
 ═══════════════════════════════════════ */
 function renderExecHeadline(afs,mb){
   var ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb');
-  var pLoy=ci>0?cb/ci*100:0;
+  var mixData=DATA.mixReservas||null;
+  var totalRes=mixData?mixData.total:ci;
+  var loyRes=mixData?mixData.miembros:cb;
+  var pLoy=totalRes>0?loyRes/totalRes*100:0;
   var fp=getMsValues('prop'),fpa=getMsValues('pais');
   var scope=fp.length===1?fp[0]:fpa.length===1?fpa[0]:'toda la cadena';
   var isOnMeta=pLoy>=15,isGrowing=pLoy>=8&&pLoy<15;
@@ -725,8 +728,7 @@ function renderExecHeadline(afs,mb){
     '<div class="hl-main">'+
     '<div class="hl-phase">\ud83d\udccd '+scope+'</div>'+
     '<div class="hl-title">'+headline+'</div>'+
-    '<div style="font-size:11px;color:rgba(255,255,255,.45);margin-top:6px;line-height:1.6">'+
-    'Penetraci\u00f3n = % de check-ins que son miembros activos \u00b7 Meta: 15%'+
+    '<div style="font-size:11px;color:rgba(255,255,255,.45);margin-top:6px;line-height:1.6">'+'Penetraci\u00f3n = % de reservas/check-ins asociadas a miembros loyalty \u00b7 Meta: 15%'+
     '</div>'+
     '</div>'+
     '<div class="hl-kpi">'+
@@ -793,10 +795,8 @@ function renderExecCtxKPIs(afs,mb){
       (nochesData&&nochesData.miembros>0?
         '<div class="exec-kpi-card">'+
           '<div class="ekc-top">'+
-            '<div class="ekc-label">Noches promedio por estadía · miembros '+ib('Noches promedio')+'</div>'+
-            '<div class="ekc-metric"><div class="ekc-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div><div class="ekc-unit" style="color:var(--gris)">noches</div></div>'+
-            '<div class="ekc-desc">'+(nochesData.no_miembros>0?(Math.abs(nochesData.miembros-nochesData.no_miembros)<0.2?'Sin diferencia vs no-miembros ('+nochesData.no_miembros.toFixed(1)+')':(nochesData.miembros>nochesData.no_miembros?'+'+(nochesData.miembros-nochesData.no_miembros).toFixed(1)+' noches más que no-miembros ('+nochesData.no_miembros.toFixed(1)+')':(nochesData.no_miembros-nochesData.miembros).toFixed(1)+' noches menos que no-miembros ('+nochesData.no_miembros.toFixed(1)+')')):'Promedio por estadía de miembro')+'</div>'+
-          '</div>'+
+'<div class="ekc-label">Noches promedio por reserva · miembros '+ib('Noches promedio')+'</div>'+            '<div class="ekc-metric"><div class="ekc-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div><div class="ekc-unit" style="color:var(--gris)">noches</div></div>'+
+'<div class="ekc-desc">Métrica histórica acumulada · AKIN</div>'+          '</div>'+
           '<div class="ekc-bottom"><span class="ekc-bottom-lbl">No-miembros</span><span class="ekc-bottom-val" style="color:var(--gris)">'+(nochesData.no_miembros>0?nochesData.no_miembros.toFixed(1)+' noches':'—')+'</span></div>'+
         '</div>'
       :'')+
@@ -841,8 +841,7 @@ function renderExecCtxKPIs(afs,mb){
         '</div>'+
         '<div class="leq-row">'+
           '<div class="leq-ico">❌</div>'+
-          '<div class="leq-lbl">Sin beneficio · <span style="font-size:10px;color:var(--gris);font-weight:400">'+fmtN(scUnicos)+' personas únicas</span></div>'+
-          '<div class="leq-pct">'+pctSC.toFixed(1)+'%</div>'+
+'<div class="leq-lbl">Reservas loyalty sin beneficios<br><span style="font-size:10px;color:var(--gris);font-weight:400">afectando a '+fmtN(scUnicos)+' afiliados</span></div>'+          '<div class="leq-pct">'+pctSC.toFixed(1)+'%</div>'+
           '<div class="leq-n" style="color:var(--err)">'+fmtN(scN)+'</div>'+
         '</div>'+
         (tiI>0?
@@ -1296,11 +1295,11 @@ function renderMembersTab(){
   var avgN=mb.reduce(function(s,r){return s+(parseFloat(r.total_nights)||0);},0)/totalM;
   var avgP=mb.reduce(function(s,r){return s+(parseFloat(r.properties_visited)||0);},0)/totalM;
   var multi=mb.filter(function(r){return (parseFloat(r.properties_visited)||0)>1;}).length;
-  var kpis=[
-    {label:'Estadías promedio por miembro',val:avgB.toFixed(1),sub:'total reservas ÷ miembros',bkc:'var(--teal)'},
-    {label:'Noches promedio por miembro',val:avgN.toFixed(1),sub:'total noches acumuladas ÷ miembros',bkc:'var(--blue)'},
-    {label:'Propiedades promedio visitadas',val:avgP.toFixed(1),sub:'índice de fidelidad a la cadena',bkc:'var(--purple)'},
-    {label:'Miembros multi-propiedad',val:fmtN(multi),sub:fmtP(multi,totalM)+' visitaron 2 o más hostels',bkc:'var(--ok)'},
+ var kpis=[
+    {label:'Reservas promedio por miembro',val:avgB.toFixed(1),sub:fmtN(Math.round(avgB*totalM))+' reservas totales · '+fmtN(totalM)+' miembros',bkc:'var(--teal)'},
+    {label:'Noches acumuladas promedio por miembro',val:avgN.toFixed(1),sub:'total noches históricas ÷ miembros registrados',bkc:'var(--blue)'},
+    {label:'Hostels promedio visitados',val:avgP.toFixed(1),sub:'índice de fidelidad cross-hostel',bkc:'var(--purple)'},
+    {label:'Miembros multi-hostel',val:fmtN(multi),sub:fmtP(multi,totalM)+' visitaron 2 o más hostels',bkc:'var(--ok)'},
   ];
   document.getElementById('members-beh-kpis').innerHTML=
     '<div class="beh-grid">'+
