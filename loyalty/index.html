@@ -931,8 +931,7 @@ function renderExecPaisPenetracion(afsAll){
     '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(202,138,4,.8);vertical-align:middle;margin-right:3px;"></span>8–14%&nbsp;&nbsp;'+
     '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:rgba(220,38,38,.8);vertical-align:middle;margin-right:3px;"></span>&lt;8%'+
     '</div>'+
-    '<div style="flex:1;position:relative;" id="pais-chart-wrap"><canvas id="pais-bar-canvas"></canvas></div>';
-  requestAnimationFrame(function(){
+'<div style="flex:1;position:relative;height:'+Math.max(140, paises.length*32)+'px;" id="pais-chart-wrap"><canvas id="pais-bar-canvas"></canvas></div>';  requestAnimationFrame(function(){
     var wrap=document.getElementById('pais-chart-wrap');
     if(wrap) wrap.style.height=Math.max(140, paises.length*30)+'px';
     var canvas=document.getElementById('pais-bar-canvas');
@@ -1214,6 +1213,9 @@ function renderPropActions(afs,mb){
   var sIco={critico:'\ud83d\udd34',atencion:'\ud83d\udfe1',ok:'\ud83d\udfe2'};
   var sLbl={critico:'Cr\u00edtico',atencion:'Atenci\u00f3n',ok:'En camino'};
   var sBadge={critico:'b-err',atencion:'b-warn',ok:'b-ok'};
+  var showSC=props.some(function(p){return p.sc>0;});
+  var showTI=props.some(function(p){return p.tiI>0;});
+  var showLK=props.filter(function(p){return p.lk>0;}).length/Math.max(props.length,1)>0.1;
   cont.innerHTML=
     '<div class="prop-table-wrap">'+
     '<table class="prop-tbl">'+
@@ -1221,8 +1223,11 @@ function renderPropActions(afs,mb){
     '<th>Propiedad</th>'+
     '<th class="tc">% Reservas loyalty<br><span style="font-weight:400;color:var(--gris);font-size:8px">base: check-ins · meta 15%</span></th>'+
     '<th class="tc">Nuevos<br><span style="font-weight:400;color:var(--gris);font-size:8px">base: huéspedes</span></th>'+
-'<th class="tc">Ejecución OK<br><span style="font-weight:400;color:var(--gris);font-size:8px">OK / reservas loyalty</span></th>'+    (props.some(function(p){return p.sc>0;})?'<th class="tc">Sin beneficios</th>':'')+
-(props.some(function(p){return p.tiI>0;})?'<th class="tc">Nivel ✗</th>':'')+(props.filter(function(p){return p.lk>0;}).length/Math.max(props.length,1)>0.1?'<th class="tc">Leakage</th>':'')+    '<th class="tc" title="El estado considera penetración, ejecución loyalty y riesgos operacionales">Estado ℹ️</th>'+
+    '<th class="tc">Ejecución OK<br><span style="font-weight:400;color:var(--gris);font-size:8px">OK / reservas loyalty</span></th>'+
+    (showSC?'<th class="tc">Sin beneficios</th>':'')+
+    (showTI?'<th class="tc">Nivel ✗</th>':'')+
+    (showLK?'<th class="tc">Leakage</th>':'')+
+    '<th class="tc" title="El estado considera penetración, ejecución loyalty y riesgos operacionales">Estado ℹ️</th>'+
     '</tr></thead><tbody>'+
     props.map(function(p){
       var colPct=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';
@@ -1246,11 +1251,12 @@ function renderPropActions(afs,mb){
         '<td class="tc"><b>'+fmtN(p.nv)+'</b></td>'+
         '<td class="tc">'+
           '<b style="color:'+colOK+'">'+p.pctOK.toFixed(1)+'%</b>'+
-(loyTotProp>0?'<div style="font-size:9px;color:var(--gris);margin-top:1px;">('+fmtN(p.ok)+'/'+fmtN(loyTotProp)+')</div>':'')
+          (loyTotProp>0?'<div style="font-size:9px;color:var(--gris);margin-top:1px;">('+fmtN(p.ok)+'/'+fmtN(loyTotProp)+')</div>':'')+
         '</td>'+
-        (props.some(function(p){return p.sc>0;})?'<td class="tc">'+(p.sc>0?'<b style="color:var(--err)">'+fmtN(p.sc)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>':'')+
-(props.some(function(p){return p.tiI>0;})?'<td class="tc">'+(p.tiI>0?'<b style="color:var(--warn)">'+fmtN(p.tiI)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>':'')+
-(props.filter(function(p){return p.lk>0;}).length/Math.max(props.length,1)>0.1?'<td class="tc">'+(p.lk>0?'<b style="color:var(--orange)">'+fmtN(p.lk)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>':'')+        '<td class="tc">'+sIco[p.status]+'<span class="badge '+sBadge[p.status]+'" style="margin-left:4px">'+sLbl[p.status]+'</span></td>'+
+        (showSC?'<td class="tc">'+(p.sc>0?'<b style="color:var(--err)">'+fmtN(p.sc)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>':'')+
+        (showTI?'<td class="tc">'+(p.tiI>0?'<b style="color:var(--warn)">'+fmtN(p.tiI)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>':'')+
+        (showLK?'<td class="tc">'+(p.lk>0?'<b style="color:var(--orange)">'+fmtN(p.lk)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>':'')+
+        '<td class="tc">'+sIco[p.status]+'<span class="badge '+sBadge[p.status]+'" style="margin-left:4px">'+sLbl[p.status]+'</span></td>'+
         '</tr>';
     }).join('')+
     '</tbody></table></div>'+
@@ -1373,10 +1379,9 @@ function renderCtxTierDonut(){
   if(raw.length>0&&raw[0].Viajero!==undefined){
     var grouped={};
     raw.forEach(function(m){
-      /* El nombre del nivel está en el campo "Viajero" — puede ser null/undefined */
       var tier=m.Viajero||m['Loyalty Level']||m.nivel||m.Tier||'Sin nivel';
-      /* Ignorar filas donde tier sea vacío o sea el header */
-if(!tier||tier==='Viajero'||tier==='nivel'||tier==='Tier'||tier==='N/A'||tier==='n/a')return;      if(!grouped[tier])grouped[tier]={name:tier,count:0,members:[]};
+      if(!tier||tier==='Viajero'||tier==='nivel'||tier==='Tier'||tier==='N/A'||tier==='n/a')return;
+      if(!grouped[tier])grouped[tier]={name:tier,count:0,members:[]};
       grouped[tier].count++;
       grouped[tier].members.push({name:m.Name||m.nombre||'',email:m.Email||m.email||'',loyalty_number:m['Loyalty #']||m.loyalty_number||''});
     });
@@ -1391,7 +1396,13 @@ if(!tier||tier==='Viajero'||tier==='nivel'||tier==='Tier'||tier==='N/A'||tier===
     document.getElementById('ctx-tier-donut').innerHTML='<div class="empty">Sin datos de niveles disponibles. Verifica que <code>akinTiers</code> tenga datos con el campo de nivel correcto.</div>';
     return;
   }
-  var donutHtml='<div class="tier-donut-card"><div class="tier-donut-wrap"><canvas id="donut-canvas" width="110" height="110"></canvas><div class="tier-donut-center"><div class="tier-donut-n">'+total+'</div><div class="tier-donut-lbl">Miembros</div></div></div><div class="tier-donut-list"><div class="tier-donut-title">Distribución actual del programa</div>'+tiers.map(function(t){var pct=total>0?Math.round((parseInt(t.count)||0)/total*1000)/10:0;var col=TIER_COLORS[t.name]||'#94a3b8';return '<div class="tier-row" onclick="drillTierMembers(\''+t.name+'\')" style="cursor:pointer"><div class="tier-dot" style="background:'+col+'"></div><div class="tier-row-name">'+t.name+'</div><div class="tier-row-n">'+fmtN(t.count)+'</div><div class="tier-row-pct">'+pct+'%</div></div>';}).join('')+'</div></div>';
+  var donutHtml='<div class="tier-donut-card"><div class="tier-donut-wrap"><canvas id="donut-canvas" width="110" height="110"></canvas><div class="tier-donut-center"><div class="tier-donut-n">'+total+'</div><div class="tier-donut-lbl">Miembros registrados</div></div></div><div class="tier-donut-list"><div class="tier-donut-title">Distribución actual del programa</div>'+
+    tiers.map(function(t){
+      var pct=total>0?Math.round((parseInt(t.count)||0)/total*1000)/10:0;
+      var col=TIER_COLORS[t.name]||'#94a3b8';
+      return '<div class="tier-row" onclick="drillTierMembers(\''+t.name+'\')" style="cursor:pointer"><div class="tier-dot" style="background:'+col+'"></div><div class="tier-row-name">'+t.name+'</div><div class="tier-row-n">'+fmtN(t.count)+'</div><div class="tier-row-pct">'+pct+'%</div></div>';
+    }).join('')+
+  '</div></div>';
   document.getElementById('ctx-tier-donut').innerHTML=donutHtml;
   requestAnimationFrame(function(){
     var canvas=document.getElementById('donut-canvas');
@@ -1500,10 +1511,11 @@ function renderCtxTiersDetail(afs,mb){
     var bens=TIER_BENEFITS[tier]||tier;
     var statusCol=pctOK>=90?'var(--ok)':pctOK>=50?'var(--warn)':'var(--err)';
     return '<div class="tier-c" style="border-top:3px solid '+col+';">'+
-      '<div class="t-top"><div class="t-nom" style="color:'+col+';">'+tier+'</div><div class="t-tot">'+fmtN(tot)+' casos</div></div>'+
+      '<div class="t-top"><div class="t-nom" style="color:'+col+';">'+tier+'</div><div class="t-tot">'+fmtN(tot)+' reservas evaluadas</div></div>'+
       '<div class="t-bens">'+bens+'</div>'+
       '<div class="tier-bar"><div class="tier-fill" style="width:'+barW+'%;background:'+col+';"></div></div>'+
-'<div class="tier-pct" style="color:'+statusCol+';">'+pctOK.toFixed(1)+'% correctamente ejecutado</div>'+      '<div style="display:flex;flex-direction:column;gap:5px;font-size:10px;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">'+
+      '<div class="tier-pct" style="color:'+statusCol+';">'+pctOK.toFixed(1)+'% correctamente ejecutado</div>'+
+      '<div style="display:flex;flex-direction:column;gap:5px;font-size:10px;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">'+
         '<div style="display:flex;justify-content:space-between;"><span style="color:var(--gris)">✅ Correctos</span><b style="color:var(--ok)">'+fmtN(ok)+'</b></div>'+
         '<div style="display:flex;justify-content:space-between;"><span style="color:var(--gris)">❌ Sin beneficio</span><b style="color:var(--err)">'+fmtN(sc)+'</b></div>'+
         (ti>0?'<div style="display:flex;justify-content:space-between;"><span style="color:var(--gris)">⚠️ Nivel incorrecto</span><b style="color:var(--warn)">'+fmtN(ti)+'</b></div>':'')+
@@ -1511,13 +1523,9 @@ function renderCtxTiersDetail(afs,mb){
       '</div>'+
     '</div>';
   }).join('');
-var worstTier=tiers.filter(function(t){return t.rows&&t.rows.length>0;}).sort(function(a,b){
-  var aOK=a.rows.filter(function(r){return r.Error_Type==='OK';}).length/Math.max(a.rows.length,1);
-  var bOK=b.rows.filter(function(r){return r.Error_Type==='OK';}).length/Math.max(b.rows.length,1);
-  return aOK-bOK;
-})[0];
-var insightHtml=worstTier?'<div style="background:var(--warn-bg);border:1.5px solid var(--warn);border-radius:var(--r);padding:10px 16px;font-size:11px;color:var(--warn);margin-bottom:12px;">⚠️ Los niveles superiores presentan mayor complejidad operacional y menor tasa de ejecución correcta.</div>':'';
-document.getElementById('ctx-tiers-g').innerHTML=insightHtml+'<div class="tiers-g">'+cards+'</div>';
+  document.getElementById('ctx-tiers-g').innerHTML=
+    '<div style="background:var(--warn-bg);border:1.5px solid var(--warn);border-radius:var(--r);padding:10px 16px;font-size:11px;color:var(--warn);margin-bottom:12px;">⚠️ Los niveles superiores presentan mayor complejidad operacional y menor tasa de ejecución correcta. · Base: reservas loyalty evaluadas por nivel del programa</div>'+
+    '<div class="tiers-g">'+cards+'</div>';
 }
 
 function renderDetailSheetBtn(){
