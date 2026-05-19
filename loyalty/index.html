@@ -1,431 +1,1448 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Viajero Go · Dashboard</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Viajero · Loyalty Dashboard</title>
 <link rel="icon" type="image/png" href="../favicon-32x32.png"/>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-:root{--coral:#F04B24;--coral-d:#C93A18;--cream:#F4EFE9;--cm:#EDE5DA;--cd:#E0D5C8;--border:#DDD4CA;--dark:#1E100A;--mid:#6B3A28;--gris:#7A6E68;--ok:#15803d;--ok-bg:#dcfce7;--warn:#854d0e;--warn-bg:#fef9c3;--err:#dc2626;--err-bg:#fee2e2;--blue:#0369a1;--blue-bg:#e0f2fe;--purple:#7c3aed;--teal:#0f766e;--teal-bg:#ccfbf1;--surface:#fff;--r:12px;--rl:16px;}
-*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
-::-webkit-scrollbar{width:5px;height:5px;}::-webkit-scrollbar-thumb{background:var(--cd);border-radius:9px;}
-header{background:var(--dark);height:64px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:300;box-shadow:0 2px 12px rgba(0,0,0,.3);}
-.h-left{display:flex;align-items:center;gap:12px;}.h-logo{height:34px;object-fit:contain;flex-shrink:0;display:block;}.h-sep{width:1px;height:28px;background:rgba(255,255,255,.15);flex-shrink:0;}
-.h-title{color:#fff;font-size:16px;font-weight:700;line-height:1.2;}.h-sub{color:rgba(255,255,255,.4);font-size:10px;letter-spacing:.4px;}
-.h-right{display:flex;align-items:center;gap:8px;}
-.h-ts{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:4px 10px;}.h-ts-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.3);}.h-ts-val{font-size:11px;color:rgba(255,255,255,.6);}
-.h-live{display:flex;align-items:center;gap:5px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);border-radius:99px;padding:4px 11px;font-size:9px;font-weight:700;color:#10b981;letter-spacing:.5px;text-transform:uppercase;}.h-live .dot{width:5px;height:5px;border-radius:50%;background:#10b981;animation:pulse 2s infinite;flex-shrink:0;}@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.5);}50%{box-shadow:0 0 0 4px rgba(16,185,129,0);}}
-.btn-back{color:rgba(255,255,255,.6);font-size:11px;font-weight:600;text-decoration:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:5px 11px;transition:.15s;}.btn-back:hover{background:rgba(255,255,255,.13);color:#fff;}
-.filtros{background:var(--coral);padding:8px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:64px;z-index:299;border-bottom:2px solid var(--coral-d);}
-.fg label{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.55);margin-bottom:3px;}
-.ms-wrap{position:relative;}.ms-btn{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:5px 24px 5px 9px;border:1.5px solid rgba(255,255,255,.22);border-radius:7px;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;min-width:120px;text-align:left;position:relative;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:.14s;}.ms-btn::after{content:'▾';position:absolute;right:7px;top:50%;transform:translateY(-50%);font-size:9px;color:rgba(255,255,255,.5);}.ms-btn:hover{background:rgba(255,255,255,.18);}
-.ms-dd{display:none;position:absolute;top:calc(100% + 5px);left:0;background:var(--dark);border-radius:10px;padding:7px;min-width:200px;z-index:999;max-height:250px;overflow-y:auto;box-shadow:0 8px 30px rgba(0,0,0,.5);}.ms-dd.open{display:block;}
-.ms-dd-hdr{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.3);padding:3px 6px 7px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:5px;display:flex;justify-content:space-between;}.ms-dd-hdr span{cursor:pointer;color:rgba(255,255,255,.5);}.ms-dd-hdr span:hover{color:#fff;}
-.ms-dd label{display:flex;align-items:center;gap:7px;color:rgba(255,255,255,.82);padding:5px 7px;font-size:12px;cursor:pointer;border-radius:5px;font-weight:500;user-select:none;}.ms-dd label:hover{background:rgba(255,255,255,.07);}.ms-dd input[type=checkbox]{accent-color:var(--coral);width:13px;height:13px;flex-shrink:0;}
-.filtros-reset{margin-left:auto;font-family:'Outfit',sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,.55);background:none;border:1px solid rgba(255,255,255,.18);border-radius:7px;padding:4px 10px;cursor:pointer;transition:.14s;}.filtros-reset:hover{background:rgba(255,255,255,.12);color:#fff;}
-.tabs-bar{background:var(--surface);border-bottom:2px solid var(--border);padding:0 32px;position:sticky;top:110px;z-index:298;display:flex;overflow-x:auto;}
-.tab-btn{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--gris);background:none;border:none;border-bottom:3px solid transparent;padding:13px 18px;cursor:pointer;transition:.15s;margin-bottom:-2px;white-space:nowrap;}.tab-btn:hover{color:var(--dark);}.tab-btn.active{color:var(--coral);border-bottom-color:var(--coral);}
-.tab-pane{display:none;}.tab-pane.active{display:block;}
-main{max-width:1120px;margin:0 auto;padding:24px 32px 80px;}
-.banner{border-radius:var(--rl);padding:18px 22px;margin-bottom:22px;display:flex;align-items:center;gap:16px;border:1.5px solid;}
-.banner.ok{background:var(--ok-bg);border-color:#86efac;}.banner.warn{background:var(--warn-bg);border-color:#fde68a;}.banner.err{background:var(--err-bg);border-color:#fca5a5;}
-.banner-ico{font-size:28px;flex-shrink:0;}.banner-title{font-size:15px;font-weight:800;}.banner-sub{font-size:12px;color:var(--gris);margin-top:3px;}
-.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
-.kpi{background:var(--surface);border-radius:var(--rl);padding:22px 20px;border:1.5px solid var(--border);position:relative;overflow:hidden;}
-.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--rl) var(--rl) 0 0;background:var(--border);}.kpi.ok::before{background:var(--ok);}.kpi.warn::before{background:#eab308;}.kpi.err::before{background:var(--err);}
-.kpi-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gris);margin-bottom:8px;}
-.kpi-num{font-size:46px;font-weight:800;line-height:1;margin-bottom:4px;}.kpi.ok .kpi-num{color:var(--ok);}.kpi.warn .kpi-num{color:#ca8a04;}.kpi.err .kpi-num{color:var(--err);}
-.kpi-desc{font-size:11px;color:var(--gris);line-height:1.5;margin-bottom:8px;}
-.kpi-delta{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-bottom:8px;}
-.kpi-delta.up{background:var(--ok-bg);color:var(--ok);}.kpi-delta.dn{background:var(--err-bg);color:var(--err);}.kpi-delta.flat{background:var(--cd);color:var(--mid);}
-.kpi-bar{height:6px;background:var(--cd);border-radius:99px;overflow:hidden;margin-top:12px;position:relative;}.kpi-bar-fill{height:100%;border-radius:99px;}.kpi-bar-tgt{position:absolute;top:-1px;bottom:-1px;width:2px;background:rgba(30,16,10,.2);}
-.kpi-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}.tag{display:inline-flex;font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;}.tag.ok{background:var(--ok-bg);color:var(--ok);}.tag.warn{background:var(--warn-bg);color:var(--warn);}.tag.err{background:var(--err-bg);color:var(--err);}.tag.gray{background:var(--cd);color:var(--mid);}
-.sec{margin-bottom:28px;}.sec-hdr{display:flex;align-items:center;gap:9px;margin-bottom:14px;}.sec-hdr h2{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}.sec-hdr .line{flex:1;height:1px;background:var(--border);}.sec-badge{background:var(--coral);color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;}
-.err-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
-.ec{background:var(--surface);border-radius:var(--r);padding:16px 14px;border:1.5px solid var(--border);transition:.15s;}.ec[data-drill]{cursor:pointer;}.ec[data-drill]:hover{box-shadow:0 6px 24px rgba(30,16,10,.12);transform:translateY(-2px);}
-.ec-num{font-size:32px;font-weight:800;line-height:1;margin-bottom:4px;}.ec-lbl{font-size:11px;font-weight:700;margin-bottom:3px;}.ec-sub{font-size:10px;color:var(--gris);line-height:1.4;}.ec-resp{font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;display:inline-block;margin-top:7px;background:var(--cd);color:var(--mid);}.ec-link{font-size:10px;color:var(--gris);margin-top:5px;display:block;}
-.ec.c-ok .ec-num{color:var(--ok);}.ec.c-err .ec-num{color:var(--err);}.ec.c-warn .ec-num{color:#ca8a04;}.ec.c-blue .ec-num{color:var(--blue);}.ec.c-purple .ec-num{color:var(--purple);}
-.trend-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:8px;}.trend-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:18px;}.trend-title{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}.trend-canvas{position:relative;height:120px;}
-.top-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}.tp{background:var(--surface);border-radius:var(--r);padding:14px;border:1.5px solid var(--border);border-left:4px solid var(--err);}.tp-rank{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}.tp-name{font-size:13px;font-weight:800;margin-bottom:6px;}.tp-issues{font-size:11px;color:var(--gris);line-height:1.8;}.tp-issues b{color:var(--err);}
-.tbl-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;margin-bottom:20px;}
-table.ptbl{width:100%;border-collapse:collapse;font-size:12px;}.ptbl thead th{background:var(--cm);color:var(--mid);padding:10px 13px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;cursor:pointer;user-select:none;white-space:nowrap;}.ptbl thead th:hover{background:var(--cd);}.ptbl tbody td{padding:10px 13px;border-bottom:1px solid var(--border);vertical-align:middle;}.ptbl tbody tr:last-child td{border-bottom:none;}.ptbl tbody tr:hover td{background:var(--cream);}
-.pbar{height:5px;background:var(--cd);border-radius:99px;overflow:hidden;margin-top:3px;width:60px;}.pbar-fill{height:100%;border-radius:99px;}
-.wl-legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}.wl-leg{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;padding:10px 14px;flex:1;min-width:130px;cursor:pointer;transition:.14s;}.wl-leg:hover,.wl-leg.active{border-color:var(--coral);}
-.wl-leg-n{font-size:22px;font-weight:800;line-height:1;}.wl-leg-t{font-size:11px;font-weight:700;}.wl-leg-d{font-size:10px;color:var(--gris);}
-.search-box{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:9px;font-family:'Outfit',sans-serif;font-size:13px;background:var(--cream);margin-bottom:9px;transition:.14s;}.search-box:focus{outline:none;border-color:var(--coral);background:#fff;}
-.scroll-wrap{overflow-x:auto;max-height:360px;border-radius:9px;border:1.5px solid var(--border);}
-.donut-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:20px;display:flex;align-items:center;gap:20px;margin-bottom:20px;}.donut-wrap{position:relative;width:120px;height:120px;flex-shrink:0;}.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;}.donut-n{font-size:24px;font-weight:800;color:var(--dark);line-height:1;}.donut-lbl{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
-.tier-list{flex:1;}.tier-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:9px;}.tier-row{display:flex;align-items:center;gap:8px;padding:3px 5px;border-radius:6px;cursor:pointer;transition:.13s;}.tier-row:hover{background:var(--cream);}.tier-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}.tier-name{font-size:12px;font-weight:600;flex:1;}.tier-n{font-size:12px;font-weight:800;}.tier-pct{font-size:10px;color:var(--gris);min-width:32px;text-align:right;}
-.rank-tabs{display:flex;gap:4px;margin-bottom:12px;}.rank-tab{font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--gris);background:var(--cm);border:1.5px solid var(--border);border-radius:7px;padding:5px 12px;cursor:pointer;transition:.13s;}.rank-tab.active{background:var(--coral);color:#fff;border-color:var(--coral);}
-.rank-item{display:flex;align-items:center;gap:11px;background:var(--surface);border-radius:11px;padding:12px 14px;border:1.5px solid var(--border);margin-bottom:7px;transition:.15s;}.rank-item:hover{box-shadow:0 2px 12px rgba(30,16,10,.08);}.rank-pos{font-size:14px;font-weight:800;color:var(--coral);min-width:28px;text-align:center;}.rank-name{flex:1;}.rank-name b{font-size:12px;font-weight:700;display:block;line-height:1.3;}.rank-name span{font-size:10px;color:var(--gris);}.rank-bar-wrap{flex:1.5;height:7px;background:var(--cd);border-radius:99px;overflow:hidden;position:relative;}.rank-bar-fill{height:100%;border-radius:99px;}.rank-target{position:absolute;top:0;bottom:0;width:1.5px;background:rgba(30,16,10,.2);}.rank-val{font-size:13px;font-weight:800;min-width:55px;text-align:right;}
-.info-box{background:var(--cream);border:1px solid var(--border);border-radius:9px;padding:9px 13px;font-size:11px;color:var(--gris);line-height:1.5;margin-bottom:12px;}
-.info-ib{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--cm);color:var(--gris);font-size:8px;font-weight:800;cursor:pointer;border:1px solid var(--border);font-style:normal;flex-shrink:0;vertical-align:middle;margin-left:3px;transition:.13s;}.info-ib:hover{background:var(--coral);color:#fff;border-color:var(--coral);}
-.overlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(15,8,4,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}.overlay.show{display:flex;}
-.modal{background:#fff;border-radius:16px;width:100%;max-width:440px;padding:24px;box-shadow:0 20px 60px rgba(30,16,10,.2);position:relative;animation:popIn .15s;}.modal-close{position:absolute;top:12px;right:14px;font-size:20px;cursor:pointer;color:var(--gris);background:none;border:none;}.modal h4{font-size:15px;font-weight:800;margin-bottom:7px;}.modal p{font-size:12px;color:var(--gris);line-height:1.8;white-space:pre-line;}@keyframes popIn{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
-.drill-overlay{display:none;position:fixed;inset:0;z-index:9500;background:rgba(15,8,4,.65);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding:32px 20px;overflow-y:auto;}.drill-overlay.show{display:flex;}
-.drill-box{background:#fff;border-radius:16px;width:100%;max-width:940px;padding:24px;box-shadow:0 24px 80px rgba(30,16,10,.22);position:relative;animation:popIn .15s;margin:auto;}.drill-box h3{font-size:16px;font-weight:800;margin-bottom:3px;}.drill-sub{font-size:11px;color:var(--gris);margin-bottom:14px;}.drill-wrap{overflow-x:auto;max-height:450px;border-radius:9px;border:1.5px solid var(--border);}
-.drill-wrap table{width:100%;border-collapse:collapse;font-size:12px;}.drill-wrap thead th{background:var(--cm);color:var(--mid);padding:8px 12px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.5px;position:sticky;top:0;text-align:left;border-bottom:1.5px solid var(--border);z-index:1;}.drill-wrap tbody td{padding:8px 12px;border-bottom:1px solid var(--border);}.drill-wrap tbody tr:last-child td{border-bottom:none;}.drill-wrap tbody tr:hover td{background:var(--cream);}
-.empty-state{text-align:center;padding:32px;color:var(--gris);font-size:12px;}.sync-warn{background:var(--warn-bg);border:1.5px solid #fde68a;border-radius:9px;padding:12px 14px;margin-bottom:12px;font-size:12px;color:var(--warn);line-height:1.6;}
-@media(max-width:900px){.kpi-grid{grid-template-columns:1fr 1fr;}.err-grid{grid-template-columns:repeat(3,1fr);}.top-grid{grid-template-columns:1fr;}.trend-row{grid-template-columns:1fr;}}
-@media(max-width:640px){header,.filtros,.tabs-bar{padding-left:14px;padding-right:14px;}main{padding:14px 14px 60px;}.kpi-grid{grid-template-columns:1fr;}.err-grid{grid-template-columns:1fr 1fr;}.tab-btn{font-size:11px;padding:10px 12px;}.rank-bar-wrap{display:none;}}
-@media(max-width:400px){.err-grid{grid-template-columns:1fr;}}
+:root{
+  --coral:#F04B24;--coral-d:#C93A18;--coral-soft:#FEF0EC;--coral-mid:#fdddd6;
+  --cream:#F4EFE9;--cm:#EDE5DA;--cd:#E0D5C8;--border:#DDD4CA;
+  --dark:#1E100A;--mid:#6B3A28;--gris:#7A6E68;
+  --ok:#15803d;--ok-bg:#dcfce7;--ok-light:#86efac;
+  --warn:#854d0e;--warn-bg:#fef9c3;
+  --err:#dc2626;--err-bg:#fee2e2;
+  --purple:#7c3aed;--purple-bg:#ede9fe;
+  --blue:#0369a1;--blue-bg:#e0f2fe;
+  --orange:#c2410c;--orange-bg:#ffedd5;
+  --teal:#0f766e;--teal-bg:#ccfbf1;
+  --surface:#fff;
+  --r:12px;--rl:16px;
+  --sh:0 2px 8px rgba(30,16,10,.06),0 4px 20px rgba(30,16,10,.07);
+  --shm:0 6px 28px rgba(30,16,10,.11);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-thumb{background:var(--cd);border-radius:9px;}
+
+/* HEADER */
+header{background:var(--dark);padding:0 36px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.25);}
+.h-left{display:flex;align-items:center;gap:14px;}
+.h-logo{height:34px;object-fit:contain;}
+.h-sep{width:1px;height:28px;background:rgba(255,255,255,.15);}
+.h-title{color:#fff;font-size:16px;font-weight:700;}
+.h-sub{color:rgba(255,255,255,.38);font-size:10px;letter-spacing:.4px;margin-top:1px;}
+.h-right{display:flex;align-items:center;gap:10px;}
+.h-ts{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:4px 10px;display:flex;flex-direction:column;align-items:flex-end;gap:1px;}
+.h-ts-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.3);}
+.h-ts-val{font-size:11px;color:rgba(255,255,255,.6);}
+.h-live{display:flex;align-items:center;gap:5px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);border-radius:99px;padding:4px 11px;font-size:9px;font-weight:700;color:#10b981;letter-spacing:.5px;text-transform:uppercase;}
+.h-live .dot{width:5px;height:5px;border-radius:50%;background:#10b981;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.5);}50%{box-shadow:0 0 0 4px rgba(16,185,129,0);}}
+.btn-hub{display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.6);font-size:11px;font-weight:600;text-decoration:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:5px 11px;transition:.18s;}
+.btn-hub:hover{background:rgba(255,255,255,.13);color:#fff;}
+
+/* FILTROS */
+.filtros{background:var(--coral);padding:9px 36px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:64px;z-index:199;border-bottom:2px solid var(--coral-d);}
+.fg{position:relative;}
+.fg label{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.55);margin-bottom:3px;}
+.ms-wrap{position:relative;}
+.ms-btn{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:5px 24px 5px 9px;border:1.5px solid rgba(255,255,255,.22);border-radius:7px;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;min-width:132px;text-align:left;position:relative;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:.14s;}
+.ms-btn::after{content:'▾';position:absolute;right:7px;top:50%;transform:translateY(-50%);font-size:9px;color:rgba(255,255,255,.5);}
+.ms-btn:hover{background:rgba(255,255,255,.18);}
+.ms-dd{display:none;position:absolute;top:calc(100% + 5px);left:0;background:var(--dark);border-radius:10px;padding:7px;min-width:215px;z-index:999;max-height:255px;overflow-y:auto;box-shadow:0 8px 30px rgba(0,0,0,.5);}
+.ms-dd.open{display:block;}
+.ms-dd-hdr{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.3);padding:3px 6px 7px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:5px;display:flex;justify-content:space-between;}
+.ms-dd-hdr span{cursor:pointer;color:rgba(255,255,255,.5);font-weight:600;}
+.ms-dd-hdr span:hover{color:#fff;}
+.ms-dd label{display:flex;align-items:center;gap:7px;color:rgba(255,255,255,.82);padding:5px 7px;font-size:12px;cursor:pointer;border-radius:5px;font-weight:500;user-select:none;}
+.ms-dd label:hover{background:rgba(255,255,255,.07);}
+.ms-dd input[type=checkbox]{accent-color:var(--coral);width:13px;height:13px;flex-shrink:0;}
+.filtros-reset{margin-left:auto;font-family:'Outfit',sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,.55);background:none;border:1px solid rgba(255,255,255,.18);border-radius:7px;padding:4px 10px;cursor:pointer;transition:.14s;}
+.filtros-reset:hover{background:rgba(255,255,255,.12);color:#fff;}
+.filter-scope{font-size:9px;color:rgba(255,255,255,.4);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+
+/* TABS */
+.tabs-bar{background:var(--surface);border-bottom:2px solid var(--border);padding:0 36px;position:sticky;top:111px;z-index:198;display:flex;overflow-x:auto;}
+.tab-btn{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--gris);background:none;border:none;border-bottom:3px solid transparent;padding:13px 20px;cursor:pointer;transition:.16s;margin-bottom:-2px;white-space:nowrap;}
+.tab-btn:hover{color:var(--dark);}
+.tab-btn.active{color:var(--coral);border-bottom-color:var(--coral);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* MAIN */
+main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
+
+/* AUDIENCE LABEL */
+.aud-label{display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;border-radius:6px;padding:4px 9px;margin-bottom:14px;}
+.aud-exec{background:var(--dark);color:rgba(255,255,255,.6);}
+.aud-ops{background:var(--blue-bg);color:var(--blue);}
+.aud-members{background:var(--teal-bg);color:var(--teal);}
+.aud-context{background:var(--cm);color:var(--mid);}
+
+/* HEADLINE BANNER */
+.headline{background:var(--dark);border-radius:var(--rl);padding:20px 24px;margin-bottom:20px;position:relative;overflow:hidden;display:flex;align-items:center;gap:24px;}
+.headline::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:var(--coral);opacity:.06;pointer-events:none;}
+.hl-main{flex:1;}
+.hl-phase{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.3);margin-bottom:5px;}
+.hl-title{font-size:18px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:10px;}
+.hl-chips{display:flex;flex-wrap:wrap;gap:7px;}
+.hl-chip{display:flex;align-items:flex-start;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:7px;padding:6px 11px;font-size:11px;color:rgba(255,255,255,.62);line-height:1.4;flex:1;min-width:180px;}
+.hl-chip b{color:#fff;font-weight:700;}
+.hl-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.hl-dot.ok{background:#4ade80;}.hl-dot.warn{background:#fbbf24;}.hl-dot.err{background:#f87171;}
+.hl-kpi{text-align:right;flex-shrink:0;}
+.hl-kpi-val{font-size:48px;font-weight:800;line-height:1;}
+.hl-kpi-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35);margin-top:3px;}
+.hl-kpi-meta{font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;}
+.hl-status{display:inline-flex;font-size:10px;font-weight:700;border-radius:99px;padding:3px 10px;border:1px solid;margin-top:6px;}
+
+/* CONTEXT KPIs */
+.ctx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.ctx-kpi{background:var(--surface);border-radius:var(--r);padding:18px 16px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .18s;}
+.ctx-kpi:hover{box-shadow:var(--shm);}
+.ctx-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--kc,var(--coral));border-radius:var(--r) var(--r) 0 0;}
+.ck-glow{position:absolute;bottom:-14px;right:-14px;width:54px;height:54px;border-radius:50%;background:var(--kc,var(--coral));opacity:.06;}
+.ck-label{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.ck-val{font-size:26px;font-weight:800;line-height:1;color:var(--kc,var(--dark));margin-bottom:3px;}
+.ck-sub{font-size:11px;color:var(--gris);line-height:1.4;}
+.ck-badge{display:inline-flex;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;margin-top:6px;}
+.ck-footer{margin-top:9px;padding-top:8px;border-top:1px solid var(--cd);display:flex;justify-content:space-between;font-size:11px;color:var(--gris);}
+.ck-footer b{font-size:13px;font-weight:800;}
+
+/* SEC */
+.sec{margin-bottom:22px;}
+.sec-hdr{display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+.sec-hdr h2{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}
+.sec-hdr .linea{flex:1;height:1px;background:var(--border);}
+.sec-cnt{background:var(--coral);color:#fff;font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;}
+
+/* INFO BTN */
+.ib{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--cm);color:var(--gris);font-size:8px;font-weight:800;cursor:pointer;border:1px solid var(--border);transition:.14s;font-style:normal;flex-shrink:0;vertical-align:middle;margin-left:3px;}
+.ib:hover{background:var(--coral);color:#fff;border-color:var(--coral);}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;}
+.b-ok{background:var(--ok-bg);color:var(--ok);}
+.b-warn{background:var(--warn-bg);color:var(--warn);}
+.b-err{background:var(--err-bg);color:var(--err);}
+.b-gray{background:var(--cd);color:var(--mid);}
+.b-coral{background:var(--coral);color:#fff;}
+.b-blue{background:var(--blue-bg);color:var(--blue);}
+.b-teal{background:var(--teal-bg);color:var(--teal);}
+
+/* PROPERTY STATUS TABLE */
+.sp-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
+.sp-table{width:100%;border-collapse:collapse;font-size:12px;}
+.sp-table thead th{background:var(--cm);color:var(--mid);padding:9px 13px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;white-space:nowrap;}
+.sp-table thead th.tc{text-align:center;}
+.sp-table tbody td{padding:10px 13px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.sp-table tbody tr:last-child td{border-bottom:none;}
+.sp-table tbody tr:hover td{background:var(--cream);}
+.pct-ok{color:var(--ok);font-weight:700;}
+.pct-warn{color:var(--warn);font-weight:700;}
+.pct-err{color:var(--err);font-weight:700;}
+
+/* TREND TABLE */
+.trend-table{width:100%;border-collapse:collapse;font-size:12px;}
+.trend-table thead th{background:var(--cm);color:var(--mid);padding:8px 11px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1.5px solid var(--border);text-align:left;}
+.trend-table thead th.tc{text-align:center;}
+.trend-table tbody td{padding:8px 11px;border-bottom:1px solid var(--border);}
+.trend-table tbody tr:last-child td{border-bottom:none;}
+.trend-table tbody tr:hover td{background:var(--cream);}
+
+/* PROP ACTION CARDS */
+.prop-action-grid{display:flex;flex-direction:column;gap:10px;}
+.prop-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;transition:.16s;}
+.prop-card:hover{box-shadow:var(--shm);}
+.prop-card-head{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;}
+.prop-card-head.critico{border-left:4px solid var(--err);}
+.prop-card-head.atencion{border-left:4px solid #eab308;}
+.prop-card-head.ok{border-left:4px solid var(--ok);}
+.prop-card-status{font-size:18px;flex-shrink:0;}
+.prop-card-info{flex:1;}
+.prop-card-name{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.prop-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;}
+.prop-card-summary{font-size:11px;color:var(--gris);margin-top:2px;line-height:1.4;}
+.prop-card-metric{text-align:right;flex-shrink:0;}
+.prop-card-pct{font-size:20px;font-weight:800;line-height:1;}
+.prop-card-pct-lbl{font-size:9px;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+.prop-card-arr{font-size:10px;color:var(--gris);transition:transform .2s;margin-left:8px;}
+.prop-card-head.open .prop-card-arr{transform:rotate(180deg);}
+.prop-card-body{display:none;padding:0 18px 16px;border-top:1px solid var(--border);}
+.prop-card-body.vis{display:block;}
+.prop-action-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--cream);}
+.prop-action-item:last-child{border-bottom:none;}
+.prop-action-ico{font-size:14px;flex-shrink:0;margin-top:1px;}
+.prop-action-text{flex:1;}
+.prop-action-label{font-size:11px;font-weight:700;color:var(--dark);margin-bottom:1px;}
+.prop-action-detail{font-size:10px;color:var(--gris);line-height:1.4;}
+.prop-action-urgent{font-size:9px;font-weight:700;color:var(--err);background:var(--err-bg);padding:1px 7px;border-radius:99px;display:inline-block;margin-top:3px;}
+
+/* SEMAFORO */
+.semaforo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px;margin-bottom:16px;}
+.s-item{background:var(--surface);border-radius:var(--r);padding:14px 12px;border:1.5px solid var(--border);text-align:center;transition:.16s;position:relative;overflow:hidden;}
+.s-item.clickable{cursor:pointer;}
+.s-item:hover.clickable{box-shadow:var(--shm);}
+.s-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0;}
+.s-verde::before{background:var(--ok);}
+.s-amarillo::before{background:#eab308;}
+.s-rojo::before{background:var(--err);}
+.s-val{font-size:26px;font-weight:800;line-height:1;}
+.s-verde .s-val{color:var(--ok);}
+.s-amarillo .s-val{color:var(--warn);}
+.s-rojo .s-val{color:var(--err);}
+.s-lbl{font-size:9px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.4px;margin-top:5px;}
+.s-sub{font-size:9px;color:var(--gris);margin-top:2px;}
+.s-tipo{font-size:9px;font-weight:600;padding:2px 7px;border-radius:99px;display:inline-block;margin-top:5px;}
+.s-verde .s-tipo{background:var(--ok-bg);color:var(--ok);}
+.s-amarillo .s-tipo{background:var(--warn-bg);color:var(--warn);}
+.s-rojo .s-tipo{background:var(--err-bg);color:var(--err);}
+
+/* HALLAZGOS */
+.hall-table{width:100%;border-collapse:collapse;font-size:12px;}
+.hall-table thead th{background:var(--cm);color:var(--mid);padding:9px 13px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;text-align:left;border-bottom:1.5px solid var(--border);}
+.hall-table thead th.tc{text-align:center;}
+.hall-table tbody td{padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.hall-table tbody tr:last-child td{border-bottom:none;}
+.hall-table tbody tr:hover td{background:var(--cream);}
+.hall-sev{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;}
+.hall-sev.critica{background:var(--err-bg);color:var(--err);}
+.hall-sev.alta{background:var(--orange-bg);color:var(--orange);}
+.hall-sev.media{background:var(--warn-bg);color:var(--warn);}
+.hall-tipo{font-weight:700;color:var(--dark);display:block;font-size:12px;}
+.hall-accion{font-size:10px;color:var(--gris);margin-top:2px;line-height:1.4;}
+.hall-btn{font-size:10px;font-weight:700;color:#fff;background:var(--coral);border:none;border-radius:7px;padding:4px 11px;cursor:pointer;font-family:'Outfit',sans-serif;white-space:nowrap;transition:.13s;}
+.hall-btn:hover{background:var(--dark);}
+
+/* RANK */
+.rank-item{display:flex;align-items:center;gap:11px;background:var(--surface);border-radius:11px;padding:12px 14px;border:1.5px solid var(--border);margin-bottom:7px;transition:.16s;}
+.rank-item:hover{box-shadow:var(--sh);transform:translateX(3px);border-color:var(--coral-mid);}
+.rank-pos{font-size:14px;font-weight:800;color:var(--coral);min-width:26px;text-align:center;}
+.rank-name{flex:1;}
+.rank-name b{font-size:12px;font-weight:700;display:block;line-height:1.3;}
+.rank-name span{font-size:10px;color:var(--gris);}
+.rank-bar-wrap{flex:1.5;height:7px;background:var(--cd);border-radius:99px;overflow:hidden;position:relative;}
+.rank-bar-fill{height:100%;border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+.rank-target{position:absolute;top:0;bottom:0;width:1.5px;background:rgba(30,16,10,.2);}
+.rank-val{font-size:13px;font-weight:800;min-width:50px;text-align:right;}
+.rank-tabs{display:flex;gap:3px;margin-bottom:12px;}
+.rank-tab{font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--gris);background:var(--cm);border:1.5px solid var(--border);border-radius:7px;padding:4px 10px;cursor:pointer;transition:.13s;}
+.rank-tab.active{background:var(--coral);color:#fff;border-color:var(--coral);}
+.prop-filter-btn{font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--gris);background:var(--cm);border:1.5px solid var(--border);border-radius:7px;padding:5px 12px;cursor:pointer;transition:.13s;}
+.prop-filter-btn.active{background:var(--dark);color:#fff;border-color:var(--dark);}
+.prop-filter-btn:hover:not(.active){background:var(--cd);}
+
+/* SC */
+.sc-search{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:9px;font-family:'Outfit',sans-serif;font-size:13px;margin-bottom:9px;background:var(--cream);transition:.14s;}
+.sc-search:focus{outline:none;border-color:var(--coral);background:#fff;}
+.sc-wrap{overflow-x:auto;max-height:320px;border-radius:9px;border:1.5px solid var(--border);}
+.sc-legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
+.sc-leg-item{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;flex:1;min-width:140px;}
+.sc-leg-n{font-size:22px;font-weight:800;}
+.sc-leg-title{font-size:11px;font-weight:700;margin-bottom:1px;}
+.sc-leg-desc{font-size:10px;color:var(--gris);line-height:1.4;}
+
+/* ACCORDION */
+.ac{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;margin-bottom:10px;}
+.ac-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;cursor:pointer;user-select:none;transition:.13s;}
+.ac-head:hover{background:var(--cream);}
+.ac-head.open{border-bottom:1.5px solid var(--border);}
+.ac-left{display:flex;align-items:center;gap:11px;}
+.ac-ico{font-size:18px;flex-shrink:0;}
+.ac-tit{font-weight:700;font-size:14px;line-height:1.3;}
+.ac-sub{font-size:11px;color:var(--gris);margin-top:2px;}
+.ac-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.ac-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap;}
+.ac-arr{font-size:10px;color:var(--gris);transition:transform .2s;flex-shrink:0;}
+.ac-head.open .ac-arr{transform:rotate(180deg);}
+.ac-body{display:none;padding:20px;}
+.ac-body.vis{display:block;}
+
+/* BEHAVIOR */
+.beh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.beh-kpi{background:var(--surface);border-radius:var(--r);padding:18px 16px;border:1.5px solid var(--border);position:relative;overflow:hidden;}
+.beh-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--bkc,var(--teal));border-radius:var(--r) var(--r) 0 0;}
+.bk-glow{position:absolute;bottom:-14px;right:-14px;width:54px;height:54px;border-radius:50%;background:var(--bkc,var(--teal));opacity:.06;}
+.bk-label{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.bk-val{font-size:26px;font-weight:800;line-height:1;color:var(--bkc,var(--dark));margin-bottom:3px;}
+.bk-sub{font-size:11px;color:var(--gris);line-height:1.4;}
+.activity-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+.act-pill{flex:1;min-width:120px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:14px;text-align:center;}
+.act-pill-n{font-size:28px;font-weight:800;line-height:1;}
+.act-pill-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-top:5px;}
+.act-pill-pct{font-size:11px;color:var(--gris);margin-top:2px;}
+.act-active .act-pill-n{color:var(--ok);}
+.act-occasional .act-pill-n{color:var(--blue);}
+.act-dormant .act-pill-n{color:var(--warn);}
+.act-inactive .act-pill-n{color:var(--err);}
+.member-search{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:9px;font-family:'Outfit',sans-serif;font-size:13px;margin-bottom:9px;background:var(--cream);transition:.14s;}
+.member-search:focus{outline:none;border-color:var(--teal);background:#fff;}
+.member-wrap{overflow-x:auto;max-height:360px;border-radius:9px;border:1.5px solid var(--border);}
+.member-table{width:100%;border-collapse:collapse;font-size:12px;}
+.member-table thead th{background:var(--cm);color:var(--mid);padding:9px 13px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;white-space:nowrap;position:sticky;top:0;}
+.member-table tbody td{padding:9px 13px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.member-table tbody tr:last-child td{border-bottom:none;}
+.member-table tbody tr:hover td{background:var(--cream);}
+.sp-active{background:var(--ok-bg);color:var(--ok);}
+.sp-occasional{background:var(--blue-bg);color:var(--blue);}
+.sp-dormant{background:var(--warn-bg);color:var(--warn);}
+.sp-inactive{background:var(--err-bg);color:var(--err);}
+.status-pill{display:inline-flex;font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;}
+.pending-banner{background:var(--teal-bg);border:1.5px solid var(--teal);border-radius:var(--r);padding:16px 20px;display:flex;align-items:flex-start;gap:13px;margin-bottom:20px;}
+.pb-ico{font-size:22px;flex-shrink:0;}
+.pb-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:4px;}
+.pb-desc{font-size:11px;color:var(--dark);line-height:1.6;}
+.pb-fields{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;}
+.pb-field{font-size:10px;font-weight:700;background:rgba(15,118,110,.1);color:var(--teal);padding:3px 9px;border-radius:99px;}
+
+/* FUNNEL */
+.funnel-outer{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:20px 22px;}
+.fn-row{display:flex;align-items:center;gap:14px;padding:9px 0;}
+.fn-row+.fn-row{border-top:1px solid var(--cream);}
+.fn-left{display:flex;align-items:center;gap:9px;width:190px;flex-shrink:0;}
+.fn-ico{font-size:17px;flex-shrink:0;}
+.fn-lbl{font-size:11px;font-weight:700;color:var(--dark);line-height:1.3;}
+.fn-sub{font-size:10px;color:var(--gris);}
+.fn-bar-track{flex:1;height:9px;background:var(--cd);border-radius:99px;overflow:hidden;}
+.fn-bar-fill{height:100%;border-radius:99px;transition:width .9s cubic-bezier(.4,0,.2,1);}
+.fn-conv{font-size:10px;color:var(--gris);min-width:60px;text-align:center;}
+.fn-right{min-width:64px;text-align:right;}
+.fn-n{font-size:20px;font-weight:800;line-height:1;}
+
+/* TIERS */
+.tier-donut-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:20px 18px;display:flex;align-items:center;gap:20px;}
+.tier-donut-wrap{position:relative;width:110px;height:110px;flex-shrink:0;}
+.tier-donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;}
+.tier-donut-n{font-size:22px;font-weight:800;line-height:1;color:var(--dark);}
+.tier-donut-lbl{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+.tier-donut-list{flex:1;}
+.tier-donut-title{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:9px;}
+.tier-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer;border-radius:6px;padding:3px 5px;transition:.14s;}
+.tier-row:hover{background:var(--cream);}
+.tier-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.tier-row-name{font-size:12px;font-weight:600;flex:1;}
+.tier-row-n{font-size:12px;font-weight:800;}
+.tier-row-pct{font-size:10px;color:var(--gris);min-width:32px;text-align:right;}
+.tiers-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;}
+.tier-c{background:var(--cream);border-radius:11px;padding:15px;border:1.5px solid var(--border);transition:.16s;}
+.tier-c:hover{box-shadow:var(--sh);border-color:var(--cd);}
+.t-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.t-nom{font-weight:800;font-size:13px;}
+.t-tot{font-size:10px;color:var(--gris);}
+.t-bens{font-size:10px;color:var(--gris);margin-bottom:9px;padding-bottom:9px;border-bottom:1px solid var(--border);line-height:1.4;}
+.tier-bar{height:7px;border-radius:99px;background:var(--cd);overflow:hidden;margin-bottom:5px;}
+.tier-fill{height:100%;border-radius:99px;transition:width .5s;}
+.tier-pct{font-size:13px;font-weight:800;margin-bottom:5px;}
+.tier-ns{display:flex;gap:8px;font-size:10px;flex-wrap:wrap;color:var(--gris);}
+.ben-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.ben-ico{font-size:19px;width:26px;text-align:center;}
+.ben-info{flex:1;}
+.ben-bar-wrap{height:8px;background:var(--cd);border-radius:5px;overflow:hidden;margin-bottom:4px;}
+.ben-bar-fill{height:100%;border-radius:5px;transition:width .7s;}
+.ben-meta{display:flex;justify-content:space-between;font-size:11px;}
+.match-banner{background:#fffbeb;border:1.5px solid #fde68a;border-radius:9px;padding:11px 14px;margin-bottom:12px;font-size:12px;color:#92400e;line-height:1.7;}
+.ctx-note{font-size:11px;background:rgba(240,75,36,.05);border:1.5px solid rgba(240,75,36,.12);border-radius:9px;padding:9px 13px;margin-bottom:12px;color:var(--mid);line-height:1.6;}
+.empty{text-align:center;padding:28px;color:var(--gris);font-size:12px;}
+
+/* OVERLAYS */
+#tip-overlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(15,8,4,.55);align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
+#tip-overlay.show{display:flex;}
+#tip-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:22px;box-shadow:0 20px 60px rgba(30,16,10,.2);position:relative;animation:popIn .17s;}
+@keyframes popIn{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+#tip-box h4{font-size:15px;font-weight:800;margin-bottom:7px;}
+#tip-box p{font-size:12px;color:var(--gris);line-height:1.75;white-space:pre-line;}
+#tip-close{position:absolute;top:12px;right:13px;font-size:18px;cursor:pointer;color:var(--gris);background:none;border:none;}
+#drill-overlay{display:none;position:fixed;inset:0;z-index:9500;background:rgba(15,8,4,.6);align-items:flex-start;justify-content:center;padding:34px 20px;overflow-y:auto;backdrop-filter:blur(4px);}
+#drill-overlay.show{display:flex;}
+#drill-box{background:#fff;border-radius:16px;width:100%;max-width:920px;padding:24px;box-shadow:0 24px 80px rgba(30,16,10,.22);position:relative;animation:popIn .17s;margin:auto;}
+#drill-box h3{font-size:16px;font-weight:800;margin-bottom:4px;}
+#drill-sub{font-size:11px;color:var(--gris);margin-bottom:13px;}
+#drill-close{position:absolute;top:14px;right:16px;font-size:20px;cursor:pointer;color:var(--gris);background:none;border:none;}
+.drill-filter{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;padding:10px 13px;background:var(--cream);border-radius:9px;border:1.5px solid var(--border);}
+.drill-filter label{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;}
+.drill-filter select{font-family:'Outfit',sans-serif;font-size:11px;font-weight:600;padding:4px 20px 4px 8px;border:1.5px solid var(--border);border-radius:6px;background:#fff;cursor:pointer;}
+.drill-count{font-size:11px;color:var(--gris);margin-left:auto;}
+.drill-wrap{overflow-x:auto;max-height:440px;border-radius:9px;border:1.5px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead th{background:var(--cm);color:var(--mid);padding:8px 11px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.5px;position:sticky;top:0;text-align:left;border-bottom:1.5px solid var(--border);z-index:1;}
+tbody td{padding:8px 11px;border-bottom:1px solid var(--border);}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:var(--cream);}
+
+@media(max-width:900px){.ctx-grid{grid-template-columns:1fr 1fr;}.beh-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:640px){
+  header,.filtros,.tabs-bar{padding-left:14px;padding-right:14px;}
+  main{padding:14px 14px 60px;}
+  .ctx-grid{grid-template-columns:1fr 1fr;}
+  .beh-grid{grid-template-columns:1fr 1fr;}
+  .headline{flex-direction:column;}.hl-kpi{text-align:left;}
+  .fn-left{width:130px;}
+  .rank-bar-wrap{display:none;}
+  .tab-btn{font-size:11px;padding:10px 12px;}
+}
+@media(max-width:400px){.ctx-grid{grid-template-columns:1fr;}.beh-grid{grid-template-columns:1fr;}}
+.detail-sheet-btn{display:inline-flex;align-items:center;gap:7px;background:var(--dark);color:#fff;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;text-decoration:none;transition:.15s;margin-bottom:16px;}
+.detail-sheet-btn:hover{background:var(--coral);}
 </style>
 </head>
 <body>
-<div class="overlay" id="tip-overlay"><div class="modal"><button class="modal-close" id="tip-close">×</button><h4 id="tip-title"></h4><p id="tip-body"></p></div></div>
-<div class="drill-overlay" id="drill-overlay"><div class="drill-box"><button class="modal-close" id="drill-close">×</button><h3 id="drill-title"></h3><div class="drill-sub" id="drill-sub"></div><div class="drill-wrap"><div id="drill-content"></div></div></div></div>
+
+<div id="tip-overlay" onclick="closeTip(event)">
+  <div id="tip-box"><button id="tip-close" onclick="closeTip()">×</button><h4 id="tip-title"></h4><p id="tip-body"></p></div>
+</div>
+<div id="drill-overlay" onclick="closeDrill(event)">
+  <div id="drill-box"><button id="drill-close" onclick="closeDrill()">×</button><h3 id="drill-title"></h3><p id="drill-sub"></p><div id="drill-content"></div></div>
+</div>
+
 <header>
   <div class="h-left">
-    <img class="h-logo" src="../02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero" onerror="this.style.display='none'">
+    <img class="h-logo" src="../02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero" onerror="this.style.display='none'"/>
     <div class="h-sep"></div>
-    <div><div class="h-title">Viajero Go</div><div class="h-sub">Programa de Membresías</div></div>
+    <div><div class="h-title">Loyalty Program</div><div class="h-sub">Viajero Hostels · Viajero Go</div></div>
   </div>
   <div class="h-right">
-    <div class="h-ts"><div class="h-ts-lbl">Actualizado</div><div class="h-ts-val" id="h-ts">—</div></div>
+    <div class="h-ts"><div class="h-ts-label">Actualizado</div><div class="h-ts-val" id="h-ts">—</div></div>
     <div class="h-live"><div class="dot"></div>Live</div>
-    <a href="../index.html" class="btn-back">← Hub</a>
+    <a href="../index.html" class="btn-hub">← Hub</a>
   </div>
 </header>
+
 <div class="filtros">
-  <div class="fg"><label>Período</label><div class="ms-wrap"><button class="ms-btn" id="ms-per-btn" onclick="toggleMs('per')">Todos</button><div class="ms-dd" id="ms-per-dd"><div class="ms-dd-hdr">Período <span onclick="clearMs('per')">Limpiar</span></div></div></div></div>
-  <div class="fg"><label>Propiedad</label><div class="ms-wrap"><button class="ms-btn" id="ms-prop-btn" onclick="toggleMs('prop')">Todas</button><div class="ms-dd" id="ms-prop-dd"><div class="ms-dd-hdr">Propiedades <span onclick="clearMs('prop')">Limpiar</span></div></div></div></div>
-  <div class="fg"><label>País</label><div class="ms-wrap"><button class="ms-btn" id="ms-pais-btn" onclick="toggleMs('pais')">Todos</button><div class="ms-dd" id="ms-pais-dd"><div class="ms-dd-hdr">Países <span onclick="clearMs('pais')">Limpiar</span></div></div></div></div>
+  <div class="fg"><label>Mes</label><div class="ms-wrap"><button class="ms-btn" onclick="toggleMs('per')" id="ms-per-btn">Todos</button><div class="ms-dd" id="ms-per-dd"><div class="ms-dd-hdr">Meses <span onclick="clearMs('per')">Limpiar</span></div></div></div></div>
+  <div class="fg"><label>Propiedad</label><div class="ms-wrap"><button class="ms-btn" onclick="toggleMs('prop')" id="ms-prop-btn">Todas</button><div class="ms-dd" id="ms-prop-dd"><div class="ms-dd-hdr">Propiedades <span onclick="clearMs('prop')">Limpiar</span></div></div></div></div>
+  <div class="fg"><label>País</label><div class="ms-wrap"><button class="ms-btn" onclick="toggleMs('pais')" id="ms-pais-btn">Todos</button><div class="ms-dd" id="ms-pais-dd"><div class="ms-dd-hdr">Países <span onclick="clearMs('pais')">Limpiar</span></div></div></div></div>
+  <span class="filter-scope" id="filter-scope-label">Todos los filtros aplican a todos los tabs</span>
   <button class="filtros-reset" onclick="resetFiltros()">× Limpiar todo</button>
 </div>
+
 <div class="tabs-bar">
-  <button class="tab-btn active" onclick="switchTab('resumen',this)">📊 Resumen</button>
-  <button class="tab-btn" onclick="switchTab('ops',this)">🏨 Operaciones</button>
-  <button class="tab-btn" onclick="switchTab('ctx',this)">🗂 Contexto</button>
+  <button class="tab-btn active" onclick="switchTab('exec',this)">📊 Resumen ejecutivo</button>
+  <button class="tab-btn" onclick="switchTab('prop',this)">🏨 Por propiedad</button>
+  <button class="tab-btn" onclick="switchTab('members',this)">👥 Comportamiento</button>
+  <button class="tab-btn" onclick="switchTab('ctx',this)">📈 Contexto del programa</button>
 </div>
+
 <main>
-<div id="tab-resumen" class="tab-pane active">
-  <div id="banner" class="banner warn"><div class="banner-ico">⏳</div><div><div class="banner-title">Cargando datos…</div><div class="banner-sub"></div></div></div>
-  <div class="kpi-grid" id="kpi-grid"></div>
+
+<!-- ═══ TAB 1: RESUMEN EJECUTIVO ═══ -->
+<!-- Audiencia: CEO · Junta · Gerencia general -->
+<!-- Qué muestra: estado de la cadena, una sola vez cada métrica clave -->
+<!-- NO contiene: tablas de reservas individuales, drill-down operativo -->
+<div id="tab-exec" class="tab-content active">
+  <div class="aud-label aud-exec">📊 Vista ejecutiva — cadena completa</div>
+  <div id="exec-headline"></div>
+  <div id="exec-ctx-kpis"></div>
   <div class="sec">
-    <div class="sec-hdr"><h2>Tendencia mensual</h2><div class="line"></div></div>
-    <div class="trend-row" id="trend-row">
-      <div class="trend-card"><div class="trend-title">% Miembros del total de huéspedes</div><div class="trend-canvas"><canvas id="c-alcance"></canvas></div></div>
-      <div class="trend-card"><div class="trend-title">% Beneficios entregados correctamente</div><div class="trend-canvas"><canvas id="c-beneficios"></canvas></div></div>
-      <div class="trend-card"><div class="trend-title">Nuevos inscritos por mes</div><div class="trend-canvas"><canvas id="c-nuevos"></canvas></div></div>
+    <div class="sec-hdr"><h2>Embudo de inscripción <i class="ib" onclick="openTip('Embudo')">i</i></h2><div class="linea"></div></div>
+    <div id="exec-funnel"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Penetración por país <i class="ib" onclick="openTip('Por país')">i</i></h2><div class="linea"></div></div>
+    <div id="exec-pais"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Movimiento del período <i class="ib" onclick="openTip('Movimiento')">i</i></h2><div class="linea"></div></div>
+    <div id="exec-movers"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Tendencia por propiedad <i class="ib" onclick="openTip('Tendencia')">i</i></h2><div class="linea"></div></div>
+    <div id="exec-trend"></div>
+  </div>
+</div>
+
+<!-- ═══ TAB 2: POR PROPIEDAD ═══ -->
+<div id="tab-prop" class="tab-content">
+  <div class="aud-label aud-ops">🏨 Vista operativa — detalle por propiedad</div>
+<div id="detail-sheet-wrapper" style="margin-bottom:8px;"></div>
+
+  <!-- 1. Semáforo -->
+  <div class="sec">
+    <div class="sec-hdr"><h2>Estado del programa <i class="ib" onclick="openTip('Resumen de errores')">i</i></h2><div class="linea"></div></div>
+    <div style="font-size:11px;color:var(--gris);margin-bottom:9px;" id="prop-sem-total"></div>
+    <div class="semaforo-grid" id="prop-semaforo"></div>
+  </div>
+
+  <!-- 2. Hallazgos -->
+  <div class="sec">
+    <div id="prop-hallazgos"></div>
+  </div>
+
+  <!-- 3. Diagnóstico por propiedad -->
+  <div class="sec">
+    <div class="sec-hdr"><h2>Diagnóstico por propiedad <i class="ib" onclick="openTip('Acción por propiedad')">i</i></h2><div class="linea"></div></div>
+    <div style="display:flex;gap:6px;margin-bottom:12px;" id="prop-filter-btns">
+      <button onclick="filterPropCards('all',this)" class="prop-filter-btn active">Todas</button>
+      <button onclick="filterPropCards('critico',this)" class="prop-filter-btn">🔴 Solo críticas</button>
+      <button onclick="filterPropCards('atencion',this)" class="prop-filter-btn">🟡 Solo atención</button>
+      <button onclick="filterPropCards('ok',this)" class="prop-filter-btn">🟢 Solo en camino</button>
+    </div>
+    <div id="prop-actions"></div>
+  </div>
+
+  <!-- 4. Lista de trabajo -->
+  <div class="sec">
+    <div class="ac">
+      <div class="ac-head" onclick="toggleAc(this)">
+        <div class="ac-left">
+          <span class="ac-ico">📋</span>
+          <div>
+            <div class="ac-tit">Lista de trabajo — miembros sin beneficio <i class="ib" onclick="event.stopPropagation();openTip('Sin beneficio')">i</i></div>
+            <div class="ac-sub" id="sc-ac-sub">Haz clic para ver la lista y filtrar por nivel</div>
+          </div>
+        </div>
+        <span class="ac-arr">▼</span>
+      </div>
+      <div class="ac-body">
+        <div id="prop-sc-legend"></div>
+        <input class="sc-search" id="sc-q" type="text" placeholder="🔍 Buscar por nombre, propiedad, reserva, nivel..." oninput="filtrarSC()"/>
+        <div class="sc-wrap" id="sc-tabla"></div>
+        <div style="font-size:10px;color:var(--mid);background:var(--cream);border-radius:8px;padding:7px 10px;margin-top:8px;">ℹ️ <b>¿Por qué hay más reservas que personas?</b> CloudBeds registra una reserva por noche en estadías largas. Ambos números son útiles: las personas para entender alcance, las reservas para el trabajo diario.</div>
+      </div>
     </div>
   </div>
+
+  <!-- 5. Problemas técnicos -->
   <div class="sec">
-    <div class="sec-hdr"><h2>¿Por qué no se dan los beneficios? <i class="info-ib" data-tip="Errores">i</i></h2><div class="line"></div></div>
-    <div class="err-grid" id="err-grid"></div>
-  </div>
-  <div class="sec">
-    <div class="sec-hdr"><h2>Las 3 propiedades con más problemas <i class="info-ib" data-tip="TopProblemas">i</i></h2><div class="line"></div></div>
-    <div class="top-grid" id="top-probs"></div>
+    <div class="sec-hdr"><h2>Problemas técnicos <i class="ib" onclick="openTip('Problemas técnicos')">i</i></h2><span class="sec-cnt" id="match-cnt">0</span><div class="linea"></div></div>
+    <div id="prop-sinmatch"></div>
   </div>
 </div>
-<div id="tab-ops" class="tab-pane">
+
+<!-- ═══ TAB 3: COMPORTAMIENTO DE MIEMBROS ═══ -->
+<!-- Audiencia: CEO · Junta · Estrategia -->
+<!-- Qué muestra: recurrencia, actividad, fidelidad real al ecosistema -->
+<!-- Requiere: memberBehavior en loyalty_data.json -->
+<div id="tab-members" class="tab-content">
+  <div class="aud-label aud-members">👥 Comportamiento y fidelidad de miembros</div>
+  <div id="members-pending-banner"></div>
+  <div id="members-beh-kpis"></div>
   <div class="sec">
-    <div class="sec-hdr"><h2>Resumen por propiedad <i class="info-ib" data-tip="TablaProp">i</i></h2><div class="line"></div></div>
-    <div class="tbl-wrap"><table class="ptbl"><thead><tr><th onclick="sortProp(0)">Propiedad ↕</th><th onclick="sortProp(1)" style="text-align:center">% Miembros ↕</th><th onclick="sortProp(2)" style="text-align:center">Nuevos ↕</th><th onclick="sortProp(3)" style="text-align:center">Sin beneficio ↕</th><th onclick="sortProp(4)" style="text-align:center">Nivel incorrecto ↕</th><th onclick="sortProp(5)" style="text-align:center">Mal aplicado ↕</th><th onclick="sortProp(6)" style="text-align:center">% OK ↕</th><th onclick="sortProp(7)" style="text-align:center">Estado ↕</th></tr></thead><tbody id="prop-tbody"><tr><td colspan="8" class="empty-state">Cargando…</td></tr></tbody></table></div>
+    <div class="sec-hdr"><h2>Estado de actividad <i class="ib" onclick="openTip('Estado actividad')">i</i></h2><div class="linea"></div></div>
+    <div id="members-activity-pills"></div>
   </div>
   <div class="sec">
-    <div class="sec-hdr"><h2>Miembros sin beneficio <i class="info-ib" data-tip="SinBeneficio">i</i></h2><div class="line"></div><span class="sec-badge" id="sc-cnt">0</span></div>
-    <a href="https://docs.google.com/spreadsheets/d/1NOvBphsUK4A2gaxMqazjil_0JMPl-TA0njZKfcDlfcM/edit" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:var(--dark);color:#fff;font-family:inherit;font-size:12px;font-weight:700;border:none;border-radius:9px;padding:8px 14px;cursor:pointer;text-decoration:none;margin-bottom:14px;transition:.14s;" onmouseover="this.style.background='var(--coral)'" onmouseout="this.style.background='var(--dark)'">📊 Ver detalle en Google Sheets →</a>
-    <div class="wl-legend" id="sc-legend"></div>
-    <div class="info-box">ℹ️ Una misma persona puede aparecer más de una vez si tuvo varias estadías sin beneficio.</div>
-    <input class="search-box" id="sc-q" placeholder="Buscar por nombre, propiedad, nivel…" oninput="filtrarSC()">
-    <div class="scroll-wrap"><div id="sc-table"></div></div>
-  </div>
-  <div class="sec">
-    <div class="sec-hdr"><h2>Problemas de sincronización Akin/CloudBeds <i class="info-ib" data-tip="Tecnicos">i</i></h2><div class="line"></div><span class="sec-badge" id="sync-cnt">0</span></div>
-    <div id="sync-cont"><p class="empty-state">Cargando…</p></div>
+    <div class="sec-hdr"><h2>Directorio de miembros <i class="ib" onclick="openTip('Directorio miembros')">i</i></h2><div class="linea"></div></div>
+    <input class="member-search" id="member-q" type="text" placeholder="🔍 Buscar por nombre, correo, estado de actividad..." oninput="filtrarMembers()"/>
+    <div class="member-wrap" id="member-tabla"></div>
   </div>
 </div>
-<div id="tab-ctx" class="tab-pane">
+
+<!-- ═══ TAB 4: CONTEXTO DEL PROGRAMA ═══ -->
+<!-- Audiencia: Todos — referencia y análisis estratégico -->
+<!-- Qué muestra: estructura del programa, ranking, embudo, tiers, beneficios -->
+<!-- NO contiene: KPIs de estado urgente (eso es Tab 1) ni detalle de errores (Tab 2) -->
+<div id="tab-ctx" class="tab-content">
+  <div class="aud-label aud-context">📈 Contexto y estructura del programa</div>
   <div class="sec">
-    <div class="sec-hdr"><h2>Distribución por nivel <i class="info-ib" data-tip="Niveles">i</i></h2><div class="line"></div></div>
-    <div class="info-box">⚠️ Muestra el total actual según Akin — no cambia con el filtro de período.</div>
-    <div id="ctx-donut"></div>
+    <div class="sec-hdr"><h2>Distribución de miembros por nivel <i class="ib" onclick="openTip('Miembros del programa')">i</i></h2><div class="linea"></div></div>
+    <div id="ctx-tier-donut"></div>
   </div>
   <div class="sec">
-    <div class="sec-hdr"><h2>Ranking de propiedades <i class="info-ib" data-tip="Ranking">i</i></h2><div class="line"></div></div>
-    <div class="rank-tabs"><button class="rank-tab active" onclick="switchRank('pct',this)">% Miembros</button><button class="rank-tab" onclick="switchRank('nv',this)">Nuevos inscritos</button><button class="rank-tab" onclick="switchRank('cb',this)">Visitas de miembros</button><button class="rank-tab" onclick="switchRank('ok',this)">% Beneficios OK</button></div>
+    <div class="sec-hdr"><h2>Ranking de propiedades <i class="ib" onclick="openTip('Ranking')">i</i></h2><div class="linea"></div></div>
     <div id="ctx-ranking"></div>
   </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Calidad de ejecución por nivel <i class="ib" onclick="openTip('Detalle por nivel')">i</i></h2><div class="linea"></div></div>
+    <div class="tiers-g" id="ctx-tiers-g"></div>
+  </div>
 </div>
+
 </main>
+
 <script>
 var DATA_URL='../data/loyalty_data.json';
-var D=null,SC_DATA=[],_scTierFilter=null,_propRows=[],_propSortCol=3,_propSortAsc=false;
-var _RD={},_donutChart=null,_trendCharts={},_ctxDone=false;
+var DATA=null,SC_DATA=[],MEMBER_DATA=[];
+var _donutChart=null;
+
+/* ── TIPS ─────────────────────────────── */
 var TIPS={
-  Alcance:{t:'% de huéspedes que son miembros',b:'De cada 100 huéspedes, cuántos son miembros activos de Viajero Go.\n\nMeta a largo plazo: 30%\nUmbral operativo: 15%\n\n🟢 ≥15%  🟡 8–15%  🔴 <8%'},
-  Beneficios:{t:'Beneficios entregados correctamente',b:'De cada 100 miembros que se hospedaron, cuántos recibieron su beneficio.\n\n🟢 ≥50%  🟡 20–50%  🔴 <20%\n\nSi está en rojo: el programa existe en papel pero no en la práctica.'},
-  Crecimiento:{t:'Nuevos inscritos',b:'% captación = nuevos inscritos ÷ huéspedes totales.\n\n🟢 ≥3%  🟡 1–3%  🔴 <1%'},
-  Errores:{t:'¿Por qué no se dan los beneficios?',b:'✅ Correctos: beneficio bien registrado.\n\n❌ Sin beneficio: miembro hospedado sin recibir nada → Recepción.\n\n💸 Descuento sin membresía: aplicado a quien NO es miembro → Recepción.\n\n⚠️ Nivel incorrecto: beneficio con nivel equivocado → Recepción + Sistemas.\n\n🚫 Mal aplicado: fuera del proceso → Recepción.\n\nHaz clic en cualquier tarjeta para ver la lista completa.'},
-  SinBeneficio:{t:'Miembros sin beneficio',b:'Miembros que se hospedaron y NO recibieron su beneficio.\n\nNota: una persona puede aparecer más de una vez si tuvo varias estadías. Cada fila es una estadía.'},
-  Tecnicos:{t:'Problemas de sincronización Akin/CloudBeds',b:'Reservas que Akin reconoce pero CloudBeds no puede emparejar.\n\nNO es error del equipo de recepción.\n→ Escalar a Akin si persiste.'},
-  TablaProp:{t:'Tabla de propiedades',b:'Resumen por propiedad en el período seleccionado.\n\nHaz clic en los encabezados para ordenar.'},
-  TopProblemas:{t:'Propiedades con más problemas',b:'Dónde enfocar la capacitación o revisión de proceso.\n\nOrdenadas por miembros sin beneficio.'},
-  Niveles:{t:'Distribución por nivel',b:'Total de personas inscritas por nivel según Akin.\n\nHaz clic en cada nivel para ver la lista de miembros.'},
-  Ranking:{t:'Ranking de propiedades',b:'• % Miembros: penetración (meta ≥15%)\n• Nuevos inscritos: captación del período\n• Visitas de miembros: check-ins de miembros\n• % Beneficios OK: proporción sin error'},
+'Estado por propiedad':{t:'Estado por propiedad',b:'Vista ejecutiva de 3 dimensiones por propiedad:\n\n• % Miembros: de cada 100 check-ins, cuántos son miembros (meta ≥15%)\n• Beneficios aplicados: ¿hay al menos un registro correcto?\n• Errores: principales problemas detectados\n\n🟢 Meta · 🟡 En proceso · 🔴 Necesita atención'},
+'Tendencia':{t:'Tendencia por propiedad',b:'% de huéspedes que son miembros por período.\n\nCon 2 períodos la tendencia es indicativa. Será concluyente a partir del 4to período.\n\n🟢 ≥15% · 🟡 8-15% · 🔴 <8%'},
+'Acción por propiedad':{t:'Diagnóstico por propiedad',b:'Diagnóstico automático por propiedad según sus datos.\n\n🔴 Crítico: acción esta semana\n🟡 Atención: refuerzo del proceso\n🟢 En camino: mantener y documentar\n\nFiltra por propiedad para ver solo una.'},
+'Resumen de errores':{t:'Estado del programa — cómo leer las tarjetas',b:'✅ Correctos\nEl beneficio fue registrado correctamente en CloudBeds (tarifa, toalla o desayuno según el nivel del huésped).\n\n❌ Sin beneficio\nMiembros que se hospedaron y NO recibieron su beneficio. El número grande = personas únicas (puede haber varias reservas por persona en estadías largas).\n\n\ud83d\udcb8 Descuento a no-miembro\nSe aplicó un descuento de lealtad a un huésped que NO está inscrito en Viajero Go. Siempre revisar — implica pérdida directa de ingreso.\n\n⚠️ Nivel incorrecto\nEl beneficio se aplicó con el nivel equivocado. El nivel registrado en CloudBeds no coincide con el nivel real del huésped en Akin.\n\n\ud83d\udeab Mal aplicado\nBeneficio aplicado fuera del proceso: sin verificar en Akin, en categoría incorrecta, o sin completar el registro en CloudBeds.\n\nHaz clic en las tarjetas con “Ver detalle →” para ver el listado individual.'},
+'Sin beneficio':{t:'Lista de trabajo — Sin beneficio',b:'Miembros que se hospedaron y no recibieron su beneficio.\n\nEl número grande = personas únicas.\nLas filas de la tabla = reservas (puede haber varias por persona en estadías largas).\n\nUsa el buscador para filtrar por propiedad o nivel.'},
+'Problemas técnicos':{t:'Problemas técnicos',b:'Reservas reconocidas en Akin pero CloudBeds no las encuentra.\n\nCausa: número de reserva o correo diferente entre sistemas.\n\n→ NO es error del equipo de recepción.\n→ Buscar al huésped por nombre en CB. Si persiste → escalar a Akin.'},
+'Estado actividad':{t:'Estado de actividad de miembros',b:'Clasificación de cada miembro según su comportamiento reciente:\n\n• Activo: reservas en los últimos 90 días\n• Ocasional: última reserva hace 91-180 días\n• Dormido: última reserva hace 181-365 días\n• Inactivo: sin reservas en más de 365 días o nunca'},
+'Directorio miembros':{t:'Directorio de miembros',b:'Lista completa de miembros con su historial.\n\nColumnas clave:\n• Estadías: número de reservas/noches\n• Propiedades: cuántos hostels distintos ha visitado\n• Últ. estadía: días desde la última visita\n• Estado: clasificación de actividad'},
+'Miembros del programa':{t:'Distribución por nivel',b:'Total de personas inscritas en Viajero Go según Akin, por nivel.\n\nHaz clic en cada nivel para ver la lista de miembros.\n\n⚠️ Este número no cambia con el filtro de período — muestra el estado actual del programa.'},
+'Ranking':{t:'Ranking de propiedades',b:'Tres vistas:\n• % Miembros: miembros ÷ check-ins (meta ≥15%)\n• Nuevos inscritos: en el período seleccionado\n• % Beneficios correctos: aplicaciones sin error\n\nLa línea vertical en "% Miembros" es la meta del 15%.'},
+'Embudo':{t:'Embudo de inscripción',b:'Flujo desde el total de huéspedes hasta los nuevos inscritos.\n\nCada barra es proporcional al total de huéspedes.\n\nLa conversión entre pasos muestra dónde se pierden oportunidades de inscripción.'},
+'Detalle por nivel':{t:'Cómo leer estas tarjetas',b:'Cada nivel tiene beneficios distintos. Los números muestran cuántas transacciones de ese nivel quedaron con cada resultado:\n\n✅ Correctos = el beneficio fue bien registrado en CloudBeds\n❌ Sin beneficio = el miembro se hospedó y no recibió nada\n💸 A no-miembro = se aplicó sin membresía (pérdida de ingreso)\n⚠️ Nivel incorrecto = el beneficio se aplicó con nivel equivocado en CB vs Akin\n\nPermite identificar qué nivel está más desatendido operativamente.'}, 
+'Beneficio más aplicado':{t:'Beneficios correctos',b:'Solo cuenta aplicaciones donde el beneficio fue aplicado correctamente.\n\nTarifa con descuento, toalla sin costo, desayuno según nivel.\n\nSi todos están en 0 → el problema es de registro en CB, no de demanda del huésped.'},
 };
-document.addEventListener('click',function(e){
-  if(!e.target.closest('.ms-wrap'))document.querySelectorAll('.ms-dd').forEach(function(d){d.classList.remove('open');});
-  var ib=e.target.closest('[data-tip]');if(ib){openTip(ib.dataset.tip);return;}
-  var ec=e.target.closest('[data-drill]');if(ec){drillErr(ec.dataset.drill);return;}
-  var tr=e.target.closest('[data-tier-drill]');if(tr){drillTier(tr.dataset.tierDrill);return;}
-  var wl=e.target.closest('.wl-leg');if(wl){scFilter(wl.dataset.tier,wl.id);return;}
-  if(e.target.id==='tip-overlay'||e.target.id==='tip-close')closeTip();
-  if(e.target.id==='drill-overlay'||e.target.id==='drill-close')closeDrill();
-});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeTip();closeDrill();}});
 function openTip(k){var t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
-function closeTip(){document.getElementById('tip-overlay').classList.remove('show');}
-function closeDrill(){document.getElementById('drill-overlay').classList.remove('show');}
+function closeTip(e){if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;document.getElementById('tip-overlay').classList.remove('show');}
+function closeDrill(e){if(e&&e.target!==document.getElementById('drill-overlay')&&e.target!==document.getElementById('drill-close'))return;document.getElementById('drill-overlay').classList.remove('show');}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('tip-overlay').classList.remove('show');document.getElementById('drill-overlay').classList.remove('show');}});
+function ib(k){return '<i class="ib" onclick="event.stopPropagation();openTip(\''+k+'\')" >i</i>';}
+
+/* ── TABS ─────────────────────────────── */
 function switchTab(id,btn){
-  document.querySelectorAll('.tab-pane').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
-  document.getElementById('tab-'+id).classList.add('active');if(btn)btn.classList.add('active');
-  if(id==='ctx'&&!_ctxDone&&D){renderCtx();_ctxDone=true;}
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='ctx')renderCtxTab();
+  if(id==='members')renderMembersTab();
 }
+
+/* ── MULTI-SELECT FILTERS ─────────────── */
 function toggleMs(id){var dd=document.getElementById('ms-'+id+'-dd');document.querySelectorAll('.ms-dd').forEach(function(d){if(d!==dd)d.classList.remove('open');});dd.classList.toggle('open');}
-function getMsVals(id){return Array.from(document.querySelectorAll('#ms-'+id+'-dd input:checked')).map(function(c){return c.value;});}
-function clearMs(id){document.querySelectorAll('#ms-'+id+'-dd input').forEach(function(c){c.checked=false;});updateMsBtn(id);_ctxDone=false;render();}
+document.addEventListener('click',function(e){if(!e.target.closest('.ms-wrap'))document.querySelectorAll('.ms-dd').forEach(function(d){d.classList.remove('open');});});
+function getMsValues(id){return Array.from(document.querySelectorAll('#ms-'+id+'-dd input[type=checkbox]:checked')||[]).map(function(c){return c.value;});}
+function clearMs(id){document.querySelectorAll('#ms-'+id+'-dd input[type=checkbox]').forEach(function(c){c.checked=false;});updateMsBtn(id);updateScopeLabel();render();}
 function resetFiltros(){['per','prop','pais'].forEach(clearMs);}
-function updateMsBtn(id){var v=getMsVals(id),b=document.getElementById('ms-'+id+'-btn'),l={per:'Todos',prop:'Todas',pais:'Todos'};b.textContent=v.length===0?l[id]:v.length===1?v[0]:v.length+' seleccionados';}
-function buildFilters(){var afs=D.afiliados||[];var ps=[],prs=[],pas=[];afs.forEach(function(r){var p=getPer(r);if(p&&!ps.includes(p))ps.push(p);var pr=r.Propiedad;if(pr&&!prs.includes(pr))prs.push(pr);var pa=r.País||r.Pais;if(pa&&!pas.includes(pa))pas.push(pa);});fillDd('per',ps.sort());fillDd('prop',prs.sort());fillDd('pais',pas.sort());}
-function fillDd(id,vals){var dd=document.getElementById('ms-'+id+'-dd');while(dd.children.length>1)dd.removeChild(dd.lastChild);vals.forEach(function(v){var l=document.createElement('label');var cb=document.createElement('input');cb.type='checkbox';cb.value=v;cb.addEventListener('change',function(){updateMsBtn(id);_ctxDone=false;render();});l.appendChild(cb);l.appendChild(document.createTextNode(' '+v));dd.appendChild(l);});}
-function getPer(r){return r.Mes||r.Período||r.Periodo||r.mes||'';}
-function filtrar(arr,kP,kA){kP=kP||'Propiedad';kA=kA||'País';var fp=getMsVals('per'),fpr=getMsVals('prop'),fpa=getMsVals('pais');return arr.filter(function(r){if(fp.length&&!fp.includes(getPer(r)))return false;if(fpr.length&&!fpr.includes(r[kP]||''))return false;if(fpa.length&&!fpa.includes(r[kA]||r.Pais||''))return false;return true;});}
-function fN(n){return Math.round(Number(n)||0).toLocaleString('es-CO');}
-function fP(a,b){return b>0?(Math.round(a/b*1000)/10).toFixed(1)+'%':'—';}
-function fDate(v){if(!v)return'—';try{return new Date(v).toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});}catch(e){return String(v);}}
+function updateMsBtn(id){var vals=getMsValues(id),btn=document.getElementById('ms-'+id+'-btn'),labels={per:'Todos',prop:'Todas',pais:'Todos'};btn.textContent=vals.length===0?labels[id]:vals.length===1?vals[0]:vals.length+' seleccionados';}
+function updateScopeLabel(){
+  var pp=getMsValues('prop'),pa=getMsValues('pais'),pe=getMsValues('per'),parts=[];
+  if(pa.length===1)parts.push(pa[0]);
+  if(pp.length===1)parts.push(pp[0]);
+  if(pe.length===1)parts.push(pe[0]);
+  var lbl=document.getElementById('filter-scope-label');
+  lbl.textContent=parts.length?'Mostrando: '+parts.join(' · '):'Todos los filtros aplican a todos los tabs';
+}
+function poblarFiltros(){
+  var afs=DATA.afiliados||[];
+  var fill=function(id,vals){
+    var dd=document.getElementById('ms-'+id+'-dd');
+    while(dd.children.length>1)dd.removeChild(dd.lastChild);
+    vals.forEach(function(v){var lbl=document.createElement('label');var cb=document.createElement('input');cb.type='checkbox';cb.value=v;cb.addEventListener('change',function(){updateMsBtn(id);updateScopeLabel();render();});lbl.appendChild(cb);lbl.appendChild(document.createTextNode(' '+v));dd.appendChild(lbl);});
+  };
+  var perSet=[],propSet=[],paisSet=[];
+  afs.forEach(function(a){var p=a['Mes']||a['mes']||a['Período']||a['Periodo'];if(p&&!perSet.includes(p))perSet.push(p);var pr=a['Propiedad'];if(pr&&!propSet.includes(pr))propSet.push(pr);var pa=a['Pais']||a['País'];if(pa&&!paisSet.includes(pa))paisSet.push(pa);});
+  fill('per',perSet.sort());fill('prop',propSet.sort());fill('pais',paisSet.sort());
+}
+
+/* ── UTILS ────────────────────────────── */
+function getPer(r){return r['Mes']||r['mes']||r['Período']||r['Periodo']||'';}
+function filtrar(arr,kP,kPr,kPa){
+  kPr=kPr||'Propiedad';kPa=kPa||'País';
+  var p=getMsValues('per'),pr=getMsValues('prop'),pa=getMsValues('pais');
+  return arr.filter(function(r){
+    return (!p.length||p.includes(getPer(r)))&&(!pr.length||pr.includes(r[kPr]||''))&&(!pa.length||pa.includes(r[kPa]||r['Pais']||''));
+  });
+}
+function fmtFecha(v){if(!v)return'—';try{return new Date(v).toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});}catch(e){return String(v);}}
+function fmtN(n){return Math.round(Number(n)||0).toLocaleString('es-CR');}
+function fmtP(a,b){return b>0?(Math.round(a/b*1000)/10).toFixed(1)+'%':'—';}
 function sum(arr,k){return arr.reduce(function(t,r){return t+(parseFloat(r[k])||0);},0);}
-function clsPct(v,t1,t2){return v>=t1?'ok':v>=t2?'warn':'err';}
-function getPeriodsOrdered(){var afs=D.afiliados||[],set=[];afs.forEach(function(a){var p=getPer(a);if(p&&!set.includes(p))set.push(p);});return set.sort();}
-function render(){if(!D)return;renderResumen();renderOps();if(_ctxDone){_ctxDone=false;renderCtx();_ctxDone=true;}}
-function renderResumen(){
-  var afs=filtrar(D.afiliados||[]),mb=filtrar(D.tiersDetalle||[]);
-  var hu=sum(afs,'_huespedes'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
-  var ok=0,sc=0,lk=0,ti=0,mu=0;
-  var isF=getMsVals('prop').length||getMsVals('per').length||getMsVals('pais').length;
-  if(!isF&&D._resumen){ok=D._resumen.ok||0;sc=D._resumen.sin_canje||0;lk=D._resumen.leakage||0;ti=D._resumen.tier_incorrecto||0;mu=D._resumen.misuse||0;}
-  else{mb.forEach(function(r){var k=r.Error_Type||'';if(k==='OK')ok++;else if(k==='SIN CANJE')sc++;else if(k==='LEAKAGE')lk++;else if(k==='TIER_INCORRECTO')ti++;else if(k==='MISUSE')mu++;});}
-  var pctA=hu>0?cb/hu*100:0,totMx=ok+sc+ti+mu,pctB=totMx>0?ok/totMx*100:0,pctCap=hu>0?nv/hu*100:0;
-  var clsA=pctA>=15?'ok':pctA>=8?'warn':'err',clsB=pctB>=50?'ok':pctB>=20?'warn':'err',clsNv=pctCap>=3?'ok':pctCap>=1?'warn':'err';
-  var dA=null,dB=null,dNv=null;
-  var perSel=getMsVals('per');
-  if(perSel.length===1){var allP=getPeriodsOrdered(),prev=allP[allP.indexOf(perSel[0])-1];if(prev){var pAfs=(D.afiliados||[]).filter(function(r){return getPer(r)===prev;});var pMb=(D.tiersDetalle||[]).filter(function(r){return getPer(r)===prev;});var pH=sum(pAfs,'_huespedes'),pC=sum(pAfs,'_afiliados_cb'),pNv=sum(pAfs,'_nuevos');var pOk=0,pTot=0;pMb.forEach(function(r){if(r.Error_Type==='OK')pOk++;if(r.Error_Type)pTot++;});if(pH>0)dA=pctA-(pC/pH*100);if(pTot>0)dB=pctB-(pOk/pTot*100);if(pNv>0)dNv=(nv-pNv)/pNv*100;}}
-  var bCls,bIco,bTitle,bSub;
-  if(pctA>=15&&pctB>=50){bCls='ok';bIco='✅';bTitle='El programa está funcionando bien';bSub='Penetración >15% y la mayoría de miembros recibe su beneficio.';}
-  else if(pctA>=8||pctB>=20){bCls='warn';bIco='⚡';bTitle='El programa está activo — hay oportunidades de mejora';bSub='Revisa los errores abajo y el tab Operaciones para ver dónde actuar.';}
-  else{bCls='err';bIco='🔴';bTitle='El programa necesita atención urgente';bSub='Penetración y/o entrega de beneficios por debajo del umbral mínimo.';}
-  var ban=document.getElementById('banner');ban.className='banner '+bCls;ban.innerHTML='<div class="banner-ico">'+bIco+'</div><div><div class="banner-title">'+bTitle+'</div><div class="banner-sub">'+bSub+'</div></div>';
-  function dHtml(d){if(d===null||d===undefined)return'';var cls=d>0.5?'up':d<-0.5?'dn':'flat',arr=d>0?'↑':'↓';return '<div class="kpi-delta '+cls+'">'+arr+' '+Math.abs(d).toFixed(1)+'% vs mes anterior</div>';}
-  var colA=pctA>=15?'var(--ok)':pctA>=8?'#ca8a04':'var(--err)';
-  var colB=pctB>=50?'var(--ok)':pctB>=20?'#ca8a04':'var(--err)';
-  var colNv=pctCap>=3?'var(--ok)':pctCap>=1?'#ca8a04':'var(--err)';
-  document.getElementById('kpi-grid').innerHTML=
-    kpiH(clsA,'¿Estamos llegando a más huéspedes?','Alcance',pctA.toFixed(1)+'%',dHtml(dA),'De cada 100 huéspedes, '+Math.round(pctA)+' son miembros de Viajero Go.',[{c:'gray',t:'Meta final: 30%'},{c:clsA,t:'Umbral: 15%'}],fN(cb)+' miembros de '+fN(hu)+' huéspedes',pctA/30,15/30,colA)+
-    kpiH(clsB,'¿Se están dando los beneficios?','Beneficios',pctB.toFixed(0)+'%',dHtml(dB),'De '+fN(totMx)+' transacciones de miembros, '+pctB.toFixed(0)+'% recibió su beneficio.',[{c:'ok',t:fN(ok)+' correctos'},{c:'err',t:fN(sc)+' sin beneficio'}],null,null,null,colB)+
-    kpiH(clsNv,'¿El programa está creciendo?','Crecimiento','+'+fN(nv),dHtml(dNv),'Nuevos inscritos. Captación: '+pctCap.toFixed(1)+'% de '+fN(hu)+' huéspedes.',[{c:clsNv,t:'Meta: ≥3% de huéspedes'}],null,null,null,colNv);
-  renderTrend();
-  renderErrCards(ok,sc,lk,ti,mu);
-  renderTopProbs(filtrar(D.tiersDetalle||[]));
+function clsP(v){var n=parseFloat(v);return isNaN(n)?'':n>=15?'pct-ok':n>=8?'pct-warn':'pct-err';}
+function toggleAc(h){h.classList.toggle('open');h.nextElementSibling.classList.toggle('vis');}
+function togglePropCard(h){h.classList.toggle('open');h.nextElementSibling.classList.toggle('vis');}
+
+/* ── DRILL OVERLAY ────────────────────── */
+var _drillTipo='';
+function drillTipoError(tipo,titulo){
+  _drillTipo=tipo;
+  var ft=getMsValues('per'),fp=getMsValues('prop'),fpa=getMsValues('pais');
+  var allRows=(DATA.tiersDetalle||[]).filter(function(r){
+    return r.Error_Type===tipo&&
+           (!ft.length||ft.includes(getPer(r)))&&
+           (!fp.length||fp.includes(r.Propiedad||''))&&
+           (!fpa.length||fpa.includes(r['País']||r.Pais||''));
+  });
+  var propsDrill=[...new Set(allRows.map(function(r){return r.Propiedad;}).filter(Boolean))].sort();
+  document.getElementById('drill-title').textContent=titulo;
+  document.getElementById('drill-sub').textContent=allRows.length+' registros en el período seleccionado';
+  var c=document.getElementById('drill-content');
+  var pSel=propsDrill.length>1?'<label>Propiedad</label><select id="dp-sel" onchange="renderDrillTable()"><option value="">Todas ('+allRows.length+')</option>'+propsDrill.map(function(p){return '<option value="'+p+'">'+p+' ('+allRows.filter(function(r){return r.Propiedad===p;}).length+')</option>';}).join('')+'</select>':'';
+  c.innerHTML='<div class="drill-filter">'+pSel+'<span class="drill-count" id="dc">'+allRows.length+' registros</span></div><div id="dt-wrap"></div>';
+  renderDrillTable();
+  document.getElementById('drill-overlay').classList.add('show');
 }
-function kpiH(cls,lbl,tip,num,delta,desc,tags,sub,barPct,barTgt,barCol){
-  var th=(tags||[]).map(function(t){return'<span class="tag '+t.c+'">'+t.t+'</span>';}).join('');
-  var bh=barPct!=null?'<div class="kpi-bar"><div class="kpi-bar-fill" style="width:'+Math.min(barPct*100,100)+'%;background:'+barCol+'"></div>'+(barTgt!=null?'<div class="kpi-bar-tgt" style="left:'+Math.min(barTgt*100,100)+'%"></div>':'')+'</div>':'';
-  return '<div class="kpi '+cls+'"><div class="kpi-lbl">'+lbl+' <i class="info-ib" data-tip="'+tip+'">i</i></div><div class="kpi-num">'+num+'</div>'+delta+'<div class="kpi-desc">'+desc+'</div><div class="kpi-tags">'+th+'</div>'+(sub?'<div style="font-size:10px;color:var(--gris);margin-top:5px;">'+sub+'</div>':'')+bh+'</div>';
+function renderDrillTable(){
+  var ft=getMsValues('per'),fp=getMsValues('prop'),fpa=getMsValues('pais');
+  var allRows=(DATA.tiersDetalle||[]).filter(function(r){
+    return r.Error_Type===_drillTipo&&(!ft.length||ft.includes(getPer(r)))&&(!fp.length||fp.includes(r.Propiedad||''))&&(!fpa.length||fpa.includes(r['País']||r.Pais||''));
+  });
+  var pF=(document.getElementById('dp-sel')||{value:''}).value;
+  var rows=allRows.filter(function(r){return !pF||r.Propiedad===pF;});
+  var cnt=document.getElementById('dc');if(cnt)cnt.textContent=rows.length+' registros';
+  var wrap=document.getElementById('dt-wrap');if(!wrap)return;
+  if(!rows.length){wrap.innerHTML='<div class="empty">Sin registros para este filtro</div>';return;}
+  var cols=[{k:'Nombre',l:'Nombre'},{k:'Reserva',l:'Reserva'},{k:'FechaIN',l:'Fecha llegada'},{k:'Noches',l:'Noches'},{k:'Propiedad',l:'Propiedad'},{k:'Periodo',l:'Período'},{k:'Tier_AKIN',l:'Nivel'}];
+  wrap.innerHTML='<div class="drill-wrap"><table><thead><tr>'+cols.map(function(c){return '<th>'+c.l+'</th>';}).join('')+'</tr></thead><tbody>'+rows.map(function(r){return '<tr>'+cols.map(function(c){return '<td>'+(c.k==='FechaIN'?fmtFecha(r[c.k]):r[c.k]||'—')+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table></div>';
 }
-function renderErrCards(ok,sc,lk,ti,mu){
-  var cards=[
-    {n:ok,lbl:'Beneficios correctos',sub:'El proceso funciona donde se aplica',resp:'',cls:'c-ok',et:null},
-    {n:sc,lbl:'Sin beneficio',sub:'Miembro hospedado sin recibir nada',resp:'→ Recepción',cls:'c-err',et:'SIN CANJE'},
-    {n:lk,lbl:'Descuento sin membresía',sub:'Aplicado a quien NO es miembro',resp:'→ Recepción',cls:'c-warn',et:'LEAKAGE'},
-    {n:ti,lbl:'Nivel incorrecto',sub:'Beneficio con nivel equivocado',resp:'→ Recepción + Sistemas',cls:'c-blue',et:'TIER_INCORRECTO'},
-    {n:mu,lbl:'Mal aplicado',sub:'Fuera del proceso establecido',resp:'→ Recepción',cls:'c-purple',et:'MISUSE'}
+
+/* ═══════════════════════════════════════
+   TAB 1: RESUMEN EJECUTIVO
+   Métrica clave: penetración (%). Una vez.
+   Nada operativo.
+═══════════════════════════════════════ */
+function renderExecHeadline(afs,mb){
+  var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
+  var okN=mb.filter(function(r){return r.Error_Type==='OK';}).length;
+  var scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
+  var lkN=mb.filter(function(r){return r.Error_Type==='LEAKAGE';}).length;
+  var pLoy=ci>0?cb/ci*100:0;
+  var fp=getMsValues('prop'),fpa=getMsValues('pais');
+  var scope=fp.length===1?fp[0]:fpa.length===1?fpa[0]:'toda la cadena';
+  var isOnMeta=pLoy>=15,isGrowing=pLoy>=8&&pLoy<15;
+  var headline=isOnMeta?'Programa en meta — '+pLoy.toFixed(1)+'% de huéspedes son miembros':isGrowing?'Programa en crecimiento — '+pLoy.toFixed(1)+'% de huéspedes son miembros':'Fase inicial — '+pLoy.toFixed(1)+'% de huéspedes son miembros';
+  var kpiColor=isOnMeta?'#4ade80':isGrowing?'#fbbf24':'#f87171';
+  var statusStyle=isOnMeta?'background:rgba(74,222,128,.15);color:#4ade80;border-color:rgba(74,222,128,.3)':isGrowing?'background:rgba(251,191,36,.15);color:#fbbf24;border-color:rgba(251,191,36,.3)':'background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.3)';
+  var statusTxt=isOnMeta?'✅ Meta alcanzada':isGrowing?'⚡ En crecimiento':'🔴 Bajo meta (15%)';
+  var chips=[];
+  chips.push({dot:isOnMeta?'ok':isGrowing?'warn':'err',html:'<b>'+fmtN(cb)+'</b> miembros activos de <b>'+fmtN(ci)+'</b> check-ins — '+pLoy.toFixed(1)+'% del total'});
+  if(scUnicos>0)chips.push({dot:'err',html:'<b>'+fmtN(scUnicos)+'</b> miembros únicos no recibieron su beneficio → ver Tab "Por propiedad"'});
+  if(okN>0)chips.push({dot:'ok',html:'<b>'+okN+'</b> beneficio'+(okN>1?'s':'')+' aplicado'+(okN>1?'s':'')+' correctamente — el proceso funciona donde se usa'});
+  else chips.push({dot:'warn',html:'0 beneficios registrados correctamente en CB — capacitación pendiente'});
+  if(lkN>0)chips.push({dot:'err',html:'<b>'+lkN+'</b> descuento'+(lkN>1?'s':'')+' a huésped sin membresía — pérdida de ingreso'});
+  chips.push({dot:nv>0?'ok':'warn',html:'<b>'+fmtN(nv)+'</b> nuevos inscritos · '+(hu>0?(nv/hu*100).toFixed(1):0)+'% captación sobre huéspedes'});
+  document.getElementById('exec-headline').innerHTML=
+    '<div class="headline">'+
+    '<div class="hl-main">'+
+    '<div class="hl-phase">📍 '+scope+'</div>'+
+    '<div class="hl-title">'+headline+'</div>'+
+    '<div class="hl-chips">'+chips.map(function(c){return '<div class="hl-chip"><div class="hl-dot '+c.dot+'"></div><span>'+c.html+'</span></div>';}).join('')+'</div>'+
+    '</div>'+
+    '<div class="hl-kpi">'+
+    '<div class="hl-kpi-val" style="color:'+kpiColor+'">'+pLoy.toFixed(1)+'%</div>'+
+    '<div class="hl-kpi-label">Penetración</div>'+
+    '<div class="hl-kpi-meta">Meta: 15%</div>'+
+    '<div class="hl-status" style="'+statusStyle+'">'+statusTxt+'</div>'+
+    '</div>'+
+    '</div>';
+}
+
+function renderExecCtxKPIs(afs,mb){
+  var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
+  var okN=mb.filter(function(r){return r.Error_Type==='OK';}).length;
+  var scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
+  var pRed=cb>0?okN/cb*100:0;
+  var colRed=pRed>=10?'var(--ok)':pRed>=3?'#ca8a04':'var(--err)';
+  var items=[
+    {label:'Nuevos inscritos',tip:'Tendencia',val:fmtN(nv),sub:fmtN(hu)+' huéspedes · '+(hu>0?(nv/hu*100).toFixed(1):0)+'% captación',kc:'var(--blue)',badge:null,footer:null},
+    {label:'Beneficios correctos',tip:'Resumen de errores',val:cb>0?pRed.toFixed(1)+'%':'—',sub:okN+' registros correctos en CB',kc:colRed,badge:null,footer:{label:'Meta futura',val:'≥30%'}},
+    {label:'Miembros sin beneficio',tip:'Sin beneficio',val:fmtN(scUnicos),sub:'personas únicas · detalle en Tab Propiedad',kc:'var(--err)',badge:{cls:'b-err',txt:'Lista de trabajo'},footer:null},
   ];
-  document.getElementById('err-grid').innerHTML=cards.map(function(c){
-    var d=c.et&&c.n>0;
-    return '<div class="ec '+c.cls+'"'+(d?' data-drill="'+c.et+'"':'')+'>'+
-      '<div class="ec-num">'+fN(c.n)+'</div><div class="ec-lbl">'+c.lbl+'</div><div class="ec-sub">'+c.sub+'</div>'+
-      (c.resp?'<div class="ec-resp">'+c.resp+'</div>':'')+
-      (d?'<span class="ec-link">Ver lista →</span>':'')+
+  document.getElementById('exec-ctx-kpis').innerHTML=
+    '<div class="ctx-grid" style="margin-bottom:20px;">'+
+    items.map(function(it){return '<div class="ctx-kpi" style="--kc:'+it.kc+'"><div class="ck-glow"></div><div class="ck-label">'+it.label+' '+ib(it.tip)+'</div><div class="ck-val">'+it.val+'</div><div class="ck-sub">'+it.sub+'</div>'+(it.badge?'<span class="ck-badge '+it.badge.cls+'">'+it.badge.txt+'</span>':'')+(it.footer?'<div class="ck-footer"><span>'+it.footer.label+'</span><b>'+it.footer.val+'</b></div>':'')+'</div>';}).join('')+
+    '</div>';
+}
+
+function renderExecPaisPenetracion(afsAll){
+  var el=document.getElementById('exec-pais');if(!el)return;
+  var map={};
+  afsAll.forEach(function(r){
+    var pa=r['Pais']||r['País']||r['pais']||'Sin país';if(!pa)return;
+    if(!map[pa])map[pa]={ci:0,cb:0,nv:0,props:new Set()};
+    map[pa].ci+=parseFloat(r._check_ins)||0;
+    map[pa].cb+=parseFloat(r._afiliados_cb)||0;
+    map[pa].nv+=parseFloat(r._nuevos)||0;
+    if(r.Propiedad)map[pa].props.add(r.Propiedad);
+  });
+  var paises=Object.entries(map).map(function(e){
+    var pa=e[0],v=e[1],pct=v.ci>0?Math.round(v.cb/v.ci*1000)/10:0;
+    return {pa:pa,ci:v.ci,cb:v.cb,nv:v.nv,pct:pct,props:v.props.size};
+  }).filter(function(p){return p.ci>0;}).sort(function(a,b){return b.pct-a.pct;});
+  var flags={'Colombia':'🇨🇴','Perú':'🇵🇪','México':'🇲🇽','Mexico':'🇲🇽','Argentina':'🇦🇷','Uruguay':'🇺🇾','Costa Rica':'🇨🇷','Panama':'🇵🇦','Panamá':'🇵🇦','Ecuador':'🇪🇨','Chile':'🇨🇱','Perú':'🇵🇪','USA':'🇺🇸','Estados Unidos':'🇺🇸'};
+  var maxPct=Math.max(25,Math.max.apply(null,paises.map(function(p){return p.pct;})));
+  el.innerHTML='<div style="background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;">'+
+    paises.map(function(p,i){
+      var col=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';
+      var barW=Math.round(p.pct/maxPct*100);
+      var flag=flags[p.pa]||'🏳️';
+      return '<div style="display:flex;align-items:center;gap:14px;padding:11px 16px;border-bottom:'+(i<paises.length-1?'1px solid var(--border)':'none')+';">' +
+        '<div style="font-size:16px;flex-shrink:0;">'+flag+'</div>'+
+        '<div style="flex:1;min-width:0;">'+
+          '<div style="font-size:12px;font-weight:700;margin-bottom:4px;">'+p.pa+'<span style="font-size:10px;color:var(--gris);font-weight:500;margin-left:8px;">'+p.props+' propiedad'+(p.props!==1?'es':'')+' · '+fmtN(p.nv)+' nuevos</span></div>'+
+          '<div style="height:6px;background:var(--cd);border-radius:99px;overflow:hidden;"><div style="width:'+barW+'%;height:100%;background:'+col+';border-radius:99px;"></div></div>'+
+        '</div>'+
+        '<div style="text-align:right;flex-shrink:0;">'+
+          '<div style="font-size:15px;font-weight:800;color:'+col+';">'+p.pct.toFixed(1)+'%</div>'+
+          '<div style="font-size:9px;color:var(--gris);">'+fmtN(p.cb)+' / '+fmtN(p.ci)+'</div>'+
+        '</div>'+
+      '</div>';
+    }).join('')+
+  '</div>'+
+  '<div style="font-size:10px;color:var(--gris);margin-top:6px;padding:5px 8px;background:var(--cream);border-radius:6px;">Línea base: % de check-ins que son miembros activos · Meta ≥15%</div>';
+}
+
+function renderExecMovers(afsAll){
+  var el=document.getElementById('exec-movers');if(!el)return;
+  var pers=[...new Set(afsAll.map(function(r){return getPer(r);}).filter(Boolean))].sort();
+  if(pers.length<2){el.innerHTML='<div class="empty">Se necesitan al menos 2 períodos para mostrar movimiento.</div>';return;}
+  var prev=pers[pers.length-2],curr=pers[pers.length-1];
+  var agg={};
+  afsAll.forEach(function(r){
+    var p=r.Propiedad,per=getPer(r);if(!p||!per)return;
+    if(!agg[p])agg[p]={};
+    if(!agg[p][per])agg[p][per]={ci:0,cb:0};
+    agg[p][per].ci+=parseFloat(r._check_ins)||0;
+    agg[p][per].cb+=parseFloat(r._afiliados_cb)||0;
+  });
+  var movers=[];
+  Object.entries(agg).forEach(function(e){
+    var prop=e[0],d=e[1];
+    var vPrev=d[prev]&&d[prev].ci>0?Math.round(d[prev].cb/d[prev].ci*1000)/10:null;
+    var vCurr=d[curr]&&d[curr].ci>0?Math.round(d[curr].cb/d[curr].ci*1000)/10:null;
+    if(vPrev!==null&&vCurr!==null)movers.push({prop:prop.replace('Viajero ',''),prev:vPrev,curr:vCurr,delta:Math.round((vCurr-vPrev)*10)/10});
+  });
+  movers.sort(function(a,b){return b.delta-a.delta;});
+  var top3up=movers.filter(function(m){return m.delta>0;}).slice(0,3);
+  var top3dn=movers.filter(function(m){return m.delta<0;}).sort(function(a,b){return a.delta-b.delta;}).slice(0,3);
+  var buildList=function(arr,up){
+    if(!arr.length)return '<div style="font-size:11px;color:var(--gris);padding:10px;">Sin datos</div>';
+    return arr.map(function(m){
+      var col=up?'var(--ok)':'var(--err)';
+      var arrow=up?'↑':'↓';
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);gap:10px;">'+
+        '<div style="flex:1;"><div style="font-size:12px;font-weight:700;">'+m.prop+'</div>'+
+        '<div style="font-size:10px;color:var(--gris);">'+m.prev.toFixed(1)+'% → '+m.curr.toFixed(1)+'%</div></div>'+
+        '<div style="font-size:15px;font-weight:800;color:'+col+';">'+arrow+' '+(up?'+':'')+m.delta.toFixed(1)+'pp</div>'+
+        '</div>';
+    }).join('');
+  };
+  el.innerHTML=
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">'+
+    '<div style="background:var(--surface);border-radius:var(--r);border:1.5px solid var(--ok-light);overflow:hidden;">'+
+      '<div style="background:var(--ok-bg);padding:8px 14px;font-size:9px;font-weight:700;color:var(--ok);text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid var(--ok-light);">'+'↑ Mayor avance vs '+prev+'</div>'+
+      buildList(top3up,true)+
+    '</div>'+
+    '<div style="background:var(--surface);border-radius:var(--r);border:1.5px solid #fca5a5;overflow:hidden;">'+
+      '<div style="background:var(--err-bg);padding:8px 14px;font-size:9px;font-weight:700;color:var(--err);text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid #fca5a5;">'+'↓ Mayor caída vs '+prev+'</div>'+
+      buildList(top3dn,false)+
+    '</div>'+
+    '</div>'+
+    '<div style="font-size:10px;color:var(--gris);margin-top:6px;padding:5px 8px;background:var(--cream);border-radius:6px;">Comparando '+prev+' vs '+curr+' · Cambio en puntos porcentuales de penetración</div>';
+}
+
+function renderExecPropStatus(afs,mb){
+  var map={};
+  afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={ci:0,cb:0,ok:0,lk:0,nv:0};map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
+  mb.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={ci:0,cb:0,ok:0,lk:0,nv:0};var et=r.Error_Type||'';if(et==='OK')map[p].ok++;if(et==='LEAKAGE')map[p].lk++;});
+  var props=Object.entries(map).filter(function(e){return e[1].ci>0||e[1].cb>0;}).map(function(e){
+    var nm=e[0],v=e[1],pct=v.ci>0?Math.round(v.cb/v.ci*1000)/10:0;
+    var status=pct>=15&&v.ok>0?'ok':pct>=8||v.ok>0?'warn':'crit';
+    return {name:nm,pct:pct,ok:v.ok,lk:v.lk,nv:v.nv,ci:v.ci,status:status};
+  }).sort(function(a,b){var o={crit:0,warn:1,ok:2};return(o[a.status]-o[b.status])||a.pct-b.pct;});
+  var CFG={
+    ok:{dot:'🟢',col:'var(--ok)',bg:'var(--ok-bg)',pill:'En meta'},
+    warn:{dot:'🟡',col:'#92400e',bg:'#fef9c3',pill:'En proceso'},
+    crit:{dot:'🔴',col:'var(--err)',bg:'var(--err-bg)',pill:'Necesita atención'}
+  };
+  var critProps=props.filter(function(p){return p.status==='crit';});
+  var warnN=props.filter(function(p){return p.status==='warn';}).length;
+  var okN=props.filter(function(p){return p.status==='ok';}).length;
+  var critN=critProps.length;
+  document.getElementById('exec-prop-status').innerHTML=
+    '<div style="display:flex;gap:8px;margin-bottom:14px;font-size:11px;flex-wrap:wrap;align-items:center;">'+
+    (critN?'<span style="background:var(--err-bg);color:var(--err);font-weight:700;padding:4px 12px;border-radius:99px;font-size:12px;">🔴 '+critN+' necesita'+(critN>1?'n':'')+' atención</span>':'')+
+    (warnN?'<span style="background:#fef9c3;color:#92400e;font-weight:700;padding:4px 12px;border-radius:99px;font-size:12px;">🟡 '+warnN+' en proceso</span>':'')+
+    (okN?'<span style="background:var(--ok-bg);color:var(--ok);font-weight:700;padding:4px 12px;border-radius:99px;font-size:12px;">🟢 '+okN+' en meta</span>':'')+
+    '</div>'+
+    (critN?'<div style="background:var(--surface);border-radius:var(--r);border:1.5px solid #fca5a5;overflow:hidden;margin-bottom:10px;">'+
+    '<div style="background:var(--err-bg);padding:8px 14px;font-size:9px;font-weight:700;color:var(--err);text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid #fca5a5;">Propiedades que necesitan intervención inmediata</div>'+
+    critProps.map(function(p,i){
+      var alertas=[];
+      if(p.lk>0)alertas.push('💸 '+p.lk+' sin membresía');
+      if(p.nv===0)alertas.push('0 nuevos inscritos');
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:'+(i<critProps.length-1?'1px solid var(--border)':'none')+';gap:12px;">'+
+        '<div style="flex:1;"><span style="font-size:12px;font-weight:700;">'+p.name.replace('Viajero ','')+'</span>'+
+        (alertas.length?'<span style="font-size:10px;color:var(--gris);margin-left:8px;">'+alertas.join(' · ')+'</span>':'')+
+        '</div>'+
+        '<span style="font-size:16px;font-weight:800;color:var(--err);white-space:nowrap;">'+p.pct.toFixed(1)+'%</span>'+
+        '</div>';
+    }).join('')+
+    '</div>':'<div style="background:var(--ok-bg);border:1.5px solid #86efac;border-radius:var(--r);padding:12px 16px;font-size:12px;color:var(--ok);font-weight:600;margin-bottom:10px;">✅ Todas las propiedades están en proceso o en meta</div>')+
+    '<div style="font-size:10px;color:var(--gris);padding:5px 8px;background:var(--cream);border-radius:6px;">Para ver todas las propiedades con detalle operativo → Tab <b>Por propiedad</b></div>';
+}
+
+function renderExecTrend(afs){
+  var allPers=[...new Set(afs.map(function(r){return getPer(r);}).filter(Boolean))].sort();
+  var allProps=[...new Set(afs.map(function(r){return r.Propiedad;}).filter(Boolean))].sort();
+  if(!allPers.length){document.getElementById('exec-trend').innerHTML='<div class="empty">Sin datos históricos.</div>';return;}
+  var agg={};
+  afs.forEach(function(r){var p=r.Propiedad,per=getPer(r);if(!p||!per)return;if(!agg[p])agg[p]={};if(!agg[p][per])agg[p][per]={ci:0,cb:0};agg[p][per].ci+=parseFloat(r._check_ins)||0;agg[p][per].cb+=parseFloat(r._afiliados_cb)||0;});
+  var getV=function(prop,per){var d=agg[prop]&&agg[prop][per];if(!d||d.ci===0)return null;return Math.round(d.cb/d.ci*1000)/10;};
+  var note=allPers.length<3?'<div class="ctx-note">ℹ️ '+allPers.length+' período'+(allPers.length>1?'s':'')+' disponibles. La tendencia será concluyente a partir del 4to período.</div>':'';
+  var rows=allProps.map(function(prop){
+    var vals=allPers.map(function(per){return getV(prop,per);});
+    var def=vals.filter(function(v){return v!==null;});
+    var trend='<span style="color:var(--gris)">—</span>';
+    if(def.length>=2){var last=def[def.length-1],prev=def[def.length-2];trend=last>prev?'<span style="color:var(--ok);font-weight:700">↑</span>':last<prev?'<span style="color:var(--err);font-weight:700">↓</span>':'<span style="color:var(--gris)">→</span>';}
+    return '<tr><td><b>'+prop+'</b></td>'+vals.map(function(v){return v===null?'<td class="tc" style="color:#ccc">—</td>':'<td class="tc '+clsP(v)+'">'+v.toFixed(1)+'%</td>';}).join('')+'<td class="tc" style="font-size:16px">'+trend+'</td></tr>';
+  }).join('');
+  document.getElementById('exec-trend').innerHTML=note+'<div style="overflow-x:auto"><table class="trend-table"><thead><tr><th>Propiedad</th>'+allPers.map(function(p){return '<th class="tc">'+p+'</th>';}).join('')+'<th class="tc">Tendencia</th></tr></thead><tbody>'+rows+'</tbody></table></div><div style="font-size:10px;color:var(--gris);margin-top:7px;padding:6px 10px;background:var(--cream);border-radius:8px;">Métrica: % de huéspedes que son miembros · 🟢 ≥15% · 🟡 8-15% · 🔴 <8%</div>';
+}
+
+/* ═══════════════════════════════════════
+   TAB 2: POR PROPIEDAD
+   Contiene: diagnóstico, errores, trabajo
+   NO contiene: KPIs globales de penetración
+═══════════════════════════════════════ */
+function renderPropActions(afs,mb){
+  var cont=document.getElementById('prop-actions');
+  var map={};
+  afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={name:p,ci:0,cb:0,hu:0,nv:0,ok:0,sc:0,lk:0,tiI:0,trans:0};map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].hu+=parseFloat(r._huespedes)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
+  mb.forEach(function(r){var p=r.Propiedad||'';if(!p||!map[p])return;var et=r.Error_Type||'';if(et==='OK')map[p].ok++;else if(et==='SIN CANJE')map[p].sc++;else if(et==='LEAKAGE')map[p].lk++;else if(et==='TIER_INCORRECTO')map[p].tiI++;if(et&&et!=='NO LOYALTY')map[p].trans++;});
+  var props=Object.values(map).filter(function(p){return p.ci>0||p.cb>0;});
+  props.forEach(function(p){p.pct=p.ci>0?Math.round(p.cb/p.ci*1000)/10:0;p.status=p.pct<5||p.cb===0?'critico':p.ok===0&&p.cb>0?'atencion':p.pct<15?'atencion':'ok';});
+  props.sort(function(a,b){var o={critico:0,atencion:1,ok:2};return(o[a.status]-o[b.status])||a.pct-b.pct;});
+  var CFG={critico:{ico:'🔴',lbl:'Crítico',cls:'critico',col:'var(--err)',bc:'b-err'},atencion:{ico:'🟡',lbl:'Necesita atención',cls:'atencion',col:'#ca8a04',bc:'b-warn'},ok:{ico:'🟢',lbl:'En camino',cls:'ok',col:'var(--ok)',bc:'b-ok'}};
+  cont.innerHTML='<div class="prop-action-grid">'+props.map(function(p,idx){
+    var cfg=CFG[p.status];
+    var actions=[];
+    if(p.cb===0&&p.ci>0)actions.push({ico:'⛔',label:'Sin miembros registrados en el período',detail:'No hay huéspedes miembros con check-in. Verificar si el equipo conoce el programa y tiene acceso a Akin.',urgent:true});
+    else if(p.pct<5)actions.push({ico:'🚨',label:'Solo '+p.pct.toFixed(1)+'% de huéspedes son miembros (meta: 15%)',detail:'Muy por debajo de la meta. Reunión urgente con el gerente para diagnosticar.',urgent:true});
+    else if(p.pct<15)actions.push({ico:'📋',label:p.pct.toFixed(1)+'% de huéspedes son miembros — en camino (meta: 15%)',detail:'Reforzar el proceso de inscripción. Asegurarse de que el equipo ofrece el programa en cada check-in.',urgent:false});
+    if(p.nv===0&&p.ci>0)actions.push({ico:'➕',label:'0 nuevos inscritos en este período',detail:'Nadie se unió al programa. El equipo no está invitando activamente a los huéspedes.',urgent:p.status==='critico'});
+    if(p.ok===0&&p.cb>0)actions.push({ico:'📱',label:'Ningún beneficio registrado correctamente en CloudBeds',detail:'Los miembros se hospedan pero el equipo no está marcando los beneficios en CB. Revisar capacitación.',urgent:true});
+    else if(p.ok>0)actions.push({ico:'✅',label:p.ok+' beneficio'+(p.ok>1?'s':'')+' aplicado'+(p.ok>1?'s':'')+' correctamente',detail:'El proceso funciona. Documentar y replicar a otras propiedades.',urgent:false});
+    if(p.sc>0){var scU=new Set((DATA.sinCanje||[]).filter(function(r){return r.Propiedad===p.name;}).map(function(r){return r.Nombre;}).filter(Boolean)).size;actions.push({ico:'❌',label:scU+' miembro'+(scU>1?'s':'')+' único'+(scU>1?'s':'')+' sin beneficio ('+p.sc+' reservas)',detail:'Revisar la lista de trabajo abajo — filtrar por esta propiedad.',urgent:p.sc>20});}
+    if(p.lk>0)actions.push({ico:'💸',label:p.lk+' descuento'+(p.lk>1?'s':'')+' a huésped sin membresía',detail:'Pérdida de ingreso. Siempre verificar en Akin antes de aplicar cualquier beneficio.',urgent:true});
+    if(p.tiI>0)actions.push({ico:'⚠️',label:p.tiI+' beneficio'+(p.tiI>1?'s':'')+' con nivel incorrecto',detail:'El nivel en CB no coincide con el nivel real en Akin. Capacitar al equipo.',urgent:false});
+    var summary=p.pct.toFixed(1)+'% miembros';
+    if(p.ok>0)summary+=' · '+p.ok+' correctos';
+    if(p.sc>0)summary+=' · '+p.sc+' sin beneficio';
+    return '<div class="prop-card"><div class="prop-card-head '+cfg.cls+'" onclick="togglePropCard(this)">'+
+      '<div class="prop-card-status">'+cfg.ico+'</div>'+
+      '<div class="prop-card-info"><div class="prop-card-name">'+p.name+' <span class="prop-badge '+cfg.bc+'">'+cfg.lbl+'</span></div><div class="prop-card-summary">'+summary+'</div></div>'+
+      '<div class="prop-card-metric"><div class="prop-card-pct" style="color:'+cfg.col+'">'+p.pct.toFixed(1)+'%</div><div class="prop-card-pct-lbl">miembros</div></div>'+
+      '<span class="prop-card-arr">▼</span></div>'+
+      '<div class="prop-card-body">'+actions.map(function(a){return '<div class="prop-action-item"><div class="prop-action-ico">'+a.ico+'</div><div class="prop-action-text"><div class="prop-action-label">'+a.label+'</div><div class="prop-action-detail">'+a.detail+'</div>'+(a.urgent?'<span class="prop-action-urgent">Acción urgente esta semana</span>':'')+'</div></div>';}).join('')+'</div></div>';
+  }).join('')+'</div>';
+}
+
+function renderPropSemaforo(mb){
+  var fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');
+  var isFiltered=fp.length||ft.length||fpa.length;
+  var t,scUnicos;
+  if(!isFiltered&&DATA._resumen){
+    var res=DATA._resumen;
+    t={OK:res.ok||0,'SIN CANJE':res.sin_canje||0,LEAKAGE:res.leakage||0,TIER_INCORRECTO:res.tier_incorrecto||0,MISUSE:res.misuse||0};
+    scUnicos=new Set((DATA.sinCanje||[]).map(function(r){return r.Nombre;}).filter(Boolean)).size;
+  } else {
+    t={OK:0,'SIN CANJE':0,LEAKAGE:0,TIER_INCORRECTO:0,MISUSE:0};
+    mb.forEach(function(r){var k=r.Error_Type||'';if(k in t)t[k]++;});
+    scUnicos=new Set(mb.filter(function(r){return r.Error_Type==='SIN CANJE';}).map(function(r){return r.Nombre;}).filter(Boolean)).size;
+  }
+  var tot=Object.values(t).reduce(function(a,b){return a+b;},0)||1;
+  document.getElementById('prop-sem-total').innerHTML='<b>'+fmtN(tot)+'</b> transacciones · <span style="color:var(--mid);font-size:10px">Fuente: CloudBeds + Akin</span>';
+  var items=[
+    {k:'OK',label:'Correctos',sub:'Bien registrado en CB',val:t['OK'],cls:'s-verde',drill:false},
+    {k:'SIN CANJE',label:'Sin beneficio',sub:scUnicos+' personas · '+t['SIN CANJE']+' reservas',val:scUnicos,cls:t['SIN CANJE']===0?'s-verde':t['SIN CANJE']<20?'s-amarillo':'s-rojo',drill:'SIN CANJE'},
+    {k:'LEAKAGE',label:'Descuento a no-miembro',sub:'Pérdida de ingreso',val:t['LEAKAGE'],cls:t['LEAKAGE']===0?'s-verde':t['LEAKAGE']<10?'s-amarillo':'s-rojo',drill:'LEAKAGE'},
+    {k:'TIER_INCORRECTO',label:'Nivel incorrecto',sub:'CB ≠ Akin',val:t['TIER_INCORRECTO'],cls:t['TIER_INCORRECTO']===0?'s-verde':t['TIER_INCORRECTO']<5?'s-amarillo':'s-rojo',drill:'TIER_INCORRECTO'},
+    {k:'MISUSE',label:'Mal aplicado',sub:'Fuera del proceso',val:t['MISUSE'],cls:t['MISUSE']===0?'s-verde':'s-rojo',drill:'MISUSE'},
+  ];
+  document.getElementById('prop-semaforo').innerHTML=items.map(function(i){
+    var hasDrill=i.drill&&i.val>0;
+    return '<div class="s-item '+i.cls+(hasDrill?' clickable':'')+'"'+(hasDrill?' onclick="drillTipoError(\''+i.drill+'\',\''+i.label+'\')"':'')+'>'+
+      '<div class="s-val">'+fmtN(i.val)+'</div>'+
+      '<div class="s-lbl">'+i.label+'</div>'+
+      '<div class="s-sub">'+i.sub+'</div>'+
+      (hasDrill?'<div class="s-tipo">Ver detalle →</div>':'')+
       '</div>';
   }).join('');
 }
-function renderTopProbs(mb){
-  var map={};
-  mb.forEach(function(r){if(r.Error_Type==='OK')return;var p=r.Propiedad||'Sin propiedad';if(!map[p])map[p]={p:p,sc:0,ti:0,mu:0,lk:0};if(r.Error_Type==='SIN CANJE')map[p].sc++;else if(r.Error_Type==='TIER_INCORRECTO')map[p].ti++;else if(r.Error_Type==='MISUSE')map[p].mu++;else if(r.Error_Type==='LEAKAGE')map[p].lk++;});
-  var sorted=Object.values(map).map(function(p){p.total=p.sc+p.ti+p.mu+p.lk;return p;}).filter(function(p){return p.total>0;}).sort(function(a,b){return b.sc-a.sc;}).slice(0,3);
-  if(!sorted.length){document.getElementById('top-probs').innerHTML='<p style="color:var(--ok);font-size:12px;padding:16px 0">✅ Sin problemas identificados para este filtro.</p>';return;}
-  document.getElementById('top-probs').innerHTML=sorted.map(function(p,i){
-    var nom=p.p.replace('Viajero ','').replace(' Hostel','').replace(' & Ecohabs','');
-    var iss=[];if(p.sc)iss.push('<b>'+p.sc+'</b> sin beneficio');if(p.ti)iss.push('<b>'+p.ti+'</b> nivel incorrecto');if(p.mu)iss.push('<b>'+p.mu+'</b> mal aplicado');if(p.lk)iss.push('<b>'+p.lk+'</b> descuento sin membresía');
-    return '<div class="tp"><div class="tp-rank">'+(i===0?'🔴 Más problemas':i===1?'🟠 2°':'🟡 3°')+'</div><div class="tp-name">'+nom+'</div><div class="tp-issues">'+iss.join(' · ')+'</div></div>';
-  }).join('');
-}
-function renderTrend(){
-  var afs=D.afiliados||[],mb=D.tiersDetalle||[],perMap={};
-  afs.forEach(function(r){var p=getPer(r);if(!p)return;var fpr=getMsVals('prop'),fpa=getMsVals('pais');if(fpr.length&&!fpr.includes(r.Propiedad||''))return;if(fpa.length&&!fpa.includes(r.País||r.Pais||''))return;if(!perMap[p])perMap[p]={hu:0,cb:0,nv:0,ok:0,tot:0};perMap[p].hu+=parseFloat(r._huespedes)||0;perMap[p].cb+=parseFloat(r._afiliados_cb)||0;perMap[p].nv+=parseFloat(r._nuevos)||0;});
-  mb.forEach(function(r){var p=getPer(r);if(!p)return;var fpr=getMsVals('prop'),fpa=getMsVals('pais');if(fpr.length&&!fpr.includes(r.Propiedad||''))return;if(fpa.length&&!fpa.includes(r.País||r.Pais||''))return;if(!perMap[p])perMap[p]={hu:0,cb:0,nv:0,ok:0,tot:0};if(r.Error_Type)perMap[p].tot++;if(r.Error_Type==='OK')perMap[p].ok++;});
-  var labels=Object.keys(perMap).sort();
-  if(labels.length<2){document.getElementById('trend-row').innerHTML='<p class="empty-state" style="grid-column:1/-1">Se necesitan al menos 2 períodos para mostrar tendencias.</p>';return;}
-  var alcance=labels.map(function(p){return perMap[p].hu>0?Math.round(perMap[p].cb/perMap[p].hu*1000)/10:0;});
-  var beneficios=labels.map(function(p){return perMap[p].tot>0?Math.round(perMap[p].ok/perMap[p].tot*1000)/10:0;});
-  var nuevos=labels.map(function(p){return perMap[p].nv||0;});
-  Object.values(_trendCharts).forEach(function(c){if(c&&c.destroy)c.destroy();});_trendCharts={};
-  function mkChart(id,data,color,isCount){var canvas=document.getElementById(id);if(!canvas||!window.Chart)return;return new Chart(canvas,{type:'line',data:{labels:labels,datasets:[{data:data,borderColor:color,backgroundColor:color+'22',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,fill:true,tension:.35}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return isCount?fN(ctx.raw):ctx.raw.toFixed(1)+'%';}}}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return isCount?fN(v):v+'%';}},grid:{color:'rgba(0,0,0,.05)'},border:{display:false}},x:{grid:{display:false}}},interaction:{mode:'index',intersect:false}}});}
-  requestAnimationFrame(function(){_trendCharts.alcance=mkChart('c-alcance',alcance,'#F04B24',false);_trendCharts.beneficios=mkChart('c-beneficios',beneficios,'#15803d',false);_trendCharts.nuevos=mkChart('c-nuevos',nuevos,'#0369a1',true);});
-}
-function drillErr(et){
-  var fp=getMsVals('per'),fpr=getMsVals('prop'),fpa=getMsVals('pais');
-  var rows=(D.tiersDetalle||[]).filter(function(r){if(r.Error_Type!==et)return false;if(fpr.length&&!fpr.includes(r.Propiedad||''))return false;if(fpa.length&&!fpa.includes(r.País||r.Pais||''))return false;if(fp.length){var rp=getPer(r);if(rp&&!fp.includes(rp))return false;}return true;});
-  var lb={'SIN CANJE':'Sin beneficio','LEAKAGE':'Descuento sin membresía','TIER_INCORRECTO':'Nivel incorrecto','MISUSE':'Mal aplicado'};
-  document.getElementById('drill-title').textContent=lb[et]||et;
-  document.getElementById('drill-sub').textContent=fN(rows.length)+' registros'+(rows.length>300?' (mostrando 300)':'');
-  document.getElementById('drill-content').innerHTML='<table><thead><tr><th>Nombre</th><th>Nivel</th><th>Reserva</th><th>Fecha llegada</th><th>Propiedad</th><th>Período</th></tr></thead><tbody>'+rows.slice(0,300).map(function(r){return '<tr><td>'+(r.Nombre||'—')+'</td><td>'+(r.Tier_AKIN||'—')+'</td><td>'+(r.Reserva||'—')+'</td><td>'+fDate(r.FechaIN)+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(getPer(r)||'—')+'</td></tr>';}).join('')+'</tbody></table>';
-  document.getElementById('drill-overlay').classList.add('show');
-}
-function renderOps(){renderPropTable();renderSinCanje(filtrar(D.sinCanje||[],'Propiedad','País'));renderSync();}
-function renderPropTable(){
-  var afs=filtrar(D.afiliados||[]),mb=filtrar(D.tiersDetalle||[]),map={};
-  afs.forEach(function(r){var p=r.Propiedad||'';if(!p)return;if(!map[p])map[p]={p:p,hu:0,cb:0,nv:0,ok:0,sc:0,lk:0,ti:0,mu:0,pais:r.País||r.Pais||''};map[p].hu+=parseFloat(r._huespedes)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
-  mb.forEach(function(r){var p=r.Propiedad||'';if(!map[p])return;var et=r.Error_Type||'';if(et==='OK')map[p].ok++;else if(et==='SIN CANJE')map[p].sc++;else if(et==='LEAKAGE')map[p].lk++;else if(et==='TIER_INCORRECTO')map[p].ti++;else if(et==='MISUSE')map[p].mu++;});
-  _propRows=Object.values(map).map(function(p){p.pctCb=p.hu>0?p.cb/p.hu*100:0;p.totMx=p.ok+p.sc+p.ti+p.mu;p.pctOK=p.totMx>0?p.ok/p.totMx*100:0;p.status=p.pctCb>=15&&p.pctOK>=50?'ok':p.pctCb>=8||p.pctOK>=20?'warn':'err';return p;});
-  renderPropBody();
-}
-function renderPropBody(){
-  var d=[].concat(_propRows);d.sort(function(a,b){var v=0;if(_propSortCol===0)v=a.p.localeCompare(b.p);else if(_propSortCol===1)v=a.pctCb-b.pctCb;else if(_propSortCol===2)v=a.nv-b.nv;else if(_propSortCol===3)v=a.sc-b.sc;else if(_propSortCol===4)v=a.ti-b.ti;else if(_propSortCol===5)v=a.mu-b.mu;else if(_propSortCol===6)v=a.pctOK-b.pctOK;else{var o={ok:2,warn:1,err:0};v=(o[a.status]||0)-(o[b.status]||0);}return _propSortAsc?v:-v;});
-  var em={ok:'🟢',warn:'🟡',err:'🔴'};
-  document.getElementById('prop-tbody').innerHTML=d.map(function(p){
-    var nom=p.p.replace('Viajero ','').replace(' Hostel','').replace(' & Ecohabs','');
-    var col=p.pctCb>=15?'var(--ok)':p.pctCb>=8?'#ca8a04':'var(--err)';
+
+function renderPropHallazgos(hall){
+  var cont=document.getElementById('prop-hallazgos');
+  if(!hall.length){cont.innerHTML='<div class="empty">✅ Sin hallazgos para este filtro</div>';return;}
+  var byT={};
+  hall.forEach(function(h){
+    var k=(h['Categoría']||'')+'|'+(h['Severidad']||'')+'|'+(h['Error_Type']||'');
+    if(!byT[k])byT[k]={cat:h['Categoría']||'General',sev:h['Severidad']||'Media',accion:h['Acción sugerida']||'',et:h['Error_Type']||'',total:0,props:{}};
+    var m=(h.Hallazgo||'').match(/^(\d+)/);byT[k].total+=m?parseInt(m[1]):1;
+    var p=h.Propiedad||'Sin especificar';byT[k].props[p]=(byT[k].props[p]||0)+(m?parseInt(m[1]):1);
+  });
+  var rows=Object.values(byT);
+  rows.sort(function(a,b){var o={'Crítica':0,'Alta':1,'Media':2};return((o[a.sev]!==undefined?o[a.sev]:3)-(o[b.sev]!==undefined?o[b.sev]:3))||(b.total-a.total);});
+  var CM={'Crítica':'critica','Alta':'alta','Media':'media'};
+  var ET_LABELS={'SIN CANJE':'Sin beneficio','LEAKAGE':'A no-miembro','TIER_INCORRECTO':'Nivel incorrecto','MISUSE':'Mal aplicado'};
+  var tableRows=rows.map(function(g){
+    var cls=CM[g.sev]||'media';
+    var hasDrill=g.et&&(DATA.tiersDetalle||[]).some(function(r){return r.Error_Type===g.et;});
+    var topProps=Object.entries(g.props).sort(function(a,b){return b[1]-a[1];}).slice(0,3).map(function(e){return e[0].replace('Viajero ','').replace(' Hostel','')+'('+e[1]+')';}).join(', ');
     return '<tr>'+
-      '<td><b style="font-size:12px;">'+nom+'</b><span style="display:block;font-size:10px;color:var(--gris);">'+p.pais+'</span></td>'+
-      '<td style="text-align:center"><span class="'+clsPct(p.pctCb,15,8)+'">'+p.pctCb.toFixed(1)+'%</span><div class="pbar"><div class="pbar-fill" style="width:'+Math.min(p.pctCb/30*100,100)+'%;background:'+col+'"></div></div></td>'+
-      '<td style="text-align:center"><b>'+fN(p.nv)+'</b></td>'+
-      '<td style="text-align:center"><span style="color:'+(p.sc>20?'var(--err)':p.sc>5?'#ca8a04':p.sc===0?'var(--gris)':'var(--ok)')+'">'+fN(p.sc)+'</span></td>'+
-      '<td style="text-align:center"><span style="color:'+(p.ti>5?'var(--err)':p.ti>0?'#ca8a04':'var(--gris)')+'">'+fN(p.ti)+'</span></td>'+
-      '<td style="text-align:center"><span style="color:'+(p.mu>10?'var(--err)':p.mu>0?'#ca8a04':'var(--gris)')+'">'+fN(p.mu)+'</span></td>'+
-      '<td style="text-align:center"><span class="'+clsPct(p.pctOK,50,20)+'">'+p.pctOK.toFixed(0)+'%</span></td>'+
-      '<td style="text-align:center">'+em[p.status]+'</td>'+
-    '</tr>';
-  }).join('')||'<tr><td colspan="8" class="empty-state">Sin datos</td></tr>';
+      '<td><span class="hall-sev '+cls+'">'+(g.sev==='Crítica'?'🔴 Crítico':g.sev==='Alta'?'🟠 Alto':'🟡 Medio')+'</span></td>'+
+      '<td><span class="hall-tipo">'+(ET_LABELS[g.et]||g.cat)+'</span><div class="hall-accion">'+g.accion+'</div></td>'+
+      '<td style="text-align:center;font-size:18px;font-weight:800;color:var(--'+(cls==='critica'?'err':cls==='alta'?'orange':'warn')+')">'+fmtN(g.total)+'</td>'+
+      '<td style="font-size:10px;color:var(--gris);max-width:180px;line-height:1.4">'+topProps+'</td>'+
+      '<td>'+(hasDrill?'<button class="hall-btn" onclick="drillTipoError(\''+g.et+'\',\''+(ET_LABELS[g.et]||g.cat)+'\')">Ver →</button>':'—')+'</td>'+
+      '</tr>';
+  }).join('');
+  cont.innerHTML='<div class="ac"><div class="ac-head open" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">⚠️</span><div><div class="ac-tit">Hallazgos detectados</div><div class="ac-sub">'+rows.length+' tipos de problema con acción sugerida</div></div></div><span class="ac-arr" style="transform:rotate(180deg)">▼</span></div><div class="ac-body vis" style="padding:0"><div style="overflow-x:auto"><table class="hall-table"><thead><tr><th>Nivel</th><th>Problema · Acción</th><th class="tc">Casos</th><th>Top propiedades</th><th></th></tr></thead><tbody>'+tableRows+'</tbody></table></div></div></div>';
 }
-function sortProp(col){_propSortAsc=(_propSortCol===col)?!_propSortAsc:(col===3?false:col===0);_propSortCol=col;renderPropBody();}
+
+var _scTierFilter=null;
 function renderSinCanje(sc){
-  SC_DATA=sc;_scTierFilter=null;
-  var tourist=sc.filter(function(r){return(r.Tier||'').toLowerCase()==='tourist';}).length;
-  var backpacker=sc.filter(function(r){return(r.Tier||'').toLowerCase()==='backpacker';}).length;
+  SC_DATA=sc;
+  _scTierFilter=null;
+  var tourist=sc.filter(function(r){return (r.Tier||'').toLowerCase()==='tourist';}).length;
+  var backpacker=sc.filter(function(r){return (r.Tier||'').toLowerCase()==='backpacker';}).length;
   var otros=sc.length-tourist-backpacker;
   var unicos=new Set(sc.map(function(r){return r.Nombre;}).filter(Boolean)).size||sc.length;
-  document.getElementById('sc-cnt').textContent=fN(sc.length)+' reservas';
   var cards=[
-    {id:'sc-all',col:'var(--gris)',n:unicos,t:'Todas las personas',d:fN(sc.length)+' reservas sin beneficio',tier:'__all__'},
-    {id:'sc-tourist',col:'#c2410c',n:tourist,t:'Tourist',d:'Tarifa -15% al check-in',tier:'tourist'},
-    {id:'sc-backpacker',col:'var(--err)',n:backpacker,t:'Backpacker',d:'Tarifa + toalla',tier:'backpacker'},
-    {id:'sc-otros',col:'var(--purple)',n:otros,t:'Explorer / Nomad / Viajero',d:'Con beneficios adicionales',tier:'__otros__'}
+    {id:'sc-f-tourist',col:'var(--orange)',n:tourist,title:'Tourist sin descuento',desc:'Tienen derecho a tarifa -15% en CB al check-in',tier:'tourist'},
+    {id:'sc-f-backpacker',col:'var(--err)',n:backpacker,title:'Backpacker sin tarifa ni toalla',desc:'Tienen derecho a tarifa con descuento + toalla sin costo',tier:'backpacker'},
   ];
-  document.getElementById('sc-legend').innerHTML=cards.map(function(c){return'<div class="wl-leg" id="'+c.id+'" data-tier="'+c.tier+'"><div><div class="wl-leg-n" style="color:'+c.col+'">'+fN(c.n)+'</div><div class="wl-leg-t">'+c.t+'</div><div class="wl-leg-d">'+c.d+'</div></div></div>';}).join('');
-  var legEl=document.getElementById('sc-legend');
-  if(legEl._bound)legEl.removeEventListener('click',legEl._handler);
-  legEl._handler=function(e){var card=e.target.closest('.wl-leg');if(!card)return;_scTierFilter=card.dataset.tier;document.querySelectorAll('.wl-leg').forEach(function(el){el.classList.remove('active');});card.classList.add('active');filtrarSC();};
-  legEl._bound=true;legEl.addEventListener('click',legEl._handler);
-  var allCard=document.getElementById('sc-all');if(allCard)allCard.classList.add('active');
-  _scTierFilter='__all__';
+  if(otros>0)cards.push({id:'sc-f-otros',col:'var(--purple)',n:otros,title:'Otros niveles (Explorer / Nomad / Viajero)',desc:'Tienen beneficios adicionales: desayuno, upgrade o todos los premium',tier:'otros'});
+  cards.push({id:'sc-f-todos',col:'var(--gris)',n:unicos,title:'Total personas únicas',desc:sc.length+' reservas en total (una persona puede tener varias en estadías largas)',tier:null,active:true});
+  document.getElementById('prop-sc-legend').innerHTML=
+    '<div style="font-size:11px;color:var(--gris);margin-bottom:8px;">Haz clic en cada tarjeta para filtrar la lista:</div>'+
+    '<div class="sc-legend">'+
+    cards.map(function(c){
+      return '<div id="'+c.id+'" onclick="scFilterTier(\''+c.tier+'\',\''+c.id+'\')" class="sc-leg-item" style="cursor:pointer;border-left:3px solid '+c.col+';'+(c.active?'box-shadow:0 0 0 2px '+c.col+';':'')+'transition:.15s;">'+
+        '<div><div class="sc-leg-n" style="color:'+c.col+';">'+fmtN(c.n)+'</div></div>'+
+        '<div><div class="sc-leg-title">'+c.title+'</div><div class="sc-leg-desc">'+c.desc+'</div></div>'+
+      '</div>';
+    }).join('')+
+    '</div>'+
+    '<div style="font-size:10px;color:var(--gris);margin-top:5px;background:var(--cream);padding:5px 9px;border-radius:7px;">'+
+    'ℹ️ La lista de abajo muestra a qué personas hay que aplicarles el beneficio que no recibieron. Usa el buscador para filtrar por propiedad o nombre.'+
+    '</div>';
   filtrarSC();
 }
-function scFilter(tier,id){_scTierFilter=tier;document.querySelectorAll('.wl-leg').forEach(function(el){el.classList.remove('active');});var el=document.getElementById(id);if(el)el.classList.add('active');filtrarSC();}
+function scFilterTier(tier,clickedId){
+  _scTierFilter=tier==='null'||tier===null?null:tier;
+  document.querySelectorAll('.sc-leg-item').forEach(function(el){
+    el.style.boxShadow='';
+    el.style.opacity='0.6';
+  });
+  var clicked=document.getElementById(clickedId);
+  if(clicked){clicked.style.boxShadow='0 0 0 2px #1E100A';clicked.style.opacity='1';}
+  filtrarSC();
+}
 function filtrarSC(){
-  var q=((document.getElementById('sc-q')||{}).value||'').toLowerCase();
-  var fpa=getMsVals('pais'),fpr=getMsVals('prop');
+  var q=(document.getElementById('sc-q')?document.getElementById('sc-q').value:'').toLowerCase();
+  var fpa=getMsValues('pais'),fp=getMsValues('prop');
   var rows=SC_DATA.filter(function(r){
-    if(fpa.length&&!fpa.includes(r.País||r.Pais||''))return false;
-    if(fpr.length&&!fpr.includes(r.Propiedad||''))return false;
-    if(_scTierFilter&&_scTierFilter!=='__all__'){
+    if(fpa.length&&!fpa.includes(r['País']||r.Pais||''))return false;
+    if(fp.length&&!fp.includes(r.Propiedad||''))return false;
+    if(_scTierFilter!==null&&_scTierFilter!==undefined){
       var tier=(r.Tier||'').toLowerCase();
-      if(_scTierFilter==='__otros__'){if(tier==='tourist'||tier==='backpacker')return false;}
+      if(_scTierFilter==='otros'){if(tier==='tourist'||tier==='backpacker')return false;}
       else{if(tier!==_scTierFilter)return false;}
     }
-    return!q||Object.values(r).some(function(v){return v&&v.toString().toLowerCase().includes(q);});
+    return !q||Object.values(r).some(function(v){return v&&v.toString().toLowerCase().includes(q);});
   });
-  var wrap=document.getElementById('sc-table');
-  if(!rows.length){wrap.innerHTML='<p class="empty-state">Sin registros para este filtro</p>';return;}
+  var wrap=document.getElementById('sc-tabla');if(!wrap)return;
+  if(!rows.length){wrap.innerHTML='<div class="empty">Sin registros</div>';return;}
   wrap.innerHTML='<table><thead><tr><th>Nombre</th><th>Nivel</th><th>Reserva</th><th>Fecha llegada</th><th>Período</th><th>Propiedad</th><th>Noches</th></tr></thead><tbody>'+
-    rows.map(function(r){var tier=(r.Tier||'').toLowerCase();var col=tier==='tourist'?'#c2410c':tier==='backpacker'?'var(--err)':'var(--purple)';return'<tr><td>'+(r.Nombre||'—')+'</td><td style="color:'+col+';font-weight:700;">'+(r.Tier||'—')+'</td><td>'+(r.Reserva||'—')+'</td><td>'+fDate(r.FechaIN)+'</td><td>'+(r.Período||r.Periodo||'—')+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Noches||'—')+'</td></tr>';}).join('')+
-  '</tbody></table>';
+    rows.map(function(r){var tier=(r.Tier||'').toLowerCase(),tc=tier==='tourist'?'color:var(--orange)':tier==='backpacker'?'color:var(--err)':'color:var(--purple)';return '<tr><td><b>'+(r.Nombre||'—')+'</b></td><td style="'+tc+';font-weight:700">'+(r.Tier||'—')+'</td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r['Período']||'—')+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Noches||'—')+'</td></tr>';}).join('')+
+    '</tbody></table>';
 }
-function renderSync(){
-  var raw=D.sinMatchAkin||[];var fp=getMsVals('prop'),fpa=getMsVals('pais');
-  var data=raw.filter(function(r){return(!fp.length||fp.includes(r.Propiedad||''))&&(!fpa.length||fpa.includes(r.País||r.Pais||''));});
-  var limpia=data.filter(function(r){return!/(demo|test|wizard)/i.test(r.Nombre||'');});
-  document.getElementById('sync-cnt').textContent=limpia.length;
-  var cont=document.getElementById('sync-cont');
-  if(!limpia.length){cont.innerHTML='<p class="empty-state">✅ Sin problemas de sincronización para este filtro</p>';return;}
-  cont.innerHTML='<div class="sync-warn">⚠️ <b>'+limpia.length+' reservas sin sincronización Akin/CloudBeds.</b> NO es error de recepción → escalar a Akin.</div>'+
-    '<div class="scroll-wrap"><table><thead><tr><th>Nombre</th><th>Reserva</th><th>Fecha llegada</th><th>Propiedad</th><th>Nivel Akin</th></tr></thead><tbody>'+
-    limpia.map(function(r){return'<tr><td>'+(r.Nombre||'—')+'</td><td>'+(r.Reserva||'—')+'</td><td>'+fDate(r.FechaIN)+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Tier_AKIN||'—')+'</td></tr>';}).join('')+
+
+function renderSinMatchAkin(){
+  var cont=document.getElementById('prop-sinmatch');
+  var raw=DATA.sinMatchAkin||[],fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');
+  var data=raw.filter(function(r){return (!fp.length||fp.includes(r.Propiedad||''))&&(!ft.length||ft.includes(getPer(r)))&&(!fpa.length||fpa.includes(r['País']||r.Pais||''));});
+  var limpia=data.filter(function(r){return !/(demo|test|wizard)/i.test(r.Nombre||'');});
+  document.getElementById('match-cnt').textContent=limpia.length;
+  if(!limpia.length){cont.innerHTML='<div style="background:var(--ok-bg);border:1.5px solid var(--ok-light);border-radius:var(--r);padding:14px 18px;font-size:12px;color:var(--ok);">✅ Sin problemas técnicos de sincronización para este filtro.</div>';return;}
+  cont.innerHTML='<div class="ac"><div class="ac-head" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">🔗</span><div><div class="ac-tit">'+limpia.length+' reservas sin sincronización Akin/CB</div><div class="ac-sub">Problema de plataforma, no del equipo de recepción</div></div></div><div class="ac-meta"><span class="ac-badge b-warn">Escalar a Akin</span></div><span class="ac-arr">▼</span></div><div class="ac-body"><div class="match-banner">🔧 <b>El equipo de recepción no tiene nada que hacer aquí.</b> Causa: número de reserva o correo difiere entre Akin y CB. <b>Paso 1:</b> Buscar por nombre en CB. <b>Paso 2:</b> Si no aparece → escalar a Akin.</div><div class="sc-wrap"><table><thead><tr><th>Nombre</th><th># Reserva Akin</th><th>Fecha llegada</th><th>Propiedad</th><th>Período</th><th>Nivel</th></tr></thead><tbody>'+limpia.map(function(r){return '<tr><td><b>'+(r.Nombre||'—')+'</b></td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Periodo||r['Período']||'—')+'</td><td>'+(r.Tier_AKIN||'—')+'</td></tr>';}).join('')+'</tbody></table></div></div></div>';
+}
+
+/* ═══════════════════════════════════════
+   TAB 3: COMPORTAMIENTO DE MIEMBROS
+   Requiere DATA.memberBehavior en JSON
+   Campos: name/nombre, email, total_bookings,
+   properties_visited, last_booking_date,
+   days_since_last_stay, total_nights,
+   average_stay_nights, activity_status
+═══════════════════════════════════════ */
+function renderMembersTab(){
+  var mb=DATA.memberBehavior||[];
+  if(!mb.length){
+    document.getElementById('members-pending-banner').innerHTML=
+      '<div class="pending-banner"><div class="pb-ico">⏳</div><div>'+
+      '<div class="pb-title">Data en proceso</div>'+
+      '<div class="pb-desc">El script de extracción de Akin está siendo procesado. En cuanto se integre al JSON, esta sección se activa automáticamente con toda la información de comportamiento de miembros.</div>'+
+      '<div class="pb-fields">'+
+      '<span class="pb-field">total_bookings</span><span class="pb-field">properties_visited</span><span class="pb-field">last_booking_date</span><span class="pb-field">days_since_last_stay</span><span class="pb-field">total_nights</span><span class="pb-field">average_stay_nights</span><span class="pb-field">activity_status</span>'+
+      '</div></div></div>';
+    document.getElementById('members-beh-kpis').innerHTML='';
+    document.getElementById('members-activity-pills').innerHTML='<div class="empty">Sin datos de comportamiento. Actualiza el JSON con la key <code>memberBehavior</code>.</div>';
+    document.getElementById('member-tabla').innerHTML='';
+    MEMBER_DATA=[];
+    return;
+  }
+  document.getElementById('members-pending-banner').innerHTML='';
+  MEMBER_DATA=mb;
+  var totalM=mb.length||1;
+  var avgB=mb.reduce(function(s,r){return s+(parseFloat(r.total_bookings)||0);},0)/totalM;
+  var avgN=mb.reduce(function(s,r){return s+(parseFloat(r.total_nights)||0);},0)/totalM;
+  var avgP=mb.reduce(function(s,r){return s+(parseFloat(r.properties_visited)||0);},0)/totalM;
+  var multi=mb.filter(function(r){return (parseFloat(r.properties_visited)||0)>1;}).length;
+  var kpis=[
+    {label:'Estadías promedio por miembro',val:avgB.toFixed(1),sub:'total reservas ÷ miembros',bkc:'var(--teal)'},
+    {label:'Noches promedio por miembro',val:avgN.toFixed(1),sub:'total noches ÷ miembros',bkc:'var(--blue)'},
+    {label:'Propiedades promedio visitadas',val:avgP.toFixed(1),sub:'índice de fidelidad a la cadena',bkc:'var(--purple)'},
+    {label:'Miembros multi-propiedad',val:fmtN(multi),sub:fmtP(multi,totalM)+' visitaron 2+ hostels',bkc:'var(--ok)'},
+  ];
+  document.getElementById('members-beh-kpis').innerHTML=
+    '<div class="beh-grid">'+
+    kpis.map(function(k){return '<div class="beh-kpi" style="--bkc:'+k.bkc+'"><div class="bk-glow"></div><div class="bk-label">'+k.label+'</div><div class="bk-val">'+k.val+'</div><div class="bk-sub">'+k.sub+'</div></div>';}).join('')+
+    '</div>';
+  var statuses={ACTIVE:0,OCCASIONAL:0,DORMANT:0,INACTIVE:0};
+  mb.forEach(function(r){var s=(r.activity_status||'').toUpperCase();if(s in statuses)statuses[s]++;});
+  var pillCfg=[
+    {k:'ACTIVE',label:'Activos',cls:'act-active',desc:'últimos 90 días'},
+    {k:'OCCASIONAL',label:'Ocasionales',cls:'act-occasional',desc:'91-180 días'},
+    {k:'DORMANT',label:'Dormidos',cls:'act-dormant',desc:'181-365 días'},
+    {k:'INACTIVE',label:'Inactivos',cls:'act-inactive',desc:'más de 365 días'},
+  ];
+  document.getElementById('members-activity-pills').innerHTML=
+    '<div class="activity-bar">'+
+    pillCfg.map(function(pc){return '<div class="act-pill '+pc.cls+'"><div class="act-pill-n">'+fmtN(statuses[pc.k])+'</div><div class="act-pill-label">'+pc.label+'</div><div class="act-pill-pct">'+fmtP(statuses[pc.k],totalM)+' · '+pc.desc+'</div></div>';}).join('')+
+    '</div>';
+  filtrarMembers();
+}
+function filtrarMembers(){
+  var q=(document.getElementById('member-q')?document.getElementById('member-q').value:'').toLowerCase();
+  var rows=MEMBER_DATA.filter(function(r){return !q||Object.values(r).some(function(v){return v&&v.toString().toLowerCase().includes(q);});});
+  var wrap=document.getElementById('member-tabla');if(!wrap)return;
+  if(!rows.length){wrap.innerHTML='<div class="empty">Sin registros</div>';return;}
+  var SC={'ACTIVE':'sp-active','OCCASIONAL':'sp-occasional','DORMANT':'sp-dormant','INACTIVE':'sp-inactive'};
+  var SL={'ACTIVE':'Activo','OCCASIONAL':'Ocasional','DORMANT':'Dormido','INACTIVE':'Inactivo'};
+  wrap.innerHTML='<div class="member-wrap"><table class="member-table"><thead><tr>'+
+    '<th>Nombre</th><th>Correo</th><th class="tc">Estadías</th><th class="tc">Noches</th><th class="tc">Propiedades</th><th class="tc">Últ. estadía</th><th class="tc">Estado</th>'+
+    '</tr></thead><tbody>'+
+    rows.map(function(r){
+      var st=(r.activity_status||'').toUpperCase();
+      var dsl=parseFloat(r.days_since_last_stay)||0;
+      var dslTxt=dsl<0?'Próximamente':dsl===0?'Hoy':dsl+' días';
+      return '<tr>'+
+        '<td><b>'+(r.name||r.nombre||'—')+'</b></td>'+
+        '<td style="color:var(--gris)">'+(r.email||'—')+'</td>'+
+        '<td class="tc" style="font-weight:700">'+(r.total_bookings||'—')+'</td>'+
+        '<td class="tc">'+(r.total_nights||'—')+'</td>'+
+        '<td class="tc">'+(r.properties_visited||'—')+'</td>'+
+        '<td class="tc" style="color:'+(dsl>180?'var(--err)':dsl>90?'var(--warn)':'var(--dark)')+'">'+(r.last_booking_date?fmtFecha(r.last_booking_date)+'<br><span style="font-size:9px;color:var(--gris)">'+dslTxt+'</span>':'—')+'</td>'+
+        '<td class="tc"><span class="status-pill '+(SC[st]||'')+'">'+( SL[st]||st||'—')+'</span></td>'+
+        '</tr>';
+    }).join('')+
     '</tbody></table></div>';
 }
-function renderCtx(){
-  renderDonut();
-  var afs=filtrar(D.afiliados||[]),mb=filtrar(D.tiersDetalle||[]),map={};
-  afs.forEach(function(r){var p=r.Propiedad||'';if(!p)return;if(!map[p])map[p]={p:p,hu:0,ci:0,cb:0,nv:0,ok:0,sc:0};map[p].hu+=parseFloat(r._huespedes)||0;map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
-  mb.forEach(function(r){var p=r.Propiedad||'';if(!map[p])return;if(r.Error_Type==='OK')map[p].ok++;else if(r.Error_Type==='SIN CANJE')map[p].sc++;});
-  var props=Object.values(map).filter(function(p){return p.hu>0||p.cb>0;});
-  props.forEach(function(p){p.pct=p.hu>0?Math.round(p.cb/p.hu*1000)/10:0;p.pctOK=(p.ok+p.sc)>0?Math.round(p.ok/(p.ok+p.sc)*1000)/10:0;});
-  _RD={props:props,maxPct:Math.max(30,Math.max.apply(null,props.map(function(p){return p.pct;}))||30),maxNv:Math.max.apply(null,props.map(function(p){return p.nv;}))||1,maxCb:Math.max.apply(null,props.map(function(p){return p.cb;}))||1};
-  switchRank('pct',document.querySelector('.rank-tab.active'));
+
+/* ═══════════════════════════════════════
+   TAB 4: CONTEXTO DEL PROGRAMA
+   Contiene: tiers, ranking, embudo, beneficios
+   Lazy-rendered al hacer clic en el tab
+═══════════════════════════════════════ */
+var _ctxRendered=false;
+function renderCtxTab(){
+  if(!DATA)return;
+  var afs=filtrar(DATA.afiliados||[]);
+  var mb=filtrar(DATA.tiersDetalle||[]);
+  renderCtxTierDonut();
+  renderCtxRanking(afs,mb);
+  renderCtxTiersDetail(afs,mb);
+  _ctxRendered=true;
 }
-function renderDonut(){
-  var raw=D.akinTiers||[];
-  var TCOLORS={Tourist:'#f97316',Backpacker:'#ef4444',Explorer:'#8b5cf6',Nomad:'#0ea5e9',Viajero:'#14b8a6'};
-  var TORDER=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
-  var tiers,total;
-  if(raw.length&&raw[0].Viajero!==undefined){var grouped={};raw.forEach(function(m){var t=m.Viajero||'Sin nivel';if(!grouped[t])grouped[t]={name:t,count:0};grouped[t].count++;});tiers=Object.values(grouped).sort(function(a,b){var ia=TORDER.indexOf(a.name),ib=TORDER.indexOf(b.name);return(ia<0?99:ia)-(ib<0?99:ib);});}
-  else{tiers=raw.map(function(t){return{name:t.name||t.tier||t.Tier||'?',count:parseInt(t.count||t.total||0)||0};});}
-  total=tiers.reduce(function(s,t){return s+(parseInt(t.count)||0);},0);
+
+function renderCtxTierDonut(){
+  var raw=DATA.akinTiers||[];
+  var tiers;
+  var TIER_ORDER=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
+  if(raw.length>0&&raw[0].Viajero!==undefined){
+    var grouped={};
+    raw.forEach(function(m){var tier=m.Viajero||'Sin nivel';if(!grouped[tier])grouped[tier]={name:tier,count:0,members:[]};grouped[tier].count++;grouped[tier].members.push({name:m.Name||m.nombre||'',email:m.Email||m.email||'',loyalty_number:m['Loyalty #']||m.loyalty_number||''});});
+    tiers=Object.values(grouped).sort(function(a,b){var ia=TIER_ORDER.indexOf(a.name),ib=TIER_ORDER.indexOf(b.name);return(ia<0?99:ia)-(ib<0?99:ib);});
+  } else {
+    tiers=raw.map(function(t){return {name:t.name||t.tier||t.nivel||t.Tier||t.Nivel||'?',count:parseInt(t.count||t.total||t.miembros||0)||0,members:t.members||[]};});
+  }
+  var TIER_COLORS={'Tourist':'#f97316','Backpacker':'#ef4444','Explorer':'#8b5cf6','Nomad':'#0ea5e9','Viajero':'#14b8a6'};
+  var total=tiers.reduce(function(s,t){return s+(parseInt(t.count)||0);},0);
   if(_donutChart){_donutChart.destroy();_donutChart=null;}
-  document.getElementById('ctx-donut').innerHTML='<div class="donut-card"><div class="donut-wrap"><canvas id="donut-c" width="120" height="120"></canvas><div class="donut-center"><div class="donut-n">'+fN(total)+'</div><div class="donut-lbl">Miembros</div></div></div><div class="tier-list"><div class="tier-title">Distribución actual</div>'+
-    tiers.map(function(t){var pct=total>0?Math.round(t.count/total*1000)/10:0;var col=TCOLORS[t.name]||'#94a3b8';return'<div class="tier-row" data-tier-drill="'+t.name+'"><div class="tier-dot" style="background:'+col+'"></div><div class="tier-name">'+t.name+'</div><div class="tier-n">'+fN(t.count)+'</div><div class="tier-pct">'+pct+'%</div></div>';}).join('')+'</div></div>';
-  requestAnimationFrame(function(){var canvas=document.getElementById('donut-c');if(!canvas||!window.Chart)return;_donutChart=new Chart(canvas,{type:'doughnut',data:{labels:tiers.map(function(t){return t.name;}),datasets:[{data:tiers.map(function(t){return parseInt(t.count)||0;}),backgroundColor:tiers.map(function(t){return TCOLORS[t.name]||'#94a3b8';}),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.label+': '+ctx.raw+' ('+Math.round(ctx.raw/total*1000)/10+'%)';}}}},animation:{duration:600}}});});
+  var donutHtml='<div class="tier-donut-card"><div class="tier-donut-wrap"><canvas id="donut-canvas" width="110" height="110"></canvas><div class="tier-donut-center"><div class="tier-donut-n">'+total+'</div><div class="tier-donut-lbl">Miembros</div></div></div><div class="tier-donut-list"><div class="tier-donut-title">Distribución actual del programa</div>'+tiers.map(function(t,i){var pct=total>0?Math.round((parseInt(t.count)||0)/total*1000)/10:0;var col=TIER_COLORS[t.name]||'#94a3b8';return '<div class="tier-row" onclick="drillTierMembers(\''+t.name+'\')" style="cursor:pointer"><div class="tier-dot" style="background:'+col+'"></div><div class="tier-row-name">'+t.name+'</div><div class="tier-row-n">'+fmtN(t.count)+'</div><div class="tier-row-pct">'+pct+'%</div></div>';}).join('')+'</div></div>';
+  document.getElementById('ctx-tier-donut').innerHTML=donutHtml;
+  requestAnimationFrame(function(){
+    var canvas=document.getElementById('donut-canvas');
+    if(!canvas||!window.Chart)return;
+    _donutChart=new Chart(canvas,{type:'doughnut',data:{labels:tiers.map(function(t){return t.name;}),datasets:[{data:tiers.map(function(t){return parseInt(t.count)||0;}),backgroundColor:tiers.map(function(t){return TIER_COLORS[t.name]||'#94a3b8';}),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.label+': '+ctx.raw+' ('+Math.round(ctx.raw/total*1000)/10+'%)';}}}},animation:{duration:600}}});
+  });
 }
-function drillTier(tier){
-  var raw=D.akinTiers||[];if(!raw.length||raw[0].Viajero===undefined)return;
-  var rows=raw.filter(function(m){return m.Viajero===tier;});if(!rows.length)return;
+function drillTierMembers(tier){
+  var raw=DATA.akinTiers||[];
+  var rows;
+  if(raw.length>0&&raw[0].Viajero!==undefined){
+    rows=raw.filter(function(m){return m.Viajero===tier;}).map(function(m){return {name:m.Name||m.nombre||'—',email:m.Email||m.email||'—',loyalty_number:m['Loyalty #']||m.loyalty_number||'—',propiedad:m.Propiedad||'—',joined:m['Joined date']||''};});
+  } else {
+    var t=(raw||[]).find(function(t){return t.name===tier;});
+    rows=t&&t.members?t.members:[];
+  }
+  if(!rows.length){return;}
   document.getElementById('drill-title').textContent='Miembros nivel '+tier;
-  document.getElementById('drill-sub').textContent=rows.length+' miembros';
-  document.getElementById('drill-content').innerHTML='<table><thead><tr><th>Nombre</th><th>Correo</th></tr></thead><tbody>'+rows.map(function(r){return'<tr><td>'+(r.Name||r.nombre||'—')+'</td><td>'+(r.Email||r.email||'—')+'</td></tr>';}).join('')+'</tbody></table>';
+  document.getElementById('drill-sub').textContent=rows.length+' miembros activos';
+  var c=document.getElementById('drill-content');
+  c.innerHTML='<div class="drill-wrap"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Propiedad</th><th>Fecha inscripción</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td><b>'+(r.name||r.Nombre||'—')+'</b></td><td style="color:var(--gris)">'+(r.email||r.Email||'—')+'</td><td>'+(r.propiedad||r.Propiedad||'—')+'</td><td>'+fmtFecha(r.joined||r['Joined date']||'')+'</td></tr>';}).join('')+'</tbody></table></div>';
   document.getElementById('drill-overlay').classList.add('show');
 }
-function switchRank(tipo,btn){
-  if(!_RD.props)return;
-  document.querySelectorAll('.rank-tab').forEach(function(b){b.classList.remove('active');});if(btn)btn.classList.add('active');
-  var sorted=[].concat(_RD.props);
-  if(tipo==='pct')sorted.sort(function(a,b){return b.pct-a.pct;});
-  else if(tipo==='nv')sorted.sort(function(a,b){return b.nv-a.nv;});
-  else if(tipo==='cb')sorted.sort(function(a,b){return b.cb-a.cb;});
-  else sorted.sort(function(a,b){return b.pctOK-a.pctOK;});
-  document.getElementById('ctx-ranking').innerHTML=sorted.map(function(p,i){
+
+function renderCtxRanking(afs,mb){
+  var cont=document.getElementById('ctx-ranking');
+  var fp=getMsValues('prop');
+  if(fp.length===1){cont.innerHTML='<div class="empty">Vista de ranking disponible sin filtro de propiedad individual.</div>';return;}
+  var map={};
+  afs.forEach(function(r){var p=r.Propiedad||'';if(!p)return;if(!map[p])map[p]={p:p,ci:0,cb:0,hu:0,nv:0,ok:0,sc:0};map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].hu+=parseFloat(r._huespedes)||0;map[p].nv+=parseFloat(r._nuevos)||0;});
+  mb.forEach(function(r){var p=r.Propiedad||'';if(!map[p])return;var et=r.Error_Type||'';if(et==='SIN CANJE')map[p].sc++;else if(et==='OK')map[p].ok++;});
+  var props=Object.values(map).filter(function(p){return p.ci>0||p.cb>0;});
+  props.forEach(function(p){p.pct=p.ci>0?Math.round(p.cb/p.ci*1000)/10:0;p.pctOK=(p.ok+p.sc)>0?Math.round(p.ok/(p.ok+p.sc)*1000)/10:0;});
+  var maxPct=Math.max(25,Math.max.apply(null,props.map(function(p){return p.pct;})));
+  var maxNv=Math.max.apply(null,props.map(function(p){return p.nv;}))||1;
+  window._RD={props:props,maxPct:maxPct,maxNv:maxNv};
+  cont.innerHTML='<div class="ac"><div class="ac-head open" onclick="toggleAc(this)"><div class="ac-left"><span class="ac-ico">🏆</span><div><div class="ac-tit">Ranking de propiedades</div><div class="ac-sub">'+props.length+' propiedades · línea = meta 15%</div></div></div><div class="ac-meta"><div class="rank-tabs" onclick="event.stopPropagation()"><button class="rank-tab active" onclick="switchRank(\'pct\',this)">% Miembros</button><button class="rank-tab" onclick="switchRank(\'nv\',this)">Nuevos</button><button class="rank-tab" onclick="switchRank(\'ok\',this)">% Sin error</button></div></div><span class="ac-arr" style="transform:rotate(180deg)">▼</span></div><div class="ac-body vis"><div id="rank-body">'+buildRankRows([].concat(props).sort(function(a,b){return b.pct-a.pct;}),'pct')+'</div></div></div>';
+}
+function renderExecFunnel(afs,mb){
+  var el=document.getElementById('exec-funnel');if(!el)return;
+  var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
+  var items=[
+    {ico:'🏠',lbl:'Total huéspedes',sub:'entran al hostel',n:hu,col:'#94a3b8'},
+    {ico:'🔑',lbl:'Hacen check-in',sub:'registrados en CB',n:ci,col:'var(--coral)'},
+    {ico:'💳',lbl:'Son miembros activos',sub:'de Viajero Go',n:cb,col:'var(--blue)'},
+    {ico:'✨',lbl:'Nuevos inscritos',sub:'se unieron en el período',n:nv,col:'var(--ok)'},
+  ];
+  var maxN=Math.max.apply(null,items.map(function(i){return i.n;}));
+  el.innerHTML='<div class="funnel-outer">'+items.map(function(it,idx){
+    var bpct=maxN>0?Math.round(it.n/maxN*100):0;
+    var conv=idx>0&&items[idx-1].n>0?'→ '+(Math.round(it.n/items[idx-1].n*1000)/10)+'%':'';
+    return '<div class="fn-row"><div class="fn-left"><div class="fn-ico">'+it.ico+'</div><div><div class="fn-lbl">'+it.lbl+'</div><div class="fn-sub">'+it.sub+'</div></div></div><div class="fn-bar-track"><div class="fn-bar-fill" style="width:'+bpct+'%;background:'+it.col+'"></div></div><div class="fn-conv">'+conv+'</div><div class="fn-right"><div class="fn-n">'+fmtN(it.n)+'</div></div></div>';
+  }).join('')+'</div>';
+}
+
+/* ── FILTER PROP CARDS ───────────────── */
+function filterPropCards(status,btn){
+  document.querySelectorAll('.prop-filter-btn').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  document.querySelectorAll('.prop-card').forEach(function(card){
+    var head=card.querySelector('.prop-card-head');
+    if(status==='all'){card.style.display='';return;}
+    var show=head&&head.classList.contains(status);
+    card.style.display=show?'':'none';
+  });
+}
+
+window.switchRank=function(tipo,btn){var rd=window._RD||{};if(!rd.props)return;document.querySelectorAll('.rank-tab').forEach(function(b){b.classList.remove('active');});if(btn)btn.classList.add('active');var s=tipo==='pct'?[].concat(rd.props).sort(function(a,b){return b.pct-a.pct;}):tipo==='nv'?[].concat(rd.props).sort(function(a,b){return b.nv-a.nv;}):[].concat(rd.props).sort(function(a,b){return b.pctOK-a.pctOK;});var el=document.getElementById('rank-body');if(el)el.innerHTML=buildRankRows(s,tipo);};
+function buildRankRows(sorted,tipo){
+  var rd=window._RD||{};
+  return sorted.map(function(p,i){
     var bpct,val,sub,col,tgt=null;
-    if(tipo==='pct'){bpct=Math.round(p.pct/_RD.maxPct*100);val=p.pct.toFixed(1)+'%';sub=fN(p.cb)+' de '+fN(p.ci)+' check-ins';col=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';tgt=Math.round(15/_RD.maxPct*100);}
-    else if(tipo==='nv'){bpct=_RD.maxNv>0?Math.round(p.nv/_RD.maxNv*100):0;val=fN(p.nv);sub=fP(p.nv,p.hu)+' captación';col='var(--coral)';}
-    else if(tipo==='cb'){bpct=_RD.maxCb>0?Math.round(p.cb/_RD.maxCb*100):0;val=fN(p.cb)+' visitas';sub='check-ins de miembros';col='var(--teal)';}
+    if(tipo==='pct'){bpct=Math.round(p.pct/rd.maxPct*100);val=p.pct.toFixed(1)+'%';sub=fmtN(p.cb)+' de '+fmtN(p.ci)+' check-ins';col=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';tgt=Math.round(15/rd.maxPct*100);}
+    else if(tipo==='nv'){bpct=rd.maxNv>0?Math.round(p.nv/rd.maxNv*100):0;val=fmtN(p.nv);sub=(p.hu>0?(p.nv/p.hu*100).toFixed(1):0)+'% captación';col='var(--coral)';}
     else{bpct=Math.round(p.pctOK);val=p.pctOK.toFixed(1)+'%';sub=p.ok+' correctos de '+(p.ok+p.sc)+' aplicaciones';col=p.pctOK>=50?'var(--ok)':p.pctOK>0?'#ca8a04':'var(--gris)';}
     var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':String(i+1);
-    var nom=p.p.replace('Viajero ','').replace(' Hostel','').replace(' & Ecohabs','');
-    return'<div class="rank-item"><div class="rank-pos">'+medal+'</div><div class="rank-name"><b>'+nom+'</b><span>'+sub+'</span></div><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:'+bpct+'%;background:'+col+'"></div>'+(tgt!==null?'<div class="rank-target" style="left:'+tgt+'%"></div>':'')+
-    '</div><div class="rank-val" style="color:'+col+'">'+val+'</div></div>';
+    return '<div class="rank-item"><div class="rank-pos">'+medal+'</div><div class="rank-name"><b>'+p.p+'</b><span>'+sub+'</span></div><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:'+bpct+'%;background:'+col+'"></div>'+(tgt!==null?'<div class="rank-target" style="left:'+tgt+'%"></div>':'')+'</div><div class="rank-val" style="color:'+col+'">'+val+'</div></div>';
   }).join('');
 }
-fetch(DATA_URL).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(function(d){
-  D=d;
-  var ts=d.actualizado||d.updatedAt||d.timestamp||d.generatedAt||'';
-  if(ts){var dt=new Date(ts);document.getElementById('h-ts').textContent=dt.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+' · '+dt.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});}
-  buildFilters();render();
-}).catch(function(err){
-  var b=document.getElementById('banner');b.className='banner err';
-  b.innerHTML='<div class="banner-ico">⚠️</div><div><div class="banner-title">No se pudo cargar el JSON</div><div class="banner-sub">Verifica que loyalty_data.json esté en ../data/ y que el servidor esté activo. Error: '+err.message+'</div></div>';
-});
+
+function renderCtxFunnel(afs,mb){
+  var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
+  var items=[
+    {ico:'🏠',lbl:'Total huéspedes',sub:'entran al hostel',n:hu,col:'#94a3b8'},
+    {ico:'🔑',lbl:'Hacen check-in',sub:'registrados en CB',n:ci,col:'var(--coral)'},
+    {ico:'💳',lbl:'Son miembros activos',sub:'de Viajero Go',n:cb,col:'var(--blue)'},
+    {ico:'✨',lbl:'Nuevos inscritos',sub:'se unieron en el período',n:nv,col:'var(--ok)'},
+  ];
+  var maxN=Math.max.apply(null,items.map(function(i){return i.n;}));
+  document.getElementById('ctx-funnel').innerHTML=
+    '<div class="funnel-outer">'+
+    items.map(function(it,idx){
+      var bpct=maxN>0?Math.round(it.n/maxN*100):0;
+      var conv=idx>0&&items[idx-1].n>0?'→ '+(Math.round(it.n/items[idx-1].n*1000)/10)+'%':'';
+      return '<div class="fn-row"><div class="fn-left"><div class="fn-ico">'+it.ico+'</div><div><div class="fn-lbl">'+it.lbl+'</div><div class="fn-sub">'+it.sub+'</div></div></div><div class="fn-bar-track"><div class="fn-bar-fill" style="width:'+bpct+'%;background:'+it.col+'"></div></div><div class="fn-conv">'+conv+'</div><div class="fn-right"><div class="fn-n">'+fmtN(it.n)+'</div></div></div>';
+    }).join('')+
+    '</div>';
+}
+
+function renderCtxTiersDetail(afs,mb){
+  var TIER_BENEFITS={'Tourist':'Tarifa -15% en CloudBeds al check-in','Backpacker':'Tarifa con descuento + toalla sin costo','Explorer':'Tarifa + toalla + desayuno','Nomad':'Tarifa + toalla + desayuno + upgrade de habitación','Viajero':'Todos los beneficios premium del programa'};
+  var TIER_COLORS={'Tourist':'#f97316','Backpacker':'#ef4444','Explorer':'#8b5cf6','Nomad':'#0ea5e9','Viajero':'#14b8a6'};
+  var TIER_ORDER=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
+  var note='';
+  var cards=TIER_ORDER.map(function(tier){
+    var rows=mb.filter(function(r){return (r.Tier_AKIN||r.Tier||'')===tier;});
+    if(!rows.length)return '';
+    var tot=rows.length;
+    var ok=rows.filter(function(r){return r.Error_Type==='OK';}).length;
+    var sc=rows.filter(function(r){return r.Error_Type==='SIN CANJE';}).length;
+    var lk=rows.filter(function(r){return r.Error_Type==='LEAKAGE';}).length;
+    var ti=rows.filter(function(r){return r.Error_Type==='TIER_INCORRECTO';}).length;
+    var ms=rows.filter(function(r){return r.Error_Type==='MISUSE';}).length;
+    var pctOK=tot>0?Math.round(ok/tot*1000)/10:0;
+    var col=TIER_COLORS[tier]||'var(--coral)';
+    var barW=tot>0?Math.round(ok/tot*100):0;
+    var bens=TIER_BENEFITS[tier]||tier;
+    var statusCol=pctOK>=90?'var(--ok)':pctOK>=50?'var(--warn)':'var(--err)';
+    return '<div class="tier-c" style="border-top:3px solid '+col+';text-align:left;">'+
+      '<div class="t-top"><div class="t-nom" style="color:'+col+';">'+tier+'</div><div class="t-tot">'+fmtN(tot)+' casos</div></div>'+
+      '<div class="t-bens">'+bens+'</div>'+
+      '<div class="tier-bar"><div class="tier-fill" style="width:'+barW+'%;background:'+col+';"></div></div>'+
+      '<div class="tier-pct" style="color:'+statusCol+';">'+pctOK.toFixed(1)+'% sin error</div>'+
+      '<div style="display:flex;flex-direction:column;gap:5px;font-size:10px;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--gris)">✅ Correctos</span><b style="color:var(--ok)">'+fmtN(ok)+'</b></div>'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--gris)">❌ Sin beneficio</span><b style="color:var(--err)">'+fmtN(sc)+'</b></div>'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--gris)">💸 A no-miembro</span><b style="color:var(--orange)">'+fmtN(lk)+'</b></div>'+
+        (ti>0?'<div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--gris)">⚠️ Nivel incorrecto</span><b style="color:var(--warn)">'+fmtN(ti)+'</b></div>':'')+
+        (ms>0?'<div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--gris)">🚫 Mal aplicado</span><b style="color:var(--err)">'+fmtN(ms)+'</b></div>':'')+
+      '</div>'+
+    '</div>';
+  }).join('');
+  document.getElementById('ctx-tiers-g').innerHTML=note+'<div class="tiers-g">'+cards+'</div>';
+  return;
+  var TIER_CONFIG={
+    'Tourist':{col:'#f97316',bens:'Tarifa -15%'},
+    'Backpacker':{col:'#ef4444',bens:'Tarifa + toalla sin costo'},
+    'Explorer':{col:'#8b5cf6',bens:'Tarifa + toalla + desayuno'},
+    'Nomad':{col:'#0ea5e9',bens:'Tarifa + toalla + desayuno + upgrade'},
+    'Viajero':{col:'#14b8a6',bens:'Todos los beneficios premium'},
+  };
+  var tierMap={};
+  mb.forEach(function(r){
+    var tier=r.Tier_AKIN||r.Tier||'Sin nivel';if(!tierMap[tier])tierMap[tier]={ok:0,err:0,sc:0,nl:0};
+    var et=r.Error_Type||'';
+    if(et==='OK')tierMap[tier].ok++;
+    else if(et==='TIER_INCORRECTO'||et==='MISUSE')tierMap[tier].err++;
+    else if(et==='SIN CANJE')tierMap[tier].sc++;
+    else tierMap[tier].nl++;
+  });
+  var tiers=Object.entries(tierMap).filter(function(e){var k=e[0];return k&&k!=='Sin nivel'&&k!=='Sin tier'&&k!=='sin nivel'&&k!=='sin tier'&&k!=='';});
+  if(!tiers.length){document.getElementById('ctx-tiers-g').innerHTML='<div class="empty">Sin datos para este filtro</div>';return;}
+  var ORDER=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
+  tiers.sort(function(a,b){var ia=ORDER.indexOf(a[0]),ib=ORDER.indexOf(b[0]);return(ia<0?99:ia)-(ib<0?99:ib);});
+  var tableRows=tiers.map(function(e){
+    var name=e[0],d=e[1],cfg=TIER_CONFIG[name]||{col:'#94a3b8',bens:'Beneficios del nivel'};
+    var tot=(d.ok+d.sc+d.err)||1;
+    var pctOK=Math.round(d.ok/tot*100);
+    var colOK=pctOK>=30?'var(--ok)':pctOK>=5?'#ca8a04':'var(--err)';
+    return '<tr>'+
+      '<td style="padding:12px 16px;">'+
+        '<div style="display:flex;align-items:center;gap:8px;">'+
+          '<div style="width:10px;height:10px;border-radius:50%;background:'+cfg.col+';flex-shrink:0;"></div>'+
+          '<div>'+
+            '<div style="font-size:13px;font-weight:800;color:'+cfg.col+';">'+name+'</div>'+
+            '<div style="font-size:10px;color:var(--gris);margin-top:1px;">'+cfg.bens+'</div>'+
+          '</div>'+
+        '</div>'+
+      '</td>'+
+      '<td style="padding:12px 11px;text-align:center;font-size:14px;font-weight:700;">'+fmtN(tot)+'</td>'+
+      '<td style="padding:12px 11px;text-align:center;">'+
+        '<div style="font-size:18px;font-weight:800;color:'+(d.ok>0?'var(--ok)':'var(--gris)')+';">'+d.ok+'</div>'+
+        '<div style="font-size:9px;color:var(--gris);">'+pctOK+'%</div>'+
+      '</td>'+
+      '<td style="padding:12px 11px;text-align:center;">'+
+        '<div style="font-size:18px;font-weight:800;color:'+(d.sc>0?'var(--err)':'var(--gris)')+';">'+d.sc+'</div>'+
+        '<div style="font-size:9px;color:var(--gris);">'+(d.sc>0?Math.round(d.sc/tot*100)+'% — ver lista de trabajo':'0%')+'</div>'+
+      '</td>'+
+      '<td style="padding:12px 11px;text-align:center;">'+
+        '<div style="font-size:18px;font-weight:800;color:'+(d.err>0?'#ca8a04':'var(--gris)')+';">'+d.err+'</div>'+
+      '</td>'+
+      '<td style="padding:12px 16px;">'+
+        '<div style="height:6px;background:var(--cd);border-radius:99px;overflow:hidden;margin-bottom:4px;">'+
+          '<div style="width:'+pctOK+'%;height:100%;background:'+colOK+';border-radius:99px;"></div>'+
+        '</div>'+
+        '<div style="font-size:11px;font-weight:700;color:'+colOK+';">'+pctOK+'% con beneficio correcto</div>'+
+      '</td>'+
+    '</tr>';
+  }).join('');
+  document.getElementById('ctx-tiers-g').innerHTML=
+    '<div style="background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;grid-column:1/-1;">'+
+    '<div style="background:var(--err-bg);border-bottom:1.5px solid #fca5a5;padding:10px 16px;font-size:11px;color:var(--err);line-height:1.6;">'+
+    '<b>⚠️ Problema generalizado:</b> la gran mayoría de miembros NO están recibiendo su beneficio, en todos los niveles. No es un problema de un nivel específico — es un problema de proceso en recepción. Ver Tab <b>Por propiedad</b> para actuar hostel por hostel.'+
+    '</div>'+
+    '<div style="overflow-x:auto;">'+
+    '<table style="width:100%;border-collapse:collapse;font-size:12px;">'+
+    '<thead><tr style="background:var(--cm);border-bottom:1.5px solid var(--border);">'+
+    '<th style="padding:9px 16px;font-size:9px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.6px;text-align:left;">Nivel · Qué beneficio tiene derecho</th>'+
+    '<th style="padding:9px 11px;font-size:9px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.6px;text-align:center;">Casos analizados</th>'+
+    '<th style="padding:9px 11px;font-size:9px;font-weight:700;color:var(--ok);text-transform:uppercase;letter-spacing:.6px;text-align:center;">✅ Recibió su beneficio</th>'+
+    '<th style="padding:9px 11px;font-size:9px;font-weight:700;color:var(--err);text-transform:uppercase;letter-spacing:.6px;text-align:center;">❌ No recibió nada</th>'+
+    '<th style="padding:9px 11px;font-size:9px;font-weight:700;color:#ca8a04;text-transform:uppercase;letter-spacing:.6px;text-align:center;">⚠️ Error de aplicación</th>'+
+    '<th style="padding:9px 16px;font-size:9px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.6px;">Resultado</th>'+
+    '</tr></thead>'+
+    '<tbody>'+tableRows+'</tbody>'+
+    '</table>'+
+    '</div>'+
+    '<div style="padding:9px 16px;font-size:10px;color:var(--gris);border-top:1px solid var(--border);background:var(--cream);">'+
+    '✅ Recibió su beneficio = el equipo lo registró correctamente en CloudBeds · ❌ No recibió nada = se hospedó pero no se aplicó nada · ⚠️ Error = nivel incorrecto o beneficio equivocado'+
+    '</div>'+
+    '</div>';
+}
+
+function renderCtxBeneficios(mb){
+  var bens={};
+  mb.filter(function(r){return r.Error_Type==='OK';}).forEach(function(r){var b=r.Beneficio||r.beneficio||'Beneficio aplicado';bens[b]=(bens[b]||0)+1;});
+  var items=Object.entries(bens).sort(function(a,b){return b[1]-a[1];});
+  var cont=document.getElementById('ctx-beneficios');
+  if(!items.length){cont.innerHTML='<div class="empty">0 beneficios registrados correctamente en este período. El equipo aún no está marcando en CloudBeds.</div>';return;}
+  var maxB=items[0][1]||1;
+  var ICOS={'tarifa':'💰','toalla':'🛁','desayuno':'🍳','upgrade':'⭐','descuento':'💳'};
+  cont.innerHTML=items.map(function(e){
+    var ico=Object.keys(ICOS).find(function(k){return e[0].toLowerCase().includes(k);})?ICOS[Object.keys(ICOS).find(function(k){return e[0].toLowerCase().includes(k);})]:''+'🎁';
+    var pct=Math.round(e[1]/maxB*100);
+    return '<div class="ben-row"><div class="ben-ico">'+ico+'</div><div class="ben-info"><div class="ben-bar-wrap"><div class="ben-bar-fill" style="width:'+pct+'%;background:var(--coral)"></div></div><div class="ben-meta"><span style="font-size:12px;font-weight:600">'+e[0]+'</span><span style="font-weight:800">'+e[1]+'</span></div></div></div>';
+  }).join('');
+}
+
+/* ═══════════════════════════════════════
+   RENDER PRINCIPAL
+   Llama solo lo que se necesita según tab
+═══════════════════════════════════════ */
+function renderDetailSheetBtn(){
+ var el=document.getElementById('detail-sheet-wrapper');if(!el)return;
+ var url=DATA.sheetUrl||'';
+ if(!url){el.innerHTML='';return;}
+ el.innerHTML='<a href="'+url+'" target="_blank" class="detail-sheet-btn">Ver detalle reserva por reserva →</a>';
+}
+function render(){
+  if(!DATA)return;
+  var afs=filtrar(DATA.afiliados||[]);
+  var mb=filtrar(DATA.tiersDetalle||[]);
+  var sc=filtrar(DATA.sinCanje||[]);
+
+  // Tab 1: siempre
+  renderExecHeadline(afs,mb);
+  renderExecCtxKPIs(afs,mb);
+  renderExecFunnel(afs,mb);
+  renderExecPaisPenetracion(DATA.afiliados||[]);
+  renderExecMovers(DATA.afiliados||[]);
+  renderExecTrend(afs);
+
+  // Tab 2: siempre
+  renderDetailSheetBtn();
+  renderPropActions(afs,mb);
+  renderPropSemaforo(mb);
+  renderPropHallazgos(filtrar(DATA.hallazgos||[]));
+  renderSinCanje(sc);
+  renderSinMatchAkin();
+
+  // Tab 3: solo si ya se renderizó (lazy)
+  // se activa al hacer clic en el tab
+
+  // Tab 4: solo si ya se abrió
+  if(_ctxRendered){renderCtxTab();}
+}
+
+/* ═══════════════════════════════════════
+   INIT — fetch + timestamp
+═══════════════════════════════════════ */
+fetch(DATA_URL)
+  .then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    return r.json();
+  })
+  .then(function(data){
+    DATA=data;
+    SC_DATA=DATA.sinCanje||[];
+    var ts=new Date();
+    document.getElementById('h-ts').textContent=ts.toLocaleString('es-CO',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+    poblarFiltros();
+    render();
+  })
+  .catch(function(err){
+    console.error('Error cargando datos:',err);
+    document.querySelector('main').innerHTML='<div style="text-align:center;padding:60px;color:var(--gris)"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="font-size:14px;font-weight:600">Error al cargar los datos del programa</div><div style="font-size:12px;margin-top:6px">Verifica que <code>../data/loyalty_data.json</code> esté disponible.</div></div>';
+  });
 </script>
 </body>
 </html>
