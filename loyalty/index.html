@@ -1147,8 +1147,7 @@ function renderPropSemaforo(mb){
   ];
   var icoMap={OK:'✅','SIN CANJE':'❌',LEAKAGE:'💸',TIER_INCORRECTO:'⚠️',MISUSE:'🚫'};
   var buildItems=function(arr){return arr.map(function(i){
-    var hasDrill=i.drill&&i.val>0;
-    return '<div class="s-item '+i.cls+(hasDrill?' clickable':'')+'"'+(hasDrill?' onclick="drillTipoError(\''+i.drill+'\',\''+i.label+'\')"':'')+'>'+
+var hasDrill=false;    return '<div class="s-item '+i.cls+(hasDrill?' clickable':'')+'"'+(hasDrill?' onclick="drillTipoError(\''+i.drill+'\',\''+i.label+'\')"':'')+'>'+
       '<div class="s-accent"></div>'+
       '<div class="s-val">'+fmtN(i.val)+'</div>'+
       '<div class="s-info">'+
@@ -1156,8 +1155,7 @@ function renderPropSemaforo(mb){
         '<div class="s-sub">'+i.sub+'</div>'+
       '</div>'+
       '<div class="s-right">'+
-        (hasDrill?'<span class="s-tipo">'+({'SIN CANJE':'Ver reservas afectadas →','TIER_INCORRECTO':'Ver diferencias CB vs AKIN →','LEAKAGE':'Ver reservas con beneficios indebidos →','MISUSE':'Ver tarifas mal aplicadas →'}[i.drill]||'Ver lista →')+'</span>':'<span class="s-tipo" style="background:var(--ok-bg);color:var(--ok)">✓ Sin problemas</span>')+
-      '</div>'+
+(false?'':      '</div>'+
       '</div>';
   }).join('');};
 
