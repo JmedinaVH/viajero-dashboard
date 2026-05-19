@@ -538,6 +538,7 @@ tbody tr:hover td{background:var(--cream);}
   </div>
   <div class="sec">
     <div class="sec-hdr"><h2>Calidad de ejecución por nivel <i class="ib" onclick="openTip('Detalle por nivel')">i</i></h2><div class="linea"></div></div>
+    <div style="font-size:10px;color:var(--gris);margin-top:4px;">Base: reservas loyalty evaluadas por nivel del programa</div>
     <div class="tiers-g" id="ctx-tiers-g"></div>
   </div>
 </div>
@@ -1218,9 +1219,8 @@ function renderPropActions(afs,mb){
     '<th>Propiedad</th>'+
     '<th class="tc">% Reservas loyalty<br><span style="font-weight:400;color:var(--gris);font-size:8px">base: check-ins · meta 15%</span></th>'+
     '<th class="tc">Nuevos<br><span style="font-weight:400;color:var(--gris);font-size:8px">base: huéspedes</span></th>'+
-'<th class="tc">Ejecución OK<br><span style="font-weight:400;color:var(--gris);font-size:8px">OK / reservas loyalty</span></th>'+    '<th class="tc">Sin beneficios.</th>'+
-    '<th class="tc">Nivel ✗</th>'+
-(props.filter(function(p){return p.lk>0;}).length/Math.max(props.length,1)>0.1?'<th class="tc">Leakage</th>':'')+    '<th class="tc" title="El estado considera penetración, ejecución loyalty y riesgos operacionales">Estado ℹ️</th>'+
+'<th class="tc">Ejecución OK<br><span style="font-weight:400;color:var(--gris);font-size:8px">OK / reservas loyalty</span></th>'+    (props.some(function(p){return p.sc>0;})?'<th class="tc">Sin beneficios</th>':'')+
+(props.some(function(p){return p.tiI>0;})?'<th class="tc">Nivel ✗</th>':'')+(props.filter(function(p){return p.lk>0;}).length/Math.max(props.length,1)>0.1?'<th class="tc">Leakage</th>':'')+    '<th class="tc" title="El estado considera penetración, ejecución loyalty y riesgos operacionales">Estado ℹ️</th>'+
     '</tr></thead><tbody>'+
     props.map(function(p){
       var colPct=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';
@@ -1246,8 +1246,8 @@ function renderPropActions(afs,mb){
           '<b style="color:'+colOK+'">'+p.pctOK.toFixed(1)+'%</b>'+
 (loyTotProp>0?'<div style="font-size:9px;color:var(--gris);margin-top:1px;">('+fmtN(p.ok)+'/'+fmtN(loyTotProp)+')</div>':'')
         '</td>'+
-        '<td class="tc">'+(p.sc>0?'<b style="color:var(--err)">'+fmtN(p.sc)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>'+
-        '<td class="tc">'+(p.tiI>0?'<b style="color:var(--warn)">'+fmtN(p.tiI)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>'+
+        (props.some(function(p){return p.sc>0;})?'<td class="tc">'+(p.sc>0?'<b style="color:var(--err)">'+fmtN(p.sc)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>':'')+
+(props.some(function(p){return p.tiI>0;})?'<td class="tc">'+(p.tiI>0?'<b style="color:var(--warn)">'+fmtN(p.tiI)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>':'')+
 (props.filter(function(p){return p.lk>0;}).length/Math.max(props.length,1)>0.1?'<td class="tc">'+(p.lk>0?'<b style="color:var(--orange)">'+fmtN(p.lk)+'</b>':'<span style="color:var(--gris)">—</span>')+'</td>':'')+        '<td class="tc">'+sIco[p.status]+'<span class="badge '+sBadge[p.status]+'" style="margin-left:4px">'+sLbl[p.status]+'</span></td>'+
         '</tr>';
     }).join('')+
@@ -1374,8 +1374,7 @@ function renderCtxTierDonut(){
       /* El nombre del nivel está en el campo "Viajero" — puede ser null/undefined */
       var tier=m.Viajero||m['Loyalty Level']||m.nivel||m.Tier||'Sin nivel';
       /* Ignorar filas donde tier sea vacío o sea el header */
-      if(!tier||tier==='Viajero'||tier==='nivel'||tier==='Tier')return;
-      if(!grouped[tier])grouped[tier]={name:tier,count:0,members:[]};
+if(!tier||tier==='Viajero'||tier==='nivel'||tier==='Tier'||tier==='N/A'||tier==='n/a')return;      if(!grouped[tier])grouped[tier]={name:tier,count:0,members:[]};
       grouped[tier].count++;
       grouped[tier].members.push({name:m.Name||m.nombre||'',email:m.Email||m.email||'',loyalty_number:m['Loyalty #']||m.loyalty_number||''});
     });
@@ -1455,8 +1454,8 @@ function renderCtxRankingMini(){
   var targetPctW=Math.round(15/maxPct*100);
   document.getElementById('ctx-ranking').innerHTML='<div class="rank-mini-row">'+
     '<div class="rank-mini-card">'+
-      '<div class="rmc-title">% Miembros</div>'+
-      '<div class="rmc-sub">% huéspedes que son miembros · meta 15%</div>'+
+      '<div class="rmc-title">% Reservas loyalty</div>'+
+'<div class="rmc-sub">% reservas/check-ins asociadas a miembros loyalty · meta 15%</div>'+
       buildMini(byPct,'pct',maxPct,targetPctW,
         function(p){return p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';},
         function(p){return p.pct.toFixed(1)+'%';},
@@ -1464,15 +1463,14 @@ function renderCtxRankingMini(){
     '</div>'+
     '<div class="rank-mini-card">'+
       '<div class="rmc-title">Captación</div>'+
-      '<div class="rmc-sub">% de huéspedes que se unieron al programa</div>'+
-      buildMini(byCapt,'captRate',maxCapt,null,
+'<div class="rmc-sub">% de huéspedes que se unieron al programa · base: huéspedes</div>'+      buildMini(byCapt,'captRate',maxCapt,null,
         function(){return 'var(--coral)';},
         function(p){return p.captRate.toFixed(1)+'%';},
         function(p){return fmtN(p.nv)+' de '+fmtN(p.hu);})+
     '</div>'+
     '<div class="rank-mini-card">'+
-      '<div class="rmc-title">% Beneficios OK</div>'+
-      '<div class="rmc-sub">Aplicaciones correctamente registradas en CB</div>'+
+      '<div class="rmc-title">% Ejecución loyalty correcta</div>'+
+'<div class="rmc-sub">% de reservas loyalty donde los beneficios fueron correctamente aplicados</div>'+
       buildMini(byOK,'pctOK',100,null,
         function(p){return p.pctOK>=50?'var(--ok)':p.pctOK>0?'#ca8a04':'var(--gris)';},
         function(p){return p.pctOK.toFixed(0)+'%';},
@@ -1503,17 +1501,21 @@ function renderCtxTiersDetail(afs,mb){
       '<div class="t-top"><div class="t-nom" style="color:'+col+';">'+tier+'</div><div class="t-tot">'+fmtN(tot)+' casos</div></div>'+
       '<div class="t-bens">'+bens+'</div>'+
       '<div class="tier-bar"><div class="tier-fill" style="width:'+barW+'%;background:'+col+';"></div></div>'+
-      '<div class="tier-pct" style="color:'+statusCol+';">'+pctOK.toFixed(1)+'% sin error</div>'+
-      '<div style="display:flex;flex-direction:column;gap:5px;font-size:10px;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">'+
+'<div class="tier-pct" style="color:'+statusCol+';">'+pctOK.toFixed(1)+'% correctamente ejecutado</div>'+      '<div style="display:flex;flex-direction:column;gap:5px;font-size:10px;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">'+
         '<div style="display:flex;justify-content:space-between;"><span style="color:var(--gris)">✅ Correctos</span><b style="color:var(--ok)">'+fmtN(ok)+'</b></div>'+
         '<div style="display:flex;justify-content:space-between;"><span style="color:var(--gris)">❌ Sin beneficio</span><b style="color:var(--err)">'+fmtN(sc)+'</b></div>'+
-        '<div style="display:flex;justify-content:space-between;"><span style="color:var(--gris)">💸 A no-miembro</span><b style="color:var(--orange)">'+fmtN(lk)+'</b></div>'+
         (ti>0?'<div style="display:flex;justify-content:space-between;"><span style="color:var(--gris)">⚠️ Nivel incorrecto</span><b style="color:var(--warn)">'+fmtN(ti)+'</b></div>':'')+
         (ms>0?'<div style="display:flex;justify-content:space-between;"><span style="color:var(--gris)">🚫 Mal aplicado</span><b style="color:var(--err)">'+fmtN(ms)+'</b></div>':'')+
       '</div>'+
     '</div>';
   }).join('');
-  document.getElementById('ctx-tiers-g').innerHTML='<div class="tiers-g">'+cards+'</div>';
+var worstTier=tiers.filter(function(t){return t.rows&&t.rows.length>0;}).sort(function(a,b){
+  var aOK=a.rows.filter(function(r){return r.Error_Type==='OK';}).length/Math.max(a.rows.length,1);
+  var bOK=b.rows.filter(function(r){return r.Error_Type==='OK';}).length/Math.max(b.rows.length,1);
+  return aOK-bOK;
+})[0];
+var insightHtml=worstTier?'<div style="background:var(--warn-bg);border:1.5px solid var(--warn);border-radius:var(--r);padding:10px 16px;font-size:11px;color:var(--warn);margin-bottom:12px;">⚠️ Los niveles superiores presentan mayor complejidad operacional y menor tasa de ejecución correcta.</div>':'';
+document.getElementById('ctx-tiers-g').innerHTML=insightHtml+'<div class="tiers-g">'+cards+'</div>';
 }
 
 function renderDetailSheetBtn(){
