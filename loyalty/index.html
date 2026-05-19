@@ -26,42 +26,53 @@ header{background:var(--dark);padding:0 36px;display:flex;align-items:center;jus
 .tab-btn{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--gris);background:none;border:none;border-bottom:3px solid transparent;padding:13px 20px;cursor:pointer;transition:.16s;margin-bottom:-2px;white-space:nowrap;}.tab-btn:hover{color:var(--dark);}.tab-btn.active{color:var(--coral);border-bottom-color:var(--coral);}
 .tab-content{display:none;}.tab-content.active{display:block;}
 main{max-width:1100px;margin:0 auto;padding:24px 36px 80px;}
+/* DIAGNOSIS BANNER */
 .dx-banner{border-radius:var(--rl);padding:18px 22px;margin-bottom:20px;display:flex;align-items:center;gap:16px;}
 .dx-banner.ok{background:var(--ok-bg);border:1.5px solid var(--ok-light);}.dx-banner.warn{background:var(--warn-bg);border:1.5px solid #fde68a;}.dx-banner.err{background:var(--err-bg);border:1.5px solid #fca5a5;}
 .dx-ico{font-size:28px;flex-shrink:0;}.dx-title{font-size:15px;font-weight:800;}.dx-sub{font-size:12px;color:var(--gris);margin-top:3px;line-height:1.5;}
+/* KPI GRID */
 .kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
 .kpi-block{background:var(--surface);border-radius:var(--rl);padding:22px 20px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .18s;}.kpi-block:hover{box-shadow:var(--shm);}
 .kpi-block::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--rl) var(--rl) 0 0;}.kpi-block.ok::before{background:var(--ok);}.kpi-block.warn::before{background:#eab308;}.kpi-block.err::before{background:var(--err);}
 .kpi-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gris);margin-bottom:8px;display:flex;align-items:center;gap:5px;}
 .kpi-val{font-size:44px;font-weight:800;line-height:1;margin-bottom:6px;}.kpi-block.ok .kpi-val{color:var(--ok);}.kpi-block.warn .kpi-val{color:#ca8a04;}.kpi-block.err .kpi-val{color:var(--err);}
 .kpi-desc{font-size:11px;color:var(--gris);line-height:1.5;margin-bottom:10px;}
+.kpi-delta{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-top:4px;}
+.kpi-delta.up{background:var(--ok-bg);color:var(--ok);}.kpi-delta.down{background:var(--err-bg);color:var(--err);}.kpi-delta.flat{background:var(--cd);color:var(--mid);}
 .kpi-meta{font-size:11px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px;}
 .kpi-badge{display:inline-flex;font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;}.kpi-badge.ok{background:var(--ok-bg);color:var(--ok);}.kpi-badge.warn{background:var(--warn-bg);color:var(--warn);}.kpi-badge.err{background:var(--err-bg);color:var(--err);}.kpi-badge.gray{background:var(--cd);color:var(--mid);}
 .kpi-progress{height:6px;background:var(--cd);border-radius:99px;overflow:hidden;margin-top:12px;position:relative;}.kpi-progress-fill{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1);}.kpi-progress-target{position:absolute;top:-1px;bottom:-1px;width:2px;background:rgba(30,16,10,.2);}
+/* SECTION */
 .sec{margin-bottom:28px;}.sec-hdr{display:flex;align-items:center;gap:9px;margin-bottom:12px;}.sec-hdr h2{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}.sec-hdr .linea{flex:1;height:1px;background:var(--border);}.sec-cnt{background:var(--coral);color:#fff;font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;white-space:nowrap;}
-.prop-table-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
-.pt{width:100%;border-collapse:collapse;font-size:12px;}.pt thead th{background:var(--cm);color:var(--mid);padding:10px 14px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;cursor:pointer;white-space:nowrap;user-select:none;}.pt thead th:hover{background:var(--cd);}.pt thead th.tc{text-align:center;}
-.pt tbody td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}.pt tbody tr:last-child td{border-bottom:none;}.pt tbody tr:hover td{background:var(--cream);}
-.pct-bar{height:5px;background:var(--cd);border-radius:99px;overflow:hidden;margin-top:4px;width:70px;}.pct-bar-fill{height:100%;border-radius:99px;}.pct-ok{color:var(--ok);font-weight:700;}.pct-warn{color:#ca8a04;font-weight:700;}.pct-err{color:var(--err);font-weight:700;}
+/* ERROR GRID */
 .err-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
 .err-card{background:var(--surface);border-radius:var(--r);padding:16px 14px;border:1.5px solid var(--border);transition:.16s;}.err-card.clickable{cursor:pointer;}.err-card.clickable:hover{box-shadow:var(--shm);transform:translateY(-2px);}
 .err-card-n{font-size:30px;font-weight:800;line-height:1;margin-bottom:4px;}.err-card-lbl{font-size:11px;font-weight:700;color:var(--dark);margin-bottom:3px;}.err-card-sub{font-size:10px;color:var(--gris);line-height:1.4;}
 .err-card-resp{font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;display:inline-block;margin-top:7px;background:var(--cd);color:var(--mid);}.err-card-link{font-size:10px;color:var(--gris);margin-top:6px;display:block;}
 .c-ok .err-card-n{color:var(--ok);}.c-warn .err-card-n{color:#ca8a04;}.c-err .err-card-n{color:var(--err);}.c-blue .err-card-n{color:var(--blue);}.c-purple .err-card-n{color:var(--purple);}
+/* TOP PROBLEMS */
+.top-probs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;}
+.tp-card{background:var(--surface);border-radius:var(--r);padding:14px;border:1.5px solid var(--border);border-left:4px solid var(--err);}
+.tp-rank{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.tp-name{font-size:13px;font-weight:800;margin-bottom:6px;}
+.tp-issues{font-size:11px;color:var(--gris);line-height:1.8;}
+.tp-issues b{color:var(--err);}
+/* PROPERTY TABLE */
+.prop-table-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
+.pt{width:100%;border-collapse:collapse;font-size:12px;}.pt thead th{background:var(--cm);color:var(--mid);padding:10px 14px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;cursor:pointer;white-space:nowrap;user-select:none;}.pt thead th:hover{background:var(--cd);}.pt thead th.tc{text-align:center;}
+.pt tbody td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}.pt tbody tr:last-child td{border-bottom:none;}.pt tbody tr:hover td{background:var(--cream);}
+.pct-bar{height:5px;background:var(--cd);border-radius:99px;overflow:hidden;margin-top:4px;width:70px;}.pct-bar-fill{height:100%;border-radius:99px;}.pct-ok{color:var(--ok);font-weight:700;}.pct-warn{color:#ca8a04;font-weight:700;}.pct-err{color:var(--err);font-weight:700;}
+.n-err{color:var(--err);font-weight:700;}.n-warn{color:#ca8a04;font-weight:700;}.n-ok{color:var(--ok);font-weight:700;}.n-zero{color:var(--gris);}
+/* SINC TABLE */
 .sc-legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;}.sc-leg-item{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;flex:1;min-width:140px;cursor:pointer;transition:.16s;}.sc-leg-item:hover,.sc-leg-item.active{border-color:var(--coral);}
 .sc-leg-n{font-size:22px;font-weight:800;line-height:1;}.sc-leg-title{font-size:11px;font-weight:700;margin-bottom:1px;}.sc-leg-desc{font-size:10px;color:var(--gris);}
 .sc-search{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:9px;font-family:'Outfit',sans-serif;font-size:13px;margin-bottom:9px;background:var(--cream);transition:.14s;}.sc-search:focus{outline:none;border-color:var(--coral);background:#fff;}
 .sc-wrap{overflow-x:auto;max-height:360px;border-radius:9px;border:1.5px solid var(--border);}
 .info-note{font-size:11px;color:var(--gris);margin-bottom:9px;padding:9px 13px;background:var(--cream);border-radius:9px;border:1px solid var(--border);line-height:1.5;}
 .detail-sheet-btn{display:inline-flex;align-items:center;gap:7px;background:var(--dark);color:#fff;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;text-decoration:none;transition:.15s;margin-bottom:16px;}.detail-sheet-btn:hover{background:var(--coral);}
+/* INFO BTN */
 .ib{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--cm);color:var(--gris);font-size:8px;font-weight:800;cursor:pointer;border:1px solid var(--border);transition:.14s;font-style:normal;flex-shrink:0;vertical-align:middle;margin-left:3px;}.ib:hover{background:var(--coral);color:#fff;border-color:var(--coral);}
 .badge{display:inline-flex;align-items:center;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;}.b-ok{background:var(--ok-bg);color:var(--ok);}.b-err{background:var(--err-bg);color:var(--err);}.b-gray{background:var(--cd);color:var(--mid);}
-/* INSIGHT CARD */
-.insight-card{background:var(--dark);color:#fff;border-radius:var(--rl);padding:18px 20px;margin-bottom:14px;display:flex;align-items:center;gap:18px;}
-.insight-ico{font-size:32px;flex-shrink:0;}
-.insight-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.4);margin-bottom:4px;}
-.insight-val{font-size:22px;font-weight:800;line-height:1;margin-bottom:4px;}
-.insight-sub{font-size:11px;color:rgba(255,255,255,.55);line-height:1.5;}
 /* TIER DONUT */
 .tier-donut-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:20px 18px;display:flex;align-items:center;gap:20px;}.tier-donut-wrap{position:relative;width:110px;height:110px;flex-shrink:0;}.tier-donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;}.tier-donut-n{font-size:22px;font-weight:800;line-height:1;color:var(--dark);}.tier-donut-lbl{font-size:9px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}.tier-donut-list{flex:1;}.tier-donut-title{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:9px;}
 .tier-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer;border-radius:6px;padding:3px 5px;transition:.14s;}.tier-row:hover{background:var(--cream);}.tier-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}.tier-row-name{font-size:12px;font-weight:600;flex:1;}.tier-row-n{font-size:12px;font-weight:800;}.tier-row-pct{font-size:10px;color:var(--gris);min-width:32px;text-align:right;}
@@ -69,7 +80,7 @@ main{max-width:1100px;margin:0 auto;padding:24px 36px 80px;}
 .rank-tabs{display:flex;gap:4px;margin-bottom:13px;}.rank-tab{font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:var(--gris);background:var(--cm);border:1.5px solid var(--border);border-radius:7px;padding:5px 12px;cursor:pointer;transition:.13s;}.rank-tab.active{background:var(--coral);color:#fff;border-color:var(--coral);}
 .rank-item{display:flex;align-items:center;gap:11px;background:var(--surface);border-radius:11px;padding:12px 14px;border:1.5px solid var(--border);margin-bottom:7px;transition:.16s;}.rank-item:hover{box-shadow:var(--sh);}.rank-pos{font-size:14px;font-weight:800;color:var(--coral);min-width:28px;text-align:center;}.rank-name{flex:1;}.rank-name b{font-size:12px;font-weight:700;display:block;line-height:1.3;}.rank-name span{font-size:10px;color:var(--gris);}
 .rank-bar-wrap{flex:1.5;height:7px;background:var(--cd);border-radius:99px;overflow:hidden;position:relative;}.rank-bar-fill{height:100%;border-radius:99px;transition:width .6s;}.rank-target{position:absolute;top:0;bottom:0;width:1.5px;background:rgba(30,16,10,.2);}.rank-val{font-size:13px;font-weight:800;min-width:50px;text-align:right;}
-.pending-banner{background:var(--teal-bg);border:1.5px solid var(--teal);border-radius:var(--r);padding:16px 20px;display:flex;align-items:flex-start;gap:13px;margin-bottom:20px;}.pb-ico{font-size:22px;flex-shrink:0;}.pb-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:4px;}.pb-desc{font-size:11px;color:var(--dark);line-height:1.6;}
+/* BEHAVIOR */
 .beh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}.beh-kpi{background:var(--surface);border-radius:var(--r);padding:16px;border:1.5px solid var(--border);position:relative;overflow:hidden;}.beh-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--bkc,var(--teal));border-radius:var(--r) var(--r) 0 0;}.bk-label{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}.bk-val{font-size:24px;font-weight:800;line-height:1;color:var(--dark);margin-bottom:2px;}.bk-sub{font-size:11px;color:var(--gris);}
 .activity-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}.act-pill{flex:1;min-width:120px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:14px;text-align:center;}.act-pill-n{font-size:26px;font-weight:800;line-height:1;}.act-pill-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-top:5px;}.act-pill-pct{font-size:11px;color:var(--gris);margin-top:2px;}
 .act-active .act-pill-n{color:var(--ok);}.act-occasional .act-pill-n{color:var(--blue);}.act-dormant .act-pill-n{color:var(--warn);}.act-inactive .act-pill-n{color:var(--err);}
@@ -77,10 +88,16 @@ main{max-width:1100px;margin:0 auto;padding:24px 36px 80px;}
 .member-wrap{overflow-x:auto;max-height:360px;border-radius:9px;border:1.5px solid var(--border);}
 .member-table{width:100%;border-collapse:collapse;font-size:12px;}.member-table thead th{background:var(--cm);color:var(--mid);padding:9px 13px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;white-space:nowrap;position:sticky;top:0;}.member-table tbody td{padding:9px 13px;border-bottom:1px solid var(--border);vertical-align:middle;}.member-table tbody tr:last-child td{border-bottom:none;}.member-table tbody tr:hover td{background:var(--cream);}
 .status-pill{display:inline-flex;font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;}.sp-active{background:var(--ok-bg);color:var(--ok);}.sp-occasional{background:var(--blue-bg);color:var(--blue);}.sp-dormant{background:var(--warn-bg);color:var(--warn);}.sp-inactive{background:var(--err-bg);color:var(--err);}
+.pending-banner{background:var(--teal-bg);border:1.5px solid var(--teal);border-radius:var(--r);padding:16px 20px;display:flex;align-items:flex-start;gap:13px;margin-bottom:20px;}.pb-ico{font-size:22px;flex-shrink:0;}.pb-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:4px;}.pb-desc{font-size:11px;color:var(--dark);line-height:1.6;}
+/* TREND CHART */
+.trend-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:20px;margin-bottom:16px;}
+.trend-card-title{font-size:12px;font-weight:700;margin-bottom:14px;color:var(--dark);}
+.trend-canvas-wrap{position:relative;height:200px;}
+/* OVERLAYS */
 #tip-overlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(15,8,4,.55);align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}#tip-overlay.show{display:flex;}#tip-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:22px;box-shadow:0 20px 60px rgba(30,16,10,.2);position:relative;animation:popIn .17s;}@keyframes popIn{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}#tip-box h4{font-size:15px;font-weight:800;margin-bottom:7px;}#tip-box p{font-size:12px;color:var(--gris);line-height:1.75;white-space:pre-line;}#tip-close{position:absolute;top:12px;right:13px;font-size:18px;cursor:pointer;color:var(--gris);background:none;border:none;}
 #drill-overlay{display:none;position:fixed;inset:0;z-index:9500;background:rgba(15,8,4,.6);align-items:flex-start;justify-content:center;padding:34px 20px;overflow-y:auto;backdrop-filter:blur(4px);}#drill-overlay.show{display:flex;}#drill-box{background:#fff;border-radius:16px;width:100%;max-width:920px;padding:24px;box-shadow:0 24px 80px rgba(30,16,10,.22);position:relative;animation:popIn .17s;margin:auto;}#drill-box h3{font-size:16px;font-weight:800;margin-bottom:4px;}#drill-sub{font-size:11px;color:var(--gris);margin-bottom:13px;}#drill-close{position:absolute;top:14px;right:16px;font-size:20px;cursor:pointer;color:var(--gris);background:none;border:none;}.drill-wrap{overflow-x:auto;max-height:440px;border-radius:9px;border:1.5px solid var(--border);}
 table{width:100%;border-collapse:collapse;font-size:12px;}thead th{background:var(--cm);color:var(--mid);padding:8px 11px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.5px;position:sticky;top:0;text-align:left;border-bottom:1.5px solid var(--border);z-index:1;}tbody td{padding:8px 11px;border-bottom:1px solid var(--border);}tbody tr:last-child td{border-bottom:none;}tbody tr:hover td{background:var(--cream);}.empty{text-align:center;padding:28px;color:var(--gris);font-size:12px;}
-@media(max-width:900px){.kpi-grid{grid-template-columns:1fr 1fr;}.err-grid{grid-template-columns:repeat(3,1fr);}.beh-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:900px){.kpi-grid{grid-template-columns:1fr 1fr;}.err-grid{grid-template-columns:repeat(3,1fr);}.beh-grid{grid-template-columns:1fr 1fr;}.top-probs{grid-template-columns:1fr;}}
 @media(max-width:640px){header,.filtros,.tabs-bar{padding-left:14px;padding-right:14px;}main{padding:14px 14px 60px;}.kpi-grid{grid-template-columns:1fr;}.err-grid{grid-template-columns:1fr 1fr;}.beh-grid{grid-template-columns:1fr 1fr;}.tab-btn{font-size:11px;padding:10px 12px;}.rank-bar-wrap{display:none;}}
 @media(max-width:400px){.err-grid{grid-template-columns:1fr;}.beh-grid{grid-template-columns:1fr;}}
 </style>
@@ -89,7 +106,14 @@ table{width:100%;border-collapse:collapse;font-size:12px;}thead th{background:va
 <div id="tip-overlay" onclick="closeTip(event)"><div id="tip-box"><button id="tip-close" onclick="closeTip(event)">×</button><h4 id="tip-title"></h4><p id="tip-body"></p></div></div>
 <div id="drill-overlay" onclick="closeDrill(event)"><div id="drill-box"><button id="drill-close" onclick="closeDrill(event)">×</button><h3 id="drill-title"></h3><div id="drill-sub"></div><div class="drill-wrap"><div id="drill-content"></div></div></div></div>
 <header>
-  <div class="h-left"><div><div class="h-title">Viajero Go</div><div class="h-sub">PROGRAMA DE MEMBRESÍAS</div></div><div class="h-sep"></div><div class="h-ts"><div class="h-ts-label">Actualizado</div><div class="h-ts-val" id="h-ts-val">—</div></div></div>
+  <div class="h-left">
+    <img class="h-logo" src="../02_Logo-Viajero_Vertical-Blanco.png" alt="Viajero" onerror="this.style.display='none'"/>
+    <div class="h-sep"></div>
+    <div><div class="h-title">Viajero Go</div><div class="h-sub">Viajero Hostels · Programa de Membersías</div></div>
+  </div>
+  <div class="h-right">
+    <div class="h-ts"><div class="h-ts-label">Última actualización</div><div class="h-ts-val" id="h-ts">—</div></div>
+  </div>
   <div class="h-right"><div class="h-live"><span class="dot"></span>Live</div><a class="btn-hub" href="../index.html">← Hub</a></div>
 </header>
 <div class="filtros">
@@ -102,55 +126,82 @@ table{width:100%;border-collapse:collapse;font-size:12px;}thead th{background:va
 <div class="tabs-bar">
   <button class="tab-btn active" onclick="switchTab('resumen',this)">📊 ¿Cómo vamos?</button>
   <button class="tab-btn" onclick="switchTab('prop',this)">🏨 Por propiedad</button>
-  <button class="tab-btn" onclick="switchTab('ctx',this)">📈 Contexto</button>
+  <button class="tab-btn" onclick="switchTab('tend',this)">📈 Tendencias</button>
+  <button class="tab-btn" onclick="switchTab('beh',this)">👥 Comportamiento</button>
+  <button class="tab-btn" onclick="switchTab('ctx',this)">🗂 Contexto</button>
 </div>
 <main>
+<!-- TAB 1: CÓMO VAMOS -->
 <div id="tab-resumen" class="tab-content active">
   <div id="dx-banner" class="dx-banner warn"><div class="dx-ico">⏳</div><div><div class="dx-title">Cargando datos…</div><div class="dx-sub"></div></div></div>
   <div class="kpi-grid" id="kpi-grid"></div>
+  <div class="sec"><div class="sec-hdr"><h2>¿Por qué no se dan los beneficios? <i class="ib" onclick="openTip('Errores')">i</i></h2><div class="linea"></div></div><div class="err-grid" id="err-grid-resumen"></div></div>
+  <div class="sec"><div class="sec-hdr"><h2>Las 3 propiedades con más problemas hoy <i class="ib" onclick="openTip('TopProblemas')">i</i></h2><div class="linea"></div></div><div class="top-probs" id="top-probs"></div></div>
 </div>
+<!-- TAB 2: POR PROPIEDAD -->
 <div id="tab-prop" class="tab-content">
-  <div class="sec"><div class="sec-hdr"><h2>Estado por propiedad</h2><div class="linea"></div></div><div class="prop-table-wrap"><table class="pt"><thead><tr><th onclick="sortProp(0)">Propiedad ↕</th><th class="tc" onclick="sortProp(1)">% Huéspedes que son miembros ↕</th><th class="tc" onclick="sortProp(2)">Nuevos inscritos ↕</th><th class="tc" onclick="sortProp(3)">No recibieron beneficio ↕</th><th class="tc" onclick="sortProp(4)">Beneficios OK ↕</th><th class="tc" onclick="sortProp(5)">Estado ↕</th></tr></thead><tbody id="prop-tbody"><tr><td colspan="6" class="empty">Cargando…</td></tr></tbody></table></div></div>
-  <div class="sec"><div class="sec-hdr"><h2>¿Por qué no se dan los beneficios? <i class="ib" onclick="openTip('Errores')">i</i></h2><div class="linea"></div></div><div class="err-grid" id="err-grid"></div></div>
+  <div class="sec"><div class="sec-hdr"><h2>Detalle por propiedad <i class="ib" onclick="openTip('TablaProp')">i</i></h2><div class="linea"></div></div><div class="prop-table-wrap"><table class="pt"><thead><tr><th onclick="sortProp(0)">Propiedad ↕</th><th class="tc" onclick="sortProp(1)">% Miembros ↕</th><th class="tc" onclick="sortProp(2)">Nuevos ↕</th><th class="tc" onclick="sortProp(3)">Sin beneficio ↕</th><th class="tc" onclick="sortProp(4)">Nivel incorrecto ↕</th><th class="tc" onclick="sortProp(5)">Mal aplicado ↕</th><th class="tc" onclick="sortProp(6)">% Beneficios OK ↕</th><th class="tc" onclick="sortProp(7)">Estado ↕</th></tr></thead><tbody id="prop-tbody"><tr><td colspan="8" class="empty">Cargando…</td></tr></tbody></table></div></div>
   <div class="sec">
-    <div class="sec-hdr"><h2>Lista de trabajo — miembros que no recibieron su beneficio <i class="ib" onclick="openTip('Sin beneficio')">i</i></h2><div class="linea"></div><span class="sec-cnt" id="sc-cnt">0</span></div>
+    <div class="sec-hdr"><h2>Miembros que no recibieron su beneficio <i class="ib" onclick="openTip('SinBeneficio')">i</i></h2><div class="linea"></div><span class="sec-cnt" id="sc-cnt">0</span></div>
+    <div id="sc-people-note" class="info-note" style="margin-bottom:10px;display:none;"></div>
     <a class="detail-sheet-btn" href="https://docs.google.com/spreadsheets/d/1NOvBphsUK4A2gaxMqazjil_0JMPl-TA0njZKfcDlfcM/edit" target="_blank">📊 Ver reserva por reserva en Google Sheets →</a>
     <div class="sc-legend" id="sc-legend"></div>
-    <p class="info-note">ℹ️ Cada fila es una reserva. Un miembro puede aparecer más de una vez si tuvo varias reservas. Usa el buscador para filtrar.</p>
+    <p class="info-note">ℹ️ Una misma persona puede aparecer más de una vez si tuvo varias estadías sin beneficio.</p>
     <input class="sc-search" id="sc-q" placeholder="Buscar por nombre, propiedad, nivel…" oninput="filtrarSC()">
     <div class="sc-wrap"><div id="sc-tabla"></div></div>
   </div>
-  <div class="sec"><div class="sec-hdr"><h2>Problemas técnicos de sincronización <i class="ib" onclick="openTip('Problemas técnicos')">i</i></h2><div class="linea"></div><span class="sec-cnt" id="match-cnt">0</span></div><div id="sinmatch-cont"><p class="empty">Cargando…</p></div></div>
+  <div class="sec"><div class="sec-hdr"><h2>Problemas técnicos de sincronización <i class="ib" onclick="openTip('Tecnicos')">i</i></h2><div class="linea"></div><span class="sec-cnt" id="match-cnt">0</span></div><div id="sinmatch-cont"><p class="empty">Cargando…</p></div></div>
 </div>
-<div id="tab-ctx" class="tab-content">
-  <div id="ctx-insight"></div>
-  <div class="sec"><div class="sec-hdr"><h2>Miembros por nivel <i class="ib" onclick="openTip('Niveles')">i</i></h2><div class="linea"></div></div><p class="info-note" style="margin-bottom:12px;">⚠️ Este número no cambia con el filtro de período — muestra el total actual del programa según Akin.</p><div id="ctx-donut"></div></div>
-  <div class="sec"><div class="sec-hdr"><h2>Ranking de propiedades <i class="ib" onclick="openTip('Ranking')">i</i></h2><div class="linea"></div></div><div class="rank-tabs"><button class="rank-tab active" onclick="switchRank('pct',this)">% Huéspedes que son miembros</button><button class="rank-tab" onclick="switchRank('nv',this)">Nuevos inscritos</button><button class="rank-tab" onclick="switchRank('cb',this)">Total visitas de miembros</button><button class="rank-tab" onclick="switchRank('ok',this)">% Beneficios OK</button></div><div id="ctx-ranking"></div></div>
+<!-- TAB 3: TENDENCIAS -->
+<div id="tab-tend" class="tab-content">
+  <div class="sec"><div class="sec-hdr"><h2>Evolución mensual del programa <i class="ib" onclick="openTip('Tendencias')">i</i></h2><div class="linea"></div></div>
+  <p class="info-note">📌 Las líneas muestran la evolución real mes a mes. Útil para ver si el programa mejora, se estanca o retrocede.</p>
+  <div class="trend-card"><div class="trend-card-title">% Huéspedes que son miembros — ¿Estamos llegando a más gente?</div><div class="trend-canvas-wrap"><canvas id="chart-alcance"></canvas></div></div>
+  <div class="trend-card"><div class="trend-card-title">% Beneficios entregados correctamente — ¿El equipo está aplicando bien el proceso?</div><div class="trend-canvas-wrap"><canvas id="chart-beneficios"></canvas></div></div>
+  <div class="trend-card"><div class="trend-card-title">Nuevos inscritos por mes — ¿Estamos captando miembros?</div><div class="trend-canvas-wrap"><canvas id="chart-nuevos"></canvas></div></div>
+  </div>
+</div>
+<!-- TAB 4: COMPORTAMIENTO -->
+<div id="tab-beh" class="tab-content">
   <div class="sec"><div class="sec-hdr"><h2>Comportamiento de miembros <i class="ib" onclick="openTip('Actividad')">i</i></h2><div class="linea"></div></div><div id="members-banner"></div><div id="members-activity"></div><div id="members-kpis"></div><input class="member-search" id="member-q" placeholder="Buscar miembro…" oninput="filtrarMembers()"><div class="member-wrap"><div id="member-tabla"></div></div></div>
+</div>
+<!-- TAB 5: CONTEXTO -->
+<div id="tab-ctx" class="tab-content">
+  <div class="sec"><div class="sec-hdr"><h2>Miembros por nivel <i class="ib" onclick="openTip('Niveles')">i</i></h2><div class="linea"></div></div><p class="info-note" style="margin-bottom:12px;">⚠️ Este número no cambia con el filtro de período — muestra el total actual según Akin.</p><div id="ctx-donut"></div></div>
+  <div class="sec"><div class="sec-hdr"><h2>Ranking de propiedades <i class="ib" onclick="openTip('Ranking')">i</i></h2><div class="linea"></div></div><div class="rank-tabs"><button class="rank-tab active" onclick="switchRank('pct',this)">% Miembros</button><button class="rank-tab" onclick="switchRank('nv',this)">Nuevos inscritos</button><button class="rank-tab" onclick="switchRank('cb',this)">Visitas de miembros</button><button class="rank-tab" onclick="switchRank('ok',this)">% Beneficios OK</button></div><div id="ctx-ranking"></div></div>
 </div>
 </main>
 <script>
 var DATA_URL='../data/loyalty_data.json';
 var DATA=null,SC_DATA=[],MEMBER_DATA=[];
-var _donutChart=null,_propSortCol=1,_propSortAsc=false,_scTierFilter=null,_propRows=[],_ctxRendered=false,_RD={};
+var _donutChart=null,_trendCharts={},_propSortCol=3,_propSortAsc=false,_scTierFilter=null,_propRows=[],_ctxRendered=false,_behRendered=false,_tendRendered=false,_RD={};
 var TIPS={
 'Alcance':{t:'% de huéspedes que son miembros',b:'De cada 100 huéspedes que se hospedaron, cuántos son miembros activos de Viajero Go.\n\nMeta a largo plazo: 30%\nUmbral operativo actual: 15%\n\n🟢 ≥15% · 🟡 8–15% · 🔴 <8%'},
-'Beneficios':{t:'Beneficios entregados correctamente',b:'De cada 100 miembros que se hospedaron, cuántos recibieron su beneficio (tarifa, toalla o desayuno según su nivel).\n\n🟢 ≥50% · 🟡 20–50% · 🔴 <20%\n\nSi está en rojo: el programa existe en papel pero no en la práctica.'},
+'Beneficios':{t:'Beneficios entregados correctamente',b:'De cada 100 miembros que se hospedaron, cuántos recibieron su beneficio correctamente.\n\n🟢 ≥50% · 🟡 20–50% · 🔴 <20%\n\nSi está en rojo: el programa existe en papel pero no en la práctica.'},
 'Crecimiento':{t:'Nuevos miembros inscritos',b:'Personas que se unieron a Viajero Go en el período.\n\n% captación = nuevos ÷ huéspedes totales.\n\n🟢 ≥3% · 🟡 1–3% · 🔴 <1%'},
-'Errores':{t:'¿Por qué no se dan los beneficios?',b:'✅ Correctos: beneficio bien registrado en CB.\n\n❌ No recibió su beneficio: el miembro se hospedó y no recibió nada → Recepción.\n\n💸 Descuento sin membresía: descuento aplicado a alguien que NO es miembro → Recepción.\n\n⚠️ Nivel incorrecto: beneficio con nivel equivocado → Recepción + Sistemas.\n\n🚫 Mal aplicado: fuera del proceso → Recepción.'},
-'Sin beneficio':{t:'Lista de miembros sin beneficio',b:'Miembros que se hospedaron y NO recibieron su beneficio.\n\nUsa los botones de nivel para filtrar. Usa el buscador para filtrar por nombre o propiedad.'},
-'Problemas técnicos':{t:'Problemas técnicos de sincronización',b:'Reservas reconocidas en Akin pero CloudBeds no las puede emparejar.\n\nCausa: número de reserva o correo distinto entre sistemas.\n\n→ NO es error del equipo de recepción.\n→ Buscar al huésped por nombre en CB. Si persiste → escalar a Akin.'},
+'Errores':{t:'¿Por qué no se dan los beneficios?',b:'✅ Correctos: beneficio bien registrado en CB.\n\n❌ Sin beneficio: el miembro se hospedó y no recibió nada → Recepción.\n\n💸 Descuento sin membresía: aplicado a alguien que NO es miembro → Recepción.\n\n⚠️ Nivel incorrecto: beneficio con nivel equivocado → Recepción + Sistemas.\n\n🚫 Mal aplicado: fuera del proceso → Recepción.'},
+'SinBeneficio':{t:'Miembros sin beneficio',b:'Miembros que se hospedaron y NO recibieron su beneficio.\n\nPor qué personas ≠ reservas: un miembro puede haberse hospedado varias veces y en ninguna recibió su beneficio. Cada fila es una estadía, no una persona.\n\nUsa los botones de nivel para filtrar. Usa el buscador para filtrar por nombre o propiedad.'},
+'Tecnicos':{t:'Problemas técnicos de sincronización',b:'Reservas reconocidas en Akin pero CloudBeds no las puede emparejar.\n\nCausa: número de reserva o correo distinto entre sistemas.\n\n→ NO es error del equipo de recepción.\n→ Buscar al huésped por nombre en CB. Si persiste → escalar a Akin.'},
+'TablaProp':{t:'Tabla de propiedades',b:'Cada fila muestra el resumen de una propiedad en el período seleccionado.\n\n• Sin beneficio: miembros que se hospedaron y no recibieron nada → responsabilidad de recepción.\n• Nivel incorrecto: beneficio aplicado con nivel equivocado → recepción + sistemas.\n• Mal aplicado: descuento o beneficio fuera del proceso → recepción.\n\nHaz clic en el encabezado de cualquier columna para ordenar.'},
+'TopProblemas':{t:'Las 3 propiedades con más problemas',b:'Las propiedades con mayor número de miembros sin beneficio en el período seleccionado.\n\nEsto indica dónde enfocar la capacitación o revisión de proceso esta semana.'},
+'Tendencias':{t:'Evolución mensual',b:'Muestra cómo han evolucionado los 3 indicadores clave mes a mes.\n\nUsa el filtro de país o propiedad para ver la tendencia de un subconjunto específico.\n\nSi la línea sube → el programa está mejorando en esa dimensión.'},
 'Niveles':{t:'Distribución por nivel',b:'Total de personas inscritas en Viajero Go según Akin, por nivel.\n\nHaz clic en cada nivel para ver la lista de miembros.\n\n⚠️ Este número no cambia con el filtro de período.'},
-'Ranking':{t:'Ranking de propiedades',b:'Cuatro vistas:\n• % Huéspedes que son miembros: meta ≥15%\n• Nuevos inscritos: en el período seleccionado\n• Total visitas de miembros: cuántas veces se hospedaron miembros — indica dónde el programa tiene más actividad\n• % Beneficios OK: proporción de transacciones sin error\n\nLa línea vertical en la primera vista es el umbral del 15%.'},
+'Ranking':{t:'Ranking de propiedades',b:'Cuatro vistas:\n• % Miembros: qué porcentaje de huéspedes son miembros (meta ≥15%)\n• Nuevos inscritos: en el período seleccionado\n• Visitas de miembros: check-ins totales de miembros — indica dónde el programa tiene más actividad\n• % Beneficios OK: proporción de transacciones sin error'},
 'Actividad':{t:'Actividad de miembros',b:'Clasificación según comportamiento reciente:\n\n• Activo: reservas en los últimos 90 días\n• Ocasional: última reserva hace 91–180 días\n• Dormido: última reserva hace 181–365 días\n• Inactivo: sin reservas en más de 365 días o nunca'},
-'Propiedad más visitada':{t:'Propiedad más visitada por miembros',b:'La propiedad con más check-ins de miembros activos en el período.\n\nEsto indica dónde el programa tiene más actividad — no necesariamente donde hay más penetración.\n\nSirve para: identificar propiedades modelo, entender patrones de conducta del miembro, y priorizar capacitación de beneficios donde más aplica.'},
 };
 function openTip(k){var t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
 function closeTip(e){if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;document.getElementById('tip-overlay').classList.remove('show');}
 function closeDrill(e){if(e&&e.target!==document.getElementById('drill-overlay')&&e.target!==document.getElementById('drill-close'))return;document.getElementById('drill-overlay').classList.remove('show');}
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('tip-overlay').classList.remove('show');document.getElementById('drill-overlay').classList.remove('show');}});
-var _ctxTabRendered=false;
-function switchTab(id,btn){document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');if(id==='ctx'&&!_ctxTabRendered){renderCtxTab();_ctxTabRendered=true;}}
+var _ctxTabRendered=false,_behTabRendered=false,_tendTabRendered=false;
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');
+  if(id==='ctx'&&!_ctxTabRendered){renderCtxTab();_ctxTabRendered=true;}
+  if(id==='beh'&&!_behTabRendered){renderMembersTab();_behTabRendered=true;}
+  if(id==='tend'&&!_tendTabRendered){renderTendencias();_tendTabRendered=true;}
+}
 function toggleMs(id){var dd=document.getElementById('ms-'+id+'-dd');document.querySelectorAll('.ms-dd').forEach(function(d){if(d!==dd)d.classList.remove('open');});dd.classList.toggle('open');}
 document.addEventListener('click',function(e){if(!e.target.closest('.ms-wrap'))document.querySelectorAll('.ms-dd').forEach(function(d){d.classList.remove('open');});});
 function getMsValues(id){return Array.from(document.querySelectorAll('#ms-'+id+'-dd input[type=checkbox]:checked')||[]).map(function(c){return c.value;});}
@@ -166,45 +217,432 @@ function fmtN(n){return Math.round(Number(n)||0).toLocaleString('es-CO');}
 function fmtP(a,b){return b>0?(Math.round(a/b*1000)/10).toFixed(1)+'%':'—';}
 function sum(arr,k){return arr.reduce(function(t,r){return t+(parseFloat(r[k])||0);},0);}
 function clsPct(v,t1,t2){return v>=t1?'pct-ok':v>=t2?'pct-warn':'pct-err';}
-/* ══ TAB 1 ══ */
-function renderResumen(){var afs=filtrar(DATA.afiliados||[]);var mb=filtrar(DATA.tiersDetalle||[]);var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');var isF=getMsValues('prop').length||getMsValues('per').length||getMsValues('pais').length;var ok=0,sc=0,lk=0,ti=0,mu=0;if(!isF&&DATA._resumen){ok=DATA._resumen.ok||0;sc=DATA._resumen.sin_canje||0;lk=DATA._resumen.leakage||0;ti=DATA._resumen.tier_incorrecto||0;mu=DATA._resumen.misuse||0;}else{mb.forEach(function(r){var k=r.Error_Type||'';if(k==='OK')ok++;else if(k==='SIN CANJE')sc++;else if(k==='LEAKAGE')lk++;else if(k==='TIER_INCORRECTO')ti++;else if(k==='MISUSE')mu++;});}
-var pctA=hu>0?cb/hu*100:0,clsA=pctA>=15?'ok':pctA>=8?'warn':'err';
-var totMx=ok+sc+ti+mu,pctB=totMx>0?ok/totMx*100:0,clsB=pctB>=50?'ok':pctB>=20?'warn':'err';
-var pctCap=hu>0?nv/hu*100:0,clsNv=pctCap>=3?'ok':pctCap>=1?'warn':'err';
-var dxCls,dxIco,dxTitle,dxSub;if(pctA>=15&&pctB>=50){dxCls='ok';dxIco='✅';dxTitle='El programa está funcionando bien';dxSub='La penetración supera el 15% y la mayoría de miembros recibe su beneficio.';}else if(pctA>=8||pctB>=20){dxCls='warn';dxIco='⚡';dxTitle='El programa está creciendo — hay oportunidades de mejora';dxSub='Revisa el tab "Por propiedad" para ver dónde enfocar la acción esta semana.';}else{dxCls='err';dxIco='🔴';dxTitle='El programa necesita atención urgente';dxSub='La penetración y/o la entrega de beneficios están por debajo de los umbrales mínimos.';}
-document.getElementById('dx-banner').className='dx-banner '+dxCls;
-document.getElementById('dx-banner').innerHTML='<div class="dx-ico">'+dxIco+'</div><div><div class="dx-title">'+dxTitle+'</div><div class="dx-sub">'+dxSub+'</div></div>';
-var colA=clsA==='ok'?'var(--ok)':clsA==='warn'?'#ca8a04':'var(--err)';
-document.getElementById('kpi-grid').innerHTML=
-'<div class="kpi-block '+clsA+'"><div class="kpi-label">¿Estamos llegando a la gente? <i class="ib" onclick="openTip(\'Alcance\')">i</i></div><div class="kpi-val">'+pctA.toFixed(1)+'%</div><div class="kpi-desc">De cada 100 huéspedes que se hospedaron, '+pctA.toFixed(0)+' son miembros activos de Viajero Go.</div><div class="kpi-meta"><span class="kpi-badge gray">Meta final: 30%</span><span class="kpi-badge '+clsA+'">Umbral ahora: 15%</span></div><div style="font-size:10px;color:var(--gris);margin-top:6px;">'+fmtN(cb)+' miembros · '+fmtN(hu)+' huéspedes</div><div class="kpi-progress"><div class="kpi-progress-fill" style="width:'+Math.min(pctA/30*100,100)+'%;background:'+colA+'"></div><div class="kpi-progress-target" style="left:'+Math.min(15/30*100,100)+'%"></div></div></div>'+
-'<div class="kpi-block '+clsB+'"><div class="kpi-label">¿Se están dando los beneficios? <i class="ib" onclick="openTip(\'Beneficios\')">i</i></div><div class="kpi-val">'+pctB.toFixed(0)+'%</div><div class="kpi-desc">De cada 100 miembros que se hospedaron, '+pctB.toFixed(0)+' recibieron su beneficio correctamente.</div><div class="kpi-meta"><span class="kpi-badge ok">'+fmtN(ok)+' recibieron</span><span class="kpi-badge err">'+fmtN(sc)+' no recibieron</span></div></div>'+
-'<div class="kpi-block '+clsNv+'"><div class="kpi-label">¿El programa está creciendo? <i class="ib" onclick="openTip(\'Crecimiento\')">i</i></div><div class="kpi-val">+'+fmtN(nv)+'</div><div class="kpi-desc">Nuevos miembros inscritos en el período. Eso es el '+pctCap.toFixed(1)+'% de los huéspedes totales.</div><div class="kpi-meta"><span class="kpi-badge gray">'+fmtN(hu)+' huéspedes en total</span></div></div>';}
-/* ══ TAB 2 ══ */
-function renderPropTab(){var afs=filtrar(DATA.afiliados||[]);var mb=filtrar(DATA.tiersDetalle||[]);var map={};afs.forEach(function(r){var p=r.Propiedad||'';if(!p)return;if(!map[p])map[p]={p:p,hu:0,ci:0,cb:0,nv:0,ok:0,sc:0,lk:0,ti:0,mu:0,pais:r['País']||r['Pais']||''};map[p].hu+=parseFloat(r._huespedes)||0;map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;});mb.forEach(function(r){var p=r.Propiedad||'';if(!map[p])return;var et=r.Error_Type||'';if(et==='OK')map[p].ok++;else if(et==='SIN CANJE')map[p].sc++;else if(et==='LEAKAGE')map[p].lk++;else if(et==='TIER_INCORRECTO')map[p].ti++;else if(et==='MISUSE')map[p].mu++;});_propRows=Object.values(map).map(function(p){p.pctCb=p.hu>0?p.cb/p.hu*100:0;p.totMx=p.ok+p.sc+p.ti+p.mu;p.pctOK=p.totMx>0?p.ok/p.totMx*100:0;p.status=p.pctCb>=15&&p.pctOK>=50?'ok':p.pctCb>=8||p.pctOK>=20?'warn':'err';return p;});renderPropTableBody();renderErrGrid(mb);}
-function renderPropTableBody(){var d=[].concat(_propRows);d.sort(function(a,b){var v=0;if(_propSortCol===0)v=a.p.localeCompare(b.p);else if(_propSortCol===1)v=a.pctCb-b.pctCb;else if(_propSortCol===2)v=a.nv-b.nv;else if(_propSortCol===3)v=a.sc-b.sc;else if(_propSortCol===4)v=a.pctOK-b.pctOK;else{var o={ok:2,warn:1,err:0};v=(o[a.status]||0)-(o[b.status]||0);}return _propSortAsc?v:-v;});var em={ok:'🟢',warn:'🟡',err:'🔴'};document.getElementById('prop-tbody').innerHTML=d.map(function(p){var nom=p.p.replace('Viajero ','').replace(' Hostel','').replace(' & Ecohabs','');var col=p.pctCb>=15?'var(--ok)':p.pctCb>=8?'#ca8a04':'var(--err)';return '<tr><td><b style="font-size:12px;">'+nom+'</b><span style="display:block;font-size:10px;color:var(--gris);">'+p.pais+'</span></td><td class="tc"><span class="'+clsPct(p.pctCb,15,8)+'">'+p.pctCb.toFixed(1)+'%</span><div class="pct-bar"><div class="pct-bar-fill" style="width:'+Math.min(p.pctCb/30*100,100)+'%;background:'+col+'"></div></div></td><td class="tc"><b>'+fmtN(p.nv)+'</b></td><td class="tc"><span style="color:var(--err);font-weight:700;">'+fmtN(p.sc)+'</span></td><td class="tc"><span class="'+clsPct(p.pctOK,50,20)+'">'+p.pctOK.toFixed(0)+'%</span></td><td class="tc">'+em[p.status]+'</td></tr>';}).join('')||'<tr><td colspan="6" class="empty">Sin datos para este filtro</td></tr>';}
-function sortProp(col){_propSortAsc=(_propSortCol===col)?!_propSortAsc:(col===0);_propSortCol=col;renderPropTableBody();}
-function renderErrGrid(mb){var isF=getMsValues('prop').length||getMsValues('per').length||getMsValues('pais').length;var ok=0,sc=0,lk=0,ti=0,mu=0;if(!isF&&DATA._resumen){ok=DATA._resumen.ok||0;sc=DATA._resumen.sin_canje||0;lk=DATA._resumen.leakage||0;ti=DATA._resumen.tier_incorrecto||0;mu=DATA._resumen.misuse||0;}else{mb.forEach(function(r){var k=r.Error_Type||'';if(k==='OK')ok++;else if(k==='SIN CANJE')sc++;else if(k==='LEAKAGE')lk++;else if(k==='TIER_INCORRECTO')ti++;else if(k==='MISUSE')mu++;});}var cards=[{n:ok,lbl:'Beneficios correctos',sub:'El proceso funciona donde se aplica',resp:'',cls:'c-ok',et:null},{n:sc,lbl:'No recibió su beneficio',sub:'Miembro hospedado sin recibir nada',resp:'→ Recepción',cls:'c-err',et:'SIN CANJE'},{n:lk,lbl:'Descuento sin membresía',sub:'Aplicado a alguien que NO es miembro',resp:'→ Recepción',cls:'c-warn',et:'LEAKAGE'},{n:ti,lbl:'Nivel incorrecto',sub:'Beneficio con nivel equivocado',resp:'→ Recepción + Sistemas',cls:'c-blue',et:'TIER_INCORRECTO'},{n:mu,lbl:'Mal aplicado',sub:'Fuera del proceso establecido',resp:'→ Recepción',cls:'c-purple',et:'MISUSE'}];document.getElementById('err-grid').innerHTML=cards.map(function(c){var cd=c.et&&c.n>0;return '<div class="err-card '+c.cls+(cd?' clickable':'')+'" '+(cd?'onclick="drillErr(\''+c.et+'\')"':'')+'>'+
-'<div class="err-card-n">'+fmtN(c.n)+'</div><div class="err-card-lbl">'+c.lbl+'</div><div class="err-card-sub">'+c.sub+'</div>'+(c.resp?'<div class="err-card-resp">'+c.resp+'</div>':'')+(cd?'<span class="err-card-link">Ver lista →</span>':'')+
-'</div>';}).join('');}
-function drillErr(et){var fp=getMsValues('per'),fpr=getMsValues('prop'),fpa=getMsValues('pais');var rows=(DATA.tiersDetalle||[]).filter(function(r){return r.Error_Type===et&&(!fp.length||fp.includes(getPer(r)))&&(!fpr.length||fpr.includes(r.Propiedad||''))&&(!fpa.length||fpa.includes(r['País']||r.Pais||''));});var lb={SIN_CANJE:'No recibió su beneficio','SIN CANJE':'No recibió su beneficio',LEAKAGE:'Descuento sin membresía',TIER_INCORRECTO:'Nivel incorrecto',MISUSE:'Mal aplicado'};document.getElementById('drill-title').textContent=lb[et]||et;document.getElementById('drill-sub').textContent=fmtN(rows.length)+' registros';document.getElementById('drill-content').innerHTML='<table><thead><tr><th>Nombre</th><th>Nivel</th><th>Reserva</th><th>Fecha llegada</th><th>Propiedad</th><th>Período</th></tr></thead><tbody>'+rows.slice(0,200).map(function(r){return '<tr><td>'+(r.Nombre||'—')+'</td><td>'+(r.Tier_AKIN||'—')+'</td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(getPer(r)||'—')+'</td></tr>';}).join('')+'</tbody></table>'+(rows.length>200?'<p style="padding:10px;font-size:11px;color:var(--gris);">Mostrando 200 de '+fmtN(rows.length)+'. Ver Google Sheets para el listado completo.</p>':'');document.getElementById('drill-overlay').classList.add('show');}
-function renderSinCanje(sc){SC_DATA=sc;_scTierFilter=null;var tourist=sc.filter(function(r){return(r.Tier||'').toLowerCase()==='tourist';}).length;var backpacker=sc.filter(function(r){return(r.Tier||'').toLowerCase()==='backpacker';}).length;var otros=sc.length-tourist-backpacker;var unicos=new Set(sc.map(function(r){return r.Nombre;}).filter(Boolean)).size||sc.length;document.getElementById('sc-cnt').textContent=fmtN(unicos)+' personas';var cards=[{id:'sc-all',col:'var(--gris)',n:unicos,title:'Todas las personas',desc:fmtN(sc.length)+' reservas en total',tier:null},{id:'sc-tourist',col:'var(--orange)',n:tourist,title:'Tourist',desc:'Tarifa -15% al check-in',tier:'tourist'},{id:'sc-backpacker',col:'var(--err)',n:backpacker,title:'Backpacker',desc:'Tarifa con descuento + toalla',tier:'backpacker'},{id:'sc-otros',col:'var(--purple)',n:otros,title:'Explorer / Nomad / Viajero',desc:'Con beneficios adicionales',tier:'__otros__'}];document.getElementById('sc-legend').innerHTML=cards.map(function(c){return '<div class="sc-leg-item" id="'+c.id+'" onclick="scFilter(\''+c.tier+'\',\''+c.id+'\')">'+'<div><div class="sc-leg-n" style="color:'+c.col+'">'+fmtN(c.n)+'</div><div class="sc-leg-title">'+c.title+'</div><div class="sc-leg-desc">'+c.desc+'</div></div></div>';}).join('');filtrarSC();}
+/* ══ PERÍODOS ORDENADOS ══ */
+function getPeriodsOrdered(){var afs=DATA.afiliados||[];var set=[];afs.forEach(function(a){var p=getPer(a);if(p&&!set.includes(p))set.push(p);});return set.sort();}
+function getPrevPeriod(periods,current){var idx=periods.indexOf(current);return idx>0?periods[idx-1]:null;}
+/* ══ TAB 1: CÓMO VAMOS ══ */
+function renderResumen(){
+  var afs=filtrar(DATA.afiliados||[]);
+  var mb=filtrar(DATA.tiersDetalle||[]);
+  var hu=sum(afs,'_huespedes'),ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb'),nv=sum(afs,'_nuevos');
+  var ok=0,sc=0,lk=0,ti=0,mu=0;
+  var isF=getMsValues('prop').length||getMsValues('per').length||getMsValues('pais').length;
+  if(!isF&&DATA._resumen){ok=DATA._resumen.ok||0;sc=DATA._resumen.sin_canje||0;lk=DATA._resumen.leakage||0;ti=DATA._resumen.tier_incorrecto||0;mu=DATA._resumen.misuse||0;}
+  else{mb.forEach(function(r){var k=r.Error_Type||'';if(k==='OK')ok++;else if(k==='SIN CANJE')sc++;else if(k==='LEAKAGE')lk++;else if(k==='TIER_INCORRECTO')ti++;else if(k==='MISUSE')mu++;});}
+  /* DELTAS: comparar con período anterior si hay un solo período seleccionado */
+  var deltaA=null,deltaB=null,deltaNv=null;
+  var perSel=getMsValues('per');
+  if(perSel.length===1){
+    var allPers=getPeriodsOrdered();
+    var prev=getPrevPeriod(allPers,perSel[0]);
+    if(prev){
+      var prevAfs=(DATA.afiliados||[]).filter(function(r){return getPer(r)===prev;});
+      var prevMb=(DATA.tiersDetalle||[]).filter(function(r){return getPer(r)===prev;});
+      var pHu=sum(prevAfs,'_huespedes'),pCb=sum(prevAfs,'_afiliados_cb'),pNv=sum(prevAfs,'_nuevos');
+      var pOk=0,pTot=0;prevMb.forEach(function(r){var k=r.Error_Type||'';if(k==='OK')pOk++;if(k!=='')pTot++;});
+      var prevA=pHu>0?pCb/pHu*100:0;
+      var prevB=pTot>0?pOk/pTot*100:0;
+      deltaA=hu>0?cb/hu*100-prevA:null;
+      deltaB=(ok+sc+ti+mu)>0?ok/(ok+sc+ti+mu)*100-prevB:null;
+      deltaNv=pNv>0?(nv-pNv)/pNv*100:null;
+    }
+  }
+  var pctA=hu>0?cb/hu*100:0,clsA=pctA>=15?'ok':pctA>=8?'warn':'err';
+  var totMx=ok+sc+ti+mu,pctB=totMx>0?ok/totMx*100:0,clsB=pctB>=50?'ok':pctB>=20?'warn':'err';
+  var pctCap=hu>0?nv/hu*100:0,clsNv=pctCap>=3?'ok':pctCap>=1?'warn':'err';
+  /* BANNER */
+  var dxCls,dxIco,dxTitle,dxSub;
+  if(pctA>=15&&pctB>=50){dxCls='ok';dxIco='✅';dxTitle='El programa está funcionando bien';dxSub='Penetración >15% y mayoría de miembros recibe su beneficio.';}
+  else if(pctA>=8||pctB>=20){dxCls='warn';dxIco='⚡';dxTitle='El programa está creciendo — hay oportunidades de mejora';dxSub='Revisa las tarjetas de abajo y el tab "Por propiedad" para ver dónde actuar.';}
+  else{dxCls='err';dxIco='🔴';dxTitle='El programa necesita atención urgente';dxSub='La penetración y/o entrega de beneficios están por debajo de los umbrales mínimos.';}
+  document.getElementById('dx-banner').className='dx-banner '+dxCls;
+  document.getElementById('dx-banner').innerHTML='<div class="dx-ico">'+dxIco+'</div><div><div class="dx-title">'+dxTitle+'</div><div class="dx-sub">'+dxSub+'</div></div>';
+  /* DELTA HTML helper */
+  function deltaHtml(d,invertir){if(d===null||d===undefined)return'';var up=d>0;var isGood=invertir?(d<0):(d>0);var cls=isGood?'up':'down';var arrow=up?'↑':'↓';return '<span class="kpi-delta '+cls+'">'+arrow+' '+Math.abs(d).toFixed(1)+'% vs mes anterior</span>';}
+  var colA=clsA==='ok'?'var(--ok)':clsA==='warn'?'#ca8a04':'var(--err)';
+  document.getElementById('kpi-grid').innerHTML=
+    '<div class="kpi-block '+clsA+'"><div class="kpi-label">¿Estamos llegando a la gente? <i class="ib" onclick="openTip(\'Alcance\')">i</i></div><div class="kpi-val">'+pctA.toFixed(1)+'%</div>'+deltaHtml(deltaA,false)+'<div class="kpi-desc" style="margin-top:8px;">De cada 100 huéspedes, '+Math.round(pctA)+' son miembros de Viajero Go.</div><div class="kpi-meta"><span class="kpi-badge gray">Meta final: 30%</span><span class="kpi-badge '+clsA+'">Umbral ahora: 15%</span></div><div style="font-size:10px;color:var(--gris);margin-top:6px;">'+fmtN(cb)+' miembros · '+fmtN(hu)+' huéspedes</div><div class="kpi-progress"><div class="kpi-progress-fill" style="width:'+Math.min(pctA/30*100,100)+'%;background:'+colA+'"></div><div class="kpi-progress-target" style="left:'+Math.min(15/30*100,100)+'%"></div></div></div>'+
+    '<div class="kpi-block '+clsB+'"><div class="kpi-label">¿Se están dando los beneficios? <i class="ib" onclick="openTip(\'Beneficios\')">i</i></div><div class="kpi-val">'+pctB.toFixed(0)+'%</div>'+deltaHtml(deltaB,false)+'<div class="kpi-desc" style="margin-top:8px;">De '+fmtN(totMx)+' veces que un miembro se hospedó, el '+pctB.toFixed(0)+'% recibió su beneficio correctamente.</div><div class="kpi-meta"><span class="kpi-badge ok">'+fmtN(ok)+' recibieron</span><span class="kpi-badge err">'+fmtN(sc)+' NO recibieron</span></div></div>'+
+    '<div class="kpi-block '+clsNv+'"><div class="kpi-label">¿El programa está creciendo? <i class="ib" onclick="openTip(\'Crecimiento\')">i</i></div><div class="kpi-val">+'+fmtN(nv)+'</div>'+deltaHtml(deltaNv,false)+'<div class="kpi-desc" style="margin-top:8px;">Nuevos miembros inscritos. Eso es el '+pctCap.toFixed(1)+'% de los '+fmtN(hu)+' huéspedes del período.</div><div class="kpi-meta"><span class="kpi-badge '+clsNv+'">Meta: ≥3% de huéspedes</span></div></div>';
+  /* ERROR CARDS EN TAB 1 */
+  renderErrCards('err-grid-resumen',ok,sc,lk,ti,mu);
+  /* TOP 3 PROPERTIES WITH PROBLEMS */
+  renderTopProblems();
+}
+function renderErrCards(containerId,ok,sc,lk,ti,mu){
+  var cards=[
+    {n:ok,lbl:'Beneficios correctos',sub:'El proceso funciona donde se aplica',resp:'',cls:'c-ok',et:null},
+    {n:sc,lbl:'Sin beneficio',sub:'Miembro hospedado sin recibir nada',resp:'→ Recepción',cls:'c-err',et:'SIN CANJE'},
+    {n:lk,lbl:'Descuento sin membresía',sub:'Aplicado a quien NO es miembro',resp:'→ Recepción',cls:'c-warn',et:'LEAKAGE'},
+    {n:ti,lbl:'Nivel incorrecto',sub:'Beneficio con nivel equivocado',resp:'→ Recepción + Sistemas',cls:'c-blue',et:'TIER_INCORRECTO'},
+    {n:mu,lbl:'Mal aplicado',sub:'Fuera del proceso establecido',resp:'→ Recepción',cls:'c-purple',et:'MISUSE'}
+  ];
+  document.getElementById(containerId).innerHTML=cards.map(function(c){
+    var cd=c.et&&c.n>0;
+    return '<div class="err-card '+c.cls+(cd?' clickable':'')+'"
+      '+(cd?'onclick="drillErr(\''+c.et+'\')"':'')+'>'+
+      '<div class="err-card-n">'+fmtN(c.n)+'</div><div class="err-card-lbl">'+c.lbl+'</div><div class="err-card-sub">'+c.sub+'</div>'+
+      (c.resp?'<div class="err-card-resp">'+c.resp+'</div>':'')+
+      (cd?'<span class="err-card-link">Ver lista →</span>':'')+
+      '</div>';
+  }).join('');
+}
+function renderTopProblems(){
+  var mb=filtrar(DATA.tiersDetalle||[]);
+  var map={};
+  mb.forEach(function(r){
+    if(r.Error_Type==='OK')return;
+    var p=r.Propiedad||'Sin propiedad';
+    if(!map[p])map[p]={p:p,sc:0,ti:0,mu:0,lk:0};
+    if(r.Error_Type==='SIN CANJE')map[p].sc++;
+    else if(r.Error_Type==='TIER_INCORRECTO')map[p].ti++;
+    else if(r.Error_Type==='MISUSE')map[p].mu++;
+    else if(r.Error_Type==='LEAKAGE')map[p].lk++;
+  });
+  var sorted=Object.values(map).map(function(p){p.total=p.sc+p.ti+p.mu+p.lk;return p;}).filter(function(p){return p.total>0;}).sort(function(a,b){return b.sc-a.sc;}).slice(0,3);
+  if(!sorted.length){document.getElementById('top-probs').innerHTML='<p style="color:var(--ok);font-size:12px;padding:16px;">✅ Sin problemas identificados para este filtro.</p>';return;}
+  document.getElementById('top-probs').innerHTML=sorted.map(function(p,i){
+    var nom=p.p.replace('Viajero ','').replace(' Hostel','').replace(' & Ecohabs','');
+    var issues=[];
+    if(p.sc)issues.push('<b>'+p.sc+'</b> sin beneficio');
+    if(p.ti)issues.push('<b>'+p.ti+'</b> nivel incorrecto');
+    if(p.mu)issues.push('<b>'+p.mu+'</b> mal aplicado');
+    if(p.lk)issues.push('<b>'+p.lk+'</b> descuento sin membresía');
+    return '<div class="tp-card"><div class="tp-rank">'+(i===0?'🔴 Más problemas':i===1?'🟠 2°':'🟡 3°')+'</div><div class="tp-name">'+nom+'</div><div class="tp-issues">'+issues.join(' · ')+'</div></div>';
+  }).join('');
+}
+/* ══ TAB 2: POR PROPIEDAD ══ */
+function renderPropTab(){
+  var afs=filtrar(DATA.afiliados||[]);
+  var mb=filtrar(DATA.tiersDetalle||[]);
+  var map={};
+  afs.forEach(function(r){
+    var p=r.Propiedad||'';if(!p)return;
+    if(!map[p])map[p]={p:p,hu:0,ci:0,cb:0,nv:0,ok:0,sc:0,lk:0,ti:0,mu:0,pais:r['País']||r['Pais']||''};
+    map[p].hu+=parseFloat(r._huespedes)||0;map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;
+  });
+  mb.forEach(function(r){
+    var p=r.Propiedad||'';if(!map[p])return;
+    var et=r.Error_Type||'';
+    if(et==='OK')map[p].ok++;
+    else if(et==='SIN CANJE')map[p].sc++;
+    else if(et==='LEAKAGE')map[p].lk++;
+    else if(et==='TIER_INCORRECTO')map[p].ti++;
+    else if(et==='MISUSE')map[p].mu++;
+  });
+  _propRows=Object.values(map).map(function(p){
+    p.pctCb=p.hu>0?p.cb/p.hu*100:0;
+    p.totMx=p.ok+p.sc+p.ti+p.mu;
+    p.pctOK=p.totMx>0?p.ok/p.totMx*100:0;
+    p.status=p.pctCb>=15&&p.pctOK>=50?'ok':p.pctCb>=8||p.pctOK>=20?'warn':'err';
+    return p;
+  });
+  renderPropTableBody();
+  renderSinCanje(filtrar(DATA.sinCanje||[],'Propiedad','País'));
+  renderSinMatchAkin();
+}
+function renderPropTableBody(){
+  var d=[].concat(_propRows);
+  d.sort(function(a,b){
+    var v=0;
+    if(_propSortCol===0)v=a.p.localeCompare(b.p);
+    else if(_propSortCol===1)v=a.pctCb-b.pctCb;
+    else if(_propSortCol===2)v=a.nv-b.nv;
+    else if(_propSortCol===3)v=a.sc-b.sc;
+    else if(_propSortCol===4)v=a.ti-b.ti;
+    else if(_propSortCol===5)v=a.mu-b.mu;
+    else if(_propSortCol===6)v=a.pctOK-b.pctOK;
+    else{var o={ok:2,warn:1,err:0};v=(o[a.status]||0)-(o[b.status]||0);}
+    return _propSortAsc?v:-v;
+  });
+  var em={ok:'🟢',warn:'🟡',err:'🔴'};
+  document.getElementById('prop-tbody').innerHTML=d.map(function(p){
+    var nom=p.p.replace('Viajero ','').replace(' Hostel','').replace(' & Ecohabs','');
+    var col=p.pctCb>=15?'var(--ok)':p.pctCb>=8?'#ca8a04':'var(--err)';
+    var scCls=p.sc>20?'n-err':p.sc>5?'n-warn':p.sc===0?'n-zero':'n-ok';
+    var tiCls=p.ti>5?'n-err':p.ti>0?'n-warn':'n-zero';
+    var muCls=p.mu>10?'n-err':p.mu>0?'n-warn':'n-zero';
+    return '<tr>'+
+      '<td><b style="font-size:12px;">'+nom+'</b><span style="display:block;font-size:10px;color:var(--gris);">'+p.pais+'</span></td>'+
+      '<td class="tc"><span class="'+clsPct(p.pctCb,15,8)+'">'+p.pctCb.toFixed(1)+'%</span><div class="pct-bar"><div class="pct-bar-fill" style="width:'+Math.min(p.pctCb/30*100,100)+'%;background:'+col+'"></div></div></td>'+
+      '<td class="tc"><b>'+fmtN(p.nv)+'</b></td>'+
+      '<td class="tc"><span class="'+scCls+'">'+fmtN(p.sc)+'</span>'+(p.sc>0?' <span style="font-size:9px;color:var(--gris);">→ Recepción</span>':'')+'</td>'+
+      '<td class="tc"><span class="'+tiCls+'">'+fmtN(p.ti)+'</span>'+(p.ti>0?' <span style="font-size:9px;color:var(--gris);">→ Rec+Sis</span>':'')+'</td>'+
+      '<td class="tc"><span class="'+muCls+'">'+fmtN(p.mu)+'</span>'+(p.mu>0?' <span style="font-size:9px;color:var(--gris);">→ Recepción</span>':'')+'</td>'+
+      '<td class="tc"><span class="'+clsPct(p.pctOK,50,20)+'">'+p.pctOK.toFixed(0)+'%</span></td>'+
+      '<td class="tc">'+em[p.status]+'</td>'+
+    '</tr>';
+  }).join('')||'<tr><td colspan="8" class="empty">Sin datos para este filtro</td></tr>';
+}
+function sortProp(col){_propSortAsc=(_propSortCol===col)?!_propSortAsc:(col===3?false:col===0);_propSortCol=col;renderPropTableBody();}
+function drillErr(et){
+  var fp=getMsValues('per'),fpr=getMsValues('prop'),fpa=getMsValues('pais');
+  var rows=(DATA.tiersDetalle||[]).filter(function(r){
+    if(r.Error_Type!==et)return false;
+    if(fpr.length&&!fpr.includes(r.Propiedad||''))return false;
+    if(fpa.length&&!fpa.includes(r['País']||r.Pais||''))return false;
+    /* período: solo filtrar si el campo existe en el registro */
+    if(fp.length){var rp=getPer(r);if(rp&&!fp.includes(rp))return false;}
+    return true;
+  });
+  var lb={'SIN CANJE':'Sin beneficio','LEAKAGE':'Descuento sin membresía','TIER_INCORRECTO':'Nivel incorrecto','MISUSE':'Mal aplicado'};
+  document.getElementById('drill-title').textContent=lb[et]||et;
+  document.getElementById('drill-sub').textContent=fmtN(rows.length)+' registros';
+  document.getElementById('drill-content').innerHTML='<table><thead><tr><th>Nombre</th><th>Nivel</th><th>Reserva</th><th>Fecha llegada</th><th>Propiedad</th><th>Período</th></tr></thead><tbody>'+
+    rows.slice(0,300).map(function(r){
+      return '<tr><td>'+(r.Nombre||'—')+'</td><td>'+(r.Tier_AKIN||'—')+'</td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(getPer(r)||'—')+'</td></tr>';
+    }).join('')+'</tbody></table>'+(rows.length>300?'<p style="padding:10px;font-size:11px;color:var(--gris);">Mostrando 300 de '+fmtN(rows.length)+'. Ver Google Sheets para el listado completo.</p>':'');
+  document.getElementById('drill-overlay').classList.add('show');
+}
+function renderSinCanje(sc){
+  SC_DATA=sc;_scTierFilter=null;
+  var tourist=sc.filter(function(r){return(r.Tier||'').toLowerCase()==='tourist';}).length;
+  var backpacker=sc.filter(function(r){return(r.Tier||'').toLowerCase()==='backpacker';}).length;
+  var otros=sc.length-tourist-backpacker;
+  var unicos=new Set(sc.map(function(r){return r.Nombre;}).filter(Boolean)).size||sc.length;
+  document.getElementById('sc-cnt').textContent=fmtN(sc.length)+' reservas';
+  /* NOTE: explain personas vs reservas */
+  /* sc-people-note oculta — no mostramos dual count */
+  var cards=[
+    {id:'sc-all',col:'var(--gris)',n:unicos,title:'Todas las personas',desc:fmtN(sc.length)+' reservas en total',tier:null},
+    {id:'sc-tourist',col:'var(--orange)',n:tourist,title:'Tourist',desc:'Tarifa -15% al check-in',tier:'tourist'},
+    {id:'sc-backpacker',col:'var(--err)',n:backpacker,title:'Backpacker',desc:'Tarifa + toalla',tier:'backpacker'},
+    {id:'sc-otros',col:'var(--purple)',n:otros,title:'Explorer / Nomad / Viajero',desc:'Con beneficios adicionales',tier:'__otros__'}
+  ];
+  document.getElementById('sc-legend').innerHTML=cards.map(function(c){
+    return '<div class="sc-leg-item" id="'+c.id+'" onclick="scFilter(\''+c.tier+'\',\''+c.id+'\')">'+
+      '<div><div class="sc-leg-n" style="color:'+c.col+'">'+fmtN(c.n)+'</div><div class="sc-leg-title">'+c.title+'</div><div class="sc-leg-desc">'+c.desc+'</div></div></div>';
+  }).join('');
+  filtrarSC();
+}
 function scFilter(tier,id){_scTierFilter=(tier==='null'||tier===null)?null:tier;document.querySelectorAll('.sc-leg-item').forEach(function(el){el.classList.remove('active');});var el=document.getElementById(id);if(el)el.classList.add('active');filtrarSC();}
-function filtrarSC(){var q=((document.getElementById('sc-q')||{}).value||'').toLowerCase();var fpa=getMsValues('pais'),fpr=getMsValues('prop');var rows=SC_DATA.filter(function(r){if(fpa.length&&!fpa.includes(r['País']||r.Pais||''))return false;if(fpr.length&&!fpr.includes(r.Propiedad||''))return false;if(_scTierFilter!==null&&_scTierFilter!==undefined){var tier=(r.Tier||'').toLowerCase();if(_scTierFilter==='__otros__'){if(tier==='tourist'||tier==='backpacker')return false;}else{if(tier!==_scTierFilter)return false;}}return!q||Object.values(r).some(function(v){return v&&v.toString().toLowerCase().includes(q);});});var wrap=document.getElementById('sc-tabla');if(!rows.length){wrap.innerHTML='<p class="empty">Sin registros para este filtro</p>';return;}wrap.innerHTML='<table><thead><tr><th>Nombre</th><th>Nivel</th><th>Reserva</th><th>Fecha llegada</th><th>Período</th><th>Propiedad</th><th>Noches</th></tr></thead><tbody>'+rows.map(function(r){var tier=(r.Tier||'').toLowerCase();var col=tier==='tourist'?'var(--orange)':tier==='backpacker'?'var(--err)':'var(--purple)';return '<tr><td>'+(r.Nombre||'—')+'</td><td style="color:'+col+';font-weight:700;">'+(r.Tier||'—')+'</td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r['Período']||r.Periodo||'—')+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Noches||'—')+'</td></tr>';}).join('')+'</tbody></table>';}
-function renderSinMatchAkin(){var raw=DATA.sinMatchAkin||[];var fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');var data=raw.filter(function(r){return(!fp.length||fp.includes(r.Propiedad||''))&&(!ft.length||ft.includes(getPer(r)))&&(!fpa.length||fpa.includes(r['País']||r.Pais||''));});var limpia=data.filter(function(r){return!/(demo|test|wizard)/i.test(r.Nombre||'');});document.getElementById('match-cnt').textContent=limpia.length;var cont=document.getElementById('sinmatch-cont');if(!limpia.length){cont.innerHTML='<p class="empty">✅ Sin problemas técnicos para este filtro</p>';return;}cont.innerHTML='<div style="background:var(--warn-bg);border:1.5px solid #fde68a;border-radius:9px;padding:11px 14px;margin-bottom:12px;font-size:12px;color:var(--warn);line-height:1.6;">⚠️ <b>'+limpia.length+' reservas sin sincronización Akin/CloudBeds.</b> NO es error de recepción. Causa: número de reserva o correo difiere entre sistemas. → Escalar a Akin.</div><div class="sc-wrap"><table><thead><tr><th>Nombre</th><th>Reserva</th><th>Fecha llegada</th><th>Propiedad</th><th>Período</th><th>Nivel Akin</th></tr></thead><tbody>'+limpia.map(function(r){return '<tr><td>'+(r.Nombre||'—')+'</td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(getPer(r)||'—')+'</td><td>'+(r.Tier_AKIN||'—')+'</td></tr>';}).join('')+'</tbody></table></div>';}
-/* ══ TAB 3 ══ */
-function renderCtxTab(){var afs=filtrar(DATA.afiliados||[]);var mb=filtrar(DATA.tiersDetalle||[]);renderInsight(afs);renderCtxDonut();renderCtxRanking(afs,mb);renderMembersTab();}
-function renderInsight(afs){var map={};afs.forEach(function(r){var p=r.Propiedad||'';if(!p)return;if(!map[p])map[p]={p:p,cb:0};map[p].cb+=parseFloat(r._afiliados_cb)||0;});var sorted=Object.values(map).sort(function(a,b){return b.cb-a.cb;});var top=sorted[0];if(!top||!top.cb){document.getElementById('ctx-insight').innerHTML='';return;}var nom=top.p.replace('Viajero ','').replace(' Hostel','').replace(' & Ecohabs','');document.getElementById('ctx-insight').innerHTML='<div class="insight-card"><div class="insight-ico">🏆</div><div><div class="insight-label">Propiedad más visitada por miembros <i class="ib" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.5);" onclick="openTip(\'Propiedad más visitada\')">i</i></div><div class="insight-val">'+nom+'</div><div class="insight-sub">'+fmtN(top.cb)+' check-ins de miembros en el período seleccionado · '+sorted.slice(1,3).map(function(p){return p.p.replace('Viajero ','').replace(' Hostel','')+'('+fmtN(p.cb)+')';}).join(' · ')+'</div></div></div>';}
-function renderCtxDonut(){var raw=DATA.akinTiers||[];var TIER_ORDER=['Tourist','Backpacker','Explorer','Nomad','Viajero'];var TIER_COLORS={Tourist:'#f97316',Backpacker:'#ef4444',Explorer:'#8b5cf6',Nomad:'#0ea5e9',Viajero:'#14b8a6'};var tiers,total;if(raw.length>0&&raw[0].Viajero!==undefined){var grouped={};raw.forEach(function(m){var t=m.Viajero||'Sin nivel';if(!grouped[t])grouped[t]={name:t,count:0};grouped[t].count++;});tiers=Object.values(grouped).sort(function(a,b){var ia=TIER_ORDER.indexOf(a.name),ib=TIER_ORDER.indexOf(b.name);return(ia<0?99:ia)-(ib<0?99:ib);});}else{tiers=raw.map(function(t){return{name:t.name||t.tier||t.Tier||'?',count:parseInt(t.count||t.total||0)||0};});}total=tiers.reduce(function(s,t){return s+(parseInt(t.count)||0);},0);if(_donutChart){_donutChart.destroy();_donutChart=null;}document.getElementById('ctx-donut').innerHTML='<div class="tier-donut-card"><div class="tier-donut-wrap"><canvas id="donut-canvas" width="110" height="110"></canvas><div class="tier-donut-center"><div class="tier-donut-n">'+fmtN(total)+'</div><div class="tier-donut-lbl">Miembros</div></div></div><div class="tier-donut-list"><div class="tier-donut-title">Distribución actual</div>'+tiers.map(function(t){var pct=total>0?Math.round(t.count/total*1000)/10:0;var col=TIER_COLORS[t.name]||'#94a3b8';return '<div class="tier-row" onclick="drillTier(\''+t.name+'\')" title="Ver lista"><div class="tier-dot" style="background:'+col+'"></div><div class="tier-row-name">'+t.name+'</div><div class="tier-row-n">'+fmtN(t.count)+'</div><div class="tier-row-pct">'+pct+'%</div></div>';}).join('')+'</div></div>';requestAnimationFrame(function(){var canvas=document.getElementById('donut-canvas');if(!canvas||!window.Chart)return;_donutChart=new Chart(canvas,{type:'doughnut',data:{labels:tiers.map(function(t){return t.name;}),datasets:[{data:tiers.map(function(t){return parseInt(t.count)||0;}),backgroundColor:tiers.map(function(t){return TIER_COLORS[t.name]||'#94a3b8';}),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.label+': '+ctx.raw+' ('+Math.round(ctx.raw/total*1000)/10+'%)';}}}},animation:{duration:600}}});});}
-function drillTier(tier){var raw=DATA.akinTiers||[];if(!raw.length||raw[0].Viajero===undefined)return;var rows=raw.filter(function(m){return m.Viajero===tier;});if(!rows.length)return;document.getElementById('drill-title').textContent='Miembros nivel '+tier;document.getElementById('drill-sub').textContent=rows.length+' miembros';document.getElementById('drill-content').innerHTML='<table><thead><tr><th>Nombre</th><th>Correo</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+(r.Name||r.nombre||'—')+'</td><td>'+(r.Email||r.email||'—')+'</td></tr>';}).join('')+'</tbody></table>';document.getElementById('drill-overlay').classList.add('show');}
-function renderCtxRanking(afs,mb){var fp=getMsValues('prop');if(fp.length===1){document.getElementById('ctx-ranking').innerHTML='<p class="empty">Vista de ranking disponible sin filtro de propiedad individual.</p>';return;}var map={};afs.forEach(function(r){var p=r.Propiedad||'';if(!p)return;if(!map[p])map[p]={p:p,hu:0,ci:0,cb:0,nv:0,ok:0,sc:0};map[p].hu+=parseFloat(r._huespedes)||0;map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;});mb.forEach(function(r){var p=r.Propiedad||'';if(!map[p])return;var et=r.Error_Type||'';if(et==='OK')map[p].ok++;else if(et==='SIN CANJE')map[p].sc++;});var props=Object.values(map).filter(function(p){return p.hu>0||p.cb>0;});props.forEach(function(p){p.pct=p.hu>0?Math.round(p.cb/p.hu*1000)/10:0;p.pctOK=(p.ok+p.sc)>0?Math.round(p.ok/(p.ok+p.sc)*1000)/10:0;});_RD={props:props,maxPct:Math.max(30,Math.max.apply(null,props.map(function(p){return p.pct;}))||30),maxNv:Math.max.apply(null,props.map(function(p){return p.nv;}))||1,maxCb:Math.max.apply(null,props.map(function(p){return p.cb;}))||1};document.getElementById('ctx-ranking').innerHTML='<div id="rank-body">'+buildRankRows([].concat(props).sort(function(a,b){return b.pct-a.pct;}),'pct')+'</div>';}
-function switchRank(tipo,btn){if(!_RD.props)return;document.querySelectorAll('.rank-tab').forEach(function(b){b.classList.remove('active');});if(btn)btn.classList.add('active');var s=tipo==='pct'?[].concat(_RD.props).sort(function(a,b){return b.pct-a.pct;}):tipo==='nv'?[].concat(_RD.props).sort(function(a,b){return b.nv-a.nv;}):tipo==='cb'?[].concat(_RD.props).sort(function(a,b){return b.cb-a.cb;}):[].concat(_RD.props).sort(function(a,b){return b.pctOK-a.pctOK;});var el=document.getElementById('rank-body');if(el)el.innerHTML=buildRankRows(s,tipo);}
-function buildRankRows(sorted,tipo){return sorted.map(function(p,i){var bpct,val,sub,col,tgt=null;if(tipo==='pct'){bpct=Math.round(p.pct/_RD.maxPct*100);val=p.pct.toFixed(1)+'%';sub=fmtN(p.cb)+' de '+fmtN(p.ci)+' check-ins';col=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';tgt=Math.round(15/_RD.maxPct*100);}else if(tipo==='nv'){bpct=_RD.maxNv>0?Math.round(p.nv/_RD.maxNv*100):0;val=fmtN(p.nv);sub=(p.hu>0?(p.nv/p.hu*100).toFixed(1):0)+'% captación';col='var(--coral)';}else if(tipo==='cb'){bpct=_RD.maxCb>0?Math.round(p.cb/_RD.maxCb*100):0;val=fmtN(p.cb)+' visitas';sub='de miembros activos en el período';col='var(--teal)';}else{bpct=Math.round(p.pctOK);val=p.pctOK.toFixed(1)+'%';sub=p.ok+' correctos de '+(p.ok+p.sc)+' aplicaciones';col=p.pctOK>=50?'var(--ok)':p.pctOK>0?'#ca8a04':'var(--gris)';}var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':String(i+1);var nom=p.p.replace('Viajero ','').replace(' Hostel','').replace(' & Ecohabs','');return '<div class="rank-item"><div class="rank-pos">'+medal+'</div><div class="rank-name"><b>'+nom+'</b><span>'+sub+'</span></div><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:'+bpct+'%;background:'+col+'"></div>'+(tgt!==null?'<div class="rank-target" style="left:'+tgt+'%"></div>':'')+
-'</div><div class="rank-val" style="color:'+col+'">'+val+'</div></div>';}).join('');}
-function renderMembersTab(){var mb=DATA.memberBehavior||[];if(!mb.length){document.getElementById('members-banner').innerHTML='<div class="pending-banner"><div class="pb-ico">⏳</div><div><div class="pb-title">Data de comportamiento en proceso</div><div class="pb-desc">Cuando se integre memberBehavior al JSON, esta sección se activa automáticamente.</div></div></div>';document.getElementById('members-activity').innerHTML='';document.getElementById('members-kpis').innerHTML='';document.getElementById('member-tabla').innerHTML='';MEMBER_DATA=[];return;}document.getElementById('members-banner').innerHTML='';MEMBER_DATA=mb;var totalM=mb.length||1;var avgB=mb.reduce(function(s,r){return s+(parseFloat(r.total_bookings)||0);},0)/totalM;var avgN=mb.reduce(function(s,r){return s+(parseFloat(r.total_nights)||0);},0)/totalM;var avgP=mb.reduce(function(s,r){return s+(parseFloat(r.properties_visited)||0);},0)/totalM;var multi=mb.filter(function(r){return(parseFloat(r.properties_visited)||0)>1;}).length;document.getElementById('members-kpis').innerHTML='<div class="beh-grid"><div class="beh-kpi" style="--bkc:var(--teal)"><div class="bk-label">Estadías prom.</div><div class="bk-val">'+avgB.toFixed(1)+'</div><div class="bk-sub">reservas por miembro</div></div><div class="beh-kpi" style="--bkc:var(--blue)"><div class="bk-label">Noches prom.</div><div class="bk-val">'+avgN.toFixed(1)+'</div><div class="bk-sub">noches por miembro</div></div><div class="beh-kpi" style="--bkc:var(--purple)"><div class="bk-label">Propiedades prom.</div><div class="bk-val">'+avgP.toFixed(1)+'</div><div class="bk-sub">propiedades distintas visitadas</div></div><div class="beh-kpi" style="--bkc:var(--ok)"><div class="bk-label">Multi-propiedad</div><div class="bk-val">'+fmtN(multi)+'</div><div class="bk-sub">'+fmtP(multi,totalM)+' visitaron 2+ hostels</div></div></div>';var statuses={ACTIVE:0,OCCASIONAL:0,DORMANT:0,INACTIVE:0};mb.forEach(function(r){var s=(r.activity_status||'').toUpperCase();if(s in statuses)statuses[s]++;});document.getElementById('members-activity').innerHTML='<div class="activity-bar"><div class="act-pill act-active"><div class="act-pill-n">'+fmtN(statuses.ACTIVE)+'</div><div class="act-pill-label">Activos</div><div class="act-pill-pct">'+fmtP(statuses.ACTIVE,totalM)+' · últimos 90 días</div></div><div class="act-pill act-occasional"><div class="act-pill-n">'+fmtN(statuses.OCCASIONAL)+'</div><div class="act-pill-label">Ocasionales</div><div class="act-pill-pct">'+fmtP(statuses.OCCASIONAL,totalM)+' · 91-180 días</div></div><div class="act-pill act-dormant"><div class="act-pill-n">'+fmtN(statuses.DORMANT)+'</div><div class="act-pill-label">Dormidos</div><div class="act-pill-pct">'+fmtP(statuses.DORMANT,totalM)+' · 181-365 días</div></div><div class="act-pill act-inactive"><div class="act-pill-n">'+fmtN(statuses.INACTIVE)+'</div><div class="act-pill-label">Inactivos</div><div class="act-pill-pct">'+fmtP(statuses.INACTIVE,totalM)+' · más de 365 días</div></div></div>';filtrarMembers();}
-function filtrarMembers(){var q=((document.getElementById('member-q')||{}).value||'').toLowerCase();var rows=MEMBER_DATA.filter(function(r){return!q||Object.values(r).some(function(v){return v&&v.toString().toLowerCase().includes(q);});});var wrap=document.getElementById('member-tabla');if(!rows.length){wrap.innerHTML='<p class="empty">Sin registros</p>';return;}var SL={ACTIVE:'Activo',OCCASIONAL:'Ocasional',DORMANT:'Dormido',INACTIVE:'Inactivo'};var SC2={ACTIVE:'sp-active',OCCASIONAL:'sp-occasional',DORMANT:'sp-dormant',INACTIVE:'sp-inactive'};wrap.innerHTML='<div class="member-wrap"><table class="member-table"><thead><tr><th>Nombre</th><th>Correo</th><th>Estadías</th><th>Noches</th><th>Propiedades</th><th>Últ. estadía</th><th>Estado</th></tr></thead><tbody>'+rows.map(function(r){var st=(r.activity_status||'').toUpperCase();var dsl=parseFloat(r.days_since_last_stay)||0;var dslTxt=dsl<0?'Próx.':dsl===0?'Hoy':dsl+' días';return '<tr><td>'+(r.name||r.nombre||'—')+'</td><td>'+(r.email||'—')+'</td><td>'+(r.total_bookings||'—')+'</td><td>'+(r.total_nights||'—')+'</td><td>'+(r.properties_visited||'—')+'</td><td>'+(r.last_booking_date?fmtFecha(r.last_booking_date)+' <span class="badge b-gray">'+dslTxt+'</span>':'—')+'</td><td><span class="status-pill '+(SC2[st]||'')+'">'+(SL[st]||st||'—')+'</span></td></tr>';}).join('')+'</tbody></table></div>';}
+function filtrarSC(){
+  var q=((document.getElementById('sc-q')||{}).value||'').toLowerCase();
+  var fpa=getMsValues('pais'),fpr=getMsValues('prop');
+  var rows=SC_DATA.filter(function(r){
+    if(fpa.length&&!fpa.includes(r['País']||r.Pais||''))return false;
+    if(fpr.length&&!fpr.includes(r.Propiedad||''))return false;
+    if(_scTierFilter!==null&&_scTierFilter!==undefined){
+      var tier=(r.Tier||'').toLowerCase();
+      if(_scTierFilter==='__otros__'){if(tier==='tourist'||tier==='backpacker')return false;}
+      else{if(tier!==_scTierFilter)return false;}
+    }
+    return!q||Object.values(r).some(function(v){return v&&v.toString().toLowerCase().includes(q);});
+  });
+  var wrap=document.getElementById('sc-tabla');
+  if(!rows.length){wrap.innerHTML='<p class="empty">Sin registros para este filtro</p>';return;}
+  wrap.innerHTML='<table><thead><tr><th>Nombre</th><th>Nivel</th><th>Reserva</th><th>Fecha llegada</th><th>Período</th><th>Propiedad</th><th>Noches</th></tr></thead><tbody>'+
+    rows.map(function(r){
+      var tier=(r.Tier||'').toLowerCase();
+      var col=tier==='tourist'?'var(--orange)':tier==='backpacker'?'var(--err)':'var(--purple)';
+      return '<tr><td>'+(r.Nombre||'—')+'</td><td style="color:'+col+';font-weight:700;">'+(r.Tier||'—')+'</td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r['Período']||r.Periodo||'—')+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Noches||'—')+'</td></tr>';
+    }).join('')+'</tbody></table>';
+}
+function renderSinMatchAkin(){
+  var raw=DATA.sinMatchAkin||[];
+  var fp=getMsValues('prop'),fpa=getMsValues('pais');
+  var data=raw.filter(function(r){
+    return(!fp.length||fp.includes(r.Propiedad||''))&&(!fpa.length||fpa.includes(r['País']||r.Pais||''));
+  });
+  var limpia=data.filter(function(r){return!/(demo|test|wizard)/i.test(r.Nombre||'');});
+  document.getElementById('match-cnt').textContent=limpia.length;
+  var cont=document.getElementById('sinmatch-cont');
+  if(!limpia.length){cont.innerHTML='<p class="empty">✅ Sin problemas técnicos para este filtro</p>';return;}
+  cont.innerHTML='<div style="background:var(--warn-bg);border:1.5px solid #fde68a;border-radius:9px;padding:11px 14px;margin-bottom:12px;font-size:12px;color:var(--warn);line-height:1.6;">⚠️ <b>'+limpia.length+' reservas sin sincronización Akin/CloudBeds.</b> NO es error de recepción. → Escalar a Akin.</div>'+
+    '<div class="sc-wrap"><table><thead><tr><th>Nombre</th><th>Reserva</th><th>Fecha llegada</th><th>Propiedad</th><th>Nivel Akin</th></tr></thead><tbody>'+
+    limpia.map(function(r){
+      return '<tr><td>'+(r.Nombre||'—')+'</td><td>'+(r.Reserva||'—')+'</td><td>'+fmtFecha(r.FechaIN)+'</td><td>'+(r.Propiedad||'—')+'</td><td>'+(r.Tier_AKIN||'—')+'</td></tr>';
+    }).join('')+'</tbody></table></div>';
+}
+/* ══ TAB 3: TENDENCIAS ══ */
+function renderTendencias(){
+  var afs=DATA.afiliados||[];
+  var mb=DATA.tiersDetalle||[];
+  /* Agrupar por período */
+  var perMap={};
+  afs.forEach(function(r){
+    var p=getPer(r);if(!p)return;
+    /* aplicar filtros de prop y país pero NO período */
+    var fpr=getMsValues('prop'),fpa=getMsValues('pais');
+    if(fpr.length&&!fpr.includes(r.Propiedad||''))return;
+    if(fpa.length&&!fpa.includes(r['País']||r['Pais']||''))return;
+    if(!perMap[p])perMap[p]={hu:0,cb:0,nv:0,ok:0,tot:0};
+    perMap[p].hu+=parseFloat(r._huespedes)||0;
+    perMap[p].cb+=parseFloat(r._afiliados_cb)||0;
+    perMap[p].nv+=parseFloat(r._nuevos)||0;
+  });
+  mb.forEach(function(r){
+    var p=getPer(r);if(!p)return;
+    var fpr=getMsValues('prop'),fpa=getMsValues('pais');
+    if(fpr.length&&!fpr.includes(r.Propiedad||''))return;
+    if(fpa.length&&!fpa.includes(r['País']||r['Pais']||''))return;
+    if(!perMap[p])perMap[p]={hu:0,cb:0,nv:0,ok:0,tot:0};
+    var et=r.Error_Type||'';
+    if(et)perMap[p].tot++;
+    if(et==='OK')perMap[p].ok++;
+  });
+  var labels=Object.keys(perMap).sort();
+  if(labels.length<2){document.querySelectorAll('.trend-canvas-wrap').forEach(function(w){w.innerHTML='<p class="empty">Se necesitan al menos 2 períodos para mostrar tendencias.</p>';});return;}
+  var alcance=labels.map(function(p){return perMap[p].hu>0?Math.round(perMap[p].cb/perMap[p].hu*1000)/10:0;});
+  var beneficios=labels.map(function(p){return perMap[p].tot>0?Math.round(perMap[p].ok/perMap[p].tot*1000)/10:0;});
+  var nuevos=labels.map(function(p){return perMap[p].nv||0;});
+  var chartCfg=function(data,color,refLine,isCount){
+    return{type:'line',data:{labels:labels,datasets:[{data:data,borderColor:color,backgroundColor:color+'22',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,fill:true,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return isCount?fmtN(ctx.raw):(ctx.raw.toFixed(1)+'%');}}}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return isCount?fmtN(v):(v+'%');}},grid:{color:'rgba(0,0,0,.05)'},border:{display:false}},x:{grid:{display:false}}},interaction:{mode:'index',intersect:false}}};
+  };
+  Object.values(_trendCharts).forEach(function(c){if(c&&c.destroy)c.destroy();});
+  _trendCharts={};
+  requestAnimationFrame(function(){
+    _trendCharts.alcance=new Chart(document.getElementById('chart-alcance'),chartCfg(alcance,'#F04B24',15,false));
+    _trendCharts.beneficios=new Chart(document.getElementById('chart-beneficios'),chartCfg(beneficios,'#15803d',50,false));
+    _trendCharts.nuevos=new Chart(document.getElementById('chart-nuevos'),chartCfg(nuevos,'#0369a1',null,true));
+  });
+}
+/* ══ TAB 4: COMPORTAMIENTO ══ */
+function renderMembersTab(){
+  var mb=DATA.memberBehavior||[];
+  if(!mb.length){
+    document.getElementById('members-banner').innerHTML='<div class="pending-banner"><div class="pb-ico">⏳</div><div><div class="pb-title">Data de comportamiento en proceso</div><div class="pb-desc">Cuando se integre memberBehavior al JSON, esta sección se activa automáticamente.<br>Contiene: actividad (activo/dormido/inactivo), estadías promedio, noches por miembro, multi-propiedad.</div></div></div>';
+    document.getElementById('members-activity').innerHTML='';
+    document.getElementById('members-kpis').innerHTML='';
+    document.getElementById('member-tabla').innerHTML='';
+    MEMBER_DATA=[];
+    return;
+  }
+  document.getElementById('members-banner').innerHTML='';
+  MEMBER_DATA=mb;
+  var totalM=mb.length||1;
+  var avgB=mb.reduce(function(s,r){return s+(parseFloat(r.total_bookings)||0);},0)/totalM;
+  var avgN=mb.reduce(function(s,r){return s+(parseFloat(r.total_nights)||0);},0)/totalM;
+  var avgP=mb.reduce(function(s,r){return s+(parseFloat(r.properties_visited)||0);},0)/totalM;
+  var multi=mb.filter(function(r){return(parseFloat(r.properties_visited)||0)>1;}).length;
+  document.getElementById('members-kpis').innerHTML='<div class="beh-grid">'+
+    '<div class="beh-kpi" style="--bkc:var(--teal)"><div class="bk-label">Estadías prom.</div><div class="bk-val">'+avgB.toFixed(1)+'</div><div class="bk-sub">reservas por miembro</div></div>'+
+    '<div class="beh-kpi" style="--bkc:var(--blue)"><div class="bk-label">Noches prom.</div><div class="bk-val">'+avgN.toFixed(1)+'</div><div class="bk-sub">noches por miembro</div></div>'+
+    '<div class="beh-kpi" style="--bkc:var(--purple)"><div class="bk-label">Propiedades prom.</div><div class="bk-val">'+avgP.toFixed(1)+'</div><div class="bk-sub">propiedades distintas visitadas</div></div>'+
+    '<div class="beh-kpi" style="--bkc:var(--ok)"><div class="bk-label">Multi-propiedad</div><div class="bk-val">'+fmtN(multi)+'</div><div class="bk-sub">'+fmtP(multi,totalM)+' visitaron 2+ hostels</div></div>'+
+  '</div>';
+  var statuses={ACTIVE:0,OCCASIONAL:0,DORMANT:0,INACTIVE:0};
+  mb.forEach(function(r){var s=(r.activity_status||'').toUpperCase();if(s in statuses)statuses[s]++;});
+  document.getElementById('members-activity').innerHTML='<div class="activity-bar">'+
+    '<div class="act-pill act-active"><div class="act-pill-n">'+fmtN(statuses.ACTIVE)+'</div><div class="act-pill-label">Activos</div><div class="act-pill-pct">'+fmtP(statuses.ACTIVE,totalM)+' · últimos 90 días</div></div>'+
+    '<div class="act-pill act-occasional"><div class="act-pill-n">'+fmtN(statuses.OCCASIONAL)+'</div><div class="act-pill-label">Ocasionales</div><div class="act-pill-pct">'+fmtP(statuses.OCCASIONAL,totalM)+' · 91-180 días</div></div>'+
+    '<div class="act-pill act-dormant"><div class="act-pill-n">'+fmtN(statuses.DORMANT)+'</div><div class="act-pill-label">Dormidos</div><div class="act-pill-pct">'+fmtP(statuses.DORMANT,totalM)+' · 181-365 días</div></div>'+
+    '<div class="act-pill act-inactive"><div class="act-pill-n">'+fmtN(statuses.INACTIVE)+'</div><div class="act-pill-label">Inactivos</div><div class="act-pill-pct">'+fmtP(statuses.INACTIVE,totalM)+' · +365 días</div></div>'+
+  '</div>';
+  filtrarMembers();
+}
+function filtrarMembers(){
+  var q=((document.getElementById('member-q')||{}).value||'').toLowerCase();
+  var rows=MEMBER_DATA.filter(function(r){
+    return!q||Object.values(r).some(function(v){return v&&v.toString().toLowerCase().includes(q);});
+  });
+  var wrap=document.getElementById('member-tabla');
+  if(!rows.length){wrap.innerHTML='<p class="empty">Sin registros</p>';return;}
+  var SL={ACTIVE:'Activo',OCCASIONAL:'Ocasional',DORMANT:'Dormido',INACTIVE:'Inactivo'};
+  var SC2={ACTIVE:'sp-active',OCCASIONAL:'sp-occasional',DORMANT:'sp-dormant',INACTIVE:'sp-inactive'};
+  wrap.innerHTML='<div class="member-wrap"><table class="member-table"><thead><tr><th>Nombre</th><th>Correo</th><th>Estadías</th><th>Noches</th><th>Propiedades</th><th>Últ. estadía</th><th>Estado</th></tr></thead><tbody>'+
+    rows.map(function(r){
+      var st=(r.activity_status||'').toUpperCase();
+      var dsl=parseFloat(r.days_since_last_stay)||0;
+      var dslTxt=dsl<0?'Próx.':dsl===0?'Hoy':dsl+' días';
+      return '<tr><td>'+(r.name||r.nombre||'—')+'</td><td>'+(r.email||'—')+'</td><td>'+(r.total_bookings||'—')+'</td><td>'+(r.total_nights||'—')+'</td><td>'+(r.properties_visited||'—')+'</td><td>'+(r.last_booking_date?fmtFecha(r.last_booking_date)+' <span class="badge b-gray">'+dslTxt+'</span>':'—')+'</td><td><span class="status-pill '+(SC2[st]||'')+'">'+( SL[st]||st||'—')+'</span></td></tr>';
+    }).join('')+
+  '</tbody></table></div>';
+}
+/* ══ TAB 5: CONTEXTO ══ */
+function renderCtxTab(){
+  var afs=filtrar(DATA.afiliados||[]);
+  var mb=filtrar(DATA.tiersDetalle||[]);
+  renderCtxDonut();
+  var map={};
+  afs.forEach(function(r){
+    var p=r.Propiedad||'';if(!p)return;
+    if(!map[p])map[p]={p:p,hu:0,ci:0,cb:0,nv:0,ok:0,sc:0};
+    map[p].hu+=parseFloat(r._huespedes)||0;map[p].ci+=parseFloat(r._check_ins)||0;
+    map[p].cb+=parseFloat(r._afiliados_cb)||0;map[p].nv+=parseFloat(r._nuevos)||0;
+  });
+  mb.forEach(function(r){
+    var p=r.Propiedad||'';if(!map[p])return;
+    var et=r.Error_Type||'';
+    if(et==='OK')map[p].ok++; else if(et==='SIN CANJE')map[p].sc++;
+  });
+  var props=Object.values(map).filter(function(p){return p.hu>0||p.cb>0;});
+  props.forEach(function(p){p.pct=p.hu>0?Math.round(p.cb/p.hu*1000)/10:0;p.pctOK=(p.ok+p.sc)>0?Math.round(p.ok/(p.ok+p.sc)*1000)/10:0;});
+  _RD={props:props,maxPct:Math.max(30,Math.max.apply(null,props.map(function(p){return p.pct;}))||30),maxNv:Math.max.apply(null,props.map(function(p){return p.nv;}))||1,maxCb:Math.max.apply(null,props.map(function(p){return p.cb;}))||1};
+  document.getElementById('ctx-ranking').innerHTML='<div id="rank-body">'+buildRankRows([].concat(props).sort(function(a,b){return b.pct-a.pct;}),'pct')+'</div>';
+}
+function renderCtxDonut(){
+  var raw=DATA.akinTiers||[];
+  var TIER_ORDER=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
+  var TIER_COLORS={Tourist:'#f97316',Backpacker:'#ef4444',Explorer:'#8b5cf6',Nomad:'#0ea5e9',Viajero:'#14b8a6'};
+  var tiers,total;
+  if(raw.length>0&&raw[0].Viajero!==undefined){
+    var grouped={};raw.forEach(function(m){var t=m.Viajero||'Sin nivel';if(!grouped[t])grouped[t]={name:t,count:0};grouped[t].count++;});
+    tiers=Object.values(grouped).sort(function(a,b){var ia=TIER_ORDER.indexOf(a.name),ib=TIER_ORDER.indexOf(b.name);return(ia<0?99:ia)-(ib<0?99:ib);});
+  }else{tiers=raw.map(function(t){return{name:t.name||t.tier||t.Tier||'?',count:parseInt(t.count||t.total||0)||0};});}
+  total=tiers.reduce(function(s,t){return s+(parseInt(t.count)||0);},0);
+  if(_donutChart){_donutChart.destroy();_donutChart=null;}
+  document.getElementById('ctx-donut').innerHTML='<div class="tier-donut-card"><div class="tier-donut-wrap"><canvas id="donut-canvas" width="110" height="110"></canvas><div class="tier-donut-center"><div class="tier-donut-n">'+fmtN(total)+'</div><div class="tier-donut-lbl">Miembros</div></div></div><div class="tier-donut-list"><div class="tier-donut-title">Distribución actual</div>'+
+    tiers.map(function(t){
+      var pct=total>0?Math.round(t.count/total*1000)/10:0;
+      var col=TIER_COLORS[t.name]||'#94a3b8';
+      return '<div class="tier-row" onclick="drillTier(\''+t.name+'\')"><div class="tier-dot" style="background:'+col+'"></div><div class="tier-row-name">'+t.name+'</div><div class="tier-row-n">'+fmtN(t.count)+'</div><div class="tier-row-pct">'+pct+'%</div></div>';
+    }).join('')+'</div></div>';
+  requestAnimationFrame(function(){
+    var canvas=document.getElementById('donut-canvas');
+    if(!canvas||!window.Chart)return;
+    _donutChart=new Chart(canvas,{type:'doughnut',data:{labels:tiers.map(function(t){return t.name;}),datasets:[{data:tiers.map(function(t){return parseInt(t.count)||0;}),backgroundColor:tiers.map(function(t){return TIER_COLORS[t.name]||'#94a3b8';}),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.label+': '+ctx.raw+' ('+Math.round(ctx.raw/total*1000)/10+'%)';}}}},animation:{duration:600}}});
+  });
+}
+function drillTier(tier){
+  var raw=DATA.akinTiers||[];
+  if(!raw.length||raw[0].Viajero===undefined)return;
+  var rows=raw.filter(function(m){return m.Viajero===tier;});
+  if(!rows.length)return;
+  document.getElementById('drill-title').textContent='Miembros nivel '+tier;
+  document.getElementById('drill-sub').textContent=rows.length+' miembros';
+  document.getElementById('drill-content').innerHTML='<table><thead><tr><th>Nombre</th><th>Correo</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+(r.Name||r.nombre||'—')+'</td><td>'+(r.Email||r.email||'—')+'</td></tr>';}).join('')+'</tbody></table>';
+  document.getElementById('drill-overlay').classList.add('show');
+}
+function switchRank(tipo,btn){
+  if(!_RD.props)return;
+  document.querySelectorAll('.rank-tab').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  var s=tipo==='pct'?[].concat(_RD.props).sort(function(a,b){return b.pct-a.pct;}):tipo==='nv'?[].concat(_RD.props).sort(function(a,b){return b.nv-a.nv;}):tipo==='cb'?[].concat(_RD.props).sort(function(a,b){return b.cb-a.cb;}):[].concat(_RD.props).sort(function(a,b){return b.pctOK-a.pctOK;});
+  var el=document.getElementById('rank-body');if(el)el.innerHTML=buildRankRows(s,tipo);
+}
+function buildRankRows(sorted,tipo){
+  return sorted.map(function(p,i){
+    var bpct,val,sub,col,tgt=null;
+    if(tipo==='pct'){bpct=Math.round(p.pct/_RD.maxPct*100);val=p.pct.toFixed(1)+'%';sub=fmtN(p.cb)+' de '+fmtN(p.ci)+' check-ins';col=p.pct>=15?'var(--ok)':p.pct>=8?'#ca8a04':'var(--err)';tgt=Math.round(15/_RD.maxPct*100);}
+    else if(tipo==='nv'){bpct=_RD.maxNv>0?Math.round(p.nv/_RD.maxNv*100):0;val=fmtN(p.nv);sub=(p.hu>0?(p.nv/p.hu*100).toFixed(1):0)+'% captación';col='var(--coral)';}
+    else if(tipo==='cb'){bpct=_RD.maxCb>0?Math.round(p.cb/_RD.maxCb*100):0;val=fmtN(p.cb)+' visitas';sub='check-ins de miembros';col='var(--teal)';}
+    else{bpct=Math.round(p.pctOK);val=p.pctOK.toFixed(1)+'%';sub=p.ok+' correctos de '+(p.ok+p.sc)+' aplicaciones';col=p.pctOK>=50?'var(--ok)':p.pctOK>0?'#ca8a04':'var(--gris)';}
+    var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':String(i+1);
+    var nom=p.p.replace('Viajero ','').replace(' Hostel','').replace(' & Ecohabs','');
+    return '<div class="rank-item"><div class="rank-pos">'+medal+'</div><div class="rank-name"><b>'+nom+'</b><span>'+sub+'</span></div><div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:'+bpct+'%;background:'+col+'"></div>'+(tgt!==null?'<div class="rank-target" style="left:'+tgt+'%"></div>':'')+
+    '</div><div class="rank-val" style="color:'+col+'">'+val+'</div></div>';
+  }).join('');
+}
 /* ══ RENDER PRINCIPAL ══ */
-function render(){if(!DATA)return;renderResumen();renderPropTab();renderSinCanje(filtrar(DATA.sinCanje||[],'Propiedad','País'));renderSinMatchAkin();if(_ctxTabRendered)renderCtxTab();}
-fetch(DATA_URL).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(function(d){DATA=d;var ts=d.updatedAt||d.timestamp||d.generatedAt||'';if(ts)document.getElementById('h-ts-val').textContent=new Date(ts).toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});poblarFiltros();render();}).catch(function(err){document.getElementById('dx-banner').className='dx-banner err';document.getElementById('dx-banner').innerHTML='<div class="dx-ico">⚠️</div><div><div class="dx-title">No se pudo cargar el JSON</div><div class="dx-sub">Verifica que loyalty_data.json esté en ../data/ y que el servidor esté activo. Error: '+err.message+'</div></div>';});
+function render(){
+  if(!DATA)return;
+  renderResumen();
+  renderPropTab();
+  _ctxTabRendered=false;_behTabRendered=false;_tendTabRendered=false;
+  if(document.getElementById('tab-ctx').classList.contains('active')){renderCtxTab();_ctxTabRendered=true;}
+  if(document.getElementById('tab-beh').classList.contains('active')){renderMembersTab();_behTabRendered=true;}
+  if(document.getElementById('tab-tend').classList.contains('active')){renderTendencias();_tendTabRendered=true;}
+}
+fetch(DATA_URL).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(function(d){
+  DATA=d;
+  var ts=d.actualizado||d.updatedAt||d.timestamp||d.generatedAt||'';
+  if(ts){var dt=new Date(ts);document.getElementById('h-ts').textContent=dt.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+' · '+dt.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});}
+  poblarFiltros();render();
+}).catch(function(err){
+  document.getElementById('dx-banner').className='dx-banner err';
+  document.getElementById('dx-banner').innerHTML='<div class="dx-ico">⚠️</div><div><div class="dx-title">No se pudo cargar el JSON</div><div class="dx-sub">Verifica que loyalty_data.json esté en ../data/ y que el servidor esté activo. Error: '+err.message+'</div></div>';
+});
 </script>
 </body>
 </html>
