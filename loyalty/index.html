@@ -1311,8 +1311,12 @@ function renderMembersTab(){
   var avgP=mb.reduce(function(s,r){return s+(parseFloat(r.properties_visited)||0);},0)/totalM;
   var multi=mb.filter(function(r){return (parseFloat(r.properties_visited)||0)>1;}).length;
  var kpis=[
-    {label:'Reservas promedio por miembro',val:avgB.toFixed(1),sub:fmtN(Math.round(avgB*totalM))+' reservas totales · '+fmtN(totalM)+' miembros',bkc:'var(--teal)'},
-    {label:'Noches acumuladas promedio por miembro',val:avgN.toFixed(1),sub:'total noches históricas ÷ miembros registrados',bkc:'var(--blue)'},
+{label:'Reservas promedio por miembro',val:avgB.toFixed(1),sub:
+  fmtP(mb.filter(function(r){return (parseFloat(r.total_bookings)||0)===1;}).length,totalM)+' · 1 visita  &nbsp;'+
+  fmtP(mb.filter(function(r){var b=parseFloat(r.total_bookings)||0;return b>=2&&b<=5;}).length,totalM)+' · 2-5 visitas  &nbsp;'+
+  fmtP(mb.filter(function(r){return (parseFloat(r.total_bookings)||0)>=6;}).length,totalM)+' · 6+  &nbsp;'+
+  fmtP(mb.filter(function(r){return (r.activity_status||'').toUpperCase()==='INACTIVE';}).length,totalM)+' · sin actividad reciente',
+bkc:'var(--teal)'},    {label:'Noches acumuladas promedio por miembro',val:avgN.toFixed(1),sub:'total noches históricas ÷ miembros registrados',bkc:'var(--blue)'},
     {label:'Hostels promedio visitados',val:avgP.toFixed(1),sub:'índice de fidelidad cross-hostel',bkc:'var(--purple)'},
     {label:'Miembros multi-hostel',val:fmtN(multi),sub:fmtP(multi,totalM)+' visitaron 2 o más hostels',bkc:'var(--ok)'},
   ];
