@@ -103,7 +103,7 @@ main{max-width:1220px;margin:0 auto;padding:24px 36px 80px;}
 .hl-status{display:inline-flex;font-size:10px;font-weight:700;border-radius:99px;padding:3px 10px;border:1px solid;margin-top:6px;}
 
 /* EXEC BOTTOM ROW: funnel right + country left */
-.exec-bottom-row{display:grid;grid-template-columns:1fr 320px;gap:16px;margin-bottom:20px;align-items:start;}
+.exec-bottom-row{display:grid;grid-template-columns:1fr 320px;gap:16px;margin-bottom:20px;align-items:start;}.exec-bottom-row>div{display:flex;flex-direction:column;}.exec-bottom-row>div>*{flex:1;}
 .exec-bottom-row .funnel-outer{margin-bottom:0;}
 
 /* CONTEXT KPIs */
@@ -440,18 +440,18 @@ tbody tr:hover td{background:var(--cream);}
   <div class="aud-label aud-ops">🏨 Vista operativa — detalle por propiedad</div>
   <div id="detail-sheet-wrapper" style="margin-bottom:8px;"></div>
 
-  <!-- Semáforo -->
-  <div class="sec">
-    <div class="sec-hdr"><h2>Estado del programa <i class="ib" onclick="openTip('Resumen de errores')">i</i></h2><div class="linea"></div></div>
-    <div style="font-size:11px;color:var(--gris);margin-bottom:9px;" id="prop-sem-total"></div>
-    <div class="semaforo-grid" id="prop-semaforo"></div>
-  </div>
-
   <!-- Tabla compacta de propiedades -->
   <div class="sec">
     <div class="sec-hdr"><h2>Diagnóstico por propiedad <i class="ib" onclick="openTip('Acción por propiedad')">i</i></h2><div class="linea"></div></div>
-    <div style="font-size:11px;color:var(--gris);margin-bottom:10px;">Haz clic en cualquier fila para ver el diagnóstico detallado y la lista de trabajo de esa propiedad.</div>
+    <div style="font-size:11px;color:var(--gris);margin-bottom:10px;">Haz clic en cualquier fila → diagnóstico detallado y lista de trabajo de esa propiedad.</div>
     <div id="prop-actions"></div>
+  </div>
+
+  <!-- Semáforo -->
+  <div class="sec">
+    <div class="sec-hdr"><h2>Resumen de errores <i class="ib" onclick="openTip('Resumen de errores')">i</i></h2><div class="linea"></div></div>
+    <div style="font-size:11px;color:var(--gris);margin-bottom:9px;" id="prop-sem-total"></div>
+    <div class="semaforo-grid" id="prop-semaforo"></div>
   </div>
 
   <!-- Problemas técnicos -->
@@ -747,8 +747,8 @@ function renderExecCtxKPIs(afs,mb){
         '<div class="ck-glow"></div>'+
         '<div class="ck-label">Noches promedio por estad\u00eda '+ib('Tendencia')+'</div>'+
         '<div class="ck-val">'+nochesData.miembros.toFixed(1)+'</div>'+
-        '<div class="ck-sub">noches \u00b7 miembros se quedan '+((nochesData.miembros-nochesData.no_miembros)>=0?'+':'')+(nochesData.miembros-nochesData.no_miembros).toFixed(1)+' vs no-miembros</div>'+
-        '<div class="ck-footer"><span>No-miembros</span><b>'+nochesData.no_miembros.toFixed(1)+' noches</b></div>'+
+        '<div class="ck-sub">noches \u00b7 miembros se quedan '+((nochesData.miembros-nochesData.no_miembros)>=0?'+':'')+(nochesData.miembros-nochesData.no_miembros).toFixed(1)+' vs no-miembros</div>':'')+
+        (Math.abs(nochesData.miembros-nochesData.no_miembros)<0.2?'<div class="ck-footer"><span>No-miembros</span><b>'+nochesData.no_miembros.toFixed(1)+' noches (sin diferencia significativa)</b></div>':'<div class="ck-footer"><span>No-miembros</span><b>'+nochesData.no_miembros.toFixed(1)+' noches</b></div>')+
       '</div>'+
     '</div>';
   }
@@ -1156,13 +1156,19 @@ function renderCtxTierDonut(){
   }
   var TIER_COLORS={'Tourist':'#f97316','Backpacker':'#ef4444','Explorer':'#8b5cf6','Nomad':'#0ea5e9','Viajero':'#14b8a6'};
   var total=tiers.reduce(function(s,t){return s+(parseInt(t.count)||0);},0);
+  tiers=tiers.filter(function(t){return(parseInt(t.count)||0)>0;});
+  var total2=tiers.reduce(function(s,t){return s+(parseInt(t.count)||0);},0);
+  if(!tiers.length||total2===0){
+    document.getElementById('ctx-tier-donut').innerHTML='<div style="background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:32px 24px;text-align:center"><div style="font-size:28px;margin-bottom:10px">👥</div><div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:5px">Sin datos de niveles</div><div style="font-size:11px;color:var(--gris)">Agrega la key <code>akinTiers</code> en el JSON para ver la distribución.</div></div>';
+    return;
+  }
   if(_donutChart){_donutChart.destroy();_donutChart=null;}
-  var donutHtml='<div class="tier-donut-card"><div class="tier-donut-wrap"><canvas id="donut-canvas" width="110" height="110"></canvas><div class="tier-donut-center"><div class="tier-donut-n">'+total+'</div><div class="tier-donut-lbl">Miembros</div></div></div><div class="tier-donut-list"><div class="tier-donut-title">Distribución actual del programa</div>'+tiers.map(function(t,i){var pct=total>0?Math.round((parseInt(t.count)||0)/total*1000)/10:0;var col=TIER_COLORS[t.name]||'#94a3b8';return '<div class="tier-row" onclick="drillTierMembers(\''+t.name+'\')" style="cursor:pointer"><div class="tier-dot" style="background:'+col+'"></div><div class="tier-row-name">'+t.name+'</div><div class="tier-row-n">'+fmtN(t.count)+'</div><div class="tier-row-pct">'+pct+'%</div></div>';}).join('')+'</div></div>';
+  var donutHtml='<div class="tier-donut-card"><div class="tier-donut-wrap"><canvas id="donut-canvas" width="110" height="110"></canvas><div class="tier-donut-center"><div class="tier-donut-n">'+total2+'</div><div class="tier-donut-lbl">Miembros</div></div></div><div class="tier-donut-list"><div class="tier-donut-title">Distribución actual del programa</div>'+tiers.map(function(t){var pct=total2>0?Math.round((parseInt(t.count)||0)/total2*1000)/10:0;var col=TIER_COLORS[t.name]||'#94a3b8';return '<div class="tier-row" onclick="drillTierMembers(\''+t.name+'\')" style="cursor:pointer"><div class="tier-dot" style="background:'+col+'"></div><div class="tier-row-name">'+t.name+'</div><div class="tier-row-n">'+fmtN(parseInt(t.count)||0)+'</div><div class="tier-row-pct">'+pct+'%</div></div>';}).join('')+'</div></div>';
   document.getElementById('ctx-tier-donut').innerHTML=donutHtml;
   requestAnimationFrame(function(){
     var canvas=document.getElementById('donut-canvas');
     if(!canvas||!window.Chart)return;
-    _donutChart=new Chart(canvas,{type:'doughnut',data:{labels:tiers.map(function(t){return t.name;}),datasets:[{data:tiers.map(function(t){return parseInt(t.count)||0;}),backgroundColor:tiers.map(function(t){return TIER_COLORS[t.name]||'#94a3b8';}),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){var sp=total>0&&!isNaN(ctx.raw)?Math.round(ctx.raw/total*1000)/10:0;return ctx.label+': '+ctx.raw+' ('+sp+'%)';}}}},animation:{duration:600}}});
+    _donutChart=new Chart(canvas,{type:'doughnut',data:{labels:tiers.map(function(t){return t.name;}),datasets:[{data:tiers.map(function(t){return parseInt(t.count)||0;}),backgroundColor:tiers.map(function(t){return TIER_COLORS[t.name]||'#94a3b8';}),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){var sp=total2>0&&!isNaN(ctx.raw)?Math.round(ctx.raw/total2*1000)/10:0;return ctx.label+': '+ctx.raw+' ('+sp+'%)';}}}},animation:{duration:600}}});
   });
 }
 
@@ -1212,7 +1218,9 @@ function renderCtxRankingMini(){
     }).join('');
   }
   var byPct=[].concat(props).sort(function(a,b){return b.pct-a.pct;});
-  var byNv=[].concat(props).sort(function(a,b){return b.nv-a.nv;});
+  props.forEach(function(p){p.captacion=p.hu>0?Math.round(p.nv/p.hu*1000)/10:0;});
+  var byNv=[].concat(props).sort(function(a,b){return b.captacion-a.captacion;});
+  var maxCap=Math.max(5,Math.max.apply(null,props.map(function(p){return p.captacion;}))||5);
   var byOK=[].concat(props).sort(function(a,b){return b.pctOK-a.pctOK;});
   var maxPct=Math.max(25,Math.max.apply(null,props.map(function(p){return p.pct;}))||25);
   var maxNv=Math.max.apply(null,props.map(function(p){return p.nv;}))||1;
@@ -1227,12 +1235,12 @@ function renderCtxRankingMini(){
         function(p){return fmtN(p.cb)+'/'+fmtN(p.ci);})+
     '</div>'+
     '<div class="rank-mini-card">'+
-      '<div class="rmc-title">Nuevos inscritos</div>'+
-      '<div class="rmc-sub">Personas que se unieron en el período</div>'+
-      buildMini(byNv,'nv',maxNv,null,
-        function(){return 'var(--coral)';},
-        function(p){return fmtN(p.nv);},
-        function(p){return p.hu>0?(p.nv/p.hu*100).toFixed(1)+'% captación':'—';})+
+      '<div class="rmc-title">Captación de nuevos</div>'+
+      '<div class="rmc-sub">Nuevos inscritos ÷ total huéspedes · meta ≥5%</div>'+
+      buildMini(byNv,'captacion',maxCap,null,
+        function(p){return p.captacion>=5?'var(--ok)':p.captacion>=2?'#ca8a04':'var(--coral)';},
+        function(p){return p.captacion.toFixed(1)+'%';},
+        function(p){return fmtN(p.nv)+' nuevos de '+fmtN(p.hu)+' huéspedes';})+
     '</div>'+
     '<div class="rank-mini-card">'+
       '<div class="rmc-title">% Beneficios OK</div>'+
