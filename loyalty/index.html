@@ -1560,27 +1560,42 @@ function renderCtxAfiliacionCharts(){
   var propArr=Object.entries(propCount).map(function(e){return{p:e[0],n:e[1]};}).sort(function(a,b){return b.n-a.n;}).slice(0,10);
 
   /* ── Picos por semana ── */
-  var dateCount={};
-  raw.forEach(function(r){
-    var d=r['Joined date']||r.joined_date||r.joinedDate||'';
-    if(!d)return;
-    var parts=d.split(/[-\/]/);
-    var y,m,day;
-    if(parts.length>=3){
-      if(parts[0].length===4){y=parseInt(parts[0]);m=parseInt(parts[1])-1;day=parseInt(parts[2]);}
-      else{y=parseInt(parts[2]);m=parseInt(parts[1])-1;day=parseInt(parts[0]);}
-    } else return;
-    if(isNaN(y)||isNaN(m)||isNaN(day))return;
-    var dt=new Date(y,m,day);
-    var dow=dt.getDay();var diff=dow===0?-6:1-dow;
-    var lunes=new Date(dt);lunes.setDate(dt.getDate()+diff);
-    var ky=lunes.getFullYear();var km=lunes.getMonth()+1;var kd=lunes.getDate();
-    var key=ky+'-'+(km<10?'0':'')+km+'-'+(kd<10?'0':'')+kd;
-    dateCount[key]=(dateCount[key]||0)+1;
-  });
-  var dateArr=Object.entries(dateCount).map(function(e){return{k:e[0],n:e[1]};}).sort(function(a,b){return a.k<b.k?-1:1;});
+ var dateCount={};
+raw.forEach(function(r){
+  var d=r['Joined date']||r['Joined Date']||r['joined date']||r['joined_date']||r['joinedDate']||r['FechaJoined']||'';
+  if(!d||typeof d!=='string')return;
+  d=d.trim();
+  var y,m,day;
 
-  /* ── HTML ── */
+  /* Formato DD/M/YYYY o D/M/YYYY */
+  var slashParts=d.split('/');
+  if(slashParts.length===3){
+    if(slashParts[2].length===4){
+      /* DD/MM/YYYY */
+      day=parseInt(slashParts[0]);m=parseInt(slashParts[1])-1;y=parseInt(slashParts[2]);
+    } else {
+      /* MM/DD/YYYY */
+      m=parseInt(slashParts[0])-1;day=parseInt(slashParts[1]);y=parseInt(slashParts[2]);
+    }
+  } else {
+    /* Formato YYYY-MM-DD */
+    var dashParts=d.split('-');
+    if(dashParts.length===3&&dashParts[0].length===4){
+      y=parseInt(dashParts[0]);m=parseInt(dashParts[1])-1;day=parseInt(dashParts[2]);
+    } else return;
+  }
+
+  if(isNaN(y)||isNaN(m)||isNaN(day)||y<2000||y>2100)return;
+  var dt=new Date(y,m,day);
+  var dow=dt.getDay();var diff=dow===0?-6:1-dow;
+  var lunes=new Date(dt);lunes.setDate(dt.getDate()+diff);
+  var ky=lunes.getFullYear();var km=lunes.getMonth()+1;var kd=lunes.getDate();
+  var key=ky+'-'+(km<10?'0':'')+km+'-'+(kd<10?'0':'')+kd;
+  dateCount[key]=(dateCount[key]||0)+1;
+});
+var dateArr=Object.entries(dateCount).map(function(e){return{k:e[0],n:e[1]};}).sort(function(a,b){return a.k<b.k?-1:1;});
+console.log('Joined dates encontrados:',dateArr.length,'semanas',dateArr.slice(0,3));
+/* ── HTML ── */
   var maxProp=propArr.length?propArr[0].n:1;
   function shortName(n){return n.replace('Viajero ','').replace(' Hostel','').replace(' & Ecohabs','').replace(' & Lake Club','');}
 
