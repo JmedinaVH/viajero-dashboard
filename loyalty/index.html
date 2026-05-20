@@ -559,7 +559,6 @@ var _drawerProp=null,_drawerSCData=[];
 var TIPS={
 'Tendencia':{t:'Tendencia mensual',b:'Tres métricas clave en el tiempo:\n\n1. % Miembros / huéspedes\nDe cada 100 huéspedes del período, cuántos son miembros activos de Viajero Go. Meta: ≥15%.\n\n2. % Beneficios OK\nDe los miembros que se hospedaron (check-in en CB), cuántos recibieron su beneficio correctamente registrado. Meta futura: ≥30%.\n\n3. Tasa de captación\n% de huéspedes totales que se unieron al programa en ese período. Meta futura: ≥5%.\n\nNota: se necesitan al menos 4 períodos para leer tendencias con confianza.'},
 'Nuevos inscritos / huésped':{t:'Nuevos inscritos / huésped',b:'Cuántos de cada 100 huéspedes se unieron por primera vez al programa Viajero Go en este período.\n\nFórmula: (nuevos inscritos ÷ total huéspedes) × 100\n\nNo confundir con penetración — un miembro ya inscrito que vuelve no cuenta aquí.\n\nMeta futura: ≥5%.'},
-'Inscripciones por semana':{t:'¿Cómo se agrupan las semanas?',b:'Cada barra representa una semana completa de lunes a domingo.\n\nSe toma la fecha de inscripción (Joined date) de cada miembro en Akin y se asigna al lunes de esa semana.\n\nEjemplo: si alguien se inscribió el miércoles 14 de mayo, aparece en la barra de la semana 12–18 may.'},
 'Beneficios correctos':{t:'Beneficios correctos en CB',b:'De los miembros que hicieron check-in, cuántos tuvieron su beneficio correctamente registrado en CloudBeds.\n\nFórmula: (registros OK ÷ total check-ins de miembros) × 100\n\nSi este % es bajo, el problema es de ejecución en recepción — el equipo no está marcando el beneficio en CB aunque el huésped sí sea miembro.\n\nMeta futura: ≥30%.'},
 'Penetración loyalty':{t:'¿Qué es la penetración loyalty?',b:'Penetración = check-ins de miembros ÷ check-ins totales.\n\nEjemplo: si entraron 1.000 huéspedes y 150 eran miembros → 15%.\n\nLa meta del 15% significa que 1 de cada 7 huéspedes debería ser miembro activo del programa.\n\nActualmente en 11.1% — faltan ~4 puntos para llegar a la meta.'},
 'Sin beneficio':{t:'Miembros sin beneficio',b:'Número de personas únicas que siendo miembros activos de Viajero Go, se hospedaron y no recibieron su beneficio en CloudBeds.\n\nEstas personas tienen membresía válida — el error fue operativo en recepción.\n\nHaz clic en cualquier propiedad en el tab "Por propiedad" para ver la lista individual y actuar propiedad por propiedad.'},
@@ -821,8 +820,8 @@ html+='<div class="univ-section">'+
   '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;">'+
 
     /* Dona izquierda */
-    '<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rl);padding:12px 14px;">'+
-  '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gris);margin-bottom:8px;">Base del programa</div>'+
+    '<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rl);padding:18px 20px;">'+
+      '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gris);margin-bottom:12px;">Base del programa</div>'+
       '<div style="display:flex;align-items:center;gap:16px;">'+
         '<div style="position:relative;width:90px;height:90px;flex-shrink:0;">'+
           '<canvas id="exec-mini-donut" width="90" height="90"></canvas>'+
@@ -835,59 +834,40 @@ html+='<div class="univ-section">'+
       '</div>'+
     '</div>'+
 
-    '<div style="display:flex;gap:14px;align-items:stretch;">'+
-
-  /* Dona — más ancha porque tiene más info */
-  '<div class="exec-kpi-card" style="flex:1.8;display:flex;flex-direction:column;justify-content:center;min-width:0;">'+
-    '<div class="ekc-label" style="margin-bottom:10px;">Base del programa</div>'+
-    '<div style="display:flex;align-items:center;gap:14px;">'+
-      '<div style="position:relative;width:80px;height:80px;flex-shrink:0;">'+
-        '<canvas id="exec-mini-donut" width="80" height="80"></canvas>'+
-        '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;">'+
-          '<div style="font-size:14px;font-weight:800;line-height:1;color:var(--dark);">'+fmtN(totalMiembros)+'</div>'+
-          '<div style="font-size:7px;color:var(--gris);text-align:center;margin-top:2px;">miembros</div>'+
+    /* Cards derecha */
+    '<div class="exec-kpi-grid" style="margin-bottom:0;">'+
+      '<div class="exec-kpi-card">'+
+        '<div class="ekc-top">'+
+          '<div class="ekc-label">Nuevos afiliados / huésped '+ib('Nuevos inscritos / huésped')+'</div>'+
+          '<div class="ekc-metric"><div class="ekc-val" style="color:'+colNv+'">'+nvRate.toFixed(1)+'</div><div class="ekc-unit" style="color:'+colNv+'">%</div></div>'+
+          '<div class="ekc-desc">'+fmtN(nv)+' nuevos de '+fmtN(hu)+' huéspedes totales</div>'+
         '</div>'+
+        '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta futura</span><span class="ekc-bottom-val" style="color:'+colNv+'">≥5%</span></div>'+
       '</div>'+
-      '<div style="flex:1;min-width:0;">'+tierListHtml+'</div>'+
-    '</div>'+
-  '</div>'+
-
-  /* Card nuevos afiliados */
-  '<div class="exec-kpi-card" style="flex:1;min-width:0;">'+
-    '<div class="ekc-top">'+
-      '<div class="ekc-label">Nuevos afiliados / huésped '+ib('Nuevos inscritos / huésped')+'</div>'+
-      '<div class="ekc-metric"><div class="ekc-val" style="color:'+colNv+'">'+nvRate.toFixed(1)+'</div><div class="ekc-unit" style="color:'+colNv+'">%</div></div>'+
-      '<div class="ekc-desc">'+fmtN(nv)+' nuevos de '+fmtN(hu)+' huéspedes totales</div>'+
-    '</div>'+
-    '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta futura</span><span class="ekc-bottom-val" style="color:'+colNv+'">≥5%</span></div>'+
-  '</div>'+
-
-  /* Card propiedades */
-  '<div class="exec-kpi-card" style="flex:1;min-width:0;">'+
-    '<div class="ekc-top">'+
-      '<div class="ekc-label">Propiedades sobre meta '+ib('Propiedades con penetración ≥15%')+'</div>'+
-      '<div class="ekc-metric"><div class="ekc-val" style="color:'+colProps+'">'+propsOnMeta+'</div><div class="ekc-unit" style="color:var(--gris)"> / '+totalProps+'</div></div>'+
-      '<div class="ekc-desc">'+propsOnMeta+' de '+totalProps+' propiedades superan el 15% de penetración</div>'+
-    '</div>'+
-    '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta</span><span class="ekc-bottom-val" style="color:var(--gris)">≥15% penetración</span></div>'+
-  '</div>'+
-
-  /* Card noches */
-  (nochesData&&nochesData.miembros>0&&!getMsValues('prop').length&&!getMsValues('per').length&&!getMsValues('pais').length?
-    '<div class="exec-kpi-card" style="flex:1;min-width:0;">'+
-      '<div class="ekc-top">'+
-        '<div class="ekc-label">Noches promedio · miembros '+ib('Noches promedio')+'</div>'+
-        '<div class="ekc-metric"><div class="ekc-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div><div class="ekc-unit" style="color:var(--gris)">noches</div></div>'+
-        '<div class="ekc-desc">Métrica histórica acumulada · AKIN</div>'+
+      '<div class="exec-kpi-card">'+
+        '<div class="ekc-top">'+
+          '<div class="ekc-label">Propiedades sobre meta '+ib('Propiedades con penetración ≥15%')+'</div>'+
+          '<div class="ekc-metric"><div class="ekc-val" style="color:'+colProps+'">'+propsOnMeta+'</div><div class="ekc-unit" style="color:var(--gris)"> / '+totalProps+'</div></div>'+
+          '<div class="ekc-desc">'+propsOnMeta+' de '+totalProps+' propiedades superan el 15% de penetración</div>'+
+        '</div>'+
+        '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta</span><span class="ekc-bottom-val" style="color:var(--gris)">≥15% penetración</span></div>'+
       '</div>'+
-      '<div class="ekc-bottom"><span class="ekc-bottom-lbl">No-miembros</span><span class="ekc-bottom-val" style="color:var(--gris)">'+(nochesData.no_miembros>0?nochesData.no_miembros.toFixed(1)+' noches':'—')+'</span></div>'+
-    '</div>'
-  :'')+
+      (nochesData&&nochesData.miembros>0&&!getMsValues('prop').length&&!getMsValues('per').length&&!getMsValues('pais').length?
+        '<div class="exec-kpi-card">'+
+          '<div class="ekc-top">'+
+            '<div class="ekc-label">Noches promedio · miembros '+ib('Noches promedio')+'</div>'+
+            '<div class="ekc-metric"><div class="ekc-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div><div class="ekc-unit" style="color:var(--gris)">noches</div></div>'+
+            '<div class="ekc-desc">Métrica histórica acumulada · AKIN</div>'+
+          '</div>'+
+          '<div class="ekc-bottom"><span class="ekc-bottom-lbl">No-miembros</span><span class="ekc-bottom-val" style="color:var(--gris)">'+(nochesData.no_miembros>0?nochesData.no_miembros.toFixed(1)+' noches':'—')+'</span></div>'+
+        '</div>'
+      :'')+
+    '</div>'+
 
-'</div>'+
-'</div>'+
+  '</div>'+
 '</div>';
 
+/* Render mini donut */
 requestAnimationFrame(function(){
   var c=document.getElementById('exec-mini-donut');
   if(!c||!window.Chart)return;
@@ -1677,7 +1657,8 @@ console.log('Joined dates encontrados:',dateArr.length,'semanas',dateArr.slice(0
   '</div>';
 
   var rightHtml='<div class="rank-mini-card" style="flex:2;min-width:300px;">'+
-'<div class="rmc-title">📅 Inscripciones por semana '+ib('Inscripciones por semana')+'</div>'+    '<div class="rmc-sub">Nuevos miembros por semana según Joined date · Akin — cada barra = lunes de esa semana</div>'+
+    '<div class="rmc-title">📅 Inscripciones por semana</div>'+
+    '<div class="rmc-sub">Nuevos miembros por semana según Joined date · Akin — cada barra = lunes de esa semana</div>'+
     '<div style="position:relative;height:200px;"><canvas id="joined-line-canvas"></canvas></div>'+
   '</div>';
 
