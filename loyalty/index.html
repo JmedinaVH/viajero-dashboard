@@ -1398,8 +1398,7 @@ function renderCtxTierDonut(){
     var grouped={};
     raw.forEach(function(m){
       var tier=m.Viajero||m['Loyalty Level']||m.nivel||m.Tier||'Sin nivel';
-      if(!tier||tier==='Viajero'||tier==='nivel'||tier==='Tier'||tier==='N/A'||tier==='n/a')return;
-      if(!grouped[tier])grouped[tier]={name:tier,count:0,members:[]};
+if(!tier||tier==='nivel'||tier==='Tier'||tier==='N/A'||tier==='n/a')return;      if(!grouped[tier])grouped[tier]={name:tier,count:0,members:[]};
       grouped[tier].count++;
       grouped[tier].members.push({name:m.Name||m.nombre||'',email:m.Email||m.email||'',loyalty_number:m['Loyalty #']||m.loyalty_number||''});
     });
@@ -1552,11 +1551,14 @@ function renderCtxAfiliacionCharts(){
 
   /* ── Ranking por propiedad ── */
   var propCount={};
-  raw.forEach(function(r){
-    var p=r.Propiedad||r.propiedad||'';
-    if(!p)return;
-    propCount[p]=(propCount[p]||0)+1;
-  });
+ var fp=getMsValues('prop');
+var propCount={};
+raw.forEach(function(r){
+  var p=r.Propiedad||r.propiedad||'';
+  if(!p)return;
+  if(fp.length&&!fp.includes(p))return;
+  propCount[p]=(propCount[p]||0)+1;
+});
   var propArr=Object.entries(propCount).map(function(e){return{p:e[0],n:e[1]};}).sort(function(a,b){return b.n-a.n;}).slice(0,10);
 
   /* ── Picos por semana ── */
