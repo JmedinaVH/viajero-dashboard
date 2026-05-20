@@ -821,7 +821,7 @@ html+='<div class="univ-section">'+
 
     /* Dona izquierda */
     '<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rl);padding:18px 20px;">'+
-      '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gris);margin-bottom:12px;">Base del programa · miembros activos</div>'+
+      '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gris);margin-bottom:12px;">Base del programa</div>'+
       '<div style="display:flex;align-items:center;gap:16px;">'+
         '<div style="position:relative;width:90px;height:90px;flex-shrink:0;">'+
           '<canvas id="exec-mini-donut" width="90" height="90"></canvas>'+
@@ -1685,7 +1685,16 @@ minBarLength:4
       },
       options:{
         responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.raw+' nuevos inscritos esa semana';}}}},
+        plugins:{legend:{display:false},tooltip:{callbacks:{
+  title:function(items){
+    var lunes=new Date(items[0].label.replace(/(\d+)-(\d+) \w+/,''));
+    var raw=dateArr[items[0].dataIndex].k;
+    var l=new Date(raw);var d=new Date(l);d.setDate(l.getDate()+6);
+    var meses=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    return l.getDate()+' '+meses[l.getMonth()]+' – '+d.getDate()+' '+meses[d.getMonth()]+' '+d.getFullYear();
+  },
+  label:function(ctx){return '  '+ctx.raw+' nuevos inscritos';}
+}}},
         scales:{
 y:{beginAtZero:true,min:0,grid:{color:'rgba(0,0,0,.04)'},border:{display:false},ticks:{precision:0}},          x:{grid:{display:false},ticks:{maxRotation:45,autoSkip:true,maxTicksLimit:24,font:{size:9}}}
         },
