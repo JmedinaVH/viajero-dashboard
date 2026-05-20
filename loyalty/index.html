@@ -559,6 +559,7 @@ var _drawerProp=null,_drawerSCData=[];
 var TIPS={
 'Tendencia':{t:'Tendencia mensual',b:'Tres métricas clave en el tiempo:\n\n1. % Miembros / huéspedes\nDe cada 100 huéspedes del período, cuántos son miembros activos de Viajero Go. Meta: ≥15%.\n\n2. % Beneficios OK\nDe los miembros que se hospedaron (check-in en CB), cuántos recibieron su beneficio correctamente registrado. Meta futura: ≥30%.\n\n3. Tasa de captación\n% de huéspedes totales que se unieron al programa en ese período. Meta futura: ≥5%.\n\nNota: se necesitan al menos 4 períodos para leer tendencias con confianza.'},
 'Nuevos inscritos / huésped':{t:'Nuevos inscritos / huésped',b:'Cuántos de cada 100 huéspedes se unieron por primera vez al programa Viajero Go en este período.\n\nFórmula: (nuevos inscritos ÷ total huéspedes) × 100\n\nNo confundir con penetración — un miembro ya inscrito que vuelve no cuenta aquí.\n\nMeta futura: ≥5%.'},
+'Inscripciones por semana':{t:'¿Cómo se agrupan las semanas?',b:'Cada barra representa una semana completa de lunes a domingo.\n\nSe toma la fecha de inscripción (Joined date) de cada miembro en Akin y se asigna al lunes de esa semana.\n\nEjemplo: si alguien se inscribió el miércoles 14 de mayo, aparece en la barra de la semana 12–18 may.'},
 'Beneficios correctos':{t:'Beneficios correctos en CB',b:'De los miembros que hicieron check-in, cuántos tuvieron su beneficio correctamente registrado en CloudBeds.\n\nFórmula: (registros OK ÷ total check-ins de miembros) × 100\n\nSi este % es bajo, el problema es de ejecución en recepción — el equipo no está marcando el beneficio en CB aunque el huésped sí sea miembro.\n\nMeta futura: ≥30%.'},
 'Penetración loyalty':{t:'¿Qué es la penetración loyalty?',b:'Penetración = check-ins de miembros ÷ check-ins totales.\n\nEjemplo: si entraron 1.000 huéspedes y 150 eran miembros → 15%.\n\nLa meta del 15% significa que 1 de cada 7 huéspedes debería ser miembro activo del programa.\n\nActualmente en 11.1% — faltan ~4 puntos para llegar a la meta.'},
 'Sin beneficio':{t:'Miembros sin beneficio',b:'Número de personas únicas que siendo miembros activos de Viajero Go, se hospedaron y no recibieron su beneficio en CloudBeds.\n\nEstas personas tienen membresía válida — el error fue operativo en recepción.\n\nHaz clic en cualquier propiedad en el tab "Por propiedad" para ver la lista individual y actuar propiedad por propiedad.'},
@@ -820,8 +821,8 @@ html+='<div class="univ-section">'+
   '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;">'+
 
     /* Dona izquierda */
-    '<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rl);padding:18px 20px;">'+
-      '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gris);margin-bottom:12px;">Base del programa</div>'+
+    '<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rl);padding:12px 14px;">'+
+  '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gris);margin-bottom:8px;">Base del programa</div>'+
       '<div style="display:flex;align-items:center;gap:16px;">'+
         '<div style="position:relative;width:90px;height:90px;flex-shrink:0;">'+
           '<canvas id="exec-mini-donut" width="90" height="90"></canvas>'+
@@ -1657,8 +1658,7 @@ console.log('Joined dates encontrados:',dateArr.length,'semanas',dateArr.slice(0
   '</div>';
 
   var rightHtml='<div class="rank-mini-card" style="flex:2;min-width:300px;">'+
-    '<div class="rmc-title">📅 Inscripciones por semana</div>'+
-    '<div class="rmc-sub">Nuevos miembros por semana según Joined date · Akin — cada barra = lunes de esa semana</div>'+
+'<div class="rmc-title">📅 Inscripciones por semana '+ib('Inscripciones por semana')+'</div>'+    '<div class="rmc-sub">Nuevos miembros por semana según Joined date · Akin — cada barra = lunes de esa semana</div>'+
     '<div style="position:relative;height:200px;"><canvas id="joined-line-canvas"></canvas></div>'+
   '</div>';
 
