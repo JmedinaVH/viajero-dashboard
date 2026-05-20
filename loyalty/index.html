@@ -790,15 +790,52 @@ var loyRes=mixData?mixData.miembros:cb;
 
   var html='';
 
-  /* ── UNIVERSO 1: Adquisición (3 cards) ── */
-  html+='<div class="univ-section">'+
-    '<div class="univ-hdr">'+
-      '<span class="univ-ico">👥</span>'+
-      '<span class="univ-tit">Adquisición</span>'+
-      '<span class="univ-base">base: '+fmtN(hu)+' huéspedes totales</span>'+
+/* ── UNIVERSO 1: Adquisición ── */
+var akinRaw=DATA.akinTiers||[];
+var TIER_COLORS_EXEC={'Tourist':'#f97316','Backpacker':'#ef4444','Explorer':'#8b5cf6','Nomad':'#0ea5e9','Viajero':'#14b8a6'};
+var TIER_ORDER_EXEC=['Tourist','Backpacker','Explorer','Nomad','Viajero'];
+var tierCountExec={};
+akinRaw.forEach(function(r){
+  var t=r.Viajero||r['Loyalty Level']||r.nivel||r.Tier||'';
+  if(!t||t==='nivel'||t==='Tier'||t==='N/A'||t==='n/a')return;
+  tierCountExec[t]=(tierCountExec[t]||0)+1;
+});
+var totalMiembros=Object.values(tierCountExec).reduce(function(a,b){return a+b;},0);
+var tierListHtml=TIER_ORDER_EXEC.filter(function(t){return tierCountExec[t]>0;}).map(function(t){
+  var pct=totalMiembros>0?Math.round(tierCountExec[t]/totalMiembros*1000)/10:0;
+  return '<div style="display:flex;align-items:center;gap:6px;padding:3px 0;">'+
+    '<div style="width:8px;height:8px;border-radius:50%;background:'+TIER_COLORS_EXEC[t]+';flex-shrink:0;"></div>'+
+    '<div style="flex:1;font-size:10px;font-weight:600;color:var(--dark);">'+t+'</div>'+
+    '<div style="font-size:10px;font-weight:700;color:var(--gris);">'+tierCountExec[t]+'</div>'+
+    '<div style="font-size:9px;color:var(--gris);min-width:32px;text-align:right;">'+pct+'%</div>'+
+  '</div>';
+}).join('');
+
+html+='<div class="univ-section">'+
+  '<div class="univ-hdr">'+
+    '<span class="univ-ico">👥</span>'+
+    '<span class="univ-tit">Adquisición</span>'+
+    '<span class="univ-base">base: '+fmtN(hu)+' huéspedes totales</span>'+
+  '</div>'+
+  '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;">'+
+
+    /* Dona izquierda */
+    '<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rl);padding:18px 20px;">'+
+      '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gris);margin-bottom:12px;">Base del programa · miembros activos</div>'+
+      '<div style="display:flex;align-items:center;gap:16px;">'+
+        '<div style="position:relative;width:90px;height:90px;flex-shrink:0;">'+
+          '<canvas id="exec-mini-donut" width="90" height="90"></canvas>'+
+          '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;">'+
+            '<div style="font-size:18px;font-weight:800;line-height:1;color:var(--dark);">'+fmtN(totalMiembros)+'</div>'+
+            '<div style="font-size:8px;color:var(--gris);text-align:center;line-height:1.2;margin-top:2px;">miembros</div>'+
+          '</div>'+
+        '</div>'+
+        '<div style="flex:1;">'+tierListHtml+'</div>'+
+      '</div>'+
     '</div>'+
-    '<div class="exec-kpi-grid" style="margin-bottom:0">'+
-      /* Card 1: Captación */
+
+    /* Cards derecha */
+    '<div class="exec-kpi-grid" style="margin-bottom:0;">'+
       '<div class="exec-kpi-card">'+
         '<div class="ekc-top">'+
           '<div class="ekc-label">Nuevos afiliados / huésped '+ib('Nuevos inscritos / huésped')+'</div>'+
@@ -807,7 +844,6 @@ var loyRes=mixData?mixData.miembros:cb;
         '</div>'+
         '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta futura</span><span class="ekc-bottom-val" style="color:'+colNv+'">≥5%</span></div>'+
       '</div>'+
-      /* Card 2: Propiedades sobre meta */
       '<div class="exec-kpi-card">'+
         '<div class="ekc-top">'+
           '<div class="ekc-label">Propiedades sobre meta '+ib('Propiedades con penetración ≥15%')+'</div>'+
@@ -816,11 +852,10 @@ var loyRes=mixData?mixData.miembros:cb;
         '</div>'+
         '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta</span><span class="ekc-bottom-val" style="color:var(--gris)">≥15% penetración</span></div>'+
       '</div>'+
-      /* Card 3: Noches (solo si hay dato) */
-      (nochesData&&nochesData.miembros>0?
+      (nochesData&&nochesData.miembros>0&&!getMsValues('prop').length&&!getMsValues('per').length&&!getMsValues('pais').length?
         '<div class="exec-kpi-card">'+
           '<div class="ekc-top">'+
-            '<div class="ekc-label">Noches promedio por reserva · miembros '+ib('Noches promedio')+'</div>'+
+            '<div class="ekc-label">Noches promedio · miembros '+ib('Noches promedio')+'</div>'+
             '<div class="ekc-metric"><div class="ekc-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div><div class="ekc-unit" style="color:var(--gris)">noches</div></div>'+
             '<div class="ekc-desc">Métrica histórica acumulada · AKIN</div>'+
           '</div>'+
@@ -828,7 +863,26 @@ var loyRes=mixData?mixData.miembros:cb;
         '</div>'
       :'')+
     '</div>'+
-  '</div>';
+
+  '</div>'+
+'</div>';
+
+/* Render mini donut */
+requestAnimationFrame(function(){
+  var c=document.getElementById('exec-mini-donut');
+  if(!c||!window.Chart)return;
+  if(c._chart){c._chart.destroy();}
+  var tiers=TIER_ORDER_EXEC.filter(function(t){return tierCountExec[t]>0;});
+  c._chart=new Chart(c,{type:'doughnut',data:{
+    labels:tiers,
+    datasets:[{data:tiers.map(function(t){return tierCountExec[t];}),
+      backgroundColor:tiers.map(function(t){return TIER_COLORS_EXEC[t];}),
+      borderWidth:2,borderColor:'#fff',hoverOffset:3}]
+  },options:{cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){
+    var sp=totalMiembros>0?Math.round(ctx.raw/totalMiembros*1000)/10:0;
+    return ctx.label+': '+ctx.raw+' ('+sp+'%)';
+  }}}},animation:{duration:500}}});
+});
 
   /* ── UNIVERSO 2: Penetración — ELIMINADO (ya está en el banner hero) ── */
 
