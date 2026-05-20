@@ -817,56 +817,52 @@ html+='<div class="univ-section">'+
     '<span class="univ-tit">Adquisición</span>'+
     '<span class="univ-base">base: '+fmtN(hu)+' huéspedes totales</span>'+
   '</div>'+
-  '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">'+
+  '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;">'+
 
-    /* Card dona — misma clase que las otras */
-    '<div class="exec-kpi-card">'+
-      '<div class="ekc-top">'+
-        '<div class="ekc-label">Base del programa</div>'+
-        '<div style="display:flex;align-items:center;gap:12px;margin-top:4px;">'+
-          '<div style="position:relative;width:72px;height:72px;flex-shrink:0;">'+
-            '<canvas id="exec-mini-donut" width="72" height="72"></canvas>'+
-            '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;">'+
-              '<div style="font-size:13px;font-weight:800;line-height:1;color:var(--dark);">'+fmtN(totalMiembros)+'</div>'+
-              '<div style="font-size:7px;color:var(--gris);text-align:center;margin-top:1px;">miembros</div>'+
-            '</div>'+
+    /* Dona izquierda */
+    '<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rl);padding:18px 20px;">'+
+      '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gris);margin-bottom:12px;">Base del programa</div>'+
+      '<div style="display:flex;align-items:center;gap:16px;">'+
+        '<div style="position:relative;width:90px;height:90px;flex-shrink:0;">'+
+          '<canvas id="exec-mini-donut" width="90" height="90"></canvas>'+
+          '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;">'+
+            '<div style="font-size:18px;font-weight:800;line-height:1;color:var(--dark);">'+fmtN(totalMiembros)+'</div>'+
+            '<div style="font-size:8px;color:var(--gris);text-align:center;line-height:1.2;margin-top:2px;">miembros</div>'+
           '</div>'+
-          '<div style="flex:1;min-width:0;">'+tierListHtml+'</div>'+
         '</div>'+
+        '<div style="flex:1;">'+tierListHtml+'</div>'+
       '</div>'+
     '</div>'+
 
-    /* Card nuevos afiliados */
-    '<div class="exec-kpi-card">'+
-      '<div class="ekc-top">'+
-        '<div class="ekc-label">Nuevos afiliados / huésped '+ib('Nuevos inscritos / huésped')+'</div>'+
-        '<div class="ekc-metric"><div class="ekc-val" style="color:'+colNv+'">'+nvRate.toFixed(1)+'</div><div class="ekc-unit" style="color:'+colNv+'">%</div></div>'+
-        '<div class="ekc-desc">'+fmtN(nv)+' nuevos de '+fmtN(hu)+' huéspedes totales</div>'+
-      '</div>'+
-      '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta futura</span><span class="ekc-bottom-val" style="color:'+colNv+'">≥5%</span></div>'+
-    '</div>'+
-
-    /* Card propiedades */
-    '<div class="exec-kpi-card">'+
-      '<div class="ekc-top">'+
-        '<div class="ekc-label">Propiedades sobre meta '+ib('Propiedades con penetración ≥15%')+'</div>'+
-        '<div class="ekc-metric"><div class="ekc-val" style="color:'+colProps+'">'+propsOnMeta+'</div><div class="ekc-unit" style="color:var(--gris)"> / '+totalProps+'</div></div>'+
-        '<div class="ekc-desc">'+propsOnMeta+' de '+totalProps+' propiedades superan el 15% de penetración</div>'+
-      '</div>'+
-      '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta</span><span class="ekc-bottom-val" style="color:var(--gris)">≥15% penetración</span></div>'+
-    '</div>'+
-
-    /* Card noches */
-    (nochesData&&nochesData.miembros>0&&!getMsValues('prop').length&&!getMsValues('per').length&&!getMsValues('pais').length?
+    /* Cards derecha */
+    '<div class="exec-kpi-grid" style="margin-bottom:0;">'+
       '<div class="exec-kpi-card">'+
         '<div class="ekc-top">'+
-          '<div class="ekc-label">Noches promedio · miembros '+ib('Noches promedio')+'</div>'+
-          '<div class="ekc-metric"><div class="ekc-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div><div class="ekc-unit" style="color:var(--gris)">noches</div></div>'+
-          '<div class="ekc-desc">Métrica histórica acumulada · AKIN</div>'+
+          '<div class="ekc-label">Nuevos afiliados / huésped '+ib('Nuevos inscritos / huésped')+'</div>'+
+          '<div class="ekc-metric"><div class="ekc-val" style="color:'+colNv+'">'+nvRate.toFixed(1)+'</div><div class="ekc-unit" style="color:'+colNv+'">%</div></div>'+
+          '<div class="ekc-desc">'+fmtN(nv)+' nuevos de '+fmtN(hu)+' huéspedes totales</div>'+
         '</div>'+
-        '<div class="ekc-bottom"><span class="ekc-bottom-lbl">No-miembros</span><span class="ekc-bottom-val" style="color:var(--gris)">'+(nochesData.no_miembros>0?nochesData.no_miembros.toFixed(1)+' noches':'—')+'</span></div>'+
-      '</div>'
-    :'')+
+        '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta futura</span><span class="ekc-bottom-val" style="color:'+colNv+'">≥5%</span></div>'+
+      '</div>'+
+      '<div class="exec-kpi-card">'+
+        '<div class="ekc-top">'+
+          '<div class="ekc-label">Propiedades sobre meta '+ib('Propiedades con penetración ≥15%')+'</div>'+
+          '<div class="ekc-metric"><div class="ekc-val" style="color:'+colProps+'">'+propsOnMeta+'</div><div class="ekc-unit" style="color:var(--gris)"> / '+totalProps+'</div></div>'+
+          '<div class="ekc-desc">'+propsOnMeta+' de '+totalProps+' propiedades superan el 15% de penetración</div>'+
+        '</div>'+
+        '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta</span><span class="ekc-bottom-val" style="color:var(--gris)">≥15% penetración</span></div>'+
+      '</div>'+
+      (nochesData&&nochesData.miembros>0&&!getMsValues('prop').length&&!getMsValues('per').length&&!getMsValues('pais').length?
+        '<div class="exec-kpi-card">'+
+          '<div class="ekc-top">'+
+            '<div class="ekc-label">Noches promedio · miembros '+ib('Noches promedio')+'</div>'+
+            '<div class="ekc-metric"><div class="ekc-val" style="color:var(--purple)">'+nochesData.miembros.toFixed(1)+'</div><div class="ekc-unit" style="color:var(--gris)">noches</div></div>'+
+            '<div class="ekc-desc">Métrica histórica acumulada · AKIN</div>'+
+          '</div>'+
+          '<div class="ekc-bottom"><span class="ekc-bottom-lbl">No-miembros</span><span class="ekc-bottom-val" style="color:var(--gris)">'+(nochesData.no_miembros>0?nochesData.no_miembros.toFixed(1)+' noches':'—')+'</span></div>'+
+        '</div>'
+      :'')+
+    '</div>'+
 
   '</div>'+
 '</div>';
