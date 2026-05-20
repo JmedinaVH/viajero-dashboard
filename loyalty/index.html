@@ -1616,10 +1616,13 @@ raw.forEach(function(r){
   var propArr=Object.entries(propCount).map(function(e){return{p:e[0],n:e[1]};}).sort(function(a,b){return b.n-a.n;}).slice(0,10);
 
   /* ── Picos por semana ── */
+var fp=getMsValues('prop');
 var dateCount={};
 raw.forEach(function(r){
   var d=r['Joined date'];
   if(!d)return;
+  var p=r.Propiedad||r.propiedad||'';
+  if(fp.length&&!fp.includes(p))return;
   var dt;
   if(d instanceof Date){
     dt=d;
