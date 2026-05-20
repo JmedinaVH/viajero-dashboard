@@ -1620,15 +1620,15 @@ console.log('Joined dates encontrados:',dateArr.length,'semanas',dateArr.slice(0
             return d.n>=maxN*0.8?'rgba(240,75,36,.85)':d.n>=maxN*0.4?'rgba(234,179,8,.75)':'rgba(3,105,161,.65)';
           }),
           borderRadius:4,
-          barPercentage:0.75
+barPercentage:0.75,
+minBarLength:4
         }]
       },
       options:{
         responsive:true,maintainAspectRatio:false,
         plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.raw+' nuevos inscritos esa semana';}}}},
         scales:{
-          y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.04)'},border:{display:false},ticks:{stepSize:1}},
-          x:{grid:{display:false},ticks:{maxRotation:45,autoSkip:true,maxTicksLimit:24,font:{size:9}}}
+y:{beginAtZero:true,min:0,grid:{color:'rgba(0,0,0,.04)'},border:{display:false},ticks:{precision:0}},          x:{grid:{display:false},ticks:{maxRotation:45,autoSkip:true,maxTicksLimit:24,font:{size:9}}}
         },
         animation:{duration:500}
       }
