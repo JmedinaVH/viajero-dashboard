@@ -537,6 +537,10 @@ tbody tr:hover td{background:var(--cream);}
     <div id="ctx-ranking"></div>
   </div>
   <div class="sec">
+  <div class="sec-hdr"><h2>Afiliación histórica</h2><div class="linea"></div></div>
+  <div id="ctx-afiliacion-charts"></div>
+</div>
+  <div class="sec">
     <div class="sec-hdr"><h2>Calidad de ejecución por nivel <i class="ib" onclick="openTip('Detalle por nivel')">i</i></h2><div class="linea"></div></div>
     <div style="font-size:10px;color:var(--gris);margin-top:4px;">Base: reservas loyalty evaluadas por nivel del programa</div>
     <div class="tiers-g" id="ctx-tiers-g"></div>
@@ -1382,6 +1386,7 @@ function renderCtxTab(){
   renderCtxTierDonut();
   renderCtxRankingMini();
   renderCtxTiersDetail(filtrar(DATA.afiliados||[]),filtrar(DATA.tiersDetalle||[]));
+  renderCtxAfiliacionCharts();
   _ctxRendered=true;
 }
 
@@ -1540,7 +1545,97 @@ function renderCtxTiersDetail(afs,mb){
   '<div class="tiers-g">'+cards+'</div>'+
   '</div>';
   }
+function renderCtxAfiliacionCharts(){
+  var el=document.getElementById('ctx-afiliacion-charts');if(!el)return;
+  var raw=DATA.akinTiers||[];
+  if(!raw.length){el.innerHTML='<div class="empty">Sin datos. Verifica que <code>akinTiers</code> tenga <code>Propiedad</code> y <code>Joined date</code>.</div>';return;}
 
+  /* ── Ranking por propiedad ── */
+  var propCount={};
+  raw.forEach(function(r){
+    var p=r.Propiedad||r.propiedad||'';
+    if(!p)return;
+    propCount[p]=(propCount[p]||0)+1;
+  });
+  var propArr=Object.entries(propCount).map(function(e){return{p:e[0],n:e[1]};}).sort(function(a,b){return b.n-a.n;}).slice(0,10);
+
+  /* ── Picos por semana ── */
+  var dateCount={};
+  raw.forEach(function(r){
+    var d=r['Joined date']||r.joined_date||r.joinedDate||'';
+    if(!d)return;
+    var parts=d.split(/[-\/]/);
+    var y,m,day;
+    if(parts.length>=3){
+      if(parts[0].length===4){y=parseInt(parts[0]);m=parseInt(parts[1])-1;day=parseInt(parts[2]);}
+      else{y=parseInt(parts[2]);m=parseInt(parts[1])-1;day=parseInt(parts[0]);}
+    } else return;
+    if(isNaN(y)||isNaN(m)||isNaN(day))return;
+    var dt=new Date(y,m,day);
+    var dow=dt.getDay();var diff=dow===0?-6:1-dow;
+    var lunes=new Date(dt);lunes.setDate(dt.getDate()+diff);
+    var ky=lunes.getFullYear();var km=lunes.getMonth()+1;var kd=lunes.getDate();
+    var key=ky+'-'+(km<10?'0':'')+km+'-'+(kd<10?'0':'')+kd;
+    dateCount[key]=(dateCount[key]||0)+1;
+  });
+  var dateArr=Object.entries(dateCount).map(function(e){return{k:e[0],n:e[1]};}).sort(function(a,b){return a.k<b.k?-1:1;});
+
+  /* ── HTML ── */
+  var maxProp=propArr.length?propArr[0].n:1;
+  function shortName(n){return n.replace('Viajero ','').replace(' Hostel','').replace(' & Ecohabs','').replace(' & Lake Club','');}
+
+  var leftHtml='<div class="rank-mini-card" style="flex:1;min-width:260px;">'+
+    '<div class="rmc-title">🏆 Propiedades con más afiliados</div>'+
+    '<div class="rmc-sub">Total miembros inscritos por propiedad · sin importar volumen de huéspedes</div>'+
+    propArr.map(function(p){
+      var w=Math.round(p.n/maxProp*100);
+      var col=p.n>=200?'var(--ok)':p.n>=100?'#ca8a04':'var(--coral)';
+      return '<div class="rmc-bar-row">'+
+        '<div class="rmc-name" title="'+p.p+'">'+shortName(p.p)+'</div>'+
+        '<div class="rmc-bar-track"><div class="rmc-bar-fill" style="width:'+w+'%;background:'+col+'"></div></div>'+
+        '<div class="rmc-val" style="color:'+col+'">'+p.n+'</div>'+
+      '</div>';
+    }).join('')+
+  '</div>';
+
+  var rightHtml='<div class="rank-mini-card" style="flex:2;min-width:300px;">'+
+    '<div class="rmc-title">📅 Inscripciones por semana</div>'+
+    '<div class="rmc-sub">Nuevos miembros por semana según Joined date · Akin — cada barra = lunes de esa semana</div>'+
+    '<div style="position:relative;height:200px;"><canvas id="joined-line-canvas"></canvas></div>'+
+  '</div>';
+
+  el.innerHTML='<div style="display:flex;gap:14px;flex-wrap:wrap;">'+leftHtml+rightHtml+'</div>';
+
+  requestAnimationFrame(function(){
+    var canvas=document.getElementById('joined-line-canvas');
+    if(!canvas||!window.Chart||!dateArr.length)return;
+    if(canvas._chart){canvas._chart.destroy();}
+    var maxN=Math.max.apply(null,dateArr.map(function(d){return d.n;}));
+    canvas._chart=new Chart(canvas,{
+      type:'bar',
+      data:{
+        labels:dateArr.map(function(d){return d.k;}),
+        datasets:[{
+          data:dateArr.map(function(d){return d.n;}),
+          backgroundColor:dateArr.map(function(d){
+            return d.n>=maxN*0.8?'rgba(240,75,36,.85)':d.n>=maxN*0.4?'rgba(234,179,8,.75)':'rgba(3,105,161,.65)';
+          }),
+          borderRadius:4,
+          barPercentage:0.75
+        }]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.raw+' nuevos inscritos esa semana';}}}},
+        scales:{
+          y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.04)'},border:{display:false},ticks:{stepSize:1}},
+          x:{grid:{display:false},ticks:{maxRotation:45,autoSkip:true,maxTicksLimit:24,font:{size:9}}}
+        },
+        animation:{duration:500}
+      }
+    });
+  });
+}
 function renderDetailSheetBtn(){
   var el=document.getElementById('detail-sheet-wrapper');if(!el)return;
   var url=DATA.sheetUrl||'';
