@@ -16,6 +16,7 @@
 --err:#dc2626;--err-bg:#fee2e2;
 --blue:#0369a1;--blue-bg:#e0f2fe;
 --purple:#7c3aed;--purple-bg:#ede9fe;
+--amber:#d97706;--amber-bg:#fef3c7;
 --surface:#fff;
 --r:14px;--rl:18px;
 --sh:0 2px 8px rgba(30,16,10,.06),0 4px 20px rgba(30,16,10,.07);
@@ -27,7 +28,7 @@ body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);f
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-thumb{background:var(--cd);border-radius:9px;}
 
-/* HEADER — idéntico a Loyalty */
+/* HEADER */
 header{background:var(--dark);padding:0 36px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.25);}
 .h-left{display:flex;align-items:center;gap:14px;}
 .h-logo{height:34px;object-fit:contain;}
@@ -73,16 +74,40 @@ header{background:var(--dark);padding:0 36px;display:flex;align-items:center;jus
 .tab-content{display:none;}
 .tab-content.active{display:block;}
 
-main{max-width:1280px;margin:0 auto;padding:26px 36px 80px;}
+main{max-width:1300px;margin:0 auto;padding:26px 36px 80px;}
 
-/* ALERT */
-.alert-banner{display:flex;align-items:flex-start;gap:12px;border-radius:var(--rl);padding:14px 18px;margin-bottom:16px;}
-.alert-banner.warn{background:#fff7ed;border:1.5px solid #fed7aa;}
-.alert-banner.red{background:var(--err-bg);border:1.5px solid #fca5a5;}
-.alert-ico{font-size:20px;flex-shrink:0;margin-top:1px;}
-.alert-text{flex:1;}
-.alert-title{font-size:13px;font-weight:800;color:var(--dark);margin-bottom:3px;}
-.alert-desc{font-size:11px;color:var(--gris);line-height:1.6;}
+/* ALERT COLLAPSED */
+.alert-collapsed{background:#fff7ed;border:1.5px solid #fed7aa;border-radius:var(--rl);padding:12px 16px;margin-bottom:16px;cursor:pointer;user-select:none;}
+.alert-collapsed-hdr{display:flex;align-items:center;gap:10px;}
+.alert-collapsed-ico{font-size:18px;}
+.alert-collapsed-txt{flex:1;font-size:13px;font-weight:700;color:var(--dark);}
+.alert-collapsed-sub{font-size:11px;color:var(--warn);font-weight:600;}
+.alert-collapsed-chev{font-size:11px;color:var(--gris);transition:.2s;}
+.alert-collapsed.open .alert-collapsed-chev{transform:rotate(180deg);}
+.alert-items{display:none;margin-top:10px;display:none;flex-direction:column;gap:6px;}
+.alert-collapsed.open .alert-items{display:flex;}
+.alert-item{background:#fff;border:1px solid #fed7aa;border-radius:9px;padding:9px 13px;font-size:11px;color:var(--gris);}
+.alert-item b{color:var(--dark);}
+
+/* HERO */
+.hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+.hero-kpi{background:var(--surface);border-radius:var(--rl);padding:20px 18px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .18s,transform .18s;}
+.hero-kpi:hover{box-shadow:var(--shm);transform:translateY(-2px);}
+.hero-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--hc,var(--green));border-radius:var(--rl) var(--rl) 0 0;}
+.hero-glow{position:absolute;bottom:-18px;right:-18px;width:72px;height:72px;border-radius:50%;background:var(--hc,var(--green));opacity:.06;}
+.hero-label{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;}
+.hero-val{font-size:32px;font-weight:800;line-height:1;color:var(--hc,var(--dark));margin-bottom:5px;}
+.hero-sub{font-size:11px;color:var(--gris);line-height:1.4;}
+.hero-delta{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;margin-top:5px;padding:2px 8px;border-radius:99px;}
+.hero-delta.up{background:#dcfce7;color:#15803d;}
+.hero-delta.down{background:var(--err-bg);color:var(--err);}
+.hero-delta.neutral{background:var(--cm);color:var(--gris);}
+
+/* SEC */
+.sec{margin-bottom:24px;}
+.sec-hdr{display:flex;align-items:center;gap:9px;margin-bottom:13px;}
+.sec-hdr h2{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}
+.sec-hdr .linea{flex:1;height:1px;background:var(--border);}
 
 /* SYNTHESIS */
 .synthesis{background:var(--dark);border-radius:var(--rl);padding:20px 24px;margin-bottom:18px;position:relative;overflow:hidden;}
@@ -94,6 +119,97 @@ main{max-width:1280px;margin:0 auto;padding:26px 36px 80px;}
 .syn-item b{color:#fff;font-weight:700;}
 .syn-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px;}
 .syn-dot.ok{background:#4ade80;}.syn-dot.warn{background:#fbbf24;}.syn-dot.err{background:#f87171;}.syn-dot.info{background:#60a5fa;}
+
+/* REVENUE SPLIT BANNER */
+.rev-split-banner{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
+.rev-split-card{border-radius:var(--rl);padding:20px 22px;border:1.5px solid;position:relative;overflow:hidden;}
+.rev-split-card.potencial{background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);border-color:#bfdbfe;}
+.rev-split-card.real{background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);border-color:#a7f3d0;}
+.rev-split-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
+.rev-split-card.potencial .rev-split-label{color:#1d4ed8;}
+.rev-split-card.real .rev-split-label{color:var(--ok);}
+.rev-split-amount{font-size:30px;font-weight:800;line-height:1;margin-bottom:5px;}
+.rev-split-card.potencial .rev-split-amount{color:#1e40af;}
+.rev-split-card.real .rev-split-amount{color:var(--ok);}
+.rev-split-sub{font-size:11px;color:var(--gris);line-height:1.6;}
+.rev-split-tag{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;padding:2px 9px;border-radius:99px;margin-bottom:8px;}
+.rev-split-card.potencial .rev-split-tag{background:#dbeafe;color:#1d4ed8;}
+.rev-split-card.real .rev-split-tag{background:var(--green-soft);color:var(--ok);}
+.rev-split-note{font-size:10px;color:var(--gris);margin-top:8px;padding:6px 9px;background:rgba(0,0,0,.04);border-radius:7px;line-height:1.6;}
+
+/* CHART AREA */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
+.chart-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:20px 22px;}
+.chart-title{font-size:12px;font-weight:800;color:var(--dark);margin-bottom:3px;}
+.chart-sub{font-size:10px;color:var(--gris);margin-bottom:16px;}
+.chart-wrap{position:relative;}
+canvas{display:block;width:100%!important;}
+
+/* LEADERBOARD */
+.leaderboard{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
+.lb-table{width:100%;border-collapse:collapse;}
+.lb-table thead th{background:var(--cm);color:var(--mid);padding:9px 14px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;white-space:nowrap;cursor:pointer;user-select:none;}
+.lb-table thead th:hover{background:var(--cd);}
+.lb-table thead th.sorted{color:var(--green);}
+.lb-table tbody td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.lb-table tbody tr:last-child td{border-bottom:none;}
+.lb-table tbody tr:hover td{background:var(--cream);}
+.lb-rank{font-size:11px;font-weight:800;color:var(--gris);min-width:22px;}
+.lb-rank.gold{color:#d97706;}
+.lb-rank.silver{color:#6b7280;}
+.lb-rank.bronze{color:#92400e;}
+.lb-prop{font-size:13px;font-weight:800;color:var(--dark);}
+.lb-prop-sub{font-size:10px;color:var(--gris);}
+.lb-bar-wrap{display:flex;align-items:center;gap:8px;}
+.lb-bar-track{flex:1;min-width:80px;height:7px;background:var(--cd);border-radius:99px;overflow:hidden;}
+.lb-bar-fill{height:100%;border-radius:99px;transition:width .7s;}
+.lb-pct{font-size:13px;font-weight:800;min-width:44px;text-align:right;}
+.lb-rev{font-size:12px;font-weight:700;color:var(--dark);}
+.lb-badge-wrap{display:flex;gap:4px;flex-wrap:wrap;}
+
+/* GAUGE TABLE */
+.gauge-table-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
+.gauge-table{width:100%;border-collapse:collapse;font-size:12px;}
+.gauge-table thead th{background:var(--cm);color:var(--mid);padding:9px 14px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;white-space:nowrap;cursor:pointer;user-select:none;transition:.14s;}
+.gauge-table thead th:hover{background:var(--cd);color:var(--dark);}
+.gauge-table thead th.sorted{color:var(--green);}
+.gauge-table thead th .sort-ico{margin-left:4px;opacity:.4;font-size:8px;}
+.gauge-table thead th.sorted .sort-ico{opacity:1;}
+.gauge-table tbody td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.gauge-table tbody tr:last-child td{border-bottom:none;}
+.gauge-table tbody tr:hover td{background:var(--cream);}
+.gt-prop{font-size:12px;font-weight:800;color:var(--dark);}
+.gt-pct{font-size:13px;font-weight:800;min-width:48px;text-align:right;}
+.gt-denom{font-size:10px;color:var(--gris);}
+.gt-cum{font-size:12px;font-weight:700;color:var(--dark);}
+
+/* TIPO CARDS */
+.tipo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.tipo-card{border-radius:11px;padding:14px;border:1.5px solid var(--border);background:var(--cream);}
+.tipo-card.desayuno{border-color:#a7f3d0;background:#f0fdf9;}
+.tipo-card.upgrade{border-color:#bfdbfe;background:#eff6ff;}
+.tipo-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px;}
+.tipo-name{font-size:12px;font-weight:800;display:flex;align-items:center;gap:5px;}
+.tipo-conv-wrap{text-align:right;}
+.tipo-conv{font-size:21px;font-weight:800;line-height:1;}
+.tipo-conv.ok{color:var(--ok);}.tipo-conv.warn{color:#854d0e;}.tipo-conv.err{color:var(--err);}
+.tipo-conv-lbl{font-size:8px;color:var(--gris);margin-top:1px;}
+.tipo-how{font-size:9px;font-weight:600;color:var(--gris);background:rgba(0,0,0,.04);border-radius:6px;padding:4px 8px;margin-bottom:8px;line-height:1.55;}
+.tipo-how strong{color:var(--dark);font-weight:800;}
+.tipo-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:10px;color:var(--gris);}
+.tipo-bar-track{flex:1;height:6px;background:var(--cd);border-radius:99px;overflow:hidden;}
+.tipo-bar-fill{height:100%;border-radius:99px;transition:width .6s;}
+.tipo-rev{font-size:11px;color:var(--gris);margin-top:5px;}
+
+/* TREND */
+.trend-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
+.trend-table{width:100%;border-collapse:collapse;font-size:12px;}
+.trend-table thead th{background:var(--cm);color:var(--mid);padding:9px 13px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;}
+.trend-table tbody td{padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.trend-table tbody tr:last-child td{border-bottom:none;}
+.trend-table tbody tr:hover td{background:var(--cream);}
+.delta-up{color:var(--ok);font-weight:700;font-size:11px;}
+.delta-down{color:var(--err);font-weight:700;font-size:11px;}
 
 /* CONCLUSIONES */
 .conclusiones{background:linear-gradient(135deg,#0c3326 0%,#155234 100%);border-radius:var(--rl);padding:20px 24px;margin-bottom:22px;}
@@ -119,66 +235,35 @@ main{max-width:1280px;margin:0 auto;padding:26px 36px 80px;}
 .metodo-desc{font-size:10px;color:var(--gris);line-height:1.65;}
 .metodo-desc b{color:var(--dark);}
 .metodo-nota{font-size:9px;color:var(--gris);margin-top:9px;padding:6px 10px;background:var(--cm);border-radius:7px;line-height:1.6;}
-@media(max-width:640px){.metodo-grid{grid-template-columns:1fr;}}
 
-/* HERO */
-.hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
-.hero-kpi{background:var(--surface);border-radius:var(--rl);padding:20px 18px;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:box-shadow .18s,transform .18s;}
-.hero-kpi:hover{box-shadow:var(--shm);transform:translateY(-2px);}
-.hero-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--hc,var(--green));border-radius:var(--rl) var(--rl) 0 0;}
-.hero-glow{position:absolute;bottom:-18px;right:-18px;width:72px;height:72px;border-radius:50%;background:var(--hc,var(--green));opacity:.06;}
-.hero-label{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;}
-.hero-val{font-size:32px;font-weight:800;line-height:1;color:var(--hc,var(--dark));margin-bottom:5px;}
-.hero-sub{font-size:11px;color:var(--gris);line-height:1.4;}
-.hero-delta{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;margin-top:5px;padding:2px 8px;border-radius:99px;}
-.hero-delta.up{background:#dcfce7;color:#15803d;}
-.hero-delta.down{background:var(--err-bg);color:var(--err);}
-.hero-delta.neutral{background:var(--cm);color:var(--gris);}
+/* CANAL */
+.canal-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
+.canal-table{width:100%;border-collapse:collapse;font-size:12px;}
+.canal-table th{background:var(--cm);color:var(--mid);padding:9px 14px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;}
+.canal-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.canal-table tr:last-child td{border-bottom:none;}
+.canal-table tr:hover td{background:var(--cream);}
+.bar-duo{height:7px;background:var(--cd);border-radius:99px;overflow:hidden;display:flex;}
+.canal-detail-row td{padding:0!important;}
 
-/* SEC */
-.sec{margin-bottom:24px;}
-.sec-hdr{display:flex;align-items:center;gap:9px;margin-bottom:13px;}
-.sec-hdr h2{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}
-.sec-hdr .linea{flex:1;height:1px;background:var(--border);}
-
-/* GAUGE TABLE — Conversión vs hostal (escala para 30+ hosteles) */
-.gauge-table-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
-.gauge-table{width:100%;border-collapse:collapse;font-size:12px;}
-.gauge-table thead th{background:var(--cm);color:var(--mid);padding:9px 14px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;white-space:nowrap;cursor:pointer;user-select:none;transition:.14s;}
-.gauge-table thead th:hover{background:var(--cd);color:var(--dark);}
-.gauge-table thead th.sorted{color:var(--green);}
-.gauge-table thead th .sort-ico{margin-left:4px;opacity:.4;font-size:8px;}
-.gauge-table thead th.sorted .sort-ico{opacity:1;}
-.gauge-table tbody td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
-.gauge-table tbody tr:last-child td{border-bottom:none;}
-.gauge-table tbody tr:hover td{background:var(--cream);}
-.gt-prop{font-size:12px;font-weight:800;color:var(--dark);}
-.gt-prop-sub{font-size:10px;color:var(--gris);font-weight:500;margin-top:1px;}
-.gt-bar-wrap{display:flex;align-items:center;gap:8px;}
-.gt-bar-track{flex:1;min-width:80px;height:7px;background:var(--cd);border-radius:99px;overflow:hidden;}
-.gt-bar-fill{height:100%;border-radius:99px;transition:width .6s;}
-.gt-pct{font-size:13px;font-weight:800;min-width:48px;text-align:right;}
-.gt-denom{font-size:10px;color:var(--gris);}
-.gt-cum{font-size:12px;font-weight:700;color:var(--dark);}
-.gt-tipo-ico{font-size:13px;}
-
-/* REVENUE */
-.rev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;}
-.rev-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:18px 16px;}
-.rev-amount{font-size:26px;font-weight:800;color:var(--green);margin:6px 0 4px;}
-.rev-label{font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;}
-.rev-sub{font-size:11px;color:var(--gris);}
-.rev-ticket{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;background:var(--green-soft);color:var(--ok);padding:2px 8px;border-radius:99px;margin-top:6px;}
-
-/* TREND */
-.trend-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
-.trend-table{width:100%;border-collapse:collapse;font-size:12px;}
-.trend-table thead th{background:var(--cm);color:var(--mid);padding:9px 13px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;}
-.trend-table tbody td{padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:middle;}
-.trend-table tbody tr:last-child td{border-bottom:none;}
-.trend-table tbody tr:hover td{background:var(--cream);}
-.delta-up{color:var(--ok);font-weight:700;font-size:11px;}
-.delta-down{color:var(--err);font-weight:700;font-size:11px;}
+/* TIMING */
+.timing-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:22px 24px;}
+.t-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.t-title{font-size:14px;font-weight:800;color:var(--dark);}
+.t-subtitle{font-size:11px;color:var(--gris);margin-top:3px;}
+.t-best-badge{background:var(--green-soft);color:var(--ok);font-size:10px;font-weight:700;padding:4px 12px;border-radius:99px;border:1px solid var(--green-mid);white-space:nowrap;}
+.t-slot{margin-bottom:10px;}
+.t-slot-lbl{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;}
+.t-slot-name{font-size:12px;font-weight:800;color:var(--dark);min-width:36px;}
+.t-slot-total{font-size:11px;color:var(--gris);font-weight:600;}
+.t-hbar-row{display:flex;align-items:center;gap:6px;margin-bottom:3px;}
+.t-hbar-tipo{font-size:9px;font-weight:700;color:var(--gris);min-width:62px;text-align:right;}
+.t-hbar-track{flex:1;height:11px;background:var(--cd);border-radius:99px;overflow:hidden;}
+.t-hbar-fill{height:100%;border-radius:99px;transition:width .6s;}
+.t-hbar-val{font-size:10px;font-weight:700;min-width:22px;text-align:left;color:var(--dark);}
+.t-divider{height:1px;background:var(--border);margin:12px 0;}
+.t-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:10px;color:var(--gris);padding-top:12px;margin-top:4px;border-top:1px solid var(--cd);}
+.t-legend span{display:flex;align-items:center;gap:5px;}
 
 /* PROP CARDS */
 .prop-search{width:100%;max-width:380px;font-family:'Outfit',sans-serif;font-size:12px;padding:8px 12px;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;outline:none;color:var(--dark);margin-bottom:13px;transition:.15s;display:block;}
@@ -204,57 +289,35 @@ main{max-width:1280px;margin:0 auto;padding:26px 36px 80px;}
 .prop-body{display:none;padding:14px 20px 18px;border-top:1px solid var(--border);}
 .prop-body.vis{display:block;}
 
-/* TIPO CARDS dentro de prop */
-.tipo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.tipo-card{border-radius:11px;padding:14px;border:1.5px solid var(--border);background:var(--cream);}
-.tipo-card.desayuno{border-color:#a7f3d0;background:#f0fdf9;}
-.tipo-card.upgrade{border-color:#bfdbfe;background:#eff6ff;}
-.tipo-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px;}
-.tipo-name{font-size:12px;font-weight:800;display:flex;align-items:center;gap:5px;}
-.tipo-conv-wrap{text-align:right;}
-.tipo-conv{font-size:21px;font-weight:800;line-height:1;}
-.tipo-conv.ok{color:var(--ok);}.tipo-conv.warn{color:#854d0e;}.tipo-conv.err{color:var(--err);}
-.tipo-conv-lbl{font-size:8px;color:var(--gris);margin-top:1px;}
-/* HOW pill dentro de tipo card */
-.tipo-how{font-size:9px;font-weight:600;color:var(--gris);background:rgba(0,0,0,.04);border-radius:6px;padding:4px 8px;margin-bottom:8px;line-height:1.55;}
-.tipo-how strong{color:var(--dark);font-weight:800;}
-.tipo-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:10px;color:var(--gris);}
-.tipo-bar-track{flex:1;height:6px;background:var(--cd);border-radius:99px;overflow:hidden;}
-.tipo-bar-fill{height:100%;border-radius:99px;transition:width .6s;}
-.tipo-rev{font-size:11px;color:var(--gris);margin-top:5px;}
-.tipo-channel{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap;}
-.tipo-ch{font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;}
-.ch-wa{background:#dcfce7;color:#15803d;}
-.ch-email{background:var(--blue-bg);color:var(--blue);}
-.ch-sin{background:var(--cm);color:var(--gris);}
+/* REVENUE REAL TAB */
+.rev-real-note{background:#fefce8;border:1.5px solid #fde68a;border-radius:var(--rl);padding:14px 18px;margin-bottom:20px;font-size:12px;color:var(--warn);line-height:1.7;}
+.rev-real-note b{color:var(--dark);}
+.rev-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;}
+.rev-kpi{background:var(--surface);border-radius:var(--rl);padding:18px 16px;border:1.5px solid var(--border);}
+.rev-kpi-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gris);margin-bottom:6px;}
+.rev-kpi-val{font-size:26px;font-weight:800;color:var(--dark);}
+.rev-kpi-sub{font-size:11px;color:var(--gris);margin-top:4px;}
+.rev-bytype-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
+.rev-type-card{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:20px;}
+.rev-type-ico{font-size:22px;margin-bottom:8px;}
+.rev-type-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gris);margin-bottom:6px;}
+.rev-type-amt{font-size:28px;font-weight:800;margin-bottom:4px;}
+.rev-type-sub{font-size:11px;color:var(--gris);}
+.rev-donut-row{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:center;}
+.rev-donut-legend{display:flex;flex-direction:column;gap:10px;}
+.rev-donut-leg-item{display:flex;align-items:center;gap:8px;font-size:12px;}
+.rev-donut-leg-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+.rev-donut-leg-lbl{color:var(--gris);}
+.rev-donut-leg-val{font-weight:800;color:var(--dark);margin-left:auto;}
 
-/* TIMING — barras horizontales */
-.timing-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);padding:22px 24px;}
-.t-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
-.t-title{font-size:14px;font-weight:800;color:var(--dark);}
-.t-subtitle{font-size:11px;color:var(--gris);margin-top:3px;}
-.t-best-badge{background:var(--green-soft);color:var(--ok);font-size:10px;font-weight:700;padding:4px 12px;border-radius:99px;border:1px solid var(--green-mid);white-space:nowrap;}
-.t-slot{margin-bottom:10px;}
-.t-slot-lbl{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;}
-.t-slot-name{font-size:12px;font-weight:800;color:var(--dark);min-width:36px;}
-.t-slot-total{font-size:11px;color:var(--gris);font-weight:600;}
-.t-hbar-row{display:flex;align-items:center;gap:6px;margin-bottom:3px;}
-.t-hbar-tipo{font-size:9px;font-weight:700;color:var(--gris);min-width:62px;text-align:right;}
-.t-hbar-track{flex:1;height:11px;background:var(--cd);border-radius:99px;overflow:hidden;}
-.t-hbar-fill{height:100%;border-radius:99px;transition:width .6s;}
-.t-hbar-val{font-size:10px;font-weight:700;min-width:22px;text-align:left;color:var(--dark);}
-.t-divider{height:1px;background:var(--border);margin:12px 0;}
-.t-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:10px;color:var(--gris);padding-top:12px;margin-top:4px;border-top:1px solid var(--cd);}
-.t-legend span{display:flex;align-items:center;gap:5px;}
-
-/* CANAL */
-.canal-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
-.canal-table{width:100%;border-collapse:collapse;font-size:12px;}
-.canal-table th{background:var(--cm);color:var(--mid);padding:9px 14px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;}
-.canal-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
-.canal-table tr:last-child td{border-bottom:none;}
-.canal-table tr:hover td{background:var(--cream);}
-.bar-duo{height:7px;background:var(--cd);border-radius:99px;overflow:hidden;display:flex;}
+/* PROP TABLE */
+.prop-table-wrap{background:var(--surface);border-radius:var(--rl);border:1.5px solid var(--border);overflow:hidden;}
+.prop-table{width:100%;border-collapse:collapse;font-size:12px;}
+.prop-table thead th{background:var(--cm);color:var(--mid);padding:9px 14px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);text-align:left;cursor:pointer;}
+.prop-table thead th:hover{background:var(--cd);}
+.prop-table tbody td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.prop-table tbody tr:last-child td{border-bottom:none;}
+.prop-table tbody tr:hover td{background:var(--cream);}
 
 /* BADGES */
 .badge{display:inline-flex;align-items:center;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;}
@@ -264,8 +327,9 @@ main{max-width:1280px;margin:0 auto;padding:26px 36px 80px;}
 .b-blue{background:var(--blue-bg);color:var(--blue);}
 .b-gray{background:var(--cd);color:var(--mid);}
 .b-curso{background:#fef3c7;color:#92400e;}
+.b-parcial{background:#fff7ed;color:#c2410c;font-size:8px;}
 
-/* INFO */
+/* INFO BUTTON */
 .ib{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--cm);color:var(--gris);font-size:8px;font-weight:800;cursor:pointer;border:1px solid var(--border);transition:.14s;font-style:normal;flex-shrink:0;vertical-align:middle;margin-left:3px;}
 .ib:hover{background:var(--green);color:#fff;border-color:var(--green);}
 .empty{text-align:center;padding:28px;color:var(--gris);font-size:12px;}
@@ -279,14 +343,22 @@ main{max-width:1280px;margin:0 auto;padding:26px 36px 80px;}
 #tip-box p{font-size:12px;color:var(--gris);line-height:1.8;white-space:pre-line;}
 #tip-close{position:absolute;top:12px;right:13px;font-size:20px;cursor:pointer;color:var(--gris);background:none;border:none;}
 
-@media(max-width:960px){.hero-grid{grid-template-columns:1fr 1fr;}.tipo-grid{grid-template-columns:1fr;}.prop-grid{grid-template-columns:1fr;}}
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr 1fr;}
+  .tipo-grid{grid-template-columns:1fr;}
+  .prop-grid{grid-template-columns:1fr;}
+  .chart-grid{grid-template-columns:1fr;}
+  .rev-split-banner{grid-template-columns:1fr;}
+  .rev-bytype-grid{grid-template-columns:1fr;}
+  .rev-donut-row{grid-template-columns:1fr;}
+  .rev-kpi-grid{grid-template-columns:1fr 1fr;}
+}
 @media(max-width:640px){
-header,.filtros,.tabs-bar{padding-left:14px;padding-right:14px;}
-main{padding:14px 14px 60px;}
-.hero-grid{grid-template-columns:1fr 1fr;}
-.tab-btn{font-size:11px;padding:10px 12px;}
-.prop-metrics{display:none;}
-.gauge-row{grid-template-columns:1fr;}
+  header,.filtros,.tabs-bar{padding-left:14px;padding-right:14px;}
+  main{padding:14px 14px 60px;}
+  .hero-grid{grid-template-columns:1fr 1fr;}
+  .tab-btn{font-size:11px;padding:10px 12px;}
+  .rev-kpi-grid{grid-template-columns:1fr;}
 }
 @media(max-width:420px){.hero-grid{grid-template-columns:1fr;}}
 </style>
@@ -318,914 +390,719 @@ main{padding:14px 14px 60px;}
 </div>
 
 <div class="tabs-bar">
-<button class="tab-btn active" onclick="switchTab('resumen',this)">¿Cómo vamos?</button>
-<button class="tab-btn" onclick="switchTab('timing',this)">Operación (propiedad · timing · canal)</button>
+<button class="tab-btn active" onclick="switchTab('resumen',this)">📊 Resumen ejecutivo</button>
+<button class="tab-btn" onclick="switchTab('revenue',this)">💰 Revenue</button>
+<button class="tab-btn" onclick="switchTab('propiedades',this)">🏨 Por propiedad</button>
+<button class="tab-btn" onclick="switchTab('timing',this)">⏱ Timing & Canal</button>
 </div>
 
 <main>
-<!-- TAB 1 -->
+
+<!-- ═══ TAB 1: RESUMEN EJECUTIVO ═══ -->
 <div id="tab-resumen" class="tab-content active">
-<div id="alerts-wrap"></div>
-<div class="sec"><div id="hero-kpis"></div></div>
-<div id="synthesis-sec"></div>
-<div id="top-sec"></div>
-<div id="conclusiones-sec"></div>
-<div class="sec">
-<div class="sec-hdr"><h2>Conversión vs universo real <i class="ib" onclick="openTip('conv_hostal')">i</i></h2><div class="linea"></div></div>
-<div id="gauge-sec"></div>
+  <div id="alerts-wrap"></div>
+  <div class="sec"><div id="hero-kpis"></div></div>
+  <div id="synthesis-sec"></div>
+  <div id="conclusiones-sec"></div>
+
+  <!-- Charts row -->
+  <div class="chart-grid" id="charts-sec"></div>
+
+  <!-- Leaderboard propiedades -->
+  <div class="sec">
+    <div class="sec-hdr"><h2>Ranking por propiedad</h2><div class="linea"></div></div>
+    <div id="leaderboard-sec"></div>
+  </div>
+
+  <!-- Gauge vs hostal -->
+  <div class="sec">
+    <div class="sec-hdr"><h2>Conversión vs universo real <i class="ib" onclick="openTip('conv_hostal')">i</i></h2><div class="linea"></div></div>
+    <div id="gauge-sec"></div>
+  </div>
+
+  <!-- Tendencia -->
+  <div class="sec">
+    <div class="sec-hdr"><h2>Tendencia por período <i class="ib" onclick="openTip('tendencia')">i</i></h2><div class="linea"></div></div>
+    <div id="trend-sec"></div>
+  </div>
+
+  <div id="metodo-sec"></div>
 </div>
 
-<div class="sec">
-<div class="sec-hdr"><h2>Tendencia por período <i class="ib" onclick="openTip('tendencia')">i</i></h2><div class="linea"></div></div>
-<div id="trend-sec"></div>
+<!-- ═══ TAB 2: REVENUE ═══ -->
+<div id="tab-revenue" class="tab-content">
+  <div class="rev-real-note">
+    ⚠️ <b>Revenue potencial vs revenue real:</b> El <b>revenue potencial</b> es lo que GTS reporta como valor facturado al huésped. El <b>revenue real</b> es el ingreso efectivo que entra a operaciones (lo que el hostal recibe neto). <b>Este campo aún no está en el JSON</b> — hay que exportarlo desde el Google Sheet. Por ahora se muestra solo el revenue potencial, desagregado por producto y propiedad.
+  </div>
+  <div id="rev-kpis-sec"></div>
+  <div id="rev-charts-sec"></div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Detalle por propiedad</h2><div class="linea"></div></div>
+    <div id="rev-table-sec"></div>
+  </div>
 </div>
-<div id="metodo-sec"></div>
+
+<!-- ═══ TAB 3: POR PROPIEDAD ═══ -->
+<div id="tab-propiedades" class="tab-content">
+  <input class="prop-search" type="text" placeholder="🔍 Buscar hostal..." oninput="filterPropCards(this.value)"/>
+  <div class="prop-grid" id="prop-grid"></div>
 </div>
-<!-- TAB 2 -->
+
+<!-- ═══ TAB 4: TIMING & CANAL ═══ -->
 <div id="tab-timing" class="tab-content">
-<div class="sec">
-<div class="sec-hdr"><h2>¿Cuándo acepta el huésped? <i class="ib" onclick="openTip('timing')">i</i></h2><div class="linea"></div></div>
-<div id="timing-sec"></div>
-</div>
-<div class="sec">
-<div class="sec-hdr"><h2>Canal de aceptación <i class="ib" onclick="openTip('canal')">i</i></h2><div class="linea"></div></div>
-<div id="canal-sec"></div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>¿Cuándo acepta el huésped? <i class="ib" onclick="openTip('timing')">i</i></h2><div class="linea"></div></div>
+    <div id="timing-sec"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Canal de aceptación <i class="ib" onclick="openTip('canal')">i</i></h2><div class="linea"></div></div>
+    <div id="canal-sec"></div>
+  </div>
 </div>
 
-</div>
 </main>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 var DATA=null;
+var CHARTS={};
+
 var TIPS={
-'conv_hostal':{
-t:'Conversión vs universo real',
-b:'¿Qué lee esta métrica?\n\n🍳 Desayuno = cumplidas ÷ total huéspedes del hostal\n🛏️ Upgrade = cumplidas ÷ total check-ins del hostal\n\n¿Por qué es la más honesta?\nElimina el sesgo de cuántas ofertas decidimos enviar. Mide qué % del universo total realmente compró.\n\nSolo disponible para períodos cerrados (denominador definitivo).\n\nReferencia de color:\n🟢 Verde = ≥ 1% · 🟡 Amarillo = 0.5-1% · 🔴 Rojo = < 0.5%\n\nEjemplo: 0.15% en hostal con 1,000 check-ins = 1-2 upgrades. Objetivo a mediano plazo: llegar al 1-2% sostenido con los 30 hostales.'
-},
-'tendencia':{
-t:'Tendencia por período',
-b:'Compara el rendimiento entre períodos.\n↑ Subió vs anterior · ↓ Bajó vs anterior\n\nCada período = mes de oferta (mes de envío/creación, derivado de "Fecha creada").\nMayo aparece como "En curso" — datos parciales: solo incluye los check-ins del mes que ya ocurrieron.\n\nConv % columna = conv. operativa (cumplidas ÷ enviadas).\nConv % vs hostal solo se muestra en la sección de gauges cuando el mes está cerrado.'
-},
-'timing':{
-t:'¿Cuándo acepta el huésped?',
-b:'Qué muestra este gráfico (súper literal):\n\nCuenta cuántas ofertas fueron ACEPTADAS en cada franja de tiempo, comparando:\n(Fecha de aceptación) vs (Fecha de check-in)\n\nCómo leer T:\nT-3 = aceptó 3 días ANTES del check-in\nT-2 = aceptó 2 días ANTES del check-in\nT-1 = aceptó 1 día ANTES del check-in\nT-0 = aceptó el MISMO día del check-in\nT+1 = aceptó 1 día DESPUÉS (ya estaba hospedado)\n\nColores:\n🍳 Verde = Desayuno · 🛏️ Azul = Upgrade\n\nImportante (escala):\nLas barras son RELATIVAS al máximo del filtro actual.\nSirven para comparar qué franja domina (no para comparar entre meses si cambias el filtro).\n\nCómo usarlo:\nSi domina T-2/T-1 → buen timing pre check-in.\nSi domina T+1 → oportunidad de empujar upsell durante la estadía.'
-},
-'canal':{
-t:'Canal de aceptación',
-b:'Muestra si la oferta fue aceptada por WhatsApp o Email.\n\nCada propiedad puede tener un canal dominante distinto.\n\nSi WhatsApp domina → invertir en plantillas y timing de WA.\nSi Email domina → asunto y diseño del email son clave.'
-}
+'conv_hostal':{t:'Conversión vs universo real',b:'🍳 Desayuno = cumplidas ÷ total huéspedes del hostal\n🛏️ Upgrade = cumplidas ÷ total check-ins del hostal\n\nElimina el sesgo de cuántas ofertas decidimos enviar. Mide qué % del universo total realmente compró.\n\nSolo disponible para períodos cerrados (denominador definitivo).\n\n🟢 Verde ≥ 1% · 🟡 Amarillo 0.5-1% · 🔴 Rojo < 0.5%'},
+'tendencia':{t:'Tendencia por período',b:'Compara el rendimiento entre períodos.\n↑ Subió vs anterior · ↓ Bajó vs anterior\n\nCada período = mes de oferta (mes de envío).\nMayo = En curso — datos parciales.\n\nConv % = cumplidas ÷ enviadas.'},
+'timing':{t:'¿Cuándo acepta el huésped?',b:'T-3 = aceptó 3 días ANTES del check-in\nT-2 = aceptó 2 días ANTES\nT-1 = aceptó 1 día ANTES\nT-0 = aceptó el MISMO día\nT+1 = aceptó 1 día DESPUÉS (ya hospedado)\n\nSi domina T-2/T-1 → buen timing pre check-in.\nSi domina T+1 → oportunidad de upsell durante estadía.'},
+'canal':{t:'Canal de aceptación',b:'Muestra si la oferta fue aceptada por WhatsApp o Email.\n\nSi WhatsApp domina → invertir en plantillas y timing de WA.\nSi Email domina → asunto y diseño del email son clave.'},
+'penetracion_loyalty':{t:'Penetración loyalty',b:'% de huéspedes del hostal que están afiliados al programa loyalty.\n\nBase = total huéspedes que se hospedaron.\nAfiliados = miembros activos que tuvieron una reserva en el período.\n\n🟢 Verde ≥ 10% · 🟡 Amarillo 5-10% · 🔴 Rojo < 5%'},
+'ejecucion_loyalty':{t:'Ejecución loyalty',b:'Mide qué tan bien se ejecutó el programa loyalty en términos de beneficios entregados.\n\nOK = beneficio entregado correctamente.\nSin canje = huésped loyalty sin beneficio entregado.\nLeakage = beneficio entregado a no-loyalty.\n\n🟢 Verde ≥ 80% OK · 🟡 Amarillo 60-80% · 🔴 Rojo < 60%'}
 };
+
 function openTip(k){var t=TIPS[k];if(!t)return;document.getElementById('tip-title').textContent=t.t;document.getElementById('tip-body').textContent=t.b;document.getElementById('tip-overlay').classList.add('show');}
-function openTipCustom(title,body){
-document.getElementById('tip-title').textContent=title;
-document.getElementById('tip-body').textContent=body;
-document.getElementById('tip-overlay').classList.add('show');
-}
-// Permite mostrar "cards" en el overlay (no solo texto plano)
-function openTipCards(title, cardsHtml){
-document.getElementById('tip-title').textContent=title;
-document.getElementById('tip-body').innerHTML=cardsHtml;
-document.getElementById('tip-overlay').classList.add('show');
-}
+function openTipCards(title,cardsHtml){document.getElementById('tip-title').textContent=title;document.getElementById('tip-body').innerHTML=cardsHtml;document.getElementById('tip-overlay').classList.add('show');}
 function closeTip(e){if(e&&e.target!==document.getElementById('tip-overlay')&&e.target!==document.getElementById('tip-close'))return;document.getElementById('tip-overlay').classList.remove('show');}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')document.getElementById('tip-overlay').classList.remove('show');});
 
 function switchTab(id,btn){
-document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
-document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
-document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  // re-render charts when switching to revenue tab
+  if(id==='revenue'&&DATA)renderRevenue(filtrar(DATA.detalle||[]));
 }
 
 function toggleMs(id){
-var dd=document.getElementById('ms-'+id+'-dd');
-document.querySelectorAll('.ms-dd').forEach(function(d){if(d!==dd)d.classList.remove('open');});
-dd.classList.toggle('open');
+  var dd=document.getElementById('ms-'+id+'-dd');
+  document.querySelectorAll('.ms-dd').forEach(function(d){if(d!==dd)d.classList.remove('open');});
+  dd.classList.toggle('open');
 }
 document.addEventListener('click',function(e){
-if(!e.target.closest('.ms-wrap'))document.querySelectorAll('.ms-dd').forEach(function(d){d.classList.remove('open');});
+  if(!e.target.closest('.ms-wrap'))document.querySelectorAll('.ms-dd').forEach(function(d){d.classList.remove('open');});
 });
-function getMsValues(id){
-return Array.from(document.querySelectorAll('#ms-'+id+'-dd input[type=checkbox]:checked')||[]).map(function(c){return c.value;});
-}
-function clearMs(id){
-document.querySelectorAll('#ms-'+id+'-dd input[type=checkbox]').forEach(function(c){c.checked=false;});
-updateMsBtn(id);render();
-}
+function getMsValues(id){return Array.from(document.querySelectorAll('#ms-'+id+'-dd input[type=checkbox]:checked')||[]).map(function(c){return c.value;});}
+function clearMs(id){document.querySelectorAll('#ms-'+id+'-dd input[type=checkbox]').forEach(function(c){c.checked=false;});updateMsBtn(id);render();}
 function resetFiltros(){['per','prop','tipo'].forEach(clearMs);}
-function updateMsBtn(id){
-var vals=getMsValues(id),btn=document.getElementById('ms-'+id+'-btn');
-var labels={per:'Todos',prop:'Todas',tipo:'Todos'};
-btn.textContent=vals.length===0?labels[id]:vals.length===1?vals[0]:vals.length+' seleccionados';
-}
-function filterDdItems(id,q){
-Array.from(document.querySelectorAll('#ms-'+id+'-dd label')).forEach(function(l){
-if(!l.querySelector('input'))return;
-l.classList.toggle('hidden',q.length>0&&!l.textContent.toLowerCase().includes(q.toLowerCase()));
-});
-}
-function filterPropCards(q){
-document.querySelectorAll('.prop-card[data-prop]').forEach(function(c){
-c.classList.toggle('hidden',q.length>0&&!c.dataset.prop.toLowerCase().includes(q.toLowerCase()));
-});
-}
+function updateMsBtn(id){var vals=getMsValues(id),btn=document.getElementById('ms-'+id+'-btn');var labels={per:'Todos',prop:'Todas',tipo:'Todos'};btn.textContent=vals.length===0?labels[id]:vals.length===1?vals[0]:vals.length+' seleccionados';}
+function filterDdItems(id,q){Array.from(document.querySelectorAll('#ms-'+id+'-dd label')).forEach(function(l){if(!l.querySelector('input'))return;l.classList.toggle('hidden',q.length>0&&!l.textContent.toLowerCase().includes(q.toLowerCase()));});}
+function filterPropCards(q){document.querySelectorAll('.prop-card[data-prop]').forEach(function(c){c.classList.toggle('hidden',q.length>0&&!c.dataset.prop.toLowerCase().includes(q.toLowerCase()));});}
+
 function poblarFiltros(){
-var det=DATA.detalle||[];
-function fill(id,vals){
-var dd=document.getElementById('ms-'+id+'-dd');
-while(dd.children.length>1)dd.removeChild(dd.lastChild);
-vals.forEach(function(v){
-var lbl=document.createElement('label');
-var cb=document.createElement('input');cb.type='checkbox';cb.value=v;
-cb.addEventListener('change',function(){updateMsBtn(id);render();});
-lbl.appendChild(cb);lbl.appendChild(document.createTextNode(' '+v));dd.appendChild(lbl);
-});
-}
-var pS=[],prS=[],tS=[];
-det.forEach(function(r){
-if(r.Período&&!pS.includes(r.Período))pS.push(r.Período);
-if(r.Propiedad&&!prS.includes(r.Propiedad))prS.push(r.Propiedad);
-if(r.tipo&&!tS.includes(r.tipo))tS.push(r.tipo);
-});
-fill('per',pS.sort());fill('prop',prS.sort());fill('tipo',tS.sort());
-}
-function filtrar(arr){
-var p=getMsValues('per'),pr=getMsValues('prop'),ti=getMsValues('tipo');
-return arr.filter(function(r){
-return(!p.length||p.includes(r.Período||''))&&(!pr.length||pr.includes(r.Propiedad||''))&&(!ti.length||ti.includes(r.tipo||''));
-});
+  var det=DATA.detalle||[];
+  function fill(id,vals){var dd=document.getElementById('ms-'+id+'-dd');while(dd.children.length>1)dd.removeChild(dd.lastChild);vals.forEach(function(v){var lbl=document.createElement('label');var cb=document.createElement('input');cb.type='checkbox';cb.value=v;cb.addEventListener('change',function(){updateMsBtn(id);render();});lbl.appendChild(cb);lbl.appendChild(document.createTextNode(' '+v));dd.appendChild(lbl);});}
+  var pS=[],prS=[],tS=[];
+  det.forEach(function(r){if(r.Período&&!pS.includes(r.Período))pS.push(r.Período);if(r.Propiedad&&!prS.includes(r.Propiedad))prS.push(r.Propiedad);if(r.tipo&&!tS.includes(r.tipo))tS.push(r.tipo);});
+  fill('per',pS.sort());fill('prop',prS.sort());fill('tipo',tS.sort());
 }
 
-// Igual que filtrar(), pero IGNORA el filtro de Tipo (producto).
-// Usado para "Canal de aceptación" cuando queremos ver el canal por propiedad, sin sesgo de producto.
-function filtrarSinTipo(arr){
-var p=getMsValues('per'),pr=getMsValues('prop');
-return arr.filter(function(r){
-return(!p.length||p.includes(r.Período||''))&&(!pr.length||pr.includes(r.Propiedad||''));
-});
-}
+function filtrar(arr){var p=getMsValues('per'),pr=getMsValues('prop'),ti=getMsValues('tipo');return arr.filter(function(r){return(!p.length||p.includes(r.Período||''))&&(!pr.length||pr.includes(r.Propiedad||''))&&(!ti.length||ti.includes(r.tipo||''));});}
+function filtrarSinTipo(arr){var p=getMsValues('per'),pr=getMsValues('prop');return arr.filter(function(r){return(!p.length||p.includes(r.Período||''))&&(!pr.length||pr.includes(r.Propiedad||''));});}
 
 // ─── FORMATO ───────────────────────────────────────────────────────────────
 function fmtN(n){return Math.round(Number(n)||0).toLocaleString('es-CO');}
 function fmtUSD(n){return '$'+(Math.round((Number(n)||0)*100)/100).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});}
-
-// FIX CLAVE: conv_vs_hostal_pct viene como fracción pura (0.0011 = 0.11%)
-// fmtFrac multiplica x100 una sola vez
-function fmtFrac(f,dec){
-var d=dec==null?2:dec;
-var v=Math.round(f*100*Math.pow(10,d))/Math.pow(10,d);
-return v.toFixed(d)+'%';
-}
-// Para conv_oferta_pct también viene como fracción (0.0763 = 7.63%)
+function fmtFrac(f,dec){var d=dec==null?2:dec;var v=Math.round(f*100*Math.pow(10,d))/Math.pow(10,d);return v.toFixed(d)+'%';}
 function fmtOferta(f,dec){return fmtFrac(f,dec==null?1:dec);}
-
 function colOferta(f){return f>=0.12?'var(--ok)':f>=0.06?'#ca8a04':'var(--err)';}
 function clsOferta(f){return f>=0.12?'ok':f>=0.06?'warn':'err';}
-// Hostal: escala distinta — objetivo largo plazo 1-2% (0.01-0.02)
 function colHostal(f){return f>=0.01?'var(--ok)':f>=0.005?'#ca8a04':'var(--err)';}
 
-// ─── METODOLOGÍA ──────────────────────────────────────────────────────────
-function renderMetodo(res){
-var cerrados=res.filter(function(r){return r.cerrado;}).map(function(r){return r.Período;});
-var abiertos=res.filter(function(r){return !r.cerrado;}).map(function(r){return r.Período;});
-document.getElementById('metodo-sec').innerHTML=
-'<details class="metodo-banner">'+
-'<summary class="metodo-title" style="list-style:none;width:100%">📐 ¿Cómo medimos? <span style="margin-left:auto;color:var(--gris);font-weight:700">▾</span></summary>'+
-'<div class="metodo-grid">'+
-'<div class="metodo-card op">'+
-'<div class="metodo-head"><span class="metodo-name">⚡ Conv % operativa</span><span class="metodo-tag tag-live">Tiempo real</span></div>'+
-'<div class="metodo-formula">cumplidas ÷ enviadas</div>'+
-'<div class="metodo-desc"><b>Período = mes de oferta</b> (mes de envío/creación, derivado de <i>Fecha creada</i> en <b>07_Kyto_Upselling_Raw</b>). Disponible siempre, incluso con el mes en curso.<br><br>Responde: <b>¿Qué % de las ofertas enviadas fue aceptado?</b><br><br>💡 Si el mes está “En curso”, las cifras son parciales pero reales.</div>'+
-'</div>'+
-'<div class="metodo-card hostal">'+
-'<div class="metodo-head"><span class="metodo-name">🏨 Conv % vs hostal</span><span class="metodo-tag tag-cerr">Solo mes cerrado</span></div>'+
-'<div class="metodo-formula">cumplidas ÷ universo hostal</div>'+
-'<div class="metodo-desc">Denominador desde <b>06_Kyto_Denominadores</b>, disponible solo cuando <b>Cerrado = TRUE</b>.<br>🍳 Desayuno: ÷ huéspedes totales · 🛏️ Upgrade: ÷ check-ins totales<br><br>Elimina el sesgo de cuántas ofertas enviamos. Mide el % real del universo que compró.<br><br>Responde: <b>¿Qué % de todos los huéspedes del hostal compró?</b><br><br>'+
-(cerrados.length?'<span style="color:var(--ok);font-weight:700">✅ Cerrado'+(cerrados.length>1?'s':'')+': '+cerrados.join(', ')+'</span><br>':'')+
-(abiertos.length?'<span style="color:var(--warn);font-weight:700">⏳ En curso: '+abiertos.join(', ')+' — se calcula al cerrar el mes</span>':'')+
-'</div>'+
-'</div>'+
-'</div>'+
-'<div class="metodo-nota">ℹ️ Para cerrar un mes: completar check-ins y huéspedes en <b>06_Kyto_Denominadores</b>, marcar <b>Cerrado = TRUE</b> y correr el AppScript.</div>'+
-'</details>';
-}
-
-// ─── ALERTAS ───────────────────────────────────────────────────────────────
+// ─── ALERTAS (colapsadas) ──────────────────────────────────────────────────
 function renderAlerts(det){
-var html='';
-det.filter(function(r){return r.tipo==='Upgrade'&&r.ofertas_cumplidas===0&&r.ofertas_enviadas>5;}).forEach(function(r){
-html+='<div class="alert-banner red"><div class="alert-ico">⚠️</div><div class="alert-text">'+
-'<div class="alert-title">'+r.Propiedad+' · Upgrade sin conversiones en '+r.Período+'</div>'+
-'<div class="alert-desc">'+r.ofertas_enviadas+' ofertas enviadas · 0 cumplidas. Revisar mensaje, precio del upgrade y canal utilizado.</div>'+
-'</div></div>';
-});
-document.getElementById('alerts-wrap').innerHTML=html;
+  var problemas=det.filter(function(r){return r.tipo==='Upgrade'&&r.ofertas_cumplidas===0&&r.ofertas_enviadas>5;});
+  if(!problemas.length){document.getElementById('alerts-wrap').innerHTML='';return;}
+  var propNames=[...new Set(problemas.map(function(r){return r.Propiedad.replace('Viajero ','');}))];
+  var html='<div class="alert-collapsed" id="alert-collapse-root" onclick="toggleAlertCollapse()">'+
+    '<div class="alert-collapsed-hdr">'+
+      '<div class="alert-collapsed-ico">⚠️</div>'+
+      '<div class="alert-txt-wrap"><div class="alert-collapsed-txt">'+problemas.length+' propiedad'+(problemas.length!==1?'es':'')+' sin conversión en Upgrade</div>'+
+      '<div class="alert-collapsed-sub">'+propNames.slice(0,3).join(', ')+(propNames.length>3?' y '+(propNames.length-3)+' más':'')+'</div></div>'+
+      '<div class="alert-collapsed-chev">▾</div>'+
+    '</div>'+
+    '<div class="alert-items">'+
+    problemas.map(function(r){
+      return '<div class="alert-item"><b>'+r.Propiedad+'</b> · '+r.Período+' — '+r.ofertas_enviadas+' ofertas enviadas · 0 cumplidas. Revisar mensaje, precio y canal.</div>';
+    }).join('')+
+    '</div>'+
+  '</div>';
+  document.getElementById('alerts-wrap').innerHTML=html;
 }
-
-// ─── SYNTHESIS ─────────────────────────────────────────────────────────────
-function renderSynthesis(det,res){
-var totEnv=det.reduce(function(s,r){return s+r.ofertas_enviadas;},0);
-var totCum=det.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
-var totRev=det.reduce(function(s,r){return s+r.revenue_usd;},0);
-var conv=totEnv>0?totCum/totEnv:0;
-var ticket=totCum>0?totRev/totCum:0;
-var pCerrados=res.filter(function(r){return r.cerrado;}).length;
-var hl=conv>=0.12?'Programa con buena conversión — '+fmtOferta(conv)+' de ofertas aceptadas':
-conv>=0.06?'Conversión en crecimiento — '+fmtOferta(conv)+' de ofertas aceptadas':
-'Programa en fase inicial — '+fmtOferta(conv)+' de conversión global';
-var nProps=[...new Set(det.map(function(r){return r.Propiedad;}))].length;
-var items=[
-{dot:conv>=0.1?'ok':conv>=0.06?'warn':'err',h:'<b>'+totCum+'</b> ofertas cumplidas de <b>'+totEnv+'</b> enviadas · conv. global '+fmtOferta(conv)},
-{dot:'ok',h:'<b>'+fmtUSD(totRev)+'</b> generados · ticket promedio <b>'+fmtUSD(ticket)+'</b> por venta'},
-{dot:'info',h:'<b>'+nProps+'</b> propiedad'+(nProps!==1?'es':'')+' activa'+(nProps!==1?'s':'')+' · <b>'+pCerrados+'</b> período'+(pCerrados!==1?'s':'')+' cerrado'+(pCerrados!==1?'s':'')+' · <b>'+(res.length-pCerrados)+'</b> en curso'}
-];
-var cero=det.filter(function(r){return r.tipo==='Upgrade'&&r.ofertas_cumplidas===0&&r.ofertas_enviadas>5;});
-if(cero.length)items.push({dot:'err',h:'<b>'+cero.length+'</b> caso'+(cero.length!==1?'s':'')+' con 0% en Upgrade — requieren atención'});
-var periodos=[...new Set(det.map(function(r){return r.Período;}))].sort().join(', ');
-document.getElementById('synthesis-sec').innerHTML=
-'<div class="synthesis"><div class="syn-phase">📍 Upselling pre check-in · Kyto · '+periodos+'</div>'+
-'<div class="syn-headline">'+hl+'</div>'+
-'<div class="syn-items">'+items.map(function(it){
-return '<div class="syn-item"><div class="syn-dot '+it.dot+'"></div><span>'+it.h+'</span></div>';
-}).join('')+'</div></div>';
-}
-
-// ─── CONCLUSIONES AUTOMÁTICAS ──────────────────────────────────────────────
-function renderConclusiones(det,res){
-}
-
-// ─── TOP GLOBAL: CANAL + PRODUCTO ─────────────────────────────────────────
-function renderTopGlobal(det){
-var wa=det.reduce(function(s,r){return s+(r.canal_wa_cumplidas||0);},0);
-var em=det.reduce(function(s,r){return s+(r.canal_email_cumplidas||0);},0);
-var totCh=wa+em;
-var chTop=totCh? (wa>=em?'WhatsApp':'Email') : '—';
-var chTopN=totCh? Math.max(wa,em) : 0;
-var chTopPct=totCh? Math.round(chTopN/totCh*100) : 0;
-
-// producto = Tipo (Desayuno / Upgrade) usando cumplidas y revenue
-var byTipo={};
-det.forEach(function(r){
-if(!byTipo[r.tipo])byTipo[r.tipo]={cum:0,rev:0};
-byTipo[r.tipo].cum+=r.ofertas_cumplidas||0;
-byTipo[r.tipo].rev+=r.revenue_usd||0;
-});
-var tipos=Object.keys(byTipo);
-var topByCum=tipos.slice().sort(function(a,b){return (byTipo[b].cum||0)-(byTipo[a].cum||0);})[0]||'—';
-var topByRev=tipos.slice().sort(function(a,b){return (byTipo[b].rev||0)-(byTipo[a].rev||0);})[0]||'—';
-
-var html=''+
-'<div class="sec">'+
-'<div class="sec-hdr"><h2>Top global (ventas)</h2><div class="linea"></div></div>'+
-'<div class="gauge-table-wrap" style="padding:14px 16px">'+
-'<div style="display:grid;grid-template-columns:1.2fr 1fr;gap:12px">'+
-'<div style="border:1.5px solid var(--border);border-radius:14px;padding:14px;background:var(--cream)">'+
-'<div style="font-size:10px;color:var(--gris);font-weight:800;text-transform:uppercase;letter-spacing:.6px">Canal top (todas las ventas)</div>'+
-'<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:6px">'+
-'<div style="font-size:22px;font-weight:900;color:var(--dark)">'+(totCh?('📱/📧 '+chTop):'—')+'</div>'+
-'<div style="font-size:11px;color:var(--gris);font-weight:700">'+(totCh?('<b>'+chTopN+'</b> de <b>'+totCh+'</b> ('+chTopPct+'%)'):'Sin canal registrado')+'</div>'+
-'</div>'+
-'<div style="margin-top:10px">'+
-'<div class="bar-duo" style="height:10px">'+
-'<div style="width:'+(totCh?Math.round(wa/totCh*100):0)+'%;background:var(--ok);height:100%"></div>'+
-'<div style="width:'+(totCh?100-Math.round(wa/totCh*100):0)+'%;background:var(--blue);height:100%"></div>'+
-'</div>'+
-'<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--gris);margin-top:5px"><span>📱 WA: <b>'+wa+'</b></span><span>📧 Email: <b>'+em+'</b></span></div>'+
-'</div>'+
-'</div>'+
-
-'<div style="border:1.5px solid var(--border);border-radius:14px;padding:14px;background:var(--cream)">'+
-'<div style="font-size:10px;color:var(--gris);font-weight:800;text-transform:uppercase;letter-spacing:.6px">Producto más vendido</div>'+
-'<div style="font-size:22px;font-weight:900;color:var(--dark);margin-top:6px">'+(topByCum==='Desayuno'?'🍳 ':'🛏️ ')+topByCum+'</div>'+
-'<div style="font-size:11px;color:var(--gris);line-height:1.6;margin-top:6px">'+
-'Por volumen: <b>'+topByCum+'</b> ('+fmtN((byTipo[topByCum]||{}).cum||0)+' ventas)<br>'+
-'Por revenue: <b>'+topByRev+'</b> ('+fmtUSD((byTipo[topByRev]||{}).rev||0)+')'+
-'</div>'+
-'</div>'+
-
-'</div>'+
-'<div style="font-size:10px;color:var(--gris);margin-top:10px">'+
-'Nota: por ahora "producto" = <b>Tipo oferta</b> (Desayuno/Upgrade). Si quieres "Subtipo" como producto real, lo sacamos del raw y lo exportamos al JSON.'+
-'</div>'+
-'</div></div>';
-
-document.getElementById('top-sec').innerHTML=html;
-}
-
-function renderConclusiones(det,res){
-var ins=[];
-// mejor propiedad
-var propStats=[...new Set(det.map(function(r){return r.Propiedad;}))].map(function(p){
-var rw=det.filter(function(r){return r.Propiedad===p;});
-var e=rw.reduce(function(s,r){return s+r.ofertas_enviadas;},0);
-var c=rw.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
-var rv=rw.reduce(function(s,r){return s+r.revenue_usd;},0);
-return{name:p,e:e,c:c,rv:rv,conv:e>0?c/e:0};
-});
-var sorted=propStats.slice().sort(function(a,b){return b.conv-a.conv;});
-if(sorted.length)ins.push({ico:'🏆',txt:'<b>'+sorted[0].name.replace('Viajero ','')+'</b> lidera la conversión con <b>'+fmtOferta(sorted[0].conv)+'</b> de sus ofertas aceptadas.'});
-// canal dominante
-var waT=det.reduce(function(s,r){return s+r.canal_wa_cumplidas;},0);
-var emT=det.reduce(function(s,r){return s+r.canal_email_cumplidas;},0);
-if(waT+emT>0)ins.push({ico:waT>=emT?'📱':'📧',txt:'El canal dominante es <b>'+(waT>=emT?'WhatsApp':'Email')+'</b> con <b>'+Math.round(Math.max(waT,emT)/(waT+emT)*100)+'%</b> de las conversiones. Enfocar contenido y timing en ese canal.'});
-// tendencia
-var cerr=res.filter(function(r){return r.cerrado;}).sort(function(a,b){return a.Período.localeCompare(b.Período);});
-if(cerr.length>=2){
-var l=cerr[cerr.length-1],pv=cerr[cerr.length-2],diff=l.conv_oferta_pct-pv.conv_oferta_pct;
-if(Math.abs(diff)>0.005)ins.push({ico:diff>0?'📈':'📉',txt:'Conversión <b>'+(diff>0?'subió':'bajó')+'</b> de '+fmtOferta(pv.conv_oferta_pct)+' ('+pv.Período+') a <b>'+fmtOferta(l.conv_oferta_pct)+'</b> ('+l.Período+'). '+(diff>0?'Mantener la estrategia.':'Revisar qué cambió.')});
-}
-// zero upgrades
-var cero=det.filter(function(r){return r.tipo==='Upgrade'&&r.ofertas_cumplidas===0&&r.ofertas_enviadas>5;});
-if(cero.length)ins.push({ico:'🔎',txt:cero.map(function(r){return r.Propiedad.replace('Viajero ','');}).join(', ')+': <b>0 conversiones en Upgrade</b>. Probar A/B test de asunto o ajustar precio del upgrade ofertado.'});
-// proyección 30 hostales
-var totE=propStats.reduce(function(s,p){return s+p.e;},0);
-var totC=propStats.reduce(function(s,p){return s+p.c;},0);
-var convG=totE>0?totC/totE:0;
-var proyVentas=Math.round(30*(totE/Math.max(propStats.length,1))*convG);
-var proyRev=fmtUSD(30*(propStats.reduce(function(s,p){return s+p.rv;},0)/Math.max(propStats.length,1)));
-ins.push({ico:'🏗️',txt:'Con los <b>30 hostales</b> de la cadena y la tasa actual de <b>'+fmtOferta(convG)+'</b>, el potencial mensual proyectado sería <b>~'+fmtN(proyVentas)+' ventas</b> y <b>~'+proyRev+'</b> en revenue de Kyto Upgrades.'});
-document.getElementById('conclusiones-sec').innerHTML=
-'<div class="conclusiones"><div class="conc-title">💡 Conclusiones automáticas</div>'+
-'<div class="conc-list">'+ins.map(function(it){
-return '<div class="conc-item"><div class="conc-ico">'+it.ico+'</div><div>'+it.txt+'</div></div>';
-}).join('')+'</div></div>';
+function toggleAlertCollapse(){
+  var el=document.getElementById('alert-collapse-root');
+  if(el)el.classList.toggle('open');
 }
 
 // ─── HERO KPIs ─────────────────────────────────────────────────────────────
 function renderHero(det,res){
-var totEnv=det.reduce(function(s,r){return s+r.ofertas_enviadas;},0);
-var totCum=det.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
-var totRev=det.reduce(function(s,r){return s+r.revenue_usd;},0);
-var conv=totEnv>0?totCum/totEnv:0;
-var ticket=totCum>0?totRev/totCum:0;
+  var totEnv=det.reduce(function(s,r){return s+r.ofertas_enviadas;},0);
+  var totCum=det.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
+  var totRev=det.reduce(function(s,r){return s+r.revenue_usd;},0);
+  var conv=totEnv>0?totCum/totEnv:0;
+  var ticket=totCum>0?totRev/totCum:0;
+  var nProps=[...new Set(det.map(function(r){return r.Propiedad;}))].length;
 
-// breakdown por tipo para detalle
-var byTipo={};
-det.forEach(function(r){
-if(!byTipo[r.tipo])byTipo[r.tipo]={rev:0,cum:0};
-byTipo[r.tipo].rev+=r.revenue_usd;byTipo[r.tipo].cum+=r.ofertas_cumplidas;
-});
+  var fp=getMsValues('per'),prev=null;
+  if(fp.length===1){var allP=res.map(function(r){return r.Período;}).sort();var idx=allP.indexOf(fp[0]);if(idx>0)prev=res.find(function(r){return r.Período===allP[idx-1];});}
+  function dlta(curr,pv,fmt){if(!prev||pv==null)return '';var d=curr-pv;if(Math.abs(d)<0.0001)return '<span class="hero-delta neutral">—</span>';return '<span class="hero-delta '+(d>0?'up':'down')+'">'+(d>0?'↑':'↓')+' '+fmt(Math.abs(d))+'</span>';}
 
-var fp=getMsValues('per'),prev=null;
-if(fp.length===1){
-var allP=res.map(function(r){return r.Período;}).sort();
-var idx=allP.indexOf(fp[0]);
-if(idx>0)prev=res.find(function(r){return r.Período===allP[idx-1];});
-}
-function dlta(curr,pv,fmt){
-if(!prev||pv==null)return '';
-var d=curr-pv;
-if(Math.abs(d)<0.0001)return '<span class="hero-delta neutral">—</span>';
-return '<span class="hero-delta '+(d>0?'up':'down')+'">'+(d>0?'↑':'↓')+' '+fmt(Math.abs(d))+'</span>';
+  var items=[
+    {l:'Ofertas enviadas',v:fmtN(totEnv),s:fmtN(totCum)+' cumplidas · '+fmtN(nProps)+' propiedades',hc:'var(--green)',d:dlta(totEnv,prev?prev.ofertas_enviadas:null,fmtN)},
+    {l:'Conversión global',v:fmtOferta(conv),s:'cumplidas ÷ enviadas',hc:colOferta(conv),d:dlta(conv,prev?prev.conv_oferta_pct:null,function(x){return fmtOferta(x,2);})},
+    {l:'Revenue potencial',v:fmtUSD(totRev),s:fmtN(totCum)+' ventas · '+fmtUSD(ticket)+' ticket',hc:'#0369a1',d:dlta(totRev,prev?prev.revenue_usd:null,fmtUSD)},
+    {l:'Ticket promedio',v:ticket>0?fmtUSD(ticket):'—',s:'por oferta cumplida',hc:'#7c3aed',d:''}
+  ];
+  document.getElementById('hero-kpis').innerHTML='<div class="hero-grid">'+items.map(function(it){
+    return '<div class="hero-kpi" style="--hc:'+it.hc+'"><div class="hero-glow"></div><div class="hero-label">'+it.l+'</div><div class="hero-val">'+it.v+'</div><div class="hero-sub">'+it.s+'</div>'+it.d+'</div>';
+  }).join('')+'</div>';
 }
 
-var items=[
-{l:'Ofertas enviadas',v:fmtN(totEnv),s:totCum+' cumplidas',hc:'var(--green)',d:dlta(totEnv,prev?prev.ofertas_enviadas:null,fmtN)},
-{l:'Conversión global',v:fmtOferta(conv),s:'cumplidas ÷ enviadas · por mes de oferta',hc:colOferta(conv),d:dlta(conv,prev?prev.conv_oferta_pct:null,function(x){return fmtOferta(x,2);})},
-{l:'Revenue generado',v:fmtUSD(totRev),s:totCum+' ventas · '+fmtUSD(ticket)+' ticket',hc:'#0369a1',d:dlta(totRev,prev?prev.revenue_usd:null,fmtUSD),id:'hero-rev'},
-{l:'Ticket promedio',v:ticket>0?fmtUSD(ticket):'—',s:'por oferta cumplida',hc:'#7c3aed',d:''}
-];
-
-var html='<div class="hero-grid">'+items.map(function(it){
-return '<div class="hero-kpi" '+(it.id?('id="'+it.id+'"'):'' )+' style="--hc:'+it.hc+';'+(it.id?'cursor:pointer;':'')+'"><div class="hero-glow"></div>'+
-'<div class="hero-label">'+it.l+'</div><div class="hero-val">'+it.v+'</div>'+
-'<div class="hero-sub">'+it.s+(it.id?' · ▼':'')+'</div>'+it.d+'</div>';
-}).join('')+'</div>';
-
-document.getElementById('hero-kpis').innerHTML=html;
-
-// click en cualquier parte de la card de revenue
-var el=document.getElementById('hero-rev');
-if(el){
-el.onclick=function(){
-// 2 cards: Desayuno y Upgrade
-function card(tipo, icono, colorVar){
-var rv=(byTipo[tipo]||{}).rev||0;
-var c=(byTipo[tipo]||{}).cum||0;
-var t=c>0?rv/c:0;
-return ''+
-'<div style="border:1.5px solid var(--border);border-radius:12px;padding:14px 14px;margin:10px 0;background:var(--cream)">'+
-'<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px">'+
-'<div style="font-weight:900;font-size:13px;color:var(--dark)">'+icono+' '+tipo+'</div>'+
-'<div style="font-weight:900;font-size:13px;color:'+colorVar+'">'+fmtUSD(rv)+'</div>'+
-'</div>'+
-'<div style="font-size:11px;color:var(--gris);line-height:1.65">'+
-'<b>'+c+'</b> ventas · ticket prom. <b>'+(c>0?fmtUSD(t):'—')+'</b><br>'+
-'Cómo leer: revenue generado por <b>'+tipo.toLowerCase()+'</b> (solo ofertas cumplidas).'+
-'</div>'+
-'</div>';
-}
-var cardsHtml=
-'<div style="font-size:11px;color:var(--gris);margin-bottom:8px;line-height:1.6">'+
-'Total: <b>'+fmtUSD(totRev)+'</b> · <b>'+totCum+'</b> ventas · ticket prom. <b>'+(totCum>0?fmtUSD(ticket):'—')+'</b>'+
-'</div>'+
-card('Desayuno','🍳','var(--ok)')+
-card('Upgrade','🛏️','var(--blue)');
-openTipCards('Revenue generado',cardsHtml);
-};
-}
+// ─── SYNTHESIS ─────────────────────────────────────────────────────────────
+function renderSynthesis(det,res){
+  var totEnv=det.reduce(function(s,r){return s+r.ofertas_enviadas;},0);
+  var totCum=det.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
+  var totRev=det.reduce(function(s,r){return s+r.revenue_usd;},0);
+  var conv=totEnv>0?totCum/totEnv:0;
+  var ticket=totCum>0?totRev/totCum:0;
+  var pCerrados=res.filter(function(r){return r.cerrado;}).length;
+  var hl=conv>=0.12?'Programa con buena conversión — '+fmtOferta(conv)+' de ofertas aceptadas':conv>=0.06?'Conversión en crecimiento — '+fmtOferta(conv)+' de ofertas aceptadas':'Programa en fase inicial — '+fmtOferta(conv)+' de conversión global';
+  var nProps=[...new Set(det.map(function(r){return r.Propiedad;}))].length;
+  var items=[
+    {dot:conv>=0.1?'ok':conv>=0.06?'warn':'err',h:'<b>'+totCum+'</b> ofertas cumplidas de <b>'+totEnv+'</b> enviadas · conv. global '+fmtOferta(conv)},
+    {dot:'ok',h:'<b>'+fmtUSD(totRev)+'</b> revenue potencial · ticket prom. <b>'+fmtUSD(ticket)+'</b>'},
+    {dot:'info',h:'<b>'+nProps+'</b> propiedad'+(nProps!==1?'es':'')+' activas · <b>'+pCerrados+'</b> período'+(pCerrados!==1?'s':'')+' cerrado'+(pCerrados!==1?'s':'')}
+  ];
+  var cero=det.filter(function(r){return r.tipo==='Upgrade'&&r.ofertas_cumplidas===0&&r.ofertas_enviadas>5;});
+  if(cero.length)items.push({dot:'err',h:'<b>'+cero.length+'</b> propiedad'+(cero.length!==1?'es':'')+' con 0 conversiones en Upgrade — requieren atención'});
+  var periodos=[...new Set(det.map(function(r){return r.Período;}))].sort().join(', ');
+  document.getElementById('synthesis-sec').innerHTML='<div class="synthesis"><div class="syn-phase">📍 Upselling pre check-in · Kyto · '+periodos+'</div><div class="syn-headline">'+hl+'</div><div class="syn-items">'+items.map(function(it){return '<div class="syn-item"><div class="syn-dot '+it.dot+'"></div><span>'+it.h+'</span></div>';}).join('')+'</div></div>';
 }
 
-// ─── GAUGE TABLE — CONVERSIÓN VS HOSTAL ──────────────────────────────────
-var _gSort={col:'pct',asc:false};
-function renderGauge(det){
-var cerrados=det.filter(function(r){return r.cerrado&&r.conv_vs_hostal_pct!==null;});
-var wrap=document.getElementById('gauge-sec');
-if(!cerrados.length){
-wrap.innerHTML='<div style="background:#fff;border-radius:14px;border:1.5px solid var(--border);padding:20px;font-size:12px;color:var(--gris);text-align:center;">⏳ Disponible solo para períodos cerrados. Filtra por un período cerrado para ver los datos.</div>';
-return;
-}
-_gSort._data=cerrados;
-_renderGaugeTable();
-}
-function _sortGauge(col){
-  if(_gSort.col===col)_gSort.asc=!_gSort.asc;
-  else{_gSort.col=col;_gSort.asc=col==='prop';}
-  _renderGaugeTable();
-}
-
-function toggleGaugeRow(tr){
-  var nxt=tr.nextElementSibling;
-  if(!nxt || !nxt.classList || !nxt.classList.contains('gauge-detail-row')) return;
-  var open=nxt.style.display==='table-row';
-  nxt.style.display=open?'none':'table-row';
-  var ch=tr.querySelector('.chev');
-  if(ch) ch.style.transform=open?'rotate(0deg)':'rotate(180deg)';
-}
-
-function _renderGaugeTable(){
-var cerrados=_gSort._data||[];
-var col=_gSort.col,asc=_gSort.asc;
-var sorted=cerrados.slice().sort(function(a,b){
-var va,vb;
-if(col==='prop'){va=a.Propiedad;vb=b.Propiedad;return asc?va.localeCompare(vb):vb.localeCompare(va);}
-if(col==='tipo'){va=a.tipo;vb=b.tipo;return asc?va.localeCompare(vb):vb.localeCompare(va);}
-if(col==='pct'){va=a.conv_vs_hostal_pct||0;vb=b.conv_vs_hostal_pct||0;}
-else if(col==='cum'){va=a.ofertas_cumplidas||0;vb=b.ofertas_cumplidas||0;}
-else if(col==='den'){va=a.tipo==='Desayuno'?a._huespedes_hostal:a._checkins_hostal;vb=b.tipo==='Desayuno'?b._huespedes_hostal:b._checkins_hostal;}
-else va=vb=0;
-return asc?va-vb:vb-va;
-});
-var maxP=Math.max.apply(null,sorted.map(function(r){return r.conv_vs_hostal_pct||0;}));
-function th(label,c,tip){
-  var ico=_gSort.col===c?(_gSort.asc?'↑':'↓'):'↕';
-  return '<th class="'+(c===_gSort.col?'sorted':'')+'" onclick="_sortGauge(\''+c+'\')">'+
-    label+' <span class="sort-ico">'+ico+'</span>'+
-    (tip?(' <i class="ib" style="vertical-align:middle" onclick="event.stopPropagation();openTip(\''+tip+'\')">i</i>'):'')+
-  '</th>';
-}
-
-// NUEVO: con 30+ hostales, tabla por PROPIEDAD con desplegable (2 cards: Desayuno + Upgrade)
-var html='<div class="gauge-table-wrap">'+
-'<table class="gauge-table"><thead><tr>'+
-th('Propiedad','prop','')+
-th('🍳 Desayuno','pct','conv_hostal')+
-th('🛏️ Upgrade','pct','conv_hostal')+
-th('Vendidas','cum','')+
-th('Universo','den','')+
-'<th>Período</th>'+
-'<th style="width:34px"></th>'+
-'</tr></thead><tbody>'+
-
-// agrupamos por Propiedad + Período (solo cerrados)
-(function(){
-  var g={};
-  sorted.forEach(function(r){
-    var k=(r.Propiedad||'')+'||'+(r.Período||'');
-    if(!g[k]) g[k]={Propiedad:r.Propiedad,Período:r.Período,rows:[]};
-    g[k].rows.push(r);
+// ─── CONCLUSIONES ──────────────────────────────────────────────────────────
+function renderConclusiones(det,res){
+  var ins=[];
+  var propStats=[...new Set(det.map(function(r){return r.Propiedad;}))].map(function(p){
+    var rw=det.filter(function(r){return r.Propiedad===p;});
+    var e=rw.reduce(function(s,r){return s+r.ofertas_enviadas;},0);
+    var c=rw.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
+    var rv=rw.reduce(function(s,r){return s+r.revenue_usd;},0);
+    return{name:p,e:e,c:c,rv:rv,conv:e>0?c/e:0};
   });
-  var items=Object.values(g);
+  var sorted=propStats.slice().sort(function(a,b){return b.conv-a.conv;});
+  if(sorted.length)ins.push({ico:'🏆',txt:'<b>'+sorted[0].name.replace('Viajero ','')+'</b> lidera la conversión con <b>'+fmtOferta(sorted[0].conv)+'</b> de sus ofertas aceptadas.'});
+  var waT=det.reduce(function(s,r){return s+r.canal_wa_cumplidas;},0);
+  var emT=det.reduce(function(s,r){return s+r.canal_email_cumplidas;},0);
+  if(waT+emT>0)ins.push({ico:waT>=emT?'📱':'📧',txt:'Canal dominante: <b>'+(waT>=emT?'WhatsApp':'Email')+'</b> con <b>'+Math.round(Math.max(waT,emT)/(waT+emT)*100)+'%</b> de las conversiones.'});
+  var cerr=res.filter(function(r){return r.cerrado;}).sort(function(a,b){return a.Período.localeCompare(b.Período);});
+  if(cerr.length>=2){var l=cerr[cerr.length-1],pv=cerr[cerr.length-2],diff=l.conv_oferta_pct-pv.conv_oferta_pct;if(Math.abs(diff)>0.005)ins.push({ico:diff>0?'📈':'📉',txt:'Conversión <b>'+(diff>0?'subió':'bajó')+'</b> de '+fmtOferta(pv.conv_oferta_pct)+' ('+pv.Período+') a <b>'+fmtOferta(l.conv_oferta_pct)+'</b> ('+l.Período+').'+(diff>0?' Mantener la estrategia.':' Revisar qué cambió.')});}
+  var cero=det.filter(function(r){return r.tipo==='Upgrade'&&r.ofertas_cumplidas===0&&r.ofertas_enviadas>5;});
+  if(cero.length)ins.push({ico:'🔎',txt:cero.map(function(r){return r.Propiedad.replace('Viajero ','');}).join(', ')+': <b>0 conversiones en Upgrade</b>. Probar A/B test de asunto o ajustar precio.'});
+  var totE=propStats.reduce(function(s,p){return s+p.e;},0);
+  var totC=propStats.reduce(function(s,p){return s+p.c;},0);
+  var convG=totE>0?totC/totE:0;
+  var proyVentas=Math.round(30*(totE/Math.max(propStats.length,1))*convG);
+  var proyRev=fmtUSD(30*(propStats.reduce(function(s,p){return s+p.rv;},0)/Math.max(propStats.length,1)));
+  ins.push({ico:'🏗️',txt:'Con los <b>30 hostales</b> y la tasa actual de <b>'+fmtOferta(convG)+'</b>, potencial mensual proyectado: <b>~'+fmtN(proyVentas)+' ventas</b> y <b>~'+proyRev+'</b> en revenue.'});
+  document.getElementById('conclusiones-sec').innerHTML='<div class="conclusiones"><div class="conc-title">💡 Conclusiones automáticas</div><div class="conc-list">'+ins.map(function(it){return '<div class="conc-item"><div class="conc-ico">'+it.ico+'</div><div>'+it.txt+'</div></div>';}).join('')+'</div></div>';
+}
 
-  // orden: por propiedad o por mejor conv
-  if(_gSort.col==='prop'){
-    items.sort(function(a,b){
-      return _gSort.asc
-        ? (a.Propiedad||'').localeCompare(b.Propiedad||'')
-        : (b.Propiedad||'').localeCompare(a.Propiedad||'');
-    });
-  }else{
-    function bestPct(it){
-      var p=it.rows.map(function(r){return r.conv_vs_hostal_pct||0;});
-      return Math.max.apply(null,p);
-    }
-    items.sort(function(a,b){
-      return _gSort.asc ? (bestPct(a)-bestPct(b)) : (bestPct(b)-bestPct(a));
+// ─── CHARTS (resumen) ─────────────────────────────────────────────────────
+function renderCharts(det, res){
+  // Chart 1: Barras por propiedad (conv%)
+  var propStats={};
+  det.forEach(function(r){
+    var p=r.Propiedad.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','');
+    if(!propStats[p])propStats[p]={e:0,c:0,rv:0};
+    propStats[p].e+=r.ofertas_enviadas;propStats[p].c+=r.ofertas_cumplidas;propStats[p].rv+=r.revenue_usd;
+  });
+  var sorted=Object.entries(propStats).map(function(e){return{name:e[0],conv:e[1].e>0?e[1].c/e[1].e:0,rev:e[1].rv,cum:e[1].c};}).sort(function(a,b){return b.conv-a.conv;});
+  var labels=sorted.map(function(x){return x.name;});
+  var convData=sorted.map(function(x){return Math.round(x.conv*1000)/10;});
+  var colors=sorted.map(function(x){return x.conv>=0.12?'rgba(21,128,61,.85)':x.conv>=0.06?'rgba(202,138,4,.85)':'rgba(220,38,38,.85)';});
+
+  // Chart 2: Tendencia
+  var resSorted=res.slice().sort(function(a,b){return a.Período.localeCompare(b.Período);}).filter(function(r){return r.Período!=='Sin período';});
+
+  document.getElementById('charts-sec').innerHTML=
+  '<div class="chart-card"><div class="chart-title">Conversión por propiedad</div><div class="chart-sub">% de ofertas enviadas que fueron aceptadas · ordenado de mayor a menor</div><div class="chart-wrap" style="height:260px"><canvas id="chart-conv"></canvas></div></div>'+
+  '<div class="chart-card"><div class="chart-title">Revenue potencial por período</div><div class="chart-sub">USD generados por mes · comparativa Desayuno vs Upgrade</div><div class="chart-wrap" style="height:260px"><canvas id="chart-rev"></canvas></div></div>';
+
+  // Conversión por propiedad
+  if(CHARTS.conv)CHARTS.conv.destroy();
+  var ctx1=document.getElementById('chart-conv');
+  if(ctx1){
+    CHARTS.conv=new Chart(ctx1,{
+      type:'bar',
+      data:{labels:labels,datasets:[{label:'Conversión %',data:convData,backgroundColor:colors,borderRadius:5,borderSkipped:false}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.parsed.y+'%';}}}},scales:{x:{ticks:{font:{family:'Outfit',size:9},maxRotation:40,color:'#7A6E68'},grid:{display:false}},y:{ticks:{font:{family:'Outfit',size:10},callback:function(v){return v+'%';},color:'#7A6E68'},grid:{color:'rgba(0,0,0,.05)'},beginAtZero:true}}}
     });
   }
+
+  // Revenue por período - stacked desayuno vs upgrade
+  var revByPeriod={};
+  det.forEach(function(r){
+    var p=r.Período;if(p==='Sin período')return;
+    if(!revByPeriod[p])revByPeriod[p]={des:0,upg:0,cerrado:false};
+    if(r.tipo==='Desayuno')revByPeriod[p].des+=r.revenue_usd;
+    else revByPeriod[p].upg+=r.revenue_usd;
+  });
+  var pLabels=Object.keys(revByPeriod).sort();
+  var desData=pLabels.map(function(p){return Math.round(revByPeriod[p].des*100)/100;});
+  var upgData=pLabels.map(function(p){return Math.round(revByPeriod[p].upg*100)/100;});
+
+  if(CHARTS.rev)CHARTS.rev.destroy();
+  var ctx2=document.getElementById('chart-rev');
+  if(ctx2){
+    CHARTS.rev=new Chart(ctx2,{
+      type:'bar',
+      data:{
+        labels:pLabels,
+        datasets:[
+          {label:'🍳 Desayuno',data:desData,backgroundColor:'rgba(21,128,61,.8)',borderRadius:5},
+          {label:'🛏️ Upgrade',data:upgData,backgroundColor:'rgba(3,105,161,.8)',borderRadius:5}
+        ]
+      },
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{family:'Outfit',size:11},color:'#1E100A'}},tooltip:{callbacks:{label:function(c){return c.dataset.label+': $'+c.parsed.y.toFixed(2);}}}},scales:{x:{stacked:true,ticks:{font:{family:'Outfit',size:11},color:'#7A6E68'},grid:{display:false}},y:{stacked:true,ticks:{font:{family:'Outfit',size:10},callback:function(v){return '$'+v;},color:'#7A6E68'},grid:{color:'rgba(0,0,0,.05)'}}}}
+    });
+  }
+}
+
+// ─── LEADERBOARD ──────────────────────────────────────────────────────────
+function renderLeaderboard(det){
+  var propStats={};
+  det.forEach(function(r){
+    var p=r.Propiedad;
+    if(!propStats[p])propStats[p]={e:0,c:0,rv:0,wa:0,em:0,des:0,upg:0};
+    propStats[p].e+=r.ofertas_enviadas;propStats[p].c+=r.ofertas_cumplidas;propStats[p].rv+=r.revenue_usd;
+    propStats[p].wa+=r.canal_wa_cumplidas||0;propStats[p].em+=r.canal_email_cumplidas||0;
+    if(r.tipo==='Desayuno')propStats[p].des+=r.ofertas_cumplidas;else propStats[p].upg+=r.ofertas_cumplidas;
+  });
+  var rows=Object.entries(propStats).map(function(e){return{name:e[0],e:e[1].e,c:e[1].c,rv:e[1].rv,wa:e[1].wa,em:e[1].em,des:e[1].des,upg:e[1].upg,conv:e[1].e>0?e[1].c/e[1].e:0};}).sort(function(a,b){return b.conv-a.conv;});
+  var maxConv=rows.length?rows[0].conv:0.01;
+
+  document.getElementById('leaderboard-sec').innerHTML='<div class="leaderboard"><table class="lb-table"><thead><tr>'+
+    '<th>#</th><th>Propiedad</th><th>Conversión</th><th>Ventas</th><th>Revenue pot.</th><th>Canal líder</th>'+
+    '</tr></thead><tbody>'+
+    rows.map(function(r,i){
+      var rank=i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1);
+      var rankCls=i===0?'gold':i===1?'silver':i===2?'bronze':'';
+      var fill=Math.round((r.conv/Math.max(maxConv,0.001))*100);
+      var col=colOferta(r.conv);
+      var canal=r.wa+r.em===0?'—':r.wa>=r.em?'📱 WA':'📧 Email';
+      var canalBadge=r.wa+r.em===0?'<span class="badge b-gray">Sin datos</span>':r.wa>=r.em?'<span class="badge b-ok">📱 WhatsApp</span>':'<span class="badge b-blue">📧 Email</span>';
+      return '<tr>'+
+        '<td><span class="lb-rank '+rankCls+'">'+rank+'</span></td>'+
+        '<td><div class="lb-prop">'+r.name.replace('Viajero ','')+'</div><div class="lb-prop-sub">'+fmtN(r.e)+' enviadas</div></td>'+
+        '<td><div class="lb-bar-wrap"><div class="lb-bar-track"><div class="lb-bar-fill" style="width:'+fill+'%;background:'+col+'"></div></div><span class="lb-pct" style="color:'+col+'">'+fmtOferta(r.conv)+'</span></div></td>'+
+        '<td><span class="lb-rev">'+fmtN(r.c)+'</span><div style="font-size:9px;color:var(--gris)">🍳'+r.des+' · 🛏️'+r.upg+'</div></td>'+
+        '<td><span class="lb-rev">'+fmtUSD(r.rv)+'</span></td>'+
+        '<td>'+canalBadge+'</td>'+
+      '</tr>';
+    }).join('')+
+    '</tbody></table></div>'+
+    '<div style="font-size:10px;color:var(--gris);margin-top:8px;padding:6px 10px;background:var(--cm);border-radius:8px;">🏆 = mayor conversión · Barra relativa al líder actual del filtro.</div>';
+}
+
+// ─── GAUGE TABLE ──────────────────────────────────────────────────────────
+var _gSort={col:'pct',asc:false};
+function renderGauge(det){
+  // show both closed and parcial
+  var data=det.filter(function(r){return r.conv_vs_hostal_pct!==null;});
+  var wrap=document.getElementById('gauge-sec');
+  if(!data.length){wrap.innerHTML='<div style="background:#fff;border-radius:14px;border:1.5px solid var(--border);padding:20px;font-size:12px;color:var(--gris);text-align:center;">⏳ Sin datos de conversión vs universo aún.</div>';return;}
+  _gSort._data=data;_renderGaugeTable();
+}
+function _sortGauge(col){if(_gSort.col===col)_gSort.asc=!_gSort.asc;else{_gSort.col=col;_gSort.asc=col==='prop';}_renderGaugeTable();}
+function toggleGaugeRow(tr){var nxt=tr.nextElementSibling;if(!nxt||!nxt.classList||!nxt.classList.contains('gauge-detail-row'))return;var open=nxt.style.display==='table-row';nxt.style.display=open?'none':'table-row';var ch=tr.querySelector('.chev');if(ch)ch.style.transform=open?'rotate(0deg)':'rotate(180deg)';}
+function _renderGaugeTable(){
+  var data=_gSort._data||[];
+  var g={};
+  data.forEach(function(r){var k=(r.Propiedad||'')+'||'+(r.Período||'');if(!g[k])g[k]={Propiedad:r.Propiedad,Período:r.Período,cerrado:r.cerrado,rows:[]};g[k].rows.push(r);});
+  var items=Object.values(g);
+  function bestPct(it){return Math.max.apply(null,it.rows.map(function(r){return r.conv_vs_hostal_pct||0;}));}
+  if(_gSort.col==='prop')items.sort(function(a,b){return _gSort.asc?(a.Propiedad||'').localeCompare(b.Propiedad||''):(b.Propiedad||'').localeCompare(a.Propiedad||'');});
+  else items.sort(function(a,b){return _gSort.asc?bestPct(a)-bestPct(b):bestPct(b)-bestPct(a);});
+
+  function th(label,c){var ico=_gSort.col===c?(_gSort.asc?'↑':'↓'):'↕';return '<th class="'+(c===_gSort.col?'sorted':'')+'" onclick="_sortGauge(\''+c+'\')">'+label+' <span class="sort-ico">'+ico+'</span></th>';}
 
   function mkCard(r){
     var esDes=r.tipo==='Desayuno';
-    var den=esDes?r._huespedes_hostal:r._checkins_hostal;
-    var denLabel=esDes?'hués.':'CI';
+    var den=esDes?r._huespedes_hostal:r._checkins_hostal;var denLabel=esDes?'hués.':'CI';
     var pct=r.conv_vs_hostal_pct||0;
     var col=colHostal(pct);
-    return ''+
-      '<div class="tipo-card '+(esDes?'desayuno':'upgrade')+'" style="background:var(--surface)">'+
-        '<div class="tipo-hdr">'+
-          '<div class="tipo-name">'+(esDes?'🍳':'🛏️')+' '+r.tipo+'</div>'+
-          '<div class="tipo-conv-wrap"><div class="tipo-conv" style="color:'+col+'">'+fmtFrac(pct,2)+'</div><div class="tipo-conv-lbl">conv. vs hostal</div></div>'+
-        '</div>'+
-        '<div class="tipo-how">'+
-          (esDes
-            ?'🍳 <strong>Cálculo:</strong> cumplidas <strong>÷ huéspedes</strong>'
-            :'🛏️ <strong>Cálculo:</strong> cumplidas <strong>÷ check-ins</strong>')+
-          ' · Período cerrado'+
-        '</div>'+
-        '<div class="tipo-bar-row"><span style="min-width:70px">'+fmtN(r.ofertas_cumplidas)+' vend.</span>'+
-          '<div class="tipo-bar-track"><div class="tipo-bar-fill" style="background:'+col+';width:'+Math.min(100,Math.round((pct/Math.max(0.02,pct*1.25))*100))+'%"></div></div>'+
-        '</div>'+
-        '<div class="tipo-rev" style="display:flex;justify-content:space-between;gap:10px">'+
-          '<span><b>Universo:</b> '+fmtN(den)+' '+denLabel+'</span>'+
-          '<span style="color:var(--gris)"><b>Período:</b> '+r.Período+'</span>'+
-        '</div>'+
-      '</div>';
+    var parcial=r.conv_vs_hostal_parcial;
+    return '<div class="tipo-card '+(esDes?'desayuno':'upgrade')+'" style="background:var(--surface)">'+
+      '<div class="tipo-hdr"><div class="tipo-name">'+(esDes?'🍳':'🛏️')+' '+r.tipo+'</div>'+
+      '<div class="tipo-conv-wrap"><div class="tipo-conv" style="color:'+col+'">'+(parcial?'~':'')+fmtFrac(pct,2)+'</div><div class="tipo-conv-lbl">vs hostal'+(parcial?' · parcial':'')+'</div></div></div>'+
+      '<div class="tipo-how">'+(esDes?'🍳 cumplidas ÷ huéspedes':'🛏️ cumplidas ÷ check-ins')+(r.cerrado?' · Cerrado':' · ⏳ En curso')+'</div>'+
+      '<div class="tipo-bar-row"><span style="min-width:70px">'+fmtN(r.ofertas_cumplidas)+' vend.</span>'+
+        '<div class="tipo-bar-track"><div class="tipo-bar-fill" style="background:'+col+';width:'+Math.min(100,Math.round((pct/Math.max(0.02,pct*1.25))*100))+'%"></div></div>'+
+      '</div>'+
+'<div class="tipo-rev"><b>Universo:</b> '+fmtN(den)+(esDes?' hués.':' CI')+'</div>'+    '</div>';
   }
 
-  return items.map(function(it){
-    var propLabel=(it.Propiedad||'').replace('Viajero ','').replace(' Hostel','').replace(' Hostal','');
-    var d=it.rows.find(function(r){return r.tipo==='Desayuno';});
-    var u=it.rows.find(function(r){return r.tipo==='Upgrade';});
-
-    var best=Math.max(d?d.conv_vs_hostal_pct||0:0, u?u.conv_vs_hostal_pct||0:0);
-    var col=colHostal(best);
-    var maxP=Math.max.apply(null, items.map(function(x){
-      var dd=x.rows.find(function(r){return r.tipo==='Desayuno';});
-      var uu=x.rows.find(function(r){return r.tipo==='Upgrade';});
-      return Math.max(dd?dd.conv_vs_hostal_pct||0:0, uu?uu.conv_vs_hostal_pct||0:0);
-    }))||0.0001;
-    var fillW=Math.min(100,Math.round(best/Math.max(maxP*1.1,0.0001)*100));
-
-    var vend=(d?d.ofertas_cumplidas||0:0)+(u?u.ofertas_cumplidas||0:0);
-    // universo: mostramos ambos (huespedes + checkins) en una sola celda
-    var uni=(d?fmtN(d._huespedes_hostal)+' hués.':'—')+' · '+(u?fmtN(u._checkins_hostal)+' CI':'—');
-
-    var panel=''+
-      '<div style="background:var(--cream);border:1.5px solid var(--border);border-radius:14px;padding:12px">'+
-        '<div class="tipo-grid" style="grid-template-columns:1fr 1fr;gap:12px">'+
-          (d?mkCard(d):'<div class="tipo-card" style="background:var(--surface);border:1.5px dashed var(--border)">Sin Desayuno</div>')+
-          (u?mkCard(u):'<div class="tipo-card" style="background:var(--surface);border:1.5px dashed var(--border)">Sin Upgrade</div>')+
-        '</div>'+
-      '</div>';
-
-    // conv por tipo (no "mejor")
-    var dPct=d?d.conv_vs_hostal_pct||0:null;
-    var uPct=u?u.conv_vs_hostal_pct||0:null;
-
-    function cellPct(pct){
-      if(pct==null) return '<span style="color:var(--gris)">—</span>';
-      var col=colHostal(pct);
-      return '<span class="gt-pct" style="color:'+col+'">'+fmtFrac(pct,2)+'</span>';
-    }
-
-    var row=''+
-      '<tr onclick="toggleGaugeRow(this)" style="cursor:pointer">'+
-        '<td><div class="gt-prop">'+propLabel+'</div></td>'+
-        '<td style="text-align:left">'+cellPct(dPct)+'</td>'+
-        '<td style="text-align:left">'+cellPct(uPct)+'</td>'+
+  var html='<div class="gauge-table-wrap"><table class="gauge-table"><thead><tr>'+
+    th('Propiedad','prop')+th('🍳 Desayuno','pct')+th('🛏️ Upgrade','pct')+'<th>Vendidas</th><th>Estado</th><th style="width:34px"></th>'+
+    '</tr></thead><tbody>'+
+    items.map(function(it){
+      var propLabel=(it.Propiedad||'').replace('Viajero ','').replace(' Hostel','').replace(' Hostal','');
+      var d=it.rows.find(function(r){return r.tipo==='Desayuno';});
+      var u=it.rows.find(function(r){return r.tipo==='Upgrade';});
+      var dPct=d?d.conv_vs_hostal_pct||0:null;
+      var uPct=u?u.conv_vs_hostal_pct||0:null;
+      var parcial=it.rows.some(function(r){return r.conv_vs_hostal_parcial;});
+      var vend=(d?d.ofertas_cumplidas||0:0)+(u?u.ofertas_cumplidas||0:0);
+      function cellPct(pct,isp){if(pct==null)return '<span style="color:var(--gris)">—</span>';var col=colHostal(pct);return '<span class="gt-pct" style="color:'+col+'">'+(isp?'~':'')+fmtFrac(pct,2)+'</span>';}
+      var panel='<div style="background:var(--cream);border:1.5px solid var(--border);border-radius:14px;padding:12px"><div class="tipo-grid" style="grid-template-columns:1fr 1fr;gap:12px">'+
+        (d?mkCard(d):'<div class="tipo-card" style="background:var(--surface);border:1.5px dashed var(--border)">Sin Desayuno</div>')+
+        (u?mkCard(u):'<div class="tipo-card" style="background:var(--surface);border:1.5px dashed var(--border)">Sin Upgrade</div>')+
+        '</div></div>';
+      var estadoBadge=it.cerrado?'<span class="badge b-ok">✅ Cerrado</span>':'<span class="badge b-curso">⏳ En curso</span>'+(parcial?' <span class="badge b-parcial">parcial</span>':'');
+      return '<tr onclick="toggleGaugeRow(this)" style="cursor:pointer">'+
+        '<td><div class="gt-prop">'+propLabel+'</div><div style="font-size:9px;color:var(--gris)">'+it.Período+'</div></td>'+
+        '<td>'+cellPct(dPct,d&&d.conv_vs_hostal_parcial)+'</td>'+
+        '<td>'+cellPct(uPct,u&&u.conv_vs_hostal_parcial)+'</td>'+
         '<td class="gt-cum">'+fmtN(vend)+'</td>'+
-        '<td class="gt-denom">'+uni+'</td>'+
-        '<td><span class="badge b-ok">'+it.Período+'</span></td>'+
+        '<td>'+estadoBadge+'</td>'+
         '<td style="text-align:center"><span class="chev" style="display:inline-block;transition:.18s;transform:rotate(0deg);font-weight:900;color:var(--gris)">▾</span></td>'+
-      '</tr>'+
-      '<tr class="gauge-detail-row" style="display:none">'+
-        '<td colspan="7" style="padding:12px 14px;background:var(--surface)">'+panel+'</td>'+
-      '</tr>';
-    return row;
-  }).join('');
-})()+
-'</tbody></table></div>'+
-'<div style="font-size:10px;color:var(--gris);margin-top:9px;padding:7px 11px;background:var(--cm);border-radius:8px;">'+
-'ℹ️ Clic en encabezado para ordenar. 🟢 ≥ 1% · 🟡 0.5-1% · 🔴 < 0.5% · Solo períodos cerrados · Denominadores desde <b>06_Kyto_Denominadores</b>'+
-'</div>';
-document.getElementById('gauge-sec').innerHTML=html;
+        '</tr>'+
+        '<tr class="gauge-detail-row" style="display:none"><td colspan="6" style="padding:12px 14px;background:var(--surface)">'+panel+'</td></tr>';
+    }).join('')+
+    '</tbody></table></div>'+
+    '<div style="font-size:10px;color:var(--gris);margin-top:9px;padding:7px 11px;background:var(--cm);border-radius:8px;">ℹ️ 🟢 ≥ 1% · 🟡 0.5-1% · 🔴 < 0.5% · ~ = mes en curso (dato parcial) · ✅ = período cerrado (dato definitivo)</div>';
+  document.getElementById('gauge-sec').innerHTML=html;
 }
 
-// ─── REVENUE ────────────────────────────────────────────────────────────────
-function renderRevenue(det){
-var totRev=det.reduce(function(s,r){return s+r.revenue_usd;},0);
-var totCum=det.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
-var ticket=totCum>0?totRev/totCum:0;
-var byTipo={};
-det.forEach(function(r){
-if(!byTipo[r.tipo])byTipo[r.tipo]={rev:0,cum:0};
-byTipo[r.tipo].rev+=r.revenue_usd;byTipo[r.tipo].cum+=r.ofertas_cumplidas;
-});
-var tipoCards=Object.entries(byTipo).map(function(e){
-return {lbl:'Revenue · '+e[0],amt:e[1].rev,sub:e[1].cum+' conversiones de '+e[0],t:e[1].cum>0?e[1].rev/e[1].cum:0};
-});
-
-document.getElementById('rev-sec').innerHTML=
-'<details class="rev-card" style="padding:0;overflow:hidden">'+
-'<summary style="list-style:none;cursor:pointer;padding:18px 16px">'+
-'<div class="rev-label">Revenue generado</div>'+
-'<div style="font-size:11px;color:var(--gris);margin-top:2px">▼</div>'+
-'<div class="rev-amount">'+fmtUSD(totRev)+'</div>'+
-'<div class="rev-sub">'+totCum+' conversiones · ticket prom. '+(totCum>0?('<b>'+fmtUSD(ticket)+'</b>'):'—')+'</div>'+
-'</summary>'+
-'<div style="padding:0 16px 16px">'+
-'<div class="rev-grid">'+
-tipoCards.map(function(c){
-return '<div class="rev-card"><div class="rev-label">'+c.lbl+'</div><div class="rev-amount">'+fmtUSD(c.amt)+'</div><div class="rev-sub">'+c.sub+'</div>'+(c.t>0?'<span class="rev-ticket">💵 '+fmtUSD(c.t)+' / conversión</span>':'')+'</div>';
-}).join('')+
-'</div>'+
-'</div>'+
-'</details>';
-}
-
-// ─── TREND TABLE ────────────────────────────────────────────────────────────
+// ─── TREND TABLE ──────────────────────────────────────────────────────────
 function renderTrend(res){
-var fp=getMsValues('per');
-var rows=(fp.length?res.filter(function(r){return fp.includes(r.Período);}):res)
-.slice().sort(function(a,b){return a.Período.localeCompare(b.Período);});
-if(rows.length<1){document.getElementById('trend-sec').innerHTML='<div class="empty">Sin datos para el filtro seleccionado.</div>';return;}
-document.getElementById('trend-sec').innerHTML='<div class="trend-wrap"><table class="trend-table"><thead><tr>'+
-'<th>Período</th><th>Enviadas</th><th>Cumplidas</th><th>Conv %</th><th>Revenue</th><th>Ticket prom.</th><th>Estado</th>'+
-'</tr></thead><tbody>'+
-rows.map(function(r,i){
-var pv=rows[i-1];
-function dlt(cur,pvV,fmt){
-if(!pv||pvV==null)return '';
-var d=cur-pvV;
-if(Math.abs(d)<0.001)return '';
-return ' <span class="'+(d>0?'delta-up':'delta-down')+'">'+(d>0?'↑':'↓')+' '+fmt(Math.abs(d))+'</span>';
-}
-return '<tr>'+
-'<td><b>'+r.Período+'</b></td>'+
-'<td>'+fmtN(r.ofertas_enviadas)+dlt(r.ofertas_enviadas,pv?pv.ofertas_enviadas:null,fmtN)+'</td>'+
-'<td>'+fmtN(r.ofertas_cumplidas)+dlt(r.ofertas_cumplidas,pv?pv.ofertas_cumplidas:null,fmtN)+'</td>'+
-'<td><b>'+fmtOferta(r.conv_oferta_pct)+'</b>'+dlt(r.conv_oferta_pct,pv?pv.conv_oferta_pct:null,function(x){return fmtOferta(x,2);})+'</td>'+
-'<td>'+fmtUSD(r.revenue_usd)+dlt(r.revenue_usd,pv?pv.revenue_usd:null,fmtUSD)+'</td>'+
-'<td>'+(r.ofertas_cumplidas>0?fmtUSD(r.revenue_usd/r.ofertas_cumplidas):'—')+'</td>'+
-'<td><span class="badge '+(r.cerrado?'b-ok':'b-curso')+'">'+(r.cerrado?'✅ Cerrado':'⏳ En curso')+'</span></td>'+
-'</tr>';
-}).join('')+'</tbody></table></div>';
+  var fp=getMsValues('per');
+  var rows=(fp.length?res.filter(function(r){return fp.includes(r.Período);}):res).slice().sort(function(a,b){return a.Período.localeCompare(b.Período);});
+  if(!rows.length){document.getElementById('trend-sec').innerHTML='<div class="empty">Sin datos.</div>';return;}
+  document.getElementById('trend-sec').innerHTML='<div class="trend-wrap"><table class="trend-table"><thead><tr>'+
+    '<th>Período</th><th>Enviadas</th><th>Cumplidas</th><th>Conv %</th><th>Revenue pot.</th><th>Ticket prom.</th><th>Estado</th>'+
+    '</tr></thead><tbody>'+
+    rows.map(function(r,i){
+      var pv=rows[i-1];
+      function dlt(cur,pvV,fmt){if(!pv||pvV==null)return '';var d=cur-pvV;if(Math.abs(d)<0.001)return '';return ' <span class="'+(d>0?'delta-up':'delta-down')+'">'+(d>0?'↑':'↓')+' '+fmt(Math.abs(d))+'</span>';}
+      return '<tr>'+
+        '<td><b>'+r.Período+'</b></td>'+
+        '<td>'+fmtN(r.ofertas_enviadas)+dlt(r.ofertas_enviadas,pv?pv.ofertas_enviadas:null,fmtN)+'</td>'+
+        '<td>'+fmtN(r.ofertas_cumplidas)+dlt(r.ofertas_cumplidas,pv?pv.ofertas_cumplidas:null,fmtN)+'</td>'+
+        '<td><b>'+fmtOferta(r.conv_oferta_pct)+'</b>'+dlt(r.conv_oferta_pct,pv?pv.conv_oferta_pct:null,function(x){return fmtOferta(x,2);})+'</td>'+
+        '<td>'+fmtUSD(r.revenue_usd)+dlt(r.revenue_usd,pv?pv.revenue_usd:null,fmtUSD)+'</td>'+
+        '<td>'+(r.ofertas_cumplidas>0?fmtUSD(r.revenue_usd/r.ofertas_cumplidas):'—')+'</td>'+
+        '<td><span class="badge '+(r.cerrado?'b-ok':'b-curso')+'">'+(r.cerrado?'✅ Cerrado':'⏳ En curso')+'</span></td>'+
+        '</tr>';
+    }).join('')+'</tbody></table></div>';
 }
 
-// ─── PROP CARDS ─────────────────────────────────────────────────────────────
-function renderPropCards(det){
-var props=[...new Set(det.map(function(r){return r.Propiedad;}))].sort();
-var wrap=document.getElementById('prop-grid');
-if(!props.length){wrap.innerHTML='<div class="empty">Sin datos para el filtro seleccionado.</div>';return;}
-wrap.innerHTML=props.map(function(prop){
-var rows=det.filter(function(r){return r.Propiedad===prop;});
-var tE=rows.reduce(function(s,r){return s+r.ofertas_enviadas;},0);
-var tC=rows.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
-var tRv=rows.reduce(function(s,r){return s+r.revenue_usd;},0);
-var conv=tE>0?tC/tE:0;
-var cls=conv>=0.12?'bueno':conv>=0.06?'medio':'critico';
-var ico=conv>=0.12?'🟢':conv>=0.06?'🟡':'🔴';
-var bCls=cls==='bueno'?'b-ok':cls==='medio'?'b-warn':'b-err';
-var tipos=[...new Set(rows.map(function(r){return r.tipo;}))];
-var tipoCards=tipos.map(function(tipo){
-var tr=rows.filter(function(r){return r.tipo===tipo;});
-var e=tr.reduce(function(s,r){return s+r.ofertas_enviadas;},0);
-var c=tr.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
-var rv=tr.reduce(function(s,r){return s+r.revenue_usd;},0);
-var cv=e>0?c/e:0;
-// Canal se ve en la pestaña "Timing & Canal" (para evitar duplicación)
-var wa=0;
-var em=0;
-var cerR=tr.filter(function(r){return r.cerrado&&r.conv_vs_hostal_pct!==null;});
-var hc=cerR.length?cerR[cerR.length-1].conv_vs_hostal_pct:null;
-var esDes=tipo==='Desayuno';
-var howTxt=esDes
-?'🍳 <strong>Cómo se calcula:</strong> Conv. vs hostal = cumplidas <strong>÷ huéspedes</strong> (solo mes cerrado)'
-:'🛏️ <strong>Cómo se calcula:</strong> Conv. vs hostal = cumplidas <strong>÷ check-ins</strong> (solo mes cerrado)';
-var hostalStr=hc!==null
-?' · vs hostal: <b>'+fmtFrac(hc,2)+'</b>' // CORREGIDO
-:'<span style="color:var(--warn)"> · vs hostal: disponible al cerrar el mes</span>';
-return '<div class="tipo-card '+(tipo.toLowerCase())+'">'+
-'<div class="tipo-hdr">'+
-'<div class="tipo-name">'+(esDes?'🍳':'🛏️')+' '+tipo+'</div>'+
-'<div class="tipo-conv-wrap"><div class="tipo-conv '+clsOferta(cv)+'">'+fmtOferta(cv)+'</div><div class="tipo-conv-lbl">conv. oferta</div></div>'+
-'</div>'+
-// HOW pill — qué lee y cómo
-'<div class="tipo-how">'+howTxt+hostalStr+'</div>'+
-'<div class="tipo-bar-row"><span style="min-width:52px">'+c+' / '+e+'</span>'+
-'<div class="tipo-bar-track"><div class="tipo-bar-fill" style="background:'+(esDes?'var(--ok)':'var(--blue)')+';width:'+Math.min(100,e>0?Math.round(cv/Math.max(0.25,cv*1.2)*100):0)+'%"></div></div>'+
-'</div>'+
-'<div class="tipo-rev">'+fmtUSD(rv)+(c>0?' · '+fmtUSD(rv/c)+'/venta':'')+'</div>'+
-'</div></div>';
-}).join('');
-return '<div class="prop-card" data-prop="'+prop+'">'+
-'<div class="prop-card-head '+cls+'" onclick="togglePropCard(this)">'+
-'<div class="prop-ico">'+ico+'</div>'+
-'<div class="prop-info">'+
-'<div class="prop-name">'+prop+'<span class="badge '+bCls+'">'+fmtOferta(conv)+'</span></div>'+
-'<div class="prop-sub">'+tE+' enviadas · '+tC+' cumplidas · '+fmtUSD(tRv)+'</div>'+
-'</div>'+
-'<div class="prop-metrics">'+
-'<div class="prop-m"><div class="prop-m-val" style="color:'+colOferta(conv)+'">'+fmtN(tC)+'</div><div class="prop-m-lbl">Ventas</div></div>'+
-'<div class="prop-m"><div class="prop-m-val" style="color:var(--ok)">'+fmtUSD(tRv)+'</div><div class="prop-m-lbl">Revenue</div></div>'+
-'<div class="prop-m" style="min-width:120px">'+
-'<div style="font-size:8px;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;">Canal líder</div>'+
-'<div class="bar-duo" style="height:7px">'+
-'<div style="width:'+ ( (function(){ var wa=rows.reduce(function(s,r){return s+r.canal_wa_cumplidas;},0); var em=rows.reduce(function(s,r){return s+r.canal_email_cumplidas;},0); var tot=wa+em||1; return Math.round(wa/tot*100); })() ) +'%;background:var(--ok);height:100%"></div>'+
-'<div style="width:'+ ( (function(){ var wa=rows.reduce(function(s,r){return s+r.canal_wa_cumplidas;},0); var em=rows.reduce(function(s,r){return s+r.canal_email_cumplidas;},0); var tot=wa+em||1; return 100-Math.round(wa/tot*100); })() ) +'%;background:var(--blue);height:100%"></div>'+
-'</div>'+
-'<div style="display:flex;justify-content:space-between;font-size:9px;margin-top:3px;color:var(--gris)"><span>📱</span><span>📧</span></div>'+
-'</div>'+
-'</div>'+
-'<div class="prop-arr">▼</div>'+
-'</div>'+
-'<div class="prop-body"><div class="tipo-grid">'+tipoCards+'</div></div>'+
-'</div>';
-}).join('');
-}
-togglePropCard=function(h){h.classList.toggle('open');h.nextElementSibling.classList.toggle('vis');};
-
-// ─── TIMING ─────────────────────────────────────────────────────────────────
-function renderTiming(det){
-var mD={},mU={};
-det.forEach(function(r){
-var m=r.tipo==='Desayuno'?mD:mU;
-Object.entries(r.timing_dist||{}).forEach(function(e){m[e[0]]=(m[e[0]]||0)+e[1];});
-});
-var slots=[...new Set([...Object.keys(mD),...Object.keys(mU)])].sort(function(a,b){
-var pn=function(s){var n=parseInt(s.slice(1));return s.includes('-')?-n:n;};
-return pn(a)-pn(b);
-});
-if(!slots.length){document.getElementById('timing-sec').innerHTML='<div class="empty">Sin datos de timing.</div>';return;}
-var maxV=Math.max(1,...slots.map(function(s){return Math.max(mD[s]||0,mU[s]||0);}));
-var totBySlot=slots.map(function(s){return{s:s,n:(mD[s]||0)+(mU[s]||0)};}).sort(function(a,b){return b.n-a.n;});
-var best=totBySlot[0]?totBySlot[0].s:null;
-var slotsHtml='';
-slotsHtml=slots.map(function(s){
-var d=mD[s]||0,u=mU[s]||0;
-var wD=maxV>0?Math.round(d/maxV*100):0;
-var wU=maxV>0?Math.round(u/maxV*100):0;
-var isBest=s===best;
-var label=s==='T-0'?s+' (mismo día CI)':s==='T+1'?s+' (in-stay)':s;
-return '<div class="t-slot">'+
-'<div class="t-slot-lbl"><span class="t-slot-name">'+(isBest?'<b style="color:var(--ok)">'+label+'</b>':label)+'</span>'+
-(isBest?'<span class="t-best-badge">★ mejor · '+(d+u)+' aceptaciones</span>':'<span class="t-slot-total">'+(d+u)+' aceptaciones</span>')+
-'</div>'+
-(d>0?'<div class="t-hbar-row"><span class="t-hbar-tipo">🍳 Desayuno</span><div class="t-hbar-track"><div class="t-hbar-fill" style="width:'+wD+'%;background:var(--ok)"></div></div><span class="t-hbar-val">'+d+'</span></div>':'')+
-(u>0?'<div class="t-hbar-row"><span class="t-hbar-tipo">🛏️ Upgrade</span><div class="t-hbar-track"><div class="t-hbar-fill" style="width:'+wU+'%;background:var(--blue)"></div></div><span class="t-hbar-val">'+u+'</span></div>':'')+
-'</div>';
-}).join('<div class="t-divider"></div>');
-document.getElementById('timing-sec').innerHTML=
-'<div class="timing-wrap">'+
-'<div class="t-header">'+
-'<div><div class="t-title">Distribución de aceptaciones por franja</div>'+
-'<div class="t-subtitle">Aceptaciones por <b>días vs check-in</b>: <b>T-</b> antes del check-in · <b>T+</b> ya hospedado</div></div>'+
-(best?'<span class="t-best-badge">★ Franja líder: '+best+'</span>':'')+
-'</div>'+
-slotsHtml+
-'<div class="t-legend">'+
-'<span><div style="width:11px;height:11px;background:var(--ok);border-radius:3px"></div> Desayuno</span>'+
-'<span><div style="width:11px;height:11px;background:var(--blue);border-radius:3px"></div> Upgrade</span>'+
-'<span><b>Escala:</b> barras relativas al máximo del filtro actual (sirven para ver la franja líder)</span>'+
-'</div></div>';
+// ─── METODOLOGÍA ──────────────────────────────────────────────────────────
+function renderMetodo(res){
+  var cerrados=res.filter(function(r){return r.cerrado;}).map(function(r){return r.Período;});
+  var abiertos=res.filter(function(r){return !r.cerrado;}).map(function(r){return r.Período;});
+  document.getElementById('metodo-sec').innerHTML='<details class="metodo-banner"><summary class="metodo-title" style="list-style:none;width:100%">📐 ¿Cómo medimos? <span style="margin-left:auto;color:var(--gris);font-weight:700">▾</span></summary>'+
+    '<div class="metodo-grid">'+
+    '<div class="metodo-card op"><div class="metodo-head"><span class="metodo-name">⚡ Conv % operativa</span><span class="metodo-tag tag-live">Tiempo real</span></div><div class="metodo-formula">cumplidas ÷ enviadas</div><div class="metodo-desc"><b>Período = mes de oferta.</b> Disponible siempre, incluso con el mes en curso.<br><br>Responde: <b>¿Qué % de las ofertas enviadas fue aceptado?</b></div></div>'+
+    '<div class="metodo-card hostal"><div class="metodo-head"><span class="metodo-name">🏨 Conv % vs hostal</span><span class="metodo-tag tag-cerr">Cerrado + parcial</span></div><div class="metodo-formula">cumplidas ÷ universo hostal</div><div class="metodo-desc">🍳 Desayuno: ÷ huéspedes · 🛏️ Upgrade: ÷ check-ins<br><br>Elimina el sesgo de envío. Mide el % real del universo que compró.<br><br>'+(cerrados.length?'<span style="color:var(--ok);font-weight:700">✅ Cerrados: '+cerrados.join(', ')+'</span><br>':'')+(abiertos.length?'<span style="color:var(--warn);font-weight:700">⏳ Parciales: '+abiertos.join(', ')+'</span>':'')+'</div></div>'+
+    '</div><div class="metodo-nota">ℹ️ Revenue mostrado = <b>revenue potencial</b> (valor GTS). El revenue real (ingreso efectivo a ops) requiere exportar ese campo desde el Google Sheet.</div></details>';
 }
 
-// ─── CANAL ──────────────────────────────────────────────────────────────────
-function renderCanal(det){
-// MERGE: Canal de aceptación + detalle por producto (cards) en un solo lugar.
-// Por propiedad: mostramos WA vs Email global y un abatible con cards por producto.
-var byProp={};
-det.forEach(function(r){
-  if(!r.ofertas_cumplidas) return;
-  var prop=r.Propiedad||'Sin propiedad';
-  var tipo=r.tipo||'Sin tipo';
-  if(!byProp[prop]) byProp[prop]={prop:prop, ventas:0, enviadas:0, revenue:0, wa:0, em:0, porTipo:{}};
-  if(!byProp[prop].porTipo[tipo]) byProp[prop].porTipo[tipo]={tipo:tipo, wa:0, em:0, ventas:0, enviadas:0, revenue:0, conv_vs_hostal:null, cerrado:false};
+// ─── REVENUE TAB ──────────────────────────────────────────────────────────
+function renderRevenue(det){
+  var totRev=det.reduce(function(s,r){return s+r.revenue_usd;},0);
+  var totCum=det.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
+  var ticket=totCum>0?totRev/totCum:0;
 
-  var wa=Number(r.canal_wa_cumplidas||0);
-  var em=Number(r.canal_email_cumplidas||0);
-  byProp[prop].wa += wa;
-  byProp[prop].em += em;
-  byProp[prop].ventas += Number(r.ofertas_cumplidas||0);
-  byProp[prop].enviadas += Number(r.ofertas_enviadas||0);
-  byProp[prop].revenue += Number(r.revenue_usd||0);
+  var byTipo={};
+  det.forEach(function(r){if(!byTipo[r.tipo])byTipo[r.tipo]={rev:0,cum:0};byTipo[r.tipo].rev+=r.revenue_usd;byTipo[r.tipo].cum+=r.ofertas_cumplidas;});
+  var desRev=(byTipo['Desayuno']||{}).rev||0;
+  var upgRev=(byTipo['Upgrade']||{}).rev||0;
+  var desCum=(byTipo['Desayuno']||{}).cum||0;
+  var upgCum=(byTipo['Upgrade']||{}).cum||0;
 
-  byProp[prop].porTipo[tipo].wa += wa;
-  byProp[prop].porTipo[tipo].em += em;
-  byProp[prop].porTipo[tipo].ventas += Number(r.ofertas_cumplidas||0);
-  byProp[prop].porTipo[tipo].enviadas += Number(r.ofertas_enviadas||0);
-  byProp[prop].porTipo[tipo].revenue += Number(r.revenue_usd||0);
+  // KPIs
+  document.getElementById('rev-kpis-sec').innerHTML='<div class="rev-kpi-grid">'+
+    '<div class="rev-kpi"><div class="rev-kpi-label">Revenue potencial total</div><div class="rev-kpi-val" style="color:var(--blue)">'+fmtUSD(totRev)+'</div><div class="rev-kpi-sub">'+fmtN(totCum)+' ventas · ticker '+fmtUSD(ticket)+'</div></div>'+
+    '<div class="rev-kpi"><div class="rev-kpi-label">🍳 Desayuno</div><div class="rev-kpi-val" style="color:var(--ok)">'+fmtUSD(desRev)+'</div><div class="rev-kpi-sub">'+fmtN(desCum)+' ventas · '+(desCum>0?fmtUSD(desRev/desCum)+'/venta':'—')+'</div></div>'+
+    '<div class="rev-kpi"><div class="rev-kpi-label">🛏️ Upgrade</div><div class="rev-kpi-val" style="color:var(--blue)">'+fmtUSD(upgRev)+'</div><div class="rev-kpi-sub">'+fmtN(upgCum)+' ventas · '+(upgCum>0?fmtUSD(upgRev/upgCum)+'/venta':'—')+'</div></div>'+
+  '</div>';
 
-  if(r.cerrado && r.conv_vs_hostal_pct!=null){
-    byProp[prop].porTipo[tipo].conv_vs_hostal = r.conv_vs_hostal_pct;
-    byProp[prop].porTipo[tipo].cerrado = true;
+  // Split visual
+  var splitHtml='<div class="rev-split-banner" style="margin-bottom:22px">'+
+    '<div class="rev-split-card potencial">'+
+      '<div class="rev-split-tag">💙 Revenue Potencial (GTS)</div>'+
+      '<div class="rev-split-amount">'+fmtUSD(totRev)+'</div>'+
+      '<div class="rev-split-sub">'+fmtN(totCum)+' ventas cerradas · lo que GTS reporta como valor facturado al huésped</div>'+
+      '<div class="rev-split-note">🍳 Desayuno: <b>'+fmtUSD(desRev)+'</b> ('+fmtN(desCum)+' ventas)<br>🛏️ Upgrade: <b>'+fmtUSD(upgRev)+'</b> ('+fmtN(upgCum)+' ventas)</div>'+
+    '</div>'+
+    '<div class="rev-split-card real">'+
+      '<div class="rev-split-tag">💚 Revenue Real (Operaciones)</div>'+
+      '<div class="rev-split-amount" style="color:var(--gris)">Pendiente</div>'+
+      '<div class="rev-split-sub">Ingreso efectivo neto a operaciones — requiere exportar campo desde <b>07_Kyto_Upselling_Raw</b></div>'+
+      '<div class="rev-split-note">⚙️ Una vez disponible en el JSON, este card mostrará el desglose real por Desayuno y Upgrade, la diferencia vs potencial, y el % de captura real.</div>'+
+    '</div>'+
+  '</div>';
+
+  // Revenue por propiedad
+  var propRev={};
+  det.forEach(function(r){
+    var p=r.Propiedad;
+    if(!propRev[p])propRev[p]={rv:0,des:0,upg:0,cum:0,env:0};
+    propRev[p].rv+=r.revenue_usd;propRev[p].cum+=r.ofertas_cumplidas;propRev[p].env+=r.ofertas_enviadas;
+    if(r.tipo==='Desayuno')propRev[p].des+=r.revenue_usd;else propRev[p].upg+=r.revenue_usd;
+  });
+  var propRows=Object.entries(propRev).map(function(e){return{name:e[0],rv:e[1].rv,des:e[1].des,upg:e[1].upg,cum:e[1].cum,env:e[1].env};}).sort(function(a,b){return b.rv-a.rv;});
+  var maxRev=propRows.length?propRows[0].rv:1;
+
+  var tableHtml='<div class="prop-table-wrap"><table class="prop-table"><thead><tr>'+
+    '<th>#</th><th>Propiedad</th><th>Revenue pot.</th><th>🍳 Desayuno</th><th>🛏️ Upgrade</th><th>Ventas</th><th>Ticket prom.</th>'+
+    '</tr></thead><tbody>'+
+    propRows.map(function(r,i){
+      var fill=Math.round((r.rv/maxRev)*100);
+      return '<tr>'+
+        '<td style="color:var(--gris);font-weight:700">'+(i+1)+'</td>'+
+        '<td>'+
+          '<div style="font-weight:800;font-size:12px;color:var(--dark)">'+r.name.replace('Viajero ','')+'</div>'+
+          '<div style="display:flex;align-items:center;gap:6px;margin-top:4px">'+
+            '<div class="lb-bar-track" style="flex:1"><div class="lb-bar-fill" style="width:'+fill+'%;background:var(--blue);opacity:.7"></div></div>'+
+          '</div>'+
+        '</td>'+
+        '<td style="font-weight:800;color:var(--blue)">'+fmtUSD(r.rv)+'</td>'+
+        '<td style="color:var(--ok)">'+fmtUSD(r.des)+'</td>'+
+        '<td style="color:var(--blue)">'+fmtUSD(r.upg)+'</td>'+
+        '<td>'+fmtN(r.cum)+'</td>'+
+        '<td>'+(r.cum>0?fmtUSD(r.rv/r.cum):'—')+'</td>'+
+        '</tr>';
+    }).join('')+
+    '</tbody></table></div>';
+
+  // Chart: donut por tipo
+  var chartHtml='<div class="chart-card" style="margin-bottom:22px"><div class="chart-title">Distribución de revenue potencial</div><div class="chart-sub">Desayuno vs Upgrade · total filtrado</div>'+
+    '<div class="rev-donut-row"><div style="position:relative;height:200px;width:200px;flex-shrink:0"><canvas id="chart-donut"></canvas></div>'+
+    '<div class="rev-donut-legend">'+
+      '<div class="rev-donut-leg-item"><div class="rev-donut-leg-dot" style="background:rgba(21,128,61,.8)"></div><span class="rev-donut-leg-lbl">🍳 Desayuno</span><span class="rev-donut-leg-val">'+fmtUSD(desRev)+'</span></div>'+
+      '<div class="rev-donut-leg-item"><div class="rev-donut-leg-dot" style="background:rgba(3,105,161,.8)"></div><span class="rev-donut-leg-lbl">🛏️ Upgrade</span><span class="rev-donut-leg-val">'+fmtUSD(upgRev)+'</span></div>'+
+      '<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)"><div style="font-size:10px;color:var(--gris)">Desayuno genera <b style="color:var(--dark)">'+(totRev>0?Math.round(desRev/totRev*100):0)+'%</b> del revenue total</div></div>'+
+    '</div></div></div>';
+
+  document.getElementById('rev-charts-sec').innerHTML=splitHtml+chartHtml;
+  document.getElementById('rev-table-sec').innerHTML=tableHtml;
+
+  if(CHARTS.donut)CHARTS.donut.destroy();
+  var ctxD=document.getElementById('chart-donut');
+  if(ctxD&&(desRev+upgRev)>0){
+    CHARTS.donut=new Chart(ctxD,{
+      type:'doughnut',
+      data:{labels:['🍳 Desayuno','🛏️ Upgrade'],datasets:[{data:[desRev,upgRev],backgroundColor:['rgba(21,128,61,.8)','rgba(3,105,161,.8)'],borderWidth:2,borderColor:'#fff'}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.label+': $'+c.parsed.toFixed(2);}}}},cutout:'68%'}
+    });
   }
-});
-
-var items=Object.values(byProp).filter(function(v){return v.wa+v.em>0;})
-  .sort(function(a,b){return (b.wa+b.em)-(a.wa+a.em);});
-if(!items.length){document.getElementById('canal-sec').innerHTML='<div class="empty">Sin datos de canal.</div>';return;}
-
-function miniBar(wa,em){
-  var tot=wa+em||1;
-  var wP=Math.round(wa/tot*100), eP=100-wP;
-  return ''+
-  '<div class="bar-duo" style="height:8px">'+
-  '<div style="width:'+wP+'%;background:var(--ok);height:100%"></div>'+
-  '<div style="width:'+eP+'%;background:var(--blue);height:100%"></div>'+
-  '</div>'+
-  '<div style="display:flex;justify-content:space-between;font-size:9px;margin-top:3px;color:var(--gris)"><span>'+wP+'% WA</span><span>'+eP+'% Email</span></div>';
 }
 
-function tipoCard(t){
-  var esDes=t.tipo==='Desayuno';
-  var cv=t.enviadas>0?(t.ventas/t.enviadas):0;
-  var howTxt=esDes
-    ?'🍳 <strong>Cómo se calcula:</strong> Conv. vs hostal = cumplidas <strong>÷ huéspedes</strong> (solo mes cerrado)'
-    :'🛏️ <strong>Cómo se calcula:</strong> Conv. vs hostal = cumplidas <strong>÷ check-ins</strong> (solo mes cerrado)';
-  var hostalStr=(t.cerrado && t.conv_vs_hostal!=null)
-    ?' · vs hostal: <b>'+fmtFrac(t.conv_vs_hostal,2)+'</b>'
-    :'<span style="color:var(--warn)"> · vs hostal: disponible al cerrar el mes</span>';
+// ─── PROP CARDS (tab 3) ───────────────────────────────────────────────────
+function renderPropCards(det){
+  var props=[...new Set(det.map(function(r){return r.Propiedad;}))].sort();
+  var wrap=document.getElementById('prop-grid');
+  if(!props.length){wrap.innerHTML='<div class="empty">Sin datos.</div>';return;}
+  wrap.innerHTML=props.map(function(prop){
+    var rows=det.filter(function(r){return r.Propiedad===prop;});
+    var tE=rows.reduce(function(s,r){return s+r.ofertas_enviadas;},0);
+    var tC=rows.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
+    var tRv=rows.reduce(function(s,r){return s+r.revenue_usd;},0);
+    var conv=tE>0?tC/tE:0;
+    var cls=conv>=0.12?'bueno':conv>=0.06?'medio':'critico';
+    var ico=conv>=0.12?'🟢':conv>=0.06?'🟡':'🔴';
+    var tipos=[...new Set(rows.map(function(r){return r.tipo;}))];
+    var tipoCards=tipos.map(function(tipo){
+      var tr=rows.filter(function(r){return r.tipo===tipo;});
+      var e=tr.reduce(function(s,r){return s+r.ofertas_enviadas;},0);
+      var c=tr.reduce(function(s,r){return s+r.ofertas_cumplidas;},0);
+      var rv=tr.reduce(function(s,r){return s+r.revenue_usd;},0);
+      var cv=e>0?c/e:0;
+      var esDes=tipo==='Desayuno';
+      // show conv_vs_hostal if available
+      var hostalRows=tr.filter(function(r){return r.conv_vs_hostal_pct!==null;});
+      var hc=hostalRows.length?hostalRows[hostalRows.length-1].conv_vs_hostal_pct:null;
+      var parcial=hostalRows.length?hostalRows[hostalRows.length-1].conv_vs_hostal_parcial:false;
+      var howTxt=esDes?'🍳 <strong>Conv vs hostal:</strong> cumplidas <strong>÷ huéspedes</strong>':'🛏️ <strong>Conv vs hostal:</strong> cumplidas <strong>÷ check-ins</strong>';
+      var hostalStr=hc!==null?' · vs hostal: <b>'+(parcial?'~':'')+fmtFrac(hc,2)+'</b>'+(parcial?' <span style="color:var(--warn);font-size:9px">(parcial)</span>':''):'<span style="color:var(--warn)"> · vs hostal: pendiente</span>';
+      return '<div class="tipo-card '+(tipo.toLowerCase())+'">'+
+        '<div class="tipo-hdr"><div class="tipo-name">'+(esDes?'🍳':'🛏️')+' '+tipo+'</div>'+
+        '<div class="tipo-conv-wrap"><div class="tipo-conv '+clsOferta(cv)+'">'+fmtOferta(cv)+'</div><div class="tipo-conv-lbl">conv. oferta</div></div></div>'+
+        '<div class="tipo-how">'+howTxt+hostalStr+'</div>'+
+        '<div class="tipo-bar-row"><span style="min-width:52px">'+fmtN(c)+' / '+fmtN(e)+'</span>'+
+          '<div class="tipo-bar-track"><div class="tipo-bar-fill" style="background:'+(esDes?'var(--ok)':'var(--blue)')+';width:'+Math.min(100,e>0?Math.round(cv/Math.max(0.25,cv*1.2)*100):0)+'%"></div></div>'+
+        '</div>'+
+        '<div class="tipo-rev">'+fmtUSD(rv)+(c>0?' · '+fmtUSD(rv/c)+'/venta':'')+'</div>'+
+      '</div>';
+    }).join('');
+    var pid='prop-'+prop.replace(/\s+/g,'-');
+    return '<div class="prop-card" data-prop="'+prop+'">'+
+      '<div class="prop-card-head '+cls+'" onclick="togglePropCard(\''+pid+'\',this)">'+
+        '<div class="prop-ico">'+ico+'</div>'+
+        '<div class="prop-info">'+
+          '<div class="prop-name">'+prop.replace('Viajero ','')+'<span class="badge '+(cls==='bueno'?'b-ok':cls==='medio'?'b-warn':'b-err')+'">'+fmtOferta(conv)+'</span></div>'+
+          '<div class="prop-sub">'+fmtN(tE)+' enviadas · '+fmtN(tC)+' ventas · '+fmtUSD(tRv)+'</div>'+
+        '</div>'+
+        '<span class="prop-arr">▾</span>'+
+      '</div>'+
+      '<div class="prop-body" id="'+pid+'">'+
+        '<div class="tipo-grid">'+tipoCards+'</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+function togglePropCard(id,hdr){
+  var b=document.getElementById(id);
+  if(!b)return;
+  var open=b.classList.contains('vis');
+  b.classList.toggle('vis',!open);
+  hdr.classList.toggle('open',!open);
+}
 
-  return ''+
-  '<div class="tipo-card '+(t.tipo||'').toLowerCase()+'" style="background:var(--cream)">'+
-    '<div class="tipo-hdr">'+
-      '<div class="tipo-name">'+(esDes?'🍳':'🛏️')+' '+t.tipo+'</div>'+
-      '<div class="tipo-conv-wrap"><div class="tipo-conv '+clsOferta(cv)+'">'+fmtOferta(cv)+'</div><div class="tipo-conv-lbl">conv. oferta</div></div>'+
-    '</div>'+
-    '<div class="tipo-how">'+howTxt+hostalStr+'</div>'+
-    '<div class="tipo-bar-row"><span style="min-width:52px">'+fmtN(t.ventas)+' / '+fmtN(t.enviadas)+'</span>'+
-      '<div class="tipo-bar-track"><div class="tipo-bar-fill" style="background:'+(esDes?'var(--ok)':'var(--blue)')+';width:'+Math.min(100,t.enviadas>0?Math.round((t.ventas/t.enviadas)/Math.max(0.25,(t.ventas/t.enviadas)*1.2)*100):0)+'%"></div></div>'+
-    '</div>'+
-    '<div class="tipo-rev">'+fmtUSD(t.revenue)+(t.ventas>0?' · '+fmtUSD(t.revenue/t.ventas)+'/venta':'')+'</div>'+
-    '<div style="margin-top:8px">'+
-      '<div style="font-size:9px;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Canal (solo cumplidas con canal)</div>'+
-      miniBar(t.wa,t.em)+
-    '</div>'+
+// ─── TIMING ───────────────────────────────────────────────────────────────
+function renderTiming(det){
+  var slots=['T-3','T-2','T-1','T-0','T+1'];
+  var bySlot={};
+  slots.forEach(function(s){bySlot[s]={des:0,upg:0};});
+  det.forEach(function(r){
+    var td=r.timing_dist||{};
+    Object.entries(td).forEach(function(e){if(bySlot[e[0]])bySlot[e[0]][r.tipo==='Desayuno'?'des':'upg']+=e[1];});
+  });
+  var maxVal=Math.max.apply(null,slots.map(function(s){return bySlot[s].des+bySlot[s].upg;}));
+  if(!maxVal){document.getElementById('timing-sec').innerHTML='<div class="empty">Sin datos de timing.</div>';return;}
+  var best=slots.slice().sort(function(a,b){return (bySlot[b].des+bySlot[b].upg)-(bySlot[a].des+bySlot[a].upg);})[0];
+  var avgDias=0,total=0;
+  det.forEach(function(r){if(r.avg_dias_antes_checkin!=null){avgDias+=r.avg_dias_antes_checkin*r.ofertas_cumplidas;total+=r.ofertas_cumplidas;}});
+  var avgDiasStr=total>0?(Math.round(avgDias/total*10)/10)+' días antes del check-in en promedio':'—';
+
+  document.getElementById('timing-sec').innerHTML='<div class="timing-wrap">'+
+    '<div class="t-header"><div><div class="t-title">Distribución de aceptación por timing</div><div class="t-subtitle">Cuándo acepta el huésped relativo a su check-in · '+avgDiasStr+'</div></div><span class="t-best-badge">🏆 Mejor franja: '+best+'</span></div>'+
+    slots.map(function(s){
+      var d=bySlot[s].des,u=bySlot[s].upg,tot=d+u;
+      var wD=maxVal?Math.round(d/maxVal*100):0,wU=maxVal?Math.round(u/maxVal*100):0;
+      var lbl=s==='T+1'?s+' (post check-in)':s==='T-0'?s+' (día llegada)':s+' ('+s.replace('T-','')+' día'+(s!=='T-1'?'s':'')+' antes)';
+      return '<div class="t-slot">'+
+        '<div class="t-slot-lbl"><span class="t-slot-name">'+lbl+'</span><span class="t-slot-total">'+tot+' aceptaciones</span></div>'+
+        '<div class="t-hbar-row"><span class="t-hbar-tipo">🍳 Desayuno</span><div class="t-hbar-track"><div class="t-hbar-fill" style="width:'+wD+'%;background:var(--ok)"></div></div><span class="t-hbar-val">'+d+'</span></div>'+
+        '<div class="t-hbar-row"><span class="t-hbar-tipo">🛏️ Upgrade</span><div class="t-hbar-track"><div class="t-hbar-fill" style="width:'+wU+'%;background:var(--blue)"></div></div><span class="t-hbar-val">'+u+'</span></div>'+
+        (s!=='T+1'?'<div class="t-divider"></div>':'');
+    }).join('')+
+    '<div class="t-legend"><span><div style="width:10px;height:10px;border-radius:3px;background:var(--ok)"></div> 🍳 Desayuno</span><span><div style="width:10px;height:10px;border-radius:3px;background:var(--blue)"></div> 🛏️ Upgrade</span></div>'+
   '</div>';
 }
 
-document.getElementById('canal-sec').innerHTML=
-'<div class="canal-wrap"><table class="canal-table"><thead><tr>'+
-'<th>Propiedad</th><th>WA vs Email (global)</th><th style="text-align:center">📱 WA</th><th style="text-align:center">📧 Email</th><th style="text-align:center">Canal líder</th><th style="width:34px"></th>'+
-'</tr></thead><tbody>'+
-items.map(function(it){
-  var lider = it.wa>=it.em ? '📱 WhatsApp' : '📧 Email';
-  var tipos = Object.values(it.porTipo||{}).filter(function(x){return (x.wa+x.em)>0;})
-    .sort(function(a,b){return (b.wa+b.em)-(a.wa+a.em);});
+// ─── CANAL ────────────────────────────────────────────────────────────────
+function renderCanal(det){
+  var byProp={};
+  det.forEach(function(r){
+    var p=r.Propiedad;
+    if(!byProp[p])byProp[p]={prop:p,wa:0,em:0,ventas:0,revenue:0,porTipo:{}};
+    byProp[p].wa+=r.canal_wa_cumplidas||0;
+    byProp[p].em+=r.canal_email_cumplidas||0;
+    byProp[p].ventas+=r.ofertas_cumplidas||0;
+    byProp[p].revenue+=r.revenue_usd||0;
+    if(!byProp[p].porTipo[r.tipo])byProp[p].porTipo[r.tipo]={tipo:r.tipo,enviadas:0,ventas:0,revenue:0,wa:0,em:0,cerrado:false,conv_vs_hostal:null,conv_vs_hostal_parcial:false};
+    var t=byProp[p].porTipo[r.tipo];
+    t.enviadas+=r.ofertas_enviadas||0;t.ventas+=r.ofertas_cumplidas||0;t.revenue+=r.revenue_usd||0;
+    t.wa+=r.canal_wa_cumplidas||0;t.em+=r.canal_email_cumplidas||0;
+    if(r.conv_vs_hostal_pct!==null){t.conv_vs_hostal=r.conv_vs_hostal_pct;t.cerrado=r.cerrado;t.conv_vs_hostal_parcial=r.conv_vs_hostal_parcial;}
+  });
+  var items=Object.values(byProp).filter(function(v){return v.wa+v.em>0;}).sort(function(a,b){return (b.wa+b.em)-(a.wa+a.em);});
+  if(!items.length){document.getElementById('canal-sec').innerHTML='<div class="empty">Sin datos de canal.</div>';return;}
 
-  var cardsHtml = tipos.map(tipoCard).join('') || '<span style="color:var(--gris);font-size:11px">—</span>';
-  var panel = ''+
-    '<div style="background:var(--cream);border:1.5px solid var(--border);border-radius:14px;padding:12px">'+
-      '<div class="tipo-grid" style="grid-template-columns:1fr 1fr;gap:12px">'+cardsHtml+'</div>'+
+  function miniBar(wa,em){var tot=wa+em||1;var wP=Math.round(wa/tot*100),eP=100-wP;return '<div class="bar-duo" style="height:8px"><div style="width:'+wP+'%;background:var(--ok);height:100%"></div><div style="width:'+eP+'%;background:var(--blue);height:100%"></div></div><div style="display:flex;justify-content:space-between;font-size:9px;margin-top:3px;color:var(--gris)"><span>'+wP+'% WA</span><span>'+eP+'% Email</span></div>';}
+
+  function tipoCard(t){
+    var esDes=t.tipo==='Desayuno';
+    var cv=t.enviadas>0?(t.ventas/t.enviadas):0;
+    var hostalStr=t.conv_vs_hostal!=null?' · vs hostal: <b>'+(t.conv_vs_hostal_parcial?'~':'')+fmtFrac(t.conv_vs_hostal,2)+'</b>'+(t.conv_vs_hostal_parcial?' <span style="color:var(--warn);font-size:9px">(parcial)</span>':''):'<span style="color:var(--warn)"> · vs hostal: pendiente</span>';
+    return '<div class="tipo-card '+(t.tipo||'').toLowerCase()+'" style="background:var(--cream)">'+
+      '<div class="tipo-hdr"><div class="tipo-name">'+(esDes?'🍳':'🛏️')+' '+t.tipo+'</div>'+
+      '<div class="tipo-conv-wrap"><div class="tipo-conv '+clsOferta(cv)+'">'+fmtOferta(cv)+'</div><div class="tipo-conv-lbl">conv. oferta</div></div></div>'+
+      '<div class="tipo-how">'+(esDes?'🍳 cumplidas ÷ huéspedes':'🛏️ cumplidas ÷ check-ins')+hostalStr+'</div>'+
+      '<div class="tipo-bar-row"><span style="min-width:52px">'+fmtN(t.ventas)+' / '+fmtN(t.enviadas)+'</span>'+
+        '<div class="tipo-bar-track"><div class="tipo-bar-fill" style="background:'+(esDes?'var(--ok)':'var(--blue)')+';width:'+Math.min(100,t.enviadas>0?Math.round(cv/Math.max(0.25,cv*1.2)*100):0)+'%"></div></div>'+
+      '</div>'+
+      '<div class="tipo-rev">'+fmtUSD(t.revenue)+(t.ventas>0?' · '+fmtUSD(t.revenue/t.ventas)+'/venta':'')+'</div>'+
+      '<div style="margin-top:8px"><div style="font-size:9px;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Canal</div>'+miniBar(t.wa,t.em)+'</div>'+
     '</div>';
+  }
 
-  var row=''+
-  '<tr onclick="toggleCanalRow(this)" style="cursor:pointer">'+
-    '<td><b>'+it.prop.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','')+'</b><br><span style="font-size:10px;color:var(--gris)">'+fmtN(it.ventas)+' ventas · '+fmtUSD(it.revenue)+'</span></td>'+
-    '<td style="min-width:160px">'+miniBar(it.wa,it.em)+'</td>'+
-    '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--ok)">'+fmtN(it.wa)+'</td>'+
-    '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--blue)">'+fmtN(it.em)+'</td>'+
-    '<td style="text-align:center"><span class="badge '+(it.wa>=it.em?'b-ok':'b-blue')+'">'+lider+'</span></td>'+
-    '<td style="text-align:center">'+
-      '<span class="chev" style="display:inline-block;transition:.18s;transform:rotate(0deg);font-weight:900;color:var(--gris)">▾</span>'+
-    '</td>'+
-  '</tr>';
-
-  var detail=''+
-  '<tr class="canal-detail-row" style="display:none">'+
-    '<td colspan="6" style="padding:12px 14px;background:var(--surface)">'+panel+'</td>'+
-  '</tr>';
-
-  return row+detail;
-}).join('')+
-'</tbody></table></div>'+
-'<div style="font-size:10px;color:var(--gris);margin-top:8px;padding:7px 11px;background:var(--cm);border-radius:8px;">ℹ️ Canal calculado sobre <b>ofertas cumplidas</b> con canal registrado. Se muestra el canal global por propiedad + el detalle por producto (con conversión y revenue) para evitar duplicación.</div>';
+  document.getElementById('canal-sec').innerHTML='<div class="canal-wrap"><table class="canal-table"><thead><tr>'+
+    '<th>Propiedad</th><th>WA vs Email</th><th style="text-align:center">📱 WA</th><th style="text-align:center">📧 Email</th><th style="text-align:center">Canal líder</th><th style="width:34px"></th>'+
+    '</tr></thead><tbody>'+
+    items.map(function(it){
+      var lider=it.wa>=it.em?'📱 WhatsApp':'📧 Email';
+      var tipos=Object.values(it.porTipo||{}).filter(function(x){return(x.wa+x.em)>0;}).sort(function(a,b){return(b.wa+b.em)-(a.wa+a.em);});
+      var cardsHtml=tipos.map(tipoCard).join('')||'<span style="color:var(--gris);font-size:11px">—</span>';
+      var panel='<div style="background:var(--cream);border:1.5px solid var(--border);border-radius:14px;padding:12px"><div class="tipo-grid" style="grid-template-columns:1fr 1fr;gap:12px">'+cardsHtml+'</div></div>';
+      return '<tr onclick="toggleCanalRow(this)" style="cursor:pointer">'+
+          '<td><b>'+it.prop.replace('Viajero ','').replace(' Hostel','').replace(' Hostal','')+'</b><br><span style="font-size:10px;color:var(--gris)">'+fmtN(it.ventas)+' ventas · '+fmtUSD(it.revenue)+'</span></td>'+
+          '<td style="min-width:160px">'+miniBar(it.wa,it.em)+'</td>'+
+          '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--ok)">'+fmtN(it.wa)+'</td>'+
+          '<td style="text-align:center;font-size:17px;font-weight:800;color:var(--blue)">'+fmtN(it.em)+'</td>'+
+          '<td style="text-align:center"><span class="badge '+(it.wa>=it.em?'b-ok':'b-blue')+'">'+lider+'</span></td>'+
+          '<td style="text-align:center"><span class="chev" style="display:inline-block;transition:.18s;transform:rotate(0deg);font-weight:900;color:var(--gris)">▾</span></td>'+
+        '</tr>'+
+        '<tr class="canal-detail-row" style="display:none"><td colspan="6" style="padding:12px 14px;background:var(--surface)">'+panel+'</td></tr>';
+    }).join('')+
+    '</tbody></table></div>'+
+    '<div style="font-size:10px;color:var(--gris);margin-top:8px;padding:7px 11px;background:var(--cm);border-radius:8px;">ℹ️ Canal calculado sobre ofertas cumplidas con canal registrado.</div>';
 }
+function toggleCanalRow(tr){var nxt=tr.nextElementSibling;if(!nxt||!nxt.classList||!nxt.classList.contains('canal-detail-row'))return;var open=nxt.style.display==='table-row';nxt.style.display=open?'none':'table-row';var ch=tr.querySelector('.chev');if(ch)ch.style.transform=open?'rotate(0deg)':'rotate(180deg)';}
 
-function toggleCanalRow(tr){
-  // Abre/cierra el panel "detalle" como una FILA completa debajo (igual a mock).
-  var nxt=tr.nextElementSibling;
-  if(!nxt || !nxt.classList || !nxt.classList.contains('canal-detail-row')) return;
-  var open=nxt.style.display==='table-row';
-  nxt.style.display=open?'none':'table-row';
-  // rota el chevron
-  var ch=tr.querySelector('.chev');
-  if(ch) ch.style.transform=open?'rotate(0deg)':'rotate(180deg)';
-}
-
+// ─── RENDER PRINCIPAL ─────────────────────────────────────────────────────
 function render(){
-if(!DATA)return;
-var det=filtrar(DATA.detalle||[]);
-var detCanal=filtrarSinTipo(DATA.detalle||[]);
-var res=DATA.resumen_por_periodo||[];
-renderAlerts(det);renderHero(det,res);renderSynthesis(det,res);renderConclusiones(det,res);renderTopGlobal(det);
-renderGauge(det);renderTrend(res);renderMetodo(res);
-renderTiming(det);renderCanal(detCanal);
+  if(!DATA)return;
+  var det=filtrar(DATA.detalle||[]);
+  var detCanal=filtrarSinTipo(DATA.detalle||[]);
+  var res=DATA.resumen_por_periodo||[];
+  renderAlerts(det);
+  renderHero(det,res);
+  renderSynthesis(det,res);
+  renderConclusiones(det,res);
+  renderCharts(det,res);
+  renderLeaderboard(det);
+  renderGauge(det);
+  renderTrend(res);
+  renderMetodo(res);
+  renderPropCards(det);
+  renderTiming(det);
+  renderCanal(detCanal);
+  // Revenue tab renders on switch, but init if already active
+  var revTab=document.getElementById('tab-revenue');
+  if(revTab&&revTab.classList.contains('active'))renderRevenue(det);
 }
 
 (async function(){
-try{
-var r=await fetch('../data/kyto_upselling.json?t='+Date.now());
-DATA=await r.json();
-if(DATA.actualizado){var dt=new Date(DATA.actualizado);var dStr=dt.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});
-var tStr=dt.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
-document.getElementById('h-ts').textContent=dStr+' · '+tStr;}
-poblarFiltros();render();
-}catch(e){
-document.getElementById('h-ts').textContent='Sin datos';
-document.getElementById('synthesis-sec').innerHTML='<div class="alert-banner red"><div class="alert-ico">❌</div><div class="alert-text"><div class="alert-title">No se pudieron cargar los datos</div><div class="alert-desc">Verifica que <code>../data/kyto_upselling.json</code> exista, que sea JSON válido y que GitHub Pages ya haya actualizado.</div></div></div>';
-console.error(e);
-}
+  try{
+    var r=await fetch('../data/kyto_upselling.json?t='+Date.now());
+    DATA=await r.json();
+    var _ts=DATA.lastUpdated||DATA.actualizado;if(_ts){var dt=new Date(_ts);document.getElementById('h-ts').textContent=dt.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})+' · '+dt.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});}
+    poblarFiltros();render();
+  }catch(e){
+    document.getElementById('h-ts').textContent='Sin datos';
+    document.getElementById('synthesis-sec').innerHTML='<div style="background:var(--err-bg);border:1.5px solid #fca5a5;border-radius:var(--rl);padding:14px 18px;font-size:12px;color:var(--err)">❌ No se pudieron cargar los datos. Verifica que <code>../data/kyto_upselling.json</code> exista.</div>';
+    console.error(e);
+  }
 })();
 </script>
 </body>
