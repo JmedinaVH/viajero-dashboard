@@ -105,19 +105,15 @@ main{max-width:1200px;margin:0 auto;padding:36px 48px 80px;}
 .tag-low{background:var(--red-soft);color:var(--red);}
 .tag-zero{background:#f1f5f9;color:#64748b;}
 .tag-alert{background:#fee2e2;color:#991b1b;}
-.insights-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:8px;}
-.insight{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:10px 16px;cursor:pointer;transition:box-shadow .15s;width:100%;}
-.insight:hover{box-shadow:0 4px 16px rgba(30,16,10,.07);}
-.insight.coral{background:#fff8f6;border-color:#f9c4b4;}
-.insight.green{background:#f0fdf6;border-color:#bbf7d0;}
-.insight.warn{background:#fffbeb;border-color:#fde68a;}
-.insight-header{display:flex;align-items:center;gap:8px;}
-.insight-icon{font-size:15px;line-height:1;flex-shrink:0;}
-.insight-title{font-size:12px;font-weight:800;color:var(--dark);line-height:1.3;flex:1;}
-.insight-arrow{font-size:11px;color:var(--gris);transition:transform .2s;flex-shrink:0;}
-.insight.open .insight-arrow{transform:rotate(180deg);}
-.insight-body{font-size:12px;color:var(--gris);line-height:1.55;font-weight:400;display:none;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
-.insight.open .insight-body{display:block;}
+.insights-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;}
+@media(max-width:700px){.insights-grid{grid-template-columns:1fr;}}
+.insight{background:var(--white);border:1.5px solid var(--border);border-left:4px solid var(--border);border-radius:12px;padding:14px 16px;}
+.insight.coral{border-left-color:#F04B24;background:#fff8f6;}
+.insight.green{border-left-color:#059669;background:#f0fdf6;}
+.insight.warn{border-left-color:#d97706;background:#fffbeb;}
+.insight-icon{font-size:18px;margin-bottom:6px;display:block;line-height:1;}
+.insight-title{font-size:13px;font-weight:800;color:var(--dark);margin-bottom:5px;line-height:1.3;}
+.insight-body{font-size:12px;color:var(--gris);line-height:1.6;}
 /* ACORDEÓN */
 .acordeon-item{background:var(--white);border:1.5px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;}
 .ac-header{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;cursor:pointer;transition:background .15s;user-select:none;}
@@ -584,12 +580,9 @@ function renderInsights(){
   ].filter(Boolean);
  document.getElementById('insightsGrid').innerHTML = items
   .map(i => `
-    <div class="insight ${i.cls}" onclick="this.classList.toggle('open')">
-      <div class="insight-header">
-        <span class="insight-icon">${icoOf(i.title)}</span>
-        <span class="insight-title">${lblOf(i.title)}</span>
-        <span class="insight-arrow">&#9662;</span>
-      </div>
+    <div class="insight ${i.cls}">
+      <span class="insight-icon">${icoOf(i.title)}</span>
+      <div class="insight-title">${lblOf(i.title)}</div>
       <div class="insight-body">${i.body}</div>
     </div>
   `)
