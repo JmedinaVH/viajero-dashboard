@@ -575,6 +575,7 @@ var TIPS={
 'Movimiento':{t:'Cambio vs período anterior',b:'Compara la penetración (% de check-ins que son miembros) entre el período más reciente y el inmediatamente anterior.\n\nLa variación se expresa en puntos porcentuales (pp).\n\nEjemplo: si en abril fue 10% y en mayo 13%, el cambio es +3 pp.\n\n↑ Verde → la propiedad mejoró su penetración\n↓ Rojo → la propiedad bajó su penetración\n\nCon solo 2 períodos los datos son orientativos. A partir del 4to período la señal es más confiable.'},
 'Detalle por nivel':{t:'Calidad de ejecución por nivel',b:'Cada tarjeta representa un nivel de membresía. Los números muestran cómo se ejecutaron los beneficios para ese nivel en el período:\n\n✅ Correctos: registrado bien en CB\n❌ Sin beneficio: el miembro se hospedó pero no recibió nada\n💸 A no-miembro: se aplicó el beneficio sin membresía válida\n⚠️ Nivel incorrecto: el nivel en CB no coincide con el real en Akin\n🚫 Mal aplicado: fuera del proceso\n\nLa barra muestra el % de transacciones sin error para ese nivel.'},
 'Reservas miembros':{t:'% Reservas de miembros',b:'Porcentaje de todas las reservas del período que pertenecen a miembros activos de Viajero Go.\n\nFórmula: reservas de miembros ÷ total de reservas × 100\n\nUna reserva puede tener varias noches. Este indicador mide participación en volumen de reservas, complementa el % de miembros sobre check-ins.'},
+'Propiedades sobre meta':{t:'Propiedades sobre meta de penetración',b:'Cuántas propiedades de la cadena tienen al menos el 30% de sus check-ins asociados a miembros activos de Viajero Go.\n\nFórmula por propiedad: miembros en CB ÷ check-ins totales × 100\n\nMeta: ≥30% por propiedad.\n\nEjemplo: si una propiedad tuvo 100 check-ins y 35 eran miembros → 35% → sobre meta.\n\nHaz clic en la card para ver el ranking completo de todas las propiedades.'},
 'Noches promedio':{t:'Noches promedio por estadía',b:'Duración media de cada reserva, comparando miembros vs no-miembros.\n\nSi los valores son iguales (o muy similares), significa que en este período la membresía no está correlacionada con estadías más largas.\n\nCuando los miembros se quedan más noches, es un indicador de mayor valor por huésped y un argumento clave para justificar el programa.'},
 };
 
@@ -867,12 +868,12 @@ html+='<div class="univ-section">'+
         '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta futura</span><span class="ekc-bottom-val" style="color:'+colNv+'">≥5%</span></div>'+
       '</div>'+
       '<div class="exec-kpi-card">'+
-        '<div class="ekc-top" onclick="drillPropsOnMeta()" style="cursor:pointer" title="Clic para ver detalle por propiedad">'+
-          '<div class="ekc-label">Propiedades sobre meta '+ib('Propiedades con penetración ≥15%')+' <span style="font-size:9px;color:var(--coral);font-weight:600;">ver detalle →</span></div>'+
+        '<div class="ekc-top" onclick="drillPropsOnMeta()" style="cursor:pointer">'+
+          '<div class="ekc-label">Propiedades sobre meta '+ib('Propiedades sobre meta')+'</div>'+
           '<div class="ekc-metric"><div class="ekc-val" style="color:'+colProps+'">'+propsOnMeta+'</div><div class="ekc-unit" style="color:var(--gris)"> / '+totalProps+'</div></div>'+
           '<div class="ekc-desc">'+propsOnMeta+' de '+totalProps+' propiedades superan el 30% de penetración</div>'+
         '</div>'+
-        '<div class="ekc-bottom" onclick="drillPropsOnMeta()" style="cursor:pointer"><span class="ekc-bottom-lbl">Meta · Clic para ver cuáles</span><span class="ekc-bottom-val" style="color:var(--gris)">≥30% penetración</span></div>'+
+        '<div class="ekc-bottom" onclick="drillPropsOnMeta()" style="cursor:pointer"><span class="ekc-bottom-lbl">Meta</span><span class="ekc-bottom-val" style="color:var(--gris)">≥30% penetración</span></div>'+
       '</div>'+
       (nochesData&&nochesData.miembros>0&&!getMsValues('prop').length&&!getMsValues('per').length&&!getMsValues('pais').length?
         '<div class="exec-kpi-card">'+
