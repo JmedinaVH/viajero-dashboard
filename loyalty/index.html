@@ -700,6 +700,29 @@ function toggleAc(h){h.classList.toggle('open');h.nextElementSibling.classList.t
 
 /* ── DRILL OVERLAY ────────────────────── */
 var _drillTipo='';
+function drillPropsOnMeta(){
+  var afs=filtrar(DATA.afiliados||[]);
+  var map={};
+  afs.forEach(function(r){var p=r.Propiedad;if(!p)return;if(!map[p])map[p]={ci:0,cb:0};map[p].ci+=parseFloat(r._check_ins)||0;map[p].cb+=parseFloat(r._afiliados_cb)||0;});
+  var props=Object.entries(map).map(function(e){var p=e[0],v=e[1],pct=v.ci>0?Math.round(v.cb/v.ci*1000)/10:0;return{name:p,ci:v.ci,cb:v.cb,pct:pct};}).filter(function(p){return p.ci>0;}).sort(function(a,b){return b.pct-a.pct;});
+  var onMeta=props.filter(function(p){return p.pct>=30;});
+  var offMeta=props.filter(function(p){return p.pct<30;});
+  document.getElementById('drill-title').textContent='Propiedades sobre meta (≥30% penetración)';
+  document.getElementById('drill-sub').textContent=onMeta.length+' de '+props.length+' propiedades superan la meta · Ordenadas de mayor a menor';
+  var rows=props.map(function(p){
+    var onM=p.pct>=30;
+    var col=p.pct>=30?'var(--ok)':p.pct>=15?'#ca8a04':'var(--err)';
+    var badge=p.pct>=30?'<span style="background:var(--ok-bg);color:var(--ok);font-size:9px;font-weight:700;padding:1px 7px;border-radius:99px;margin-left:6px;">✓ Meta</span>':'<span style="background:var(--err-bg);color:var(--err);font-size:9px;font-weight:700;padding:1px 7px;border-radius:99px;margin-left:6px;">Bajo meta</span>';
+    var barW=Math.min(100,Math.round(p.pct/50*100));
+    return '<tr><td><b>'+p.name.replace('Viajero ','')+'</b>'+badge+'</td>'+
+      '<td style="text-align:center;font-weight:800;color:'+col+'">'+p.pct.toFixed(1)+'%</td>'+
+      '<td style="text-align:center;color:var(--gris)">'+Math.round(p.cb)+' / '+Math.round(p.ci)+'</td>'+
+      '<td style="min-width:100px"><div style="height:6px;border-radius:99px;background:var(--cd);overflow:hidden;position:relative;"><div style="height:100%;width:'+barW+'%;background:'+col+';border-radius:99px;"></div><div style="position:absolute;top:0;bottom:0;left:60%;width:1.5px;background:rgba(30,16,10,.2);"></div></div></td>'+
+      '</tr>';
+  }).join('');
+  document.getElementById('drill-content').innerHTML='<div style="overflow-x:auto;max-height:440px;border-radius:9px;border:1.5px solid var(--border);"><table><thead><tr><th>Propiedad</th><th style="text-align:center">% Penetración</th><th style="text-align:center">Miembros / Check-ins</th><th>Meta 30%</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+  document.getElementById('drill-overlay').classList.add('show');
+}
 function drillTipoError(tipo,titulo){
   _drillTipo=tipo;
   var ft=getMsValues('per'),fp=getMsValues('prop'),fpa=getMsValues('pais');
@@ -844,12 +867,12 @@ html+='<div class="univ-section">'+
         '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta futura</span><span class="ekc-bottom-val" style="color:'+colNv+'">≥5%</span></div>'+
       '</div>'+
       '<div class="exec-kpi-card">'+
-        '<div class="ekc-top">'+
-          '<div class="ekc-label">Propiedades sobre meta '+ib('Propiedades con penetración ≥15%')+'</div>'+
+        '<div class="ekc-top" onclick="drillPropsOnMeta()" style="cursor:pointer" title="Clic para ver detalle por propiedad">'+
+          '<div class="ekc-label">Propiedades sobre meta '+ib('Propiedades con penetración ≥15%')+' <span style="font-size:9px;color:var(--coral);font-weight:600;">ver detalle →</span></div>'+
           '<div class="ekc-metric"><div class="ekc-val" style="color:'+colProps+'">'+propsOnMeta+'</div><div class="ekc-unit" style="color:var(--gris)"> / '+totalProps+'</div></div>'+
           '<div class="ekc-desc">'+propsOnMeta+' de '+totalProps+' propiedades superan el 30% de penetración</div>'+
         '</div>'+
-        '<div class="ekc-bottom"><span class="ekc-bottom-lbl">Meta</span><span class="ekc-bottom-val" style="color:var(--gris)">≥30% penetración</span></div>'+
+        '<div class="ekc-bottom" onclick="drillPropsOnMeta()" style="cursor:pointer"><span class="ekc-bottom-lbl">Meta · Clic para ver cuáles</span><span class="ekc-bottom-val" style="color:var(--gris)">≥30% penetración</span></div>'+
       '</div>'+
       (nochesData&&nochesData.miembros>0&&!getMsValues('prop').length&&!getMsValues('per').length&&!getMsValues('pais').length?
         '<div class="exec-kpi-card">'+
