@@ -194,8 +194,8 @@ function render(){
  document.getElementById('hero').innerHTML =
   kpi('Ingresos YTD',   '$'+fmtN(sum(rows,'ingresos_ytd')), 'Mes: $'+fmtN(sum(rows,'ingresos_mes'))+' · '+(sum(rows,'ingresos_ytd')>0?Math.round(sum(rows,'ingresos_mes')/sum(rows,'ingresos_ytd')*100):0)+'% del YTD', '#15803d')+
   kpi('Reservas',       fmtN(sum(rows,'reservas_n')), '$'+fmtN(sum(rows,'ingresos_mes'))+' · $'+fmtN(Math.round(sum(rows,'ingresos_mes')/Math.max(sum(rows,'reservas_n'),1)))+' /reserva', 'var(--orange)')+
-  kpi('Satisfacción',   Math.round(sat)+'/100', 'Buena: '+pct(b)+' · Mala: '+pct(m), 'var(--ok)')+
-  kpi('Ahorro trabajo', fmtN(hrs)+' h', 'FTE/día: '+fte.toFixed(2)+' · '+fmtN(totConv)+' convs', 'var(--blue)');
+kpi('Satisfacción',   Math.round(sat)+'/100', 'Buena: '+pct(avgWeighted(rows,'satisfaccion_buena_pct','conversaciones'))+' · Mala: '+pct(avgWeighted(rows,'satisfaccion_mala_pct','conversaciones')), 'var(--ok)')+  kpi('Ahorro trabajo', fmtN(hrs)+' h', 'FTE/día: '+fte.toFixed(2)+' · '+fmtN(totConv)+' convs', 'var(--blue)')+
+kpi('Desborde HITL', pct(hitlRate), fmtN(hitl)+' solicitudes · razón #1: manage booking', '#dc2626');
   // Satisfaction
   var b=avgWeighted(rows,'satisfaccion_buena_pct','conversaciones');
   var n=avgWeighted(rows,'satisfaccion_normal_pct','conversaciones');
