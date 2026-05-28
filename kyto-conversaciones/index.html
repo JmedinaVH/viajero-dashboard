@@ -186,6 +186,9 @@ function render(){
   var tr=avgWeighted(rows,'tiempo_respuesta_s','conversaciones');
 
   var hitl=sum(rows,'hitl_solicitudes');
+  var b=avgWeighted(rows,'satisfaccion_buena_pct','conversaciones');
+var n=avgWeighted(rows,'satisfaccion_normal_pct','conversaciones');
+var m=avgWeighted(rows,'satisfaccion_mala_pct','conversaciones');
   var hitlRate=totConv?hitl/totConv:0;
 
   var fte=avgWeighted(rows,'fte_dia','conversaciones');
