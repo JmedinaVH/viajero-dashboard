@@ -195,8 +195,9 @@ function render(){
     kpi('Conversaciones', fmtN(totConv), fmtN(totUsers)+' usuarios', 'var(--orange)')+
     kpi('Tiempo respuesta', fmtMinFromSeconds(tr), 'promedio ponderado', 'var(--blue)')+
     kpi('Mensajes', fmtN(totMsgs), 'User prom: '+(avgWeighted(rows,'msg_user_prom','conversaciones').toFixed(1))+' · Bot prom: '+(avgWeighted(rows,'msg_bot_prom','conversaciones').toFixed(1)), 'var(--purple)')+
-    kpi('Ahorro trabajo', fmtN(hrs)+' h', 'FTE/día: '+fte.toFixed(2), 'var(--ok)');
-
+kpi('Ahorro trabajo', fmtN(hrs)+' h', 'FTE/día: '+fte.toFixed(2), 'var(--ok)')+
+kpi('Reservas', fmtN(sum(rows,'reservas_n')), '$'+fmtN(Math.round(sum(rows,'ingresos_mes')/Math.max(sum(rows,'reservas_n'),1)))+' / reserva', 'var(--orange)')+
+kpi('Ingresos YTD', '$'+fmtN(sum(rows,'ingresos_ytd')), 'Mes: $'+fmtN(sum(rows,'ingresos_mes')), '#15803d');
   // Satisfaction
   var b=avgWeighted(rows,'satisfaccion_buena_pct','conversaciones');
   var n=avgWeighted(rows,'satisfaccion_normal_pct','conversaciones');
