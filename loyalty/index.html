@@ -462,7 +462,6 @@ tbody tr:hover td{background:var(--cream);}
 <div class="tabs-bar">
   <button class="tab-btn active" onclick="switchTab('exec',this)">📊 Resumen ejecutivo</button>
   <button class="tab-btn" onclick="switchTab('prop',this)">🏨 Por propiedad</button>
-  <button class="tab-btn" onclick="switchTab('members',this)">👥 Comportamiento Historico</button>
   <button class="tab-btn" onclick="switchTab('ctx',this)">📈 Histórico del programa</button>
   <button class="tab-btn" onclick="switchTab('tiers',this)">⭐ Ejecución por nivel</button>
 </div>
@@ -521,26 +520,7 @@ tbody tr:hover td{background:var(--cream);}
   </div>
 </div>
 
-<!-- TAB 3: COMPORTAMIENTO -->
-<div id="tab-members" class="tab-content">
-  <div class="aud-label aud-members">👥 Fidelidad histórica del programa</div>
-  <div id="members-pending-banner"></div>
-  <div class="info-box" style="border-left:3px solid var(--teal);margin-bottom:16px;">
-  📚 <b>Fuente: historial acumulado AKIN</b> — Estas métricas reflejan el comportamiento histórico de todos los miembros registrados y <b>no dependen del período seleccionado</b>. No están relacionadas con las 4.696 reservas loyalty auditadas del período.
-</div>
-  <div id="members-beh-kpis"></div>
-  <div class="sec">
-    <div class="sec-hdr"><h2>Estado de actividad <i class="ib" onclick="openTip('Estado actividad')">i</i></h2><div class="linea"></div></div>
-    <div id="members-activity-pills"></div>
-  </div>
-  <div class="sec">
-    <div class="sec-hdr"><h2>Directorio de miembros <i class="ib" onclick="openTip('Directorio miembros')">i</i></h2><div class="linea"></div></div>
-    <input class="member-search" id="member-q" type="text" placeholder="🔍 Buscar por nombre, correo, estado de actividad..." oninput="filtrarMembers()"/>
-    <div class="member-wrap" id="member-tabla"></div>
-  </div>
-</div>
-
-<!-- TAB 4: CONTEXTO -->
+<!-- TAB 4: CONTEXTO (ahora incluye fidelidad histórica) -->
 <div id="tab-ctx" class="tab-content">
   <div class="aud-label aud-context">📈 Contexto y estructura del programa</div>
   <!-- CTX LOCAL FILTER -->
@@ -557,15 +537,20 @@ tbody tr:hover td{background:var(--cream);}
     <div class="sec-hdr"><h2>Distribución de miembros por nivel <i class="ib" onclick="openTip('Miembros del programa')">i</i></h2><div class="linea"></div></div>
         <div id="ctx-tier-donut"></div>
   </div>
+  <div id="members-pending-banner"></div>
+  <div class="info-box" style="border-left:3px solid var(--teal);margin-bottom:16px;margin-top:8px;">
+  📚 <b>Fuente: historial acumulado AKIN</b> — Estas métricas reflejan el comportamiento histórico de todos los miembros registrados y <b>no dependen del período seleccionado</b>. No están relacionadas con las 4.696 reservas loyalty auditadas del período.
+</div>
+  <div id="members-beh-kpis"></div>
   <div class="sec">
-    <div class="sec-hdr"><h2>Ranking de propiedades <i class="ib" onclick="openTip('Ranking')">i</i></h2><div class="linea"></div></div>
-    <div style="font-size:11px;color:var(--gris);margin-bottom:12px;">Las 3 métricas clave por propiedad. La línea vertical en % Miembros marca la meta del 15%. Captación: meta ≥30%.</div>
-    <div id="ctx-ranking"></div>
+    <div class="sec-hdr"><h2>Estado de actividad <i class="ib" onclick="openTip('Estado actividad')">i</i></h2><div class="linea"></div></div>
+    <div id="members-activity-pills"></div>
   </div>
   <div class="sec">
-  <div class="sec-hdr"><h2>Afiliación histórica</h2><div class="linea"></div></div>
-  <div id="ctx-afiliacion-charts"></div>
-</div>
+    <div class="sec-hdr"><h2>Directorio de miembros <i class="ib" onclick="openTip('Directorio miembros')">i</i></h2><div class="linea"></div></div>
+    <input class="member-search" id="member-q" type="text" placeholder="🔍 Buscar por nombre, correo, estado de actividad..." oninput="filtrarMembers()"/>
+    <div class="member-wrap" id="member-tabla"></div>
+  </div>
 </div>
 
 <!-- TAB 5: EJECUCION POR NIVEL -->
@@ -576,6 +561,15 @@ tbody tr:hover td{background:var(--cream);}
     <div class="sec-hdr"><h2>Calidad de ejecución por nivel <i class="ib" onclick="openTip('Detalle por nivel')">i</i></h2><div class="linea"></div></div>
     <div style="font-size:10px;color:var(--gris);margin-top:4px;">Base: reservas loyalty evaluadas por nivel del programa · Filtrado por período, propiedad y país seleccionados</div>
     <div class="tiers-g" id="ctx-tiers-g"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Ranking de propiedades <i class="ib" onclick="openTip('Ranking')">i</i></h2><div class="linea"></div></div>
+    <div style="font-size:11px;color:var(--gris);margin-bottom:12px;">Las 3 métricas clave por propiedad. La línea vertical en % Miembros marca la meta del 15%. Captación: meta ≥30%.</div>
+    <div id="ctx-ranking"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Afiliación histórica</h2><div class="linea"></div></div>
+    <div id="ctx-afiliacion-charts"></div>
   </div>
 </div>
 
@@ -686,10 +680,9 @@ function switchTab(id,btn){
   btn.classList.add('active');
   /* Barra de Mes: solo visible en tabs que usan período */
 
-  if(id==='ctx'){renderCtxTab();}
+  if(id==='ctx'){renderCtxTab();renderMembersTab();}
   if(id==='tiers'){renderCtxTab();}
   if(id==='hist')renderHistTab();
-  if(id==='members'){renderMembersTab();renderCtxTab();}
 }
 
 /* ── MULTI-SELECT FILTERS ─────────────── */
