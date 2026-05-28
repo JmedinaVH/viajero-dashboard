@@ -529,6 +529,13 @@ tbody tr:hover td{background:var(--cream);}
   <div class="aud-label aud-context">📈 Contexto y estructura del programa</div>
   <div class="sec">
     <div class="sec-hdr"><h2>Distribución de miembros por nivel <i class="ib" onclick="openTip('Miembros del programa')">i</i></h2><div class="linea"></div></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
+  <label style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gris);">Mostrar miembros inscritos:</label>
+  <select id="ctx-hasta-sel" onchange="applyCtxHasta()" style="font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;padding:5px 14px 5px 10px;border:1.5px solid var(--border);border-radius:7px;background:var(--surface);color:var(--dark);cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237A6E68'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 8px center;">
+    <option value="">Todos los miembros</option>
+  </select>
+  <span id="ctx-hasta-cnt" style="font-size:11px;color:var(--gris);font-weight:600;"></span>
+</div>
     <div id="ctx-tier-donut"></div>
   </div>
   <div class="sec">
@@ -1770,6 +1777,76 @@ fetch(DATA_URL)
     console.error('Error cargando datos:',err);
     document.querySelector('main').innerHTML='<div style="text-align:center;padding:60px;color:var(--gris)"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="font-size:14px;font-weight:600">Error al cargar los datos del programa</div><div style="font-size:12px;margin-top:6px">Verifica que <code>../data/loyalty_data.json</code> esté disponible.</div></div>';
   });
+/* ═══════════════════════════════════════
+   FILTRO ACUMULADO — DISTRIBUCIÓN POR NIVEL
+═══════════════════════════════════════ */
+function _ctxGetJoinDate(r){
+  var raw=r['Joined date']||r['Joined']||r['join_date']||r['fecha_ingreso']||r['Fecha Ingreso']||
+          r['fecha_union']||r['Fecha Union']||r['created_at']||r['Created']||
+          r['Join Date']||r['registration_date']||r['Fecha de Inscripcion']||
+          r['Fecha Inscripcion']||r['joined_at']||r['JoinDate']||r['Fecha']||'';
+  if(!raw)return null;
+  try{var d=new Date(raw);return isNaN(d.getTime())?null:d;}catch(e){return null;}
+}
+function _ctxFmtKey(d){
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+}
+function _ctxFmtLabel(key){
+  var parts=key.split('-');
+  var meses=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  return 'Hasta '+meses[parseInt(parts[1],10)-1]+' '+parts[0];
+}
+function poblarCtxHasta(){
+  var sel=document.getElementById('ctx-hasta-sel');
+  if(!sel||!DATA||sel.dataset.populated)return;
+  var raw=DATA.akinTiers||[];
+  var months={};
+  raw.forEach(function(r){var d=_ctxGetJoinDate(r);if(d)months[_ctxFmtKey(d)]=true;});
+  var sorted=Object.keys(months).sort();
+  if(!sorted.length){sel.closest('div[style]').style.display='none';return;}
+  while(sel.options.length>1)sel.remove(1);
+  sorted.forEach(function(m){
+    var o=document.createElement('option');
+    o.value=m;o.textContent=_ctxFmtLabel(m);
+    sel.appendChild(o);
+  });
+  sel.value=sorted[sorted.length-1];
+  sel.dataset.populated='1';
+}
+function getAkinFiltered(){
+  var sel=document.getElementById('ctx-hasta-sel');
+  var val=sel?sel.value:'';
+  if(!val)return DATA.akinTiers||[];
+  var y=parseInt(val.split('-')[0],10),m=parseInt(val.split('-')[1],10);
+  return (DATA.akinTiers||[]).filter(function(r){
+    var d=_ctxGetJoinDate(r);
+    if(!d)return true;
+    return d.getFullYear()<y||(d.getFullYear()===y&&(d.getMonth()+1)<=m);
+  });
+}
+function applyCtxHasta(){
+  if(!DATA)return;
+  var filtered=getAkinFiltered();
+  var orig=DATA.akinTiers;
+  DATA.akinTiers=filtered;
+  if(typeof renderCtxTab==='function')renderCtxTab();
+  DATA.akinTiers=orig;
+  var cnt=document.getElementById('ctx-hasta-cnt');
+  if(cnt){
+    var sel=document.getElementById('ctx-hasta-sel');
+    var val=sel?sel.value:'';
+    if(val)cnt.textContent='('+filtered.length.toLocaleString('es-CO')+' miembros)';
+    else cnt.textContent='';
+  }
+}
+/* Envolver switchTab para poblar el selector al abrir la pestaña ctx */
+(function(){
+  var _orig=window.switchTab;
+  window.switchTab=function(id,btn){
+    _orig(id,btn);
+    if(id==='ctx'){poblarCtxHasta();applyCtxHasta();}
+  };
+})();
 </script>
 </body>
 </html>
