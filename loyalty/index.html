@@ -65,9 +65,6 @@ header{background:var(--dark);padding:0 36px;display:flex;align-items:center;jus
 .ms-dd input[type=checkbox]{accent-color:var(--coral);width:13px;height:13px;flex-shrink:0;}
 .filtros-reset{margin-left:auto;font-family:'Outfit',sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,.55);background:none;border:1px solid rgba(255,255,255,.18);border-radius:7px;padding:4px 10px;cursor:pointer;transition:.14s;}
 .filtros-reset:hover{background:rgba(255,255,255,.12);color:#fff;}
-.fg.filter-disabled{opacity:.35;pointer-events:none;transition:.2s;}
-.fg.filter-disabled .fg-note{display:block;}
-.fg-note{display:none;font-size:8px;color:rgba(255,255,255,.4);margin-top:2px;font-weight:600;}
 .filter-scope{font-size:9px;color:rgba(255,255,255,.4);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
 
 /* TABS */
@@ -333,7 +330,7 @@ tbody tr:hover td{background:var(--cream);}
 .pb-fields{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;}
 .pb-field{font-size:10px;font-weight:700;background:rgba(15,118,110,.1);color:var(--teal);padding:3px 9px;border-radius:99px;}
 
-.beh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.beh-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px;}
 .beh-kpi{background:var(--surface);border-radius:var(--r);padding:18px 16px;border:1.5px solid var(--border);position:relative;overflow:hidden;}
 .beh-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--bkc,var(--teal));border-radius:var(--r) var(--r) 0 0;}
 .bk-glow{position:absolute;bottom:-14px;right:-14px;width:54px;height:54px;border-radius:50%;background:var(--bkc,var(--teal));opacity:.06;}
@@ -458,7 +455,7 @@ tbody tr:hover td{background:var(--cream);}
   <div class="fg"><label>Mes</label><div class="ms-wrap"><button class="ms-btn" onclick="toggleMs('per')" id="ms-per-btn">Todos</button><div class="ms-dd" id="ms-per-dd"><div class="ms-dd-hdr">Meses <span onclick="clearMs('per')">Limpiar</span></div></div></div></div>
   <div class="fg"><label>Propiedad</label><div class="ms-wrap"><button class="ms-btn" onclick="toggleMs('prop')" id="ms-prop-btn">Todas</button><div class="ms-dd" id="ms-prop-dd"><div class="ms-dd-hdr">Propiedades <span onclick="clearMs('prop')">Limpiar</span></div></div></div></div>
   <div class="fg"><label>País</label><div class="ms-wrap"><button class="ms-btn" onclick="toggleMs('pais')" id="ms-pais-btn">Todos</button><div class="ms-dd" id="ms-pais-dd"><div class="ms-dd-hdr">Países <span onclick="clearMs('pais')">Limpiar</span></div></div></div></div>
-  <span class="filter-scope" id="filter-scope-label">Todos los filtros aplican a todos los tabs</span>
+  <span class="filter-scope" id="filter-scope-label"></span>
   <button class="filtros-reset" onclick="resetFiltros()">× Limpiar todo</button>
 </div>
 
@@ -466,7 +463,8 @@ tbody tr:hover td{background:var(--cream);}
   <button class="tab-btn active" onclick="switchTab('exec',this)">📊 Resumen ejecutivo</button>
   <button class="tab-btn" onclick="switchTab('prop',this)">🏨 Por propiedad</button>
   <button class="tab-btn" onclick="switchTab('members',this)">👥 Comportamiento Historico</button>
-  <button class="tab-btn" onclick="switchTab('ctx',this)">📈 Contexto del programa</button>
+  <button class="tab-btn" onclick="switchTab('ctx',this)">📈 Histórico del programa</button>
+  <button class="tab-btn" onclick="switchTab('tiers',this)">⭐ Ejecución por nivel</button>
 </div>
 
 <main>
@@ -568,9 +566,15 @@ tbody tr:hover td{background:var(--cream);}
   <div class="sec-hdr"><h2>Afiliación histórica</h2><div class="linea"></div></div>
   <div id="ctx-afiliacion-charts"></div>
 </div>
+</div>
+
+<!-- TAB 5: EJECUCION POR NIVEL -->
+<div id="tab-tiers" class="tab-content">
+  <div class="aud-label aud-ops">⭐ Calidad de ejecución — filtros: Mes · Propiedad · País</div>
+  <div class="info-box" style="border-left:3px solid var(--coral);margin-bottom:16px;">🎛️ <b>Esta vista usa los filtros globales</b> (Mes, Propiedad, País) del encabezado. El selector "Corte histórico" de la pestaña anterior <b>no aplica aquí</b>.</div>
   <div class="sec">
     <div class="sec-hdr"><h2>Calidad de ejecución por nivel <i class="ib" onclick="openTip('Detalle por nivel')">i</i></h2><div class="linea"></div></div>
-    <div style="font-size:10px;color:var(--gris);margin-top:4px;">Base: reservas loyalty evaluadas por nivel del programa</div>
+    <div style="font-size:10px;color:var(--gris);margin-top:4px;">Base: reservas loyalty evaluadas por nivel del programa · Filtrado por período, propiedad y país seleccionados</div>
     <div class="tiers-g" id="ctx-tiers-g"></div>
   </div>
 </div>
@@ -680,16 +684,10 @@ function switchTab(id,btn){
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
-  /* Filtro Mes: no aplica en tab acumulado histórico */
-  var mesGrp=document.querySelector('.fg:first-child');
-  if(mesGrp){
-    mesGrp.classList.toggle('filter-disabled',id==='members');
-    var note=mesGrp.querySelector('.fg-note');
-    if(!note){note=document.createElement('div');note.className='fg-note';note.textContent='no aplica aquí';mesGrp.appendChild(note);}
-  }
-  var lbl=document.getElementById('filter-scope-label');
-  if(id==='members'&&lbl)lbl.textContent='📅 Acumulado: filtro Mes no aplica · Propiedad y País sí aplican';
-  if(id==='ctx'){renderCtxTab();renderCtxCaptacion();}
+  /* Barra de Mes: solo visible en tabs que usan período */
+
+  if(id==='ctx'){renderCtxTab();}
+  if(id==='tiers'){renderCtxTab();}
   if(id==='hist')renderHistTab();
   if(id==='members'){renderMembersTab();renderCtxTab();}
 }
@@ -722,6 +720,7 @@ function poblarFiltros(){
 }
 
 /* ── UTILS ────────────────────────────── */
+function getMixReservas(ci,cb){var fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');var isFiltered=fp.length||ft.length||fpa.length;var d=(!isFiltered&&DATA&&DATA.mixReservas)||null;return{total:d?d.total:ci,miembros:d?d.miembros:cb};}
 function getPer(r){return r['Mes']||r['mes']||r['Período']||r['Periodo']||'';}
 function filtrar(arr,kP,kPr,kPa){
   kPr=kPr||'Propiedad';kPa=kPa||'País';
@@ -782,11 +781,8 @@ function drillTipoError(tipo,titulo){
 ═══════════════════════════════════════ */
 function renderExecHeadline(afs,mb){
   var ci=sum(afs,'_check_ins'),cb=sum(afs,'_afiliados_cb');
-var fp2=getMsValues('prop'),ft2=getMsValues('per'),fpa2=getMsValues('pais');
-var isFiltered2=fp2.length||ft2.length||fpa2.length;
-var mixData=(!isFiltered2&&DATA.mixReservas)||null;
-var totalRes=mixData?mixData.total:ci;
-var loyRes=mixData?mixData.miembros:cb;
+var _mix=getMixReservas(ci,cb);
+var totalRes=_mix.total,loyRes=_mix.miembros;
   var pLoy=totalRes>0?loyRes/totalRes*100:0;
   var fp=getMsValues('prop'),fpa=getMsValues('pais');
   var scope=fp.length===1?fp[0]:fpa.length===1?fpa[0]:'toda la cadena';
@@ -826,11 +822,8 @@ function renderExecCtxKPIs(afs,mb){
   var pctOK=totalLoyalty>0?Math.round(okN/totalLoyalty*1000)/10:0;
   var pctSC=totalLoyalty>0?Math.round(scN/totalLoyalty*1000)/10:0;
   var pctTI=totalLoyalty>0?Math.round(tiI/totalLoyalty*1000)/10:0;
- var fp=getMsValues('prop'),ft=getMsValues('per'),fpa=getMsValues('pais');
-var isFiltered=fp.length||ft.length||fpa.length;
-var mixData=(!isFiltered&&DATA.mixReservas)||null;
-var totalRes=mixData?mixData.total:ci;
-var loyRes=mixData?mixData.miembros:cb;
+var _mix2=getMixReservas(ci,cb);
+var totalRes=_mix2.total,loyRes=_mix2.miembros;
   var pctLoy=totalRes>0?Math.round(loyRes/totalRes*1000)/10:0;
   var mbArr=DATA.memberBehavior||[];
   var nochesData=DATA.nochesPromedio||null;
