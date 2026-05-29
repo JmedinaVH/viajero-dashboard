@@ -546,22 +546,12 @@ tbody tr:hover td{background:var(--cream);}
     <div class="sec-hdr"><h2>Estado de actividad <i class="ib" onclick="openTip('Estado actividad')">i</i></h2><div class="linea"></div></div>
     <div id="members-activity-pills"></div>
   </div>
-  <div class="sec">
-    <div class="sec-hdr"><h2>Directorio de miembros <i class="ib" onclick="openTip('Directorio miembros')">i</i></h2><div class="linea"></div></div>
-    <input class="member-search" id="member-q" type="text" placeholder="🔍 Buscar por nombre, correo, estado de actividad..." oninput="filtrarMembers()"/>
-    <div class="member-wrap" id="member-tabla"></div>
-  </div>
 </div>
 
 <!-- TAB 5: EJECUCION POR NIVEL -->
 <div id="tab-tiers" class="tab-content">
   <div class="aud-label aud-ops">⭐ Calidad de ejecución — filtros: Mes · Propiedad · País</div>
   <div class="info-box" style="border-left:3px solid var(--coral);margin-bottom:16px;">🎛️ <b>Esta vista usa los filtros globales</b> (Mes, Propiedad, País) del encabezado. El selector "Corte histórico" de la pestaña anterior <b>no aplica aquí</b>.</div>
-  <div class="sec">
-    <div class="sec-hdr"><h2>Calidad de ejecución por nivel <i class="ib" onclick="openTip('Detalle por nivel')">i</i></h2><div class="linea"></div></div>
-    <div style="font-size:10px;color:var(--gris);margin-top:4px;">Base: reservas loyalty evaluadas por nivel del programa · Filtrado por período, propiedad y país seleccionados</div>
-    <div class="tiers-g" id="ctx-tiers-g"></div>
-  </div>
   <div class="sec">
     <div class="sec-hdr"><h2>Ranking de propiedades <i class="ib" onclick="openTip('Ranking')">i</i></h2><div class="linea"></div></div>
     <div style="font-size:11px;color:var(--gris);margin-bottom:12px;">Las 3 métricas clave por propiedad. La línea vertical en % Miembros marca la meta del 15%. Captación: meta ≥30%.</div>
@@ -570,6 +560,11 @@ tbody tr:hover td{background:var(--cream);}
   <div class="sec">
     <div class="sec-hdr"><h2>Afiliación histórica</h2><div class="linea"></div></div>
     <div id="ctx-afiliacion-charts"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-hdr"><h2>Calidad de ejecución por nivel <i class="ib" onclick="openTip('Detalle por nivel')">i</i></h2><div class="linea"></div></div>
+    <div style="font-size:10px;color:var(--gris);margin-top:4px;">Base: reservas loyalty evaluadas por nivel del programa · Filtrado por período, propiedad y país seleccionados</div>
+    <div class="tiers-g" id="ctx-tiers-g"></div>
   </div>
 </div>
 
@@ -1868,7 +1863,7 @@ fetch(DATA_URL)
     var hasta=CTX_HASTA,prev=hasta?prevKey(hasta):'';
     var fHasta=akinHasta(hasta),fPrev=hasta?akinHasta(prev):[];
     var newN=hasta?akinExact(hasta):[];
-    var total=fHasta.length,totalPrev=fPrev.length;
+    var _validTier=function(r){var t=r['Viajero']||r['Loyalty Level']||r.nivel||r.Tier||'';return t&&t!=='nivel'&&t!=='Tier'&&t!=='N/A'&&t!=='n/a';};var total=fHasta.filter(_validTier).length,totalPrev=fPrev.filter(_validTier).length;
     var growthAbs=total-totalPrev;
     var growthPct=totalPrev>0?(growthAbs/totalPrev*100):null;
     var growthCol=growthPct===null?'var(--gris)':growthPct>=0?'var(--ok)':'var(--err)';
