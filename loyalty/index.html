@@ -496,15 +496,13 @@ tbody tr:hover td{background:var(--cream);}
 
 <!-- TAB 2: POR PROPIEDAD -->
 <div id="tab-prop" class="tab-content">
-  <div class="aud-label aud-ops">🏨 Vista operativa — detalle por propiedad</div>
-  <div id="detail-sheet-wrapper" style="margin-bottom:8px;"></div>
-
   <!-- Resumen global rápido -->
   <div class="sec">
     <div class="sec-hdr"><h2>Estado global del programa <i class="ib" onclick="openTip('Resumen de errores')">i</i></h2><div class="linea"></div></div>
     <div style="font-size:11px;color:var(--gris);margin-bottom:10px;" id="prop-sem-total"></div>
     <div id="prop-semaforo"></div>
   </div>
+  <div id="detail-sheet-wrapper" style="margin-bottom:16px;"></div>
 
   <!-- Tabla de propiedades -->
   <div class="sec">
@@ -1225,13 +1223,32 @@ function renderPropSemaforo(mb){
   var loyTot=t['OK']+(t['SIN CANJE']||0)+(t['TIER_INCORRECTO']||0);
   var opTot=(t['LEAKAGE']||0)+(t['MISUSE']||0);
   document.getElementById('prop-sem-total').innerHTML=
-    '<b>'+fmtN(tot)+'</b> reservas evaluadas · <span style="color:var(--mid);font-size:10px">Unidad: reservas · Fuente: CloudBeds + Akin · Clic en tarjeta para ver detalle</span>'+
-    '<div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;">'+
-      '<span style="font-size:10px;background:var(--blue-bg);color:var(--blue);padding:2px 9px;border-radius:99px;font-weight:700;">🎁 Universo loyalty · '+fmtN(loyTot)+' reservas</span>'+
-'<span style="font-size:10px;background:var(--orange-bg);color:var(--orange);padding:2px 9px;border-radius:99px;font-weight:700;">⚠️ Riesgos operacionales · '+fmtN(opTot)+' casos</span>'+
-      '<span style="font-size:10px;background:var(--cm);color:var(--mid);padding:2px 9px;border-radius:99px;font-weight:600;">'+fmtN(loyTot)+' + '+fmtN(opTot)+' = '+fmtN(tot)+' total</span>'+
-    '</div>'+
-    '<div style="margin-top:5px;font-size:10px;color:var(--gris);">ℹ️ Beneficios considerados: desayuno, toalla y descuento loyalty · Una persona puede tener múltiples reservas</div>';
+    '<div style="font-size:10px;color:var(--gris);margin-bottom:10px;">Fuente: CloudBeds + Akin · Beneficios: desayuno, toalla, descuento loyalty · Una persona puede tener múltiples reservas</div>'+
+    '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--cream);border-radius:10px;padding:14px 16px;border:1.5px solid var(--border);">'+
+      '<div style="text-align:center;min-width:80px;">'+
+        '<div style="font-size:22px;font-weight:800;color:var(--blue)">'+fmtN(loyTot)+'</div>'+
+        '<div style="font-size:9px;font-weight:700;color:var(--gris);margin-top:3px;line-height:1.3;">🎁 Universo loyalty</div>'+
+      '</div>'+
+      (t['LEAKAGE']>0?
+        '<div style="font-size:20px;color:var(--gris);">+</div>'+
+        '<div style="text-align:center;min-width:70px;">'+
+          '<div style="font-size:22px;font-weight:800;color:var(--orange)">'+fmtN(t['LEAKAGE'])+'</div>'+
+          '<div style="font-size:9px;font-weight:700;color:var(--gris);margin-top:3px;line-height:1.3;">💸 A no-miembro</div>'+
+        '</div>'
+      :'')+
+      (t['MISUSE']>0?
+        '<div style="font-size:20px;color:var(--gris);">+</div>'+
+        '<div style="text-align:center;min-width:70px;">'+
+          '<div style="font-size:22px;font-weight:800;color:var(--err)">'+fmtN(t['MISUSE'])+'</div>'+
+          '<div style="font-size:9px;font-weight:700;color:var(--gris);margin-top:3px;line-height:1.3;">🚫 Mal aplicado</div>'+
+        '</div>'
+      :'')+
+      '<div style="font-size:20px;color:var(--gris);">=</div>'+
+      '<div style="text-align:center;min-width:80px;">'+
+        '<div style="font-size:26px;font-weight:800;color:var(--dark)">'+fmtN(tot)+'</div>'+
+        '<div style="font-size:9px;font-weight:700;color:var(--gris);margin-top:3px;">Total evaluadas</div>'+
+      '</div>'+
+    '</div>';
   var loyTotal=t['OK']+(t['SIN CANJE']||0)+(t['TIER_INCORRECTO']||0);
   var pctOK=loyTotal>0?Math.round(t['OK']/loyTotal*1000)/10:0;
   var pctSC=loyTotal>0?Math.round((t['SIN CANJE']||0)/loyTotal*1000)/10:0;
@@ -1292,7 +1309,7 @@ function renderPropSemaforo(mb){
       '<a href="https://docs.google.com/spreadsheets/d/1NOvBphsUK4A2gaxMqazjil_0JMPl-TA0njZKfcDlfcM/edit" target="_blank" style="font-size:10px;color:var(--blue);text-decoration:none;background:var(--blue-bg);padding:3px 10px;border-radius:99px;font-weight:600;">Ver detalle reserva por reserva →</a>'+
     '</div>'+
     '<div style="font-size:11px;color:var(--gris);">'+
-      '<b>'+fmtN(tot)+'</b> reservas evaluadas · Fuente: CloudBeds + Akin · Clic en fila para ver detalle'+
+      '<b>'+fmtN(tot)+'</b> reservas evaluadas = <b>'+fmtN(loyTot)+'</b> loyalty + <b>'+fmtN(opTot)+'</b> errores operacionales (beneficios entregados a no-miembros) · Fuente: CloudBeds + Akin'+
       '<div style="margin-top:5px;display:flex;gap:8px;flex-wrap:wrap;">'+
         '<span style="font-size:10px;background:var(--blue-bg);color:var(--blue);padding:2px 9px;border-radius:99px;font-weight:700;">🎁 Universo loyalty · '+fmtN(loyTot)+' reservas</span>'+
         '<span style="font-size:10px;background:var(--orange-bg);color:var(--orange);padding:2px 9px;border-radius:99px;font-weight:700;">⚠️ Riesgos operacionales · '+fmtN(opTot)+' casos</span>'+
